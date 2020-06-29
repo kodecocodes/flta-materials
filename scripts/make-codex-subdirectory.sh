@@ -24,12 +24,15 @@ if [ $isEdition -ne 8 ]; then
   read -p "Hit Ctrl-C to cancel, or RETURN to continue" choice
 fi
 
+# Checkout the new branch, create the directory & enter it
 git checkout -b $1
 mkdir $1
-cd $1
+pushd $1
+# Create the standard directory structure, and enter it
 mkdir -p assets projects/starter projects/final projects/challenge
 touch assets/.keep projects/starter/.keep projects/final/.keep projects/challenge/.keep
-cd ..
+# Jump back out, and commit the changes
+popd
 git add $1
 git commit -m "Adding $1" $1
 git checkout $BRANCH
