@@ -30,7 +30,7 @@
 import 'package:flutter/material.dart';
 
 class ShoppingList extends StatelessWidget {
-  List<String> ingredients = List<String>();
+  final List<String> ingredients = List<String>();
 
   @override
   Widget build(BuildContext context) {
