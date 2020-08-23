@@ -184,25 +184,6 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
-  Widget _buildRecipeList(BuildContext recipeListContext, List hits) {
-    var size = MediaQuery.of(context).size;
-    final double itemHeight = 220;
-    final double itemWidth = size.width / 2;
-    return Flexible(
-      child: GridView.builder(
-        controller: _scrollController,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: (itemWidth / itemHeight),
-        ),
-        itemCount: hits.length,
-        itemBuilder: (BuildContext context, int index) {
-          return _buildRecipeCard(recipeListContext, hits, index);
-        },
-      ),
-    );
-  }
-
   Widget _buildRecipeCard(BuildContext topLevelContext, List hits,
       int index) {
     return GestureDetector(
