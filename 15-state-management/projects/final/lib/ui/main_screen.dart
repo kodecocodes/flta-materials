@@ -27,10 +27,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'myrecipes/my_recipes_list.dart';
 import 'recipes/recipe_list.dart';
 import 'shopping/shopping_list.dart';
-import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -40,6 +41,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen>  {
   int _selectedIndex = 0;
   List<Widget> pageList = List<Widget>();
+  static const String prefIndex = "selectedIndex";
 
   @override
   void initState() {
@@ -47,11 +49,25 @@ class _MainScreenState extends State<MainScreen>  {
     pageList.add(RecipeList());
     pageList.add(MyRecipesList());
     pageList.add(ShoppingList());
+    getCurrentIndex();
+  }
+
+  void saveCurrentIndex() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt(prefIndex, _selectedIndex);
+  }
+
+  void getCurrentIndex() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey(prefIndex)) {
+      _selectedIndex = prefs.getInt(prefIndex);
+    }
   }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      saveCurrentIndex();
     });
   }
 

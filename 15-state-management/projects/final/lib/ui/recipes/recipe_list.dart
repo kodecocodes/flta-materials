@@ -39,6 +39,7 @@ import '../recipe_card.dart';
 import '../recipes/recipe_details.dart';
 import '../../network/recipe_model.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RecipeList extends StatefulWidget {
   @override
@@ -46,6 +47,8 @@ class RecipeList extends StatefulWidget {
 }
 
 class _RecipeListState extends State<RecipeList> {
+  static const String prefIndex = "previousSearches";
+
   TextEditingController searchTextController;
   ScrollController _scrollController = ScrollController();
   List<APIHits> currentSearchList = List();
@@ -56,6 +59,8 @@ class _RecipeListState extends State<RecipeList> {
   bool hasMore = false;
   bool loading = false;
   bool inErrorState = false;
+  List<String> previousSearches = List<String>();
+  String currentSearch;
   APIRecipeQuery currentQuery;
 
   @override
@@ -89,8 +94,25 @@ class _RecipeListState extends State<RecipeList> {
     super.dispose();
   }
 
+
+  void savePreviousSearches() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList(prefIndex, previousSearches);
+  }
+
+  void getPreviousSearches() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey(prefIndex)) {
+      previousSearches = prefs.getStringList(prefIndex);
+      if (previousSearches == null) {
+        previousSearches = List<String>();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Search Card
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -108,27 +130,49 @@ class _RecipeListState extends State<RecipeList> {
         padding: const EdgeInsets.all(4.0),
         child: Row(
           children: [
-            Icon(Icons.search),
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                String newValue = searchTextController.text;
+                setState(() {
+                  currentSearchList.clear();
+                  currentCount = 0;
+                  currentEndPosition = pageCount;
+                  currentStartPosition = 0;
+                  if (!previousSearches.contains(newValue)) {
+                    previousSearches.add(newValue);
+                    savePreviousSearches();
+                  }
+                });
+              },
+            ),
             SizedBox(
               width: 6.0,
             ),
             Expanded(
-              child: TextField(
-                decoration: InputDecoration(border: UnderlineInputBorder()),
-                autofocus: false,
-                controller: searchTextController,
-                onChanged: (query) => {
-                  if (query.length >= 3)
-                    {
-                      // Rebuild list
-                      setState(() {
-                        currentSearchList.clear();
-                        currentCount = 0;
-                        currentEndPosition = pageCount;
-                        currentStartPosition = 0;
-                      })
-                    }
-                },
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                      child: TextField(
+                        controller: searchTextController,
+                        onChanged: (value) {
+                          print("Text Field $value");
+                        },
+                      )),
+                  PopupMenuButton<String>(
+                    icon: const Icon(Icons.arrow_drop_down),
+                    onSelected: (String value) {
+                      searchTextController.text = value;
+                    },
+                    itemBuilder: (BuildContext context) {
+                      return previousSearches
+                          .map<PopupMenuItem<String>>((String value) {
+                        return PopupMenuItem(
+                            child: Text(value), value: value);
+                      }).toList();
+                    },
+                  ),
+                ],
               ),
             ),
           ],
