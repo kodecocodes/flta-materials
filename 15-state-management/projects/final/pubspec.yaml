@@ -1,0 +1,42 @@
+name: recipes
+description: Recipe Finder
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.0
+  cached_network_image: ^2.3.1
+  flutter_slidable: ^0.5.7
+  json_annotation: ^3.0.1
+  http: ^0.12.2
+  chopper: ^3.0.3
+  logging: ^0.11.4
+  provider: ^4.3.2+2
+  equatable: ^1.2.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  build_runner: ^1.10.0
+  json_serializable: ^3.3.0
+  chopper_generator: ^3.0.5
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - recipes1.json
+    - recipes2.json
+
+
