@@ -41,7 +41,7 @@ class RecipeList extends StatefulWidget {
 }
 
 class _RecipeListState extends State<RecipeList> {
-  static const String prefIndex = "previousSearches";
+  static const String prefSearchKey = "previousSearches";
 
   TextEditingController searchTextController;
   ScrollController _scrollController = ScrollController();
@@ -54,7 +54,6 @@ class _RecipeListState extends State<RecipeList> {
   bool loading = false;
   bool inErrorState = false;
   List<String> previousSearches = List<String>();
-  String currentSearch;
 
   @override
   void initState() {
@@ -90,13 +89,13 @@ class _RecipeListState extends State<RecipeList> {
 
   void savePreviousSearches() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList(prefIndex, previousSearches);
+    prefs.setStringList(prefSearchKey, previousSearches);
   }
 
   void getPreviousSearches() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey(prefIndex)) {
-      previousSearches = prefs.getStringList(prefIndex);
+    if (prefs.containsKey(prefSearchKey)) {
+      previousSearches = prefs.getStringList(prefSearchKey);
       if (previousSearches == null) {
         previousSearches = List<String>();
       }

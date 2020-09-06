@@ -41,7 +41,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen>  {
   int _selectedIndex = 0;
   List<Widget> pageList = List<Widget>();
-  static const String prefIndex = "selectedIndex";
+  static const String prefSelectedIndexKey = "selectedIndex";
 
   @override
   void initState() {
@@ -54,13 +54,13 @@ class _MainScreenState extends State<MainScreen>  {
 
   void saveCurrentIndex() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt(prefIndex, _selectedIndex);
+    prefs.setInt(prefSelectedIndexKey, _selectedIndex);
   }
 
   void getCurrentIndex() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey(prefIndex)) {
-      _selectedIndex = prefs.getInt(prefIndex);
+    if (prefs.containsKey(prefSelectedIndexKey)) {
+      _selectedIndex = prefs.getInt(prefSelectedIndexKey);
     }
   }
 
