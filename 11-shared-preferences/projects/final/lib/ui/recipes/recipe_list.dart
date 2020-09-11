@@ -32,9 +32,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../recipe_card.dart';
-import 'recipe_details.dart';
-
 class RecipeList extends StatefulWidget {
   @override
   _RecipeListState createState() => _RecipeListState();
@@ -182,18 +179,5 @@ class _RecipeListState extends State<RecipeList> {
       child: CircularProgressIndicator(),
     );
   }
-  
-  Widget _buildRecipeCard(BuildContext topLevelContext, List hits,
-      int index) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context) {
-            return RecipeDetails();
-          },
-        ));
-      },
-      child: recipeStringCard("", ""),
-    );
-  }
+
 }
