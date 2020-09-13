@@ -143,10 +143,14 @@ class _RecipeListState extends State<RecipeList> {
                 children: <Widget>[
                   Expanded(
                       child: TextField(
-                        controller: searchTextController,
-                        onChanged: (value) {
-                          print("Text Field $value");
+                        textInputAction: TextInputAction.done,
+                        onSubmitted: (value) {
+                          if (!previousSearches.contains(value)) {
+                            previousSearches.add(value);
+                            savePreviousSearches();
+                          }
                         },
+                        controller: searchTextController,
                       )),
                   PopupMenuButton<String>(
                     icon: const Icon(Icons.arrow_drop_down),
