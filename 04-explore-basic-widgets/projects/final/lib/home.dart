@@ -29,21 +29,64 @@
  */
 
 import 'package:flutter/material.dart';
-import 'fooderlich_theme.dart';
-import 'home.dart';
+import 'card1.dart';
+import 'card2.dart';
+import 'card3.dart';
 
-void main() {
-  runApp(Fooderlich());
+class Home extends StatefulWidget {
+  Home({Key key}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
 }
 
-class Fooderlich extends StatelessWidget {
+class _HomeState extends State<Home> {
+
+
+  int _selectedIndex = 0;
+
+  static List<Widget> pages = <Widget>[
+    Card1(),
+    Card2(),
+    Card3()
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    var theme = FooderlichTheme.dark();
-    return MaterialApp(
-      theme: theme,
-      title: "Fooderlich",
-      home: Home()
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        title: Text(
+          "Fooderlich", 
+          style: Theme.of(context).textTheme.headline6),
+      ),
+      body: pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Theme.of(context).textSelectionColor,
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.card_giftcard),
+            title: Text('Card'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.card_giftcard),
+            title: Text('Card2'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.card_giftcard),
+            title: Text('Card3'),
+          ),
+
+        ]
+      ),
     );
   }
 }
