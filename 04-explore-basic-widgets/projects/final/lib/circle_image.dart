@@ -41,7 +41,6 @@ class CircleImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Haha this is great, a circle avatar within a circle avatar. Could make a great joke in the book.
     return CircleAvatar(
       backgroundColor: Colors.white, 
       radius: radius, 
