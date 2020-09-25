@@ -30,6 +30,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import '../widgets/custom_dropdown.dart';
 
 class RecipeList extends StatefulWidget {
   @override
@@ -81,20 +82,25 @@ class _RecipeListState extends State<RecipeList> {
 
   @override
   Widget build(BuildContext context) {
-    // Search Card
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: <Widget>[
-          _buildSearchCard(),
-          _buildRecipeLoader(context),
-        ],
+    return Container(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            _buildSearchCard(),
+            _buildRecipeLoader(context),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildSearchCard() {
     return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Row(
@@ -105,7 +111,7 @@ class _RecipeListState extends State<RecipeList> {
             ),
             Expanded(
               child: TextField(
-                decoration: InputDecoration(border: UnderlineInputBorder()),
+                decoration: InputDecoration(border: InputBorder.none, hintText: 'Search'),
                 autofocus: false,
                 controller: searchTextController,
                 onChanged: (query) => {

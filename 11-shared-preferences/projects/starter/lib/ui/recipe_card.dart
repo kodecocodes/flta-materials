@@ -33,21 +33,39 @@ import 'package:flutter/material.dart';
 
 Widget recipeStringCard(String image, String label) {
   return Card(
-    elevation: 1.0,
+    elevation: 4.0,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(10.0),
+      borderRadius: BorderRadius.circular(6.0),
     ),
-    child: Padding(
-      padding: const EdgeInsets.all(6.0),
-      child: Column(
-        children: <Widget>[
-          CachedNetworkImage(imageUrl: image, height: 120, fit: BoxFit.cover),
-          SizedBox(
-            height: 12.0,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        ClipRRect(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(6.0), topRight: Radius.circular(6.0)),
+            child: CachedNetworkImage(
+                imageUrl: image, height: 210, fit: BoxFit.fill)),
+        SizedBox(
+          height: 12.0,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(
+            label,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
-          Text(label)
-        ],
-      ),
+        ),
+        SizedBox(
+          height: 8.0,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(
+            '100g',
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontWeight: FontWeight.normal, fontSize: 11, ),
+          ),
+        ),
+      ],
     ),
   );
 }

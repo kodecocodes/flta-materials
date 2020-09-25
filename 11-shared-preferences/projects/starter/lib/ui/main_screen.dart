@@ -27,10 +27,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:recipes/ui/colors.dart';
+
 import 'myrecipes/my_recipes_list.dart';
 import 'recipes/recipe_list.dart';
 import 'shopping/shopping_list.dart';
+import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -63,38 +66,54 @@ class _MainScreenState extends State<MainScreen>  {
         title = 'Recipes';
         break;
       case 1:
-        title = 'My Recipes';
+        title = 'Bookmarks';
         break;
       case 2:
-        title = 'Shopping';
+        title = 'Groceries';
         break;
     }
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.fastfood),
-            title: Text("Recipes")
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.local_dining),
-            title: Text("My Recipes")
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_shopping_cart),
-            title: Text("Shopping")
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.lightBlueAccent[800],
-        onTap: _onItemTapped,
-      ),
-      appBar: AppBar(
-        title: Text(title),
-       ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: pageList,
+    return SafeArea(
+      child: Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                  'assets/images/icon_recipe.svg',
+                  color: _selectedIndex == 0 ? green : Colors.grey ,
+                  semanticsLabel: 'Recipes'
+              ),
+              title: Text("Recipes")
+            ),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                    'assets/images/icon_bookmarks.svg',
+                    color: _selectedIndex == 1 ? green : Colors.grey ,
+                    semanticsLabel: 'Bookmarks'
+                ),
+              title: Text("Bookmarks")
+            ),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                    'assets/images/icon_shopping_list.svg',
+                    color: _selectedIndex == 2 ? green : Colors.grey ,
+                    semanticsLabel: 'Groceries'
+                ),
+              title: Text("Groceries")
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: green,
+          onTap: _onItemTapped,
+        ),
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          title: Text(title, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.black),),
+        ),
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: pageList,
+        ),
       ),
     );
   }

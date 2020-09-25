@@ -31,6 +31,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../widgets/custom_dropdown.dart';
 
 class RecipeList extends StatefulWidget {
   @override
@@ -101,20 +102,25 @@ class _RecipeListState extends State<RecipeList> {
 
   @override
   Widget build(BuildContext context) {
-    // Search Card
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: <Widget>[
-          _buildSearchCard(),
-          _buildRecipeLoader(context),
-        ],
+    return Container(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            _buildSearchCard(),
+            _buildRecipeLoader(context),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildSearchCard() {
     return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Row(
@@ -122,17 +128,7 @@ class _RecipeListState extends State<RecipeList> {
             IconButton(
               icon: Icon(Icons.search),
               onPressed: () {
-                String newValue = searchTextController.text;
-                setState(() {
-                  currentSearchList.clear();
-                  currentCount = 0;
-                  currentEndPosition = pageCount;
-                  currentStartPosition = 0;
-                  if (!previousSearches.contains(newValue)) {
-                    previousSearches.add(newValue);
-                    savePreviousSearches();
-                  }
-                });
+                startSearch(searchTextController.text);
               },
             ),
             SizedBox(
@@ -143,25 +139,31 @@ class _RecipeListState extends State<RecipeList> {
                 children: <Widget>[
                   Expanded(
                       child: TextField(
-                        textInputAction: TextInputAction.done,
-                        onSubmitted: (value) {
-                          if (!previousSearches.contains(value)) {
-                            previousSearches.add(value);
-                            savePreviousSearches();
-                          }
-                        },
-                        controller: searchTextController,
-                      )),
+                    decoration: InputDecoration(
+                        border: InputBorder.none, hintText: 'Search'),
+                    autofocus: false,
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (value) {
+                      if (!previousSearches.contains(value)) {
+                        previousSearches.add(value);
+                        savePreviousSearches();
+                      }
+                    },
+                    controller: searchTextController,
+                  )),
                   PopupMenuButton<String>(
                     icon: const Icon(Icons.arrow_drop_down),
                     onSelected: (String value) {
                       searchTextController.text = value;
+                      startSearch(searchTextController.text);
                     },
                     itemBuilder: (BuildContext context) {
                       return previousSearches
-                          .map<PopupMenuItem<String>>((String value) {
-                        return PopupMenuItem(
-                            child: Text(value), value: value);
+                          .map<CustomDropdownMenuItem<String>>((String value) {
+                        return CustomDropdownMenuItem<String>(
+                          text: value,
+                          value: value,
+                        );
                       }).toList();
                     },
                   ),
@@ -172,6 +174,20 @@ class _RecipeListState extends State<RecipeList> {
         ),
       ),
     );
+  }
+
+  void startSearch(String value) {
+    setState(() {
+      currentSearchList.clear();
+      currentCount = 0;
+      currentEndPosition = pageCount;
+      currentStartPosition = 0;
+      hasMore = true;
+      if (!previousSearches.contains(value)) {
+        previousSearches.add(value);
+        savePreviousSearches();
+      }
+    });
   }
 
   Widget _buildRecipeLoader(BuildContext context) {
