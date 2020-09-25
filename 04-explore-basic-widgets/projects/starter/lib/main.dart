@@ -31,19 +31,23 @@
 import 'package:flutter/material.dart';
 
 void main() {
+  // 1
   runApp(Fooderlich());
 }
 
 class Fooderlich extends StatelessWidget {
+  // 2
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context) { 
+    // 3
+    return MaterialApp( 
       title: "Fooderlich",
-      home: Scaffold(
-        appBar: AppBar(title: Text("Fooderlich")),
+      // 4
+      home: Scaffold( 
+        // 5
+        appBar: AppBar(title: Text("Fooderlich")), 
         body: Center(child: Text("Let's get cooking 👩‍🍳")),
       ),
     );
   }
 }
-
