@@ -31,22 +31,27 @@
 import 'package:flutter/material.dart';
 
 class CircleImage extends StatelessWidget {
+  // 1
   CircleImage(
     this.imageProvider, {
-    this.radius = 20,
+    this.imageRadius = 20,
   });
 
-  final double radius;
+  // 2
+  final double imageRadius;
   final ImageProvider imageProvider;
 
   @override
   Widget build(BuildContext context) {
+    // 3
     return CircleAvatar(
-      backgroundColor: Colors.white, 
-      radius: radius, 
+      backgroundColor: Colors.white,
+      radius: imageRadius,
+      // 4
       child: CircleAvatar(
-        radius: radius - 5,
+        radius: imageRadius - 5,
         backgroundImage: imageProvider,
-    ));
+      ),
+    );
   }
 }
