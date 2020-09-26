@@ -6,12 +6,13 @@ class CustomDropdownMenuItem<T> extends PopupMenuEntry<T> {
     Key key,
     this.value,
     @required this.text,
+    this.callback
   })  : assert(text != null),
         super(key: key);
 
   final T value;
-
   final String text;
+  final Function callback;
 
   @override
   _CustomDropdownMenuItemState<T> createState() => _CustomDropdownMenuItemState<T>();
@@ -31,12 +32,6 @@ class _CustomDropdownMenuItemState<T> extends State<CustomDropdownMenuItem<T>> {
       child: Padding(
         padding: EdgeInsets.all(8.0),
         child: ListTile(
-          leading:
-            SvgPicture.asset(
-                'assets/images/history.svg',
-                color: Colors.grey ,
-                semanticsLabel: 'Back'
-            ),
           title: Text(
               widget.text,
               style: TextStyle(
@@ -45,11 +40,18 @@ class _CustomDropdownMenuItemState<T> extends State<CustomDropdownMenuItem<T>> {
                 color: Colors.grey.shade600,
               ),
             ),
-          trailing: SvgPicture.asset(
-                'assets/images/dismiss.svg',
-                color: Colors.grey ,
-                semanticsLabel: 'Back'
-            ),
+          trailing: GestureDetector(
+            onTap: () {
+              if (widget.callback != null) {
+                widget.callback();
+              }
+            },
+            child: SvgPicture.asset(
+                  'assets/images/dismiss.svg',
+                  color: Colors.grey ,
+                  semanticsLabel: 'Back'
+              ),
+          ),
         ),
       ),
     );

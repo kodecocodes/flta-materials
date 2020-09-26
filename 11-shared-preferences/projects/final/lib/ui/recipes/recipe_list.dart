@@ -163,6 +163,12 @@ class _RecipeListState extends State<RecipeList> {
                         return CustomDropdownMenuItem<String>(
                           text: value,
                           value: value,
+                          callback: () {
+                            setState(() {
+                              previousSearches.remove(value);
+                              Navigator.pop(context);
+                            });
+                          },
                         );
                       }).toList();
                     },
