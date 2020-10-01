@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'recipe.dart';
 
 void main() {
   runApp(RecipeApp());
@@ -48,7 +49,38 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Container()
+      body: ListView.builder(
+          itemCount: Recipe.samples.length,
+          itemBuilder: (BuildContext context, int index) {
+            return RecipeCard(Recipe.samples[index]);
+          }
+      )
     );
   }
+}
+
+Widget RecipeCard(Recipe recipe) {
+  return Card(
+    elevation: 2.0,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10.0)
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: <Widget>[
+          Image(image: AssetImage(recipe.imageUrl)),
+          SizedBox(
+            height: 14.0,
+          ),
+          Text(recipe.label,
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.w700,
+            fontFamily: "Palatino"
+          ))
+        ],
+      ),
+    ),
+  );
 }
