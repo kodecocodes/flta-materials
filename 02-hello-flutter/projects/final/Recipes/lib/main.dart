@@ -37,19 +37,19 @@ void main() {
 }
 
 class RecipeApp extends StatelessWidget {
-
   // 1
   @override
   Widget build(BuildContext context) {
+    // 2
     return MaterialApp(
-      // 2
+      // 3
       title: 'Recipe Calculator',
       theme: ThemeData(
-        // 3
-        primaryColor: Colors.white,
-        accentColor: Colors.black
+        // 4
+          primaryColor: Colors.white,
+          accentColor: Colors.black
       ),
-      // 4
+      // 5
       home: MyHomePage(title: 'Recipe Calculator'),
     );
   }
@@ -68,48 +68,59 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: ListView.builder(
-          itemCount: Recipe.samples.length,
-          itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return RecipeDetail(Recipe.samples[index]);
-                    }
-                ));
-              },
-              child: buildRecipeCard(Recipe.samples[index]),
-            );
-          }
-      )
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: ListView.builder(
+            itemCount: Recipe.samples.length,
+            itemBuilder: (BuildContext context, int index) {
+              // 1
+              return GestureDetector(
+                // 2
+                onTap: () {
+                  // 3
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        // 4
+                        return RecipeDetail(Recipe.samples[index]);
+                      }
+                  ));
+                },
+                // 5
+                child: buildRecipeCard(Recipe.samples[index]),
+              );
+            }
+        )
     );
   }
 }
 
 Widget buildRecipeCard(Recipe recipe) {
   return Card(
+    // 1
     elevation: 2.0,
+    // 2
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(10.0)
+        borderRadius: BorderRadius.circular(10.0)
     ),
+    // 3
     child: Padding(
       padding: const EdgeInsets.all(16.0),
+      // 4
       child: Column(
         children: <Widget>[
           Image(image: AssetImage(recipe.imageUrl)),
+          // 5
           SizedBox(
             height: 14.0,
           ),
           Text(recipe.label,
-          style: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.w700,
-            fontFamily: "Palatino"
-          ))
+              // 6
+              style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Palatino"
+              ))
         ],
       ),
     ),
