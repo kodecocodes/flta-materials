@@ -27,13 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:recipes/network/recipe_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../recipe_card.dart';
-import 'recipe_details.dart';
+import '../widgets/custom_dropdown.dart';
 
 class RecipeList extends StatefulWidget {
   @override
@@ -41,7 +43,7 @@ class RecipeList extends StatefulWidget {
 }
 
 class _RecipeListState extends State<RecipeList> {
-  static const String prefIndex = "previousSearches";
+  static const String prefSearchKey = "previousSearches";
 
   TextEditingController searchTextController;
   ScrollController _scrollController = ScrollController();
@@ -54,11 +56,13 @@ class _RecipeListState extends State<RecipeList> {
   bool loading = false;
   bool inErrorState = false;
   List<String> previousSearches = List<String>();
-  String currentSearch;
+  APIRecipeQuery _currentRecipes1;
 
   @override
   void initState() {
     super.initState();
+    loadRecipes();
+    getPreviousSearches();
     searchTextController = TextEditingController(text: "");
     _scrollController
       ..addListener(() {
@@ -81,22 +85,28 @@ class _RecipeListState extends State<RecipeList> {
       });
   }
 
+  Future loadRecipes() async {
+    var jsonString = await rootBundle.loadString('assets/recipes1.json');
+    setState(() {
+      _currentRecipes1 = APIRecipeQuery.fromJson(jsonDecode(jsonString));
+    });
+  }
+
   @override
   void dispose() {
     searchTextController.dispose();
     super.dispose();
   }
-
-
+  
   void savePreviousSearches() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList(prefIndex, previousSearches);
+    prefs.setStringList(prefSearchKey, previousSearches);
   }
 
   void getPreviousSearches() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey(prefIndex)) {
-      previousSearches = prefs.getStringList(prefIndex);
+    if (prefs.containsKey(prefSearchKey)) {
+      previousSearches = prefs.getStringList(prefSearchKey);
       if (previousSearches == null) {
         previousSearches = List<String>();
       }
@@ -105,20 +115,25 @@ class _RecipeListState extends State<RecipeList> {
 
   @override
   Widget build(BuildContext context) {
-    // Search Card
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: <Widget>[
-          _buildSearchCard(),
-          _buildRecipeLoader(context),
-        ],
+    return Container(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            _buildSearchCard(),
+            _buildRecipeLoader(context),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildSearchCard() {
     return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Row(
@@ -126,17 +141,7 @@ class _RecipeListState extends State<RecipeList> {
             IconButton(
               icon: Icon(Icons.search),
               onPressed: () {
-                String newValue = searchTextController.text;
-                setState(() {
-                  currentSearchList.clear();
-                  currentCount = 0;
-                  currentEndPosition = pageCount;
-                  currentStartPosition = 0;
-                  if (!previousSearches.contains(newValue)) {
-                    previousSearches.add(newValue);
-                    savePreviousSearches();
-                  }
-                });
+                startSearch(searchTextController.text);
               },
             ),
             SizedBox(
@@ -147,21 +152,37 @@ class _RecipeListState extends State<RecipeList> {
                 children: <Widget>[
                   Expanded(
                       child: TextField(
-                        controller: searchTextController,
-                        onChanged: (value) {
-                          print("Text Field $value");
-                        },
-                      )),
+                    decoration: InputDecoration(
+                        border: InputBorder.none, hintText: 'Search'),
+                    autofocus: false,
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (value) {
+                      if (!previousSearches.contains(value)) {
+                        previousSearches.add(value);
+                        savePreviousSearches();
+                      }
+                    },
+                    controller: searchTextController,
+                  )),
                   PopupMenuButton<String>(
                     icon: const Icon(Icons.arrow_drop_down),
                     onSelected: (String value) {
                       searchTextController.text = value;
+                      startSearch(searchTextController.text);
                     },
                     itemBuilder: (BuildContext context) {
                       return previousSearches
-                          .map<PopupMenuItem<String>>((String value) {
-                        return PopupMenuItem(
-                            child: Text(value), value: value);
+                          .map<CustomDropdownMenuItem<String>>((String value) {
+                        return CustomDropdownMenuItem<String>(
+                          text: value,
+                          value: value,
+                          callback: () {
+                            setState(() {
+                              previousSearches.remove(value);
+                              Navigator.pop(context);
+                            });
+                          },
+                        );
                       }).toList();
                     },
                   ),
@@ -174,27 +195,37 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
+  void startSearch(String value) {
+    setState(() {
+      currentSearchList.clear();
+      currentCount = 0;
+      currentEndPosition = pageCount;
+      currentStartPosition = 0;
+      hasMore = true;
+      if (!previousSearches.contains(value)) {
+        previousSearches.add(value);
+        savePreviousSearches();
+      }
+    });
+  }
+
   Widget _buildRecipeLoader(BuildContext context) {
-    if (searchTextController.text.length < 3) {
+    if (_currentRecipes1 == null || _currentRecipes1.hits == null) {
       return Container();
     }
     // Show a loading indicator while waiting for the movies
     return Center(
-      child: CircularProgressIndicator(),
+      child: _buildRecipeCard(context, _currentRecipes1.hits, 0),
     );
   }
 
-  Widget _buildRecipeCard(BuildContext topLevelContext, List hits,
+  Widget _buildRecipeCard(BuildContext context, List<APIHits> hits,
       int index) {
+    APIRecipe recipe = hits[index].recipe;
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context) {
-            return RecipeDetails();
-          },
-        ));
       },
-      child: recipeStringCard("", ""),
+      child: recipeStringCard(recipe.image, recipe.label),
     );
   }
 }
