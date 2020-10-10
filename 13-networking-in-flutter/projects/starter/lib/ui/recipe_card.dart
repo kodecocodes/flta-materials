@@ -66,8 +66,10 @@ Widget recipeStringCard(String image, String label) {
             style: TextStyle(fontWeight: FontWeight.normal, fontSize: 11, ),
           ),
         ),
+        SizedBox(
+          height: 8.0,
+        ),
       ],
     ),
   );
 }
-

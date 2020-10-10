@@ -118,4 +118,3 @@ class APIIngredients {
   factory APIIngredients.fromJson(Map<String, dynamic> json) => _$APIIngredientsFromJson(json);
   Map<String, dynamic> toJson() => _$APIIngredientsToJson(this);
 }
-

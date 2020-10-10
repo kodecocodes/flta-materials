@@ -29,6 +29,9 @@
  */
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../colors.dart';
 
 class RecipeDetails extends StatelessWidget {
 
@@ -38,43 +41,77 @@ class RecipeDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Recipe"),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              SizedBox(
-                height: 16,
-              ),
-              SizedBox(
-                height: 260,
-                width: size.width,
+        body: SafeArea(
+            child: SingleChildScrollView(
+                child: Container(
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Stack(
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
                 child: CachedNetworkImage(
                   imageUrl: "https://www.edamam.com/web-img/e42/e42f9119813e890af34c259785ae1cfb.jpg",
-                  height: 400,
+                  alignment: Alignment.topLeft,
+                  fit: BoxFit.fill,
+                  width: size.width,
                 ),
               ),
-              SizedBox(
-                height: 16,
-              ),
-              Text(
-                "Chicken Vesuvio",
-                style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              RaisedButton(
-                color: Theme.of(context).accentColor,
-                onPressed: () async {
-                  Navigator.pop(context);
-                },
-                child: Text("Add To My Recipes"),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Container(
+                  decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.black),
+                  child: BackButton(
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ],
           ),
-        ));
+          SizedBox(
+            height: 16,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Text(
+              "Chicken Vesuvio",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: Chip(
+                label: Text('16CAL'),
+              )),
+          SizedBox(
+            height: 16,
+          ),
+          Center(
+            child: RaisedButton.icon(
+              color: green,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              onPressed: () async {
+                Navigator.pop(context);
+              },
+              icon: SvgPicture.asset(
+                'assets/images/icon_bookmark.svg',
+                color: Colors.white,
+              ),
+              label: Text(
+                "Bookmark",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ))));
   }
 }

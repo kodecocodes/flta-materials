@@ -67,8 +67,10 @@ Widget recipeCard(APIRecipe recipe) {
             style: TextStyle(fontWeight: FontWeight.normal, fontSize: 11, ),
           ),
         ),
+        SizedBox(
+          height: 8.0,
+        ),
       ],
     ),
   );
 }
-
