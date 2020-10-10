@@ -30,6 +30,12 @@
 .pub/
 /build/
 
+# from dart.dev https://dart.dev/guides/libraries/private-files
+pubspec.lock  # exclude except for application packages
+
+# Mac from dart.dev https://dart.dev/guides/libraries/private-files
+.DS_Store
+
 # Web related
 lib/generated_plugin_registrant.dart
 
