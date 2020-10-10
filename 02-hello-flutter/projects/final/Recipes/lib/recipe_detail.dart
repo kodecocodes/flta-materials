@@ -29,6 +29,7 @@
  */
 
 import 'package:flutter/material.dart';
+
 import 'recipe.dart';
 
 class RecipeDetail extends StatefulWidget {
@@ -50,53 +51,66 @@ class _RecipeDetailState extends State {
 
   @override
   Widget build(BuildContext context) {
+    // 1
     return Scaffold(
-        appBar: AppBar(
-          title: Text(recipe.label),
-        ),
-        body: Column(
+      appBar: AppBar(
+        title: Text(recipe.label),
+      ),
+      // 2
+      body: SafeArea(
+        // 3
+        child: Column(
           children: <Widget>[
+            // 4
             Container(
               height: 300,
               width: double.infinity,
               child: Image(image: AssetImage(recipe.imageUrl)),
             ),
+            // 5
             SizedBox(
               height: 4,
             ),
+            // 6
             Text(
               recipe.label,
               style: TextStyle(fontSize: 18),
             ),
+            // 7
             Expanded(
+              // 8
               child: ListView.builder(
-                  padding: const EdgeInsets.all(7.0),
-                  itemCount: recipe.ingredients.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final ingredient = recipe.ingredients[index];
-                    return Text("${ingredient.quantity * _sliderVal} ${ingredient.measure} ${ingredient.name}");
-                  }),
+                padding: const EdgeInsets.all(7.0),
+                itemCount: recipe.ingredients.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final ingredient = recipe.ingredients[index];
+                  // 9
+                  return Text("${ingredient.quantity * _sliderVal} ${ingredient.measure} ${ingredient.name}");
+                },
+              ),
             ),
             Slider(
-              // 1
-                min: 1,
-                max: 10,
-                divisions: 10,
-                // 2
-                label: "${_sliderVal * recipe.servings} servings",
-                // 3
-                value: _sliderVal.toDouble(),
-                // 4
-                onChanged: (newValue) {
-                  setState(() {
-                    _sliderVal = newValue.round();
-                  });
-                },
-                // 5
-                activeColor: Colors.green,
-                inactiveColor: Colors.black
-            )
+              // 10
+              min: 1,
+              max: 10,
+              divisions: 10,
+              // 11
+              label: "${_sliderVal * recipe.servings} servings",
+              // 12
+              value: _sliderVal.toDouble(),
+              // 13
+              onChanged: (newValue) {
+                setState(() {
+                  _sliderVal = newValue.round();
+                });
+              },
+              // 14
+              activeColor: Colors.green,
+              inactiveColor: Colors.black,
+            ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }
