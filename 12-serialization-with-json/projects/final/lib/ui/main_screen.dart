@@ -100,7 +100,7 @@ class _MainScreenState extends State<MainScreen>  {
                   color: _selectedIndex == 0 ? green : Colors.grey ,
                   semanticsLabel: 'Recipes'
               ),
-              title: Text("Recipes")
+              label: title
             ),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -108,7 +108,7 @@ class _MainScreenState extends State<MainScreen>  {
                     color: _selectedIndex == 1 ? green : Colors.grey ,
                     semanticsLabel: 'Bookmarks'
                 ),
-              title: Text("Bookmarks")
+                label: title
             ),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -116,7 +116,7 @@ class _MainScreenState extends State<MainScreen>  {
                     color: _selectedIndex == 2 ? green : Colors.grey ,
                     semanticsLabel: 'Groceries'
                 ),
-              title: Text("Groceries")
+                label: title
             ),
           ],
           currentIndex: _selectedIndex,
@@ -126,7 +126,7 @@ class _MainScreenState extends State<MainScreen>  {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
-          title: Text(title, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.black),),
+          title: Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black),),
         ),
         body: IndexedStack(
           index: _selectedIndex,
@@ -135,5 +135,4 @@ class _MainScreenState extends State<MainScreen>  {
       ),
     );
   }
-
 }

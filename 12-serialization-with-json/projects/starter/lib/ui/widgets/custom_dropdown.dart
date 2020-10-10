@@ -33,13 +33,13 @@ class _CustomDropdownMenuItemState<T> extends State<CustomDropdownMenuItem<T>> {
         padding: EdgeInsets.all(8.0),
         child: ListTile(
           title: Text(
-              widget.text,
-              style: TextStyle(
-                fontSize: 14.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey.shade600,
-              ),
+            widget.text,
+            style: TextStyle(
+              fontSize: 14.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey.shade600,
             ),
+          ),
           trailing: GestureDetector(
             onTap: () {
               if (widget.callback != null) {
@@ -47,10 +47,10 @@ class _CustomDropdownMenuItemState<T> extends State<CustomDropdownMenuItem<T>> {
               }
             },
             child: SvgPicture.asset(
-                  'assets/images/dismiss.svg',
-                  color: Colors.grey ,
-                  semanticsLabel: 'Back'
-              ),
+                'assets/images/dismiss.svg',
+                color: Colors.grey ,
+                semanticsLabel: 'Back'
+            ),
           ),
         ),
       ),

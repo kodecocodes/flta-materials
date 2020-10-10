@@ -189,6 +189,7 @@ class _RecipeListState extends State<RecipeList> {
       currentEndPosition = pageCount;
       currentStartPosition = 0;
       hasMore = true;
+      value = value.trim();
       if (!previousSearches.contains(value)) {
         previousSearches.add(value);
         savePreviousSearches();
@@ -205,5 +206,4 @@ class _RecipeListState extends State<RecipeList> {
       child: CircularProgressIndicator(),
     );
   }
-
 }
