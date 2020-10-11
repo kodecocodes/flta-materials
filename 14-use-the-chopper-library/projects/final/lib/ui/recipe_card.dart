@@ -33,26 +33,44 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 Widget recipeCard(APIRecipe recipe) {
-  return recipeStringCard(recipe.image, recipe.label);
-}
-
-Widget recipeStringCard(String image, String label) {
   return Card(
-    elevation: 1.0,
+    elevation: 4.0,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(10.0),
+      borderRadius: BorderRadius.circular(6.0),
     ),
-    child: Padding(
-      padding: const EdgeInsets.all(6.0),
-      child: Column(
-        children: <Widget>[
-          CachedNetworkImage(imageUrl: image, height: 120, fit: BoxFit.cover),
-          SizedBox(
-            height: 12.0,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        ClipRRect(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(6.0), topRight: Radius.circular(6.0)),
+            child: CachedNetworkImage(
+                imageUrl: recipe.image, height: 210, fit: BoxFit.fill)),
+        SizedBox(
+          height: 12.0,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(
+            recipe.label,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
-          Text(label)
-        ],
-      ),
+        ),
+        SizedBox(
+          height: 8.0,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(
+            getCalories(recipe.calories),
+            style: TextStyle(fontWeight: FontWeight.normal, fontSize: 11, ),
+          ),
+        ),
+        SizedBox(
+          height: 8.0,
+        ),
+      ],
     ),
   );
 }

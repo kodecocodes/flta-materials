@@ -28,11 +28,15 @@
  * THE SOFTWARE.
  */
 import 'package:logging/logging.dart';
-import 'package:recipes/ui/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
-void main() {
-  _setupLogging();
+import 'ui/main_screen.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
+  await FlutterStatusbarcolor.setStatusBarColor(Colors.white);
   runApp(MyApp());
 }
 

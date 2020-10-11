@@ -1,8 +1,8 @@
 
 import 'package:http/http.dart';
 
-const String apiKey = '<Your Key Here>';
-const String apiId = '<Your Id here>';
+const String apiKey = '<Your Key>';
+const String apiId = '<your ID>';
 const String APIURL = 'https://api.edamam.com/search';
 
 

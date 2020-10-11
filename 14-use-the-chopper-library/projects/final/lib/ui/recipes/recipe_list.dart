@@ -29,6 +29,8 @@
  */
 import 'dart:math';
 
+import 'package:recipes/ui/widgets/custom_dropdown.dart';
+
 import '../../network/recipe_service.dart';
 import 'package:chopper/chopper.dart';
 import '../../network/model_response.dart';
@@ -44,7 +46,7 @@ class RecipeList extends StatefulWidget {
 }
 
 class _RecipeListState extends State<RecipeList> {
-  static const String prefIndex = "previousSearches";
+  static const String prefSearchKey = "previousSearches";
 
   TextEditingController searchTextController;
   ScrollController _scrollController = ScrollController();
@@ -61,6 +63,8 @@ class _RecipeListState extends State<RecipeList> {
   @override
   void initState() {
     super.initState();
+   getPreviousSearches();
+ 
     searchTextController = TextEditingController(text: "");
     _scrollController
       ..addListener(() {
@@ -91,13 +95,13 @@ class _RecipeListState extends State<RecipeList> {
 
   void savePreviousSearches() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList(prefIndex, previousSearches);
+    prefs.setStringList(prefSearchKey, previousSearches);
   }
 
   void getPreviousSearches() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey(prefIndex)) {
-      previousSearches = prefs.getStringList(prefIndex);
+    if (prefs.containsKey(prefSearchKey)) {
+      previousSearches = prefs.getStringList(prefSearchKey);
       if (previousSearches == null) {
         previousSearches = List<String>();
       }
@@ -106,20 +110,25 @@ class _RecipeListState extends State<RecipeList> {
 
   @override
   Widget build(BuildContext context) {
-    // Search Card
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: <Widget>[
-          _buildSearchCard(),
-          _buildRecipeLoader(context),
-        ],
+    return Container(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            _buildSearchCard(),
+            _buildRecipeLoader(context),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildSearchCard() {
     return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Row(
@@ -127,17 +136,7 @@ class _RecipeListState extends State<RecipeList> {
             IconButton(
               icon: Icon(Icons.search),
               onPressed: () {
-                String newValue = searchTextController.text;
-                setState(() {
-                  currentSearchList.clear();
-                  currentCount = 0;
-                  currentEndPosition = pageCount;
-                  currentStartPosition = 0;
-                  if (!previousSearches.contains(newValue)) {
-                    previousSearches.add(newValue);
-                    savePreviousSearches();
-                  }
-                });
+                startSearch(searchTextController.text);
               },
             ),
             SizedBox(
@@ -148,20 +147,37 @@ class _RecipeListState extends State<RecipeList> {
                 children: <Widget>[
                   Expanded(
                       child: TextField(
-                        controller: searchTextController,
-                        onChanged: (value) {
-                        },
-                      )),
+                    decoration: InputDecoration(
+                        border: InputBorder.none, hintText: 'Search'),
+                    autofocus: false,
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (value) {
+                      if (!previousSearches.contains(value)) {
+                        previousSearches.add(value);
+                        savePreviousSearches();
+                      }
+                    },
+                    controller: searchTextController,
+                  )),
                   PopupMenuButton<String>(
                     icon: const Icon(Icons.arrow_drop_down),
                     onSelected: (String value) {
                       searchTextController.text = value;
+                      startSearch(searchTextController.text);
                     },
                     itemBuilder: (BuildContext context) {
                       return previousSearches
-                          .map<PopupMenuItem<String>>((String value) {
-                        return PopupMenuItem(
-                            child: Text(value), value: value);
+                          .map<CustomDropdownMenuItem<String>>((String value) {
+                        return CustomDropdownMenuItem<String>(
+                          text: value,
+                          value: value,
+                          callback: () {
+                            setState(() {
+                              previousSearches.remove(value);
+                              Navigator.pop(context);
+                            });
+                          },
+                        );
                       }).toList();
                     },
                   ),
@@ -174,7 +190,22 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
-  Widget _buildRecipeLoader(BuildContext context) {
+   void startSearch(String value) {
+    setState(() {
+      currentSearchList.clear();
+      currentCount = 0;
+      currentEndPosition = pageCount;
+      currentStartPosition = 0;
+      hasMore = true;
+      value = value.trim();
+      if (!previousSearches.contains(value)) {
+        previousSearches.add(value);
+        savePreviousSearches();
+      }
+    });
+  }
+
+ Widget _buildRecipeLoader(BuildContext context) {
     if (searchTextController.text.length < 3) {
       return Container();
     }
@@ -225,7 +256,7 @@ class _RecipeListState extends State<RecipeList> {
 
   Widget _buildRecipeList(BuildContext recipeListContext, List<APIHits> hits) {
     var size = MediaQuery.of(context).size;
-    final double itemHeight = 220;
+    final double itemHeight = 310;
     final double itemWidth = size.width / 2;
     return Flexible(
       child: GridView.builder(

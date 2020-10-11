@@ -28,10 +28,14 @@
  * THE SOFTWARE.
  */
 import 'package:flutter/material.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
 import 'ui/main_screen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
+  await FlutterStatusbarcolor.setStatusBarColor(Colors.white);
   runApp(MyApp());
 }
 

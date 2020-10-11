@@ -52,6 +52,9 @@ APIRecipe _$APIRecipeFromJson(Map<String, dynamic> json) {
             ? null
             : APIIngredients.fromJson(e as Map<String, dynamic>))
         ?.toList(),
+    calories: (json['calories'] as num)?.toDouble(),
+    totalWeight: (json['totalWeight'] as num)?.toDouble(),
+    totalTime: (json['totalTime'] as num)?.toDouble(),
   );
 }
 
@@ -60,6 +63,9 @@ Map<String, dynamic> _$APIRecipeToJson(APIRecipe instance) => <String, dynamic>{
       'image': instance.image,
       'url': instance.url,
       'ingredients': instance.ingredients,
+      'calories': instance.calories,
+      'totalWeight': instance.totalWeight,
+      'totalTime': instance.totalTime,
     };
 
 APIIngredients _$APIIngredientsFromJson(Map<String, dynamic> json) {
