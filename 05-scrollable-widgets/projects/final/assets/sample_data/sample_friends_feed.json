@@ -1,0 +1,58 @@
+{
+    "feed": [
+        {
+            "profileImageUrl": "person_cesare.jpeg",
+            "comment": "Made this delicious pizza this morning",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "10"
+        },
+        {
+            "profileImageUrl": "person_crispy.png",
+            "comment": "Made a killer delicious salad today!",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "20"
+        },
+        {
+            "profileImageUrl": "person_joe.jpeg",
+            "comment": "Cooked a killer widget this morning.",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "30"
+        },
+        {
+            "profileImageUrl": "person_katz.jpeg",
+            "comment": "I made a killer smooth, healthy, peanut butter smoothie. Going to power through my day with this nutty smoothie to finish up Flutter apprentice for our readers!",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "40"
+        },
+        {
+            "profileImageUrl": "person_kevin.jpeg",
+            "comment": "Made this delicious pizza this morning",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "50"
+        },
+        {
+            "profileImageUrl": "person_manda.png",
+            "comment": "Made this delicious pizza this morning",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "60"
+        },
+        {
+            "profileImageUrl": "person_ray.jpeg",
+            "comment": "Made this delicious pizza this morning",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "70"
+        },
+        {
+            "profileImageUrl": "person_stef.jpeg",
+            "comment": "Made this delicious pizza this morning",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "80"
+        },
+        {
+            "profileImageUrl": "person_tiffani.jpeg",
+            "comment": "Made this delicious pizza this morning",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "90"
+        }
+    ]
+}
