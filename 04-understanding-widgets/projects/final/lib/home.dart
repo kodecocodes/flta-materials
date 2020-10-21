@@ -68,9 +68,9 @@ class _HomeState extends State<Home> {
             currentIndex: _selectedIndex,
             onTap: _onItemTapped,
             items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(icon: Icon(Icons.card_giftcard), title: Text('Card')),
-              BottomNavigationBarItem(icon: Icon(Icons.card_giftcard), title: Text('Card2')),
-              BottomNavigationBarItem(icon: Icon(Icons.card_giftcard), title: Text('Card3')),
+              BottomNavigationBarItem(icon: Icon(Icons.card_giftcard), label: 'Card'),
+              BottomNavigationBarItem(icon: Icon(Icons.card_giftcard), label: 'Card2'),
+              BottomNavigationBarItem(icon: Icon(Icons.card_giftcard), label: 'Card3'),
             ]));
   }
 }
