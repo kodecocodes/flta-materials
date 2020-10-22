@@ -34,7 +34,7 @@ class Recipe {
   int servings;
   List<Ingredient> ingredients;
 
-  Recipe(this.label, this.imageUrl, this.servings, this.ingredients) {}
+  Recipe(this.label, this.imageUrl, this.servings, this.ingredients);
 
   static List<Recipe> samples = [
     Recipe(
@@ -103,5 +103,5 @@ class Ingredient {
   String measure;
   String name;
 
-  Ingredient(this.quantity, this.measure, this.name) {}
+  Ingredient(this.quantity, this.measure, this.name);
 }
