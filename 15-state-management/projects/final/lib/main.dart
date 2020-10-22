@@ -28,17 +28,20 @@
  * THE SOFTWARE.
  */
 import 'package:logging/logging.dart';
-import 'package:provider/provider.dart';
 import 'ui/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
+import 'package:provider/provider.dart';
 import 'data/memory_repository.dart';
 import 'mock_service/mock_service.dart';
 
-void main() {
+Future<void> main() async {
   _setupLogging();
-  MemoryRepository repository = MemoryRepository();
-  runApp(MyApp(repository));
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
+  await FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+  runApp(MyApp());
 }
 
 void _setupLogging() {
@@ -49,8 +52,6 @@ void _setupLogging() {
 }
 
 class MyApp extends StatelessWidget {
-  final MemoryRepository repository;
-  const MyApp(this.repository) : super();
 
   // This widget is the root of your application.
   @override
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<MemoryRepository>(
             lazy: false,
-            create: (_) => repository,
+            create: (_) => MemoryRepository(),
           ),
           FutureProvider(
             create: (_) async {
@@ -68,8 +69,6 @@ class MyApp extends StatelessWidget {
               return service;
             },
             lazy: false,
-//            create: (_) => RecipeService.create(),
-//            dispose: (_, RecipeService service) => service.client.dispose(),
           ),
         ],
         child: MaterialApp(

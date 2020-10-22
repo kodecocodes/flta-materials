@@ -9,32 +9,10 @@ class MemoryRepository extends Repository with ChangeNotifier {
   List<Recipe> _currentRecipes = List<Recipe>();
   List<Ingredient> _currentIngredients = List<Ingredient>();
 
-
   @override
-  void deleteIngredients(List<Ingredient> ingredients) {
-    _currentIngredients.removeWhere((ingredient) => ingredients.contains(ingredient));
-    notifyListeners();
-  }
-
-  @override
-  void deleteRecipe(Recipe recipe) {
-    _currentRecipes.remove(recipe);
-    deleteIngredients(recipe.ingredients);
-    notifyListeners();
-  }
-
-
-  @override
-  List<Ingredient>findAllIngredients() {
-    return _currentIngredients;
-  }
-
-
-  @override
-  List<Recipe>findAllRecipes() {
+  List<Recipe> findAllRecipes() {
     return _currentRecipes;
   }
-
 
   @override
   Recipe findRecipeById(int id) {
@@ -42,10 +20,23 @@ class MemoryRepository extends Repository with ChangeNotifier {
   }
 
   @override
-  List<Ingredient>findRecipeIngredients(int id) {
+  List<Ingredient> findAllIngredients() {
+    return _currentIngredients;
+  }
+
+  @override
+  List<Ingredient> findRecipeIngredients(int id) {
     var recipe = _currentRecipes.firstWhere((element) => element.id == id);
-    var firstWhere = _currentIngredients.firstWhere((element) => element.recipeId == recipe.id);
-    return List<Ingredient>.filled(1, firstWhere);
+    var recipeIngredients = _currentIngredients.where((element) => element.recipeId == recipe.id).toList();
+    return recipeIngredients;
+  }
+
+  @override
+  int insertRecipe(Recipe recipe) {
+    _currentRecipes.add(recipe);
+    insertIngredients(recipe.ingredients);
+    notifyListeners();
+    return 0;
   }
 
   @override
@@ -58,26 +49,21 @@ class MemoryRepository extends Repository with ChangeNotifier {
   }
 
   @override
+  void deleteRecipe(Recipe recipe) {
+    _currentRecipes.remove(recipe);
+    deleteRecipeIngredients(recipe.id);
+    notifyListeners();
+  }
+
+  @override
   void deleteIngredient(Ingredient ingredient) {
     _currentIngredients.remove(ingredient);
   }
 
   @override
-  int insertRecipe(Recipe recipe) {
-    _currentRecipes.add(recipe);
-    insertIngredients(recipe.ingredients);
+  void deleteIngredients(List<Ingredient> ingredients) {
+    _currentIngredients.removeWhere((ingredient) => ingredients.contains(ingredient));
     notifyListeners();
-    return 0;
-  }
-
-  @override
-  Future init() {
-
-  }
-
-  @override
-  void close() {
-
   }
 
   @override
@@ -88,4 +74,13 @@ class MemoryRepository extends Repository with ChangeNotifier {
       }
     });
   }
+
+  @override
+  Future init() {
+  }
+
+  @override
+  void close() {
+  }
+
 }
