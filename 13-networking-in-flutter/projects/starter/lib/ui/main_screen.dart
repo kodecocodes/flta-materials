@@ -41,7 +41,7 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen>  {
+class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   List<Widget> pageList = List<Widget>();
   static const String prefSelectedIndexKey = "selectedIndex";
@@ -79,7 +79,7 @@ class _MainScreenState extends State<MainScreen>  {
   @override
   Widget build(BuildContext context) {
     String title;
-    switch(_selectedIndex) {
+    switch (_selectedIndex) {
       case 0:
         title = 'Recipes';
         break;
@@ -96,27 +96,27 @@ class _MainScreenState extends State<MainScreen>  {
           items: [
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                  'assets/images/icon_recipe.svg',
-                  color: _selectedIndex == 0 ? green : Colors.grey ,
-                  semanticsLabel: 'Recipes'
+                'assets/images/icon_recipe.svg',
+                color: _selectedIndex == 0 ? green : Colors.grey,
+                semanticsLabel: 'Recipes',
               ),
-              label: title
+              title: Text(title),
             ),
             BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                    'assets/images/icon_bookmarks.svg',
-                    color: _selectedIndex == 1 ? green : Colors.grey ,
-                    semanticsLabel: 'Bookmarks'
-                ),
-                label: title
+              icon: SvgPicture.asset(
+                'assets/images/icon_bookmarks.svg',
+                color: _selectedIndex == 1 ? green : Colors.grey,
+                semanticsLabel: 'Bookmarks',
+              ),
+              title: Text(title),
             ),
             BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                    'assets/images/icon_shopping_list.svg',
-                    color: _selectedIndex == 2 ? green : Colors.grey ,
-                    semanticsLabel: 'Groceries'
-                ),
-                label: title
+              icon: SvgPicture.asset(
+                'assets/images/icon_shopping_list.svg',
+                color: _selectedIndex == 2 ? green : Colors.grey,
+                semanticsLabel: 'Groceries',
+              ),
+              title: Text(title),
             ),
           ],
           currentIndex: _selectedIndex,
@@ -126,7 +126,10 @@ class _MainScreenState extends State<MainScreen>  {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
-          title: Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black),),
+          title: Text(
+            title,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black),
+          ),
         ),
         body: IndexedStack(
           index: _selectedIndex,
