@@ -110,6 +110,7 @@ class _RecipeListState extends State<RecipeList> {
               width: 6.0,
             ),
             Expanded(
+              // ******** Replace ****************
               child: TextField(
                 decoration: InputDecoration(border: InputBorder.none, hintText: 'Search'),
                 autofocus: false,
@@ -127,6 +128,7 @@ class _RecipeListState extends State<RecipeList> {
                     }
                 },
               ),
+              // ******** Replace ****************
             ),
           ],
         ),
