@@ -1,25 +1,60 @@
-
+/*
+ * Copyright (c) 2020 Razeware LLC
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
+ * distribute, sublicense, create a derivative work, and/or sell copies of the
+ * Software in any work that is designed, intended, or marketed for pedagogical or
+ * instructional purposes related to programming, coding, application development,
+ * or information technology.  Permission for such use, copying, modification,
+ * merger, publication, distribution, sublicensing, creation of derivative works,
+ * or sale is expressly withheld.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 import 'package:http/http.dart';
 
-const String apiKey = '<Your Key>';
-const String apiId = '<your ID>';
-const String APIURL = 'https://api.edamam.com/search';
+const String apiId = '<Your API id>';
+const String apiKey = '<Your API key>';
+const String apiUrl = 'https://api.edamam.com/search';
 
+// 1
+Future getData(String url) async {
+  // 2
+  print('Calling uri: $url');
+  // 3
+  Response response = await get(url);
+  // 4
+  if (response.statusCode == 200) {
+    // 5
+    return response.body;
+  } else {
+    // 6
+    print(response.statusCode);
+  }
+}
 
 class RecipeService {
+  // 1
   Future<dynamic> getRecipes(String query, int from, int to) async {
-    var recipeData = await getData('$APIURL?app_id=$apiId&app_key=$apiKey&q=$query&from=$from&to=$to');
+    // 2
+    var recipeData = await getData('$apiUrl?app_id=$apiId&app_key=$apiKey&q=$query&from=$from&to=$to');
+    // 3
     return recipeData;
   }
-
-  Future getData(String url) async {
-    print('Calling uri: $url');
-    Response response = await get(url);
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      print(response.statusCode);
-    }
-  }
-
 }
