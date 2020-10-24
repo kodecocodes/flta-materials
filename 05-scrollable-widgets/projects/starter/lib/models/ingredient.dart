@@ -28,22 +28,18 @@
  * THE SOFTWARE.
  */
 
-import 'package:flutter/material.dart';
-import 'fooderlich_theme.dart';
-import 'home.dart';
+part of 'explore_recipe.dart';
 
-void main() {
-  runApp(Fooderlich());
-}
+class Ingredients {
+  String imageUrl;
+  String title;
+  String source;
 
-class Fooderlich extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var theme = FooderlichTheme.dark();
-    return MaterialApp(
-      theme: theme,
-      title: "Fooderlich",
-      home: Home()
-    );
+  Ingredients({this.imageUrl, this.title, this.source});
+
+  Ingredients.fromJson(Map<String, dynamic> json) {
+    imageUrl = json['imageUrl'];
+    title = json['title'];
+    source = json['source'];
   }
 }
