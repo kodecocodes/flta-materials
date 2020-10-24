@@ -33,8 +33,7 @@ import 'package:fooderlich/fooderlich_theme.dart';
 
 import 'circle_image.dart';
 
-class AuthorCard extends StatelessWidget {
-  // 1
+class AuthorCard extends StatefulWidget {
   final String authorName;
   final String title;
   final ImageProvider imageProvider;
@@ -46,7 +45,14 @@ class AuthorCard extends StatelessWidget {
     this.imageProvider,
   }) : super(key: key);
 
-  // 2
+  @override
+  _AuthorCardState createState() => _AuthorCardState();
+}
+
+class _AuthorCardState extends State<AuthorCard> {
+
+  bool _isFavorited = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,29 +61,30 @@ class AuthorCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(children: [
-            CircleImage(imageProvider, imageRadius: 28),
+            CircleImage(widget.imageProvider, imageRadius: 28),
             SizedBox(width: 8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  authorName,
+                  widget.authorName,
                   style: FooderlichTheme.lightTextTheme.headline2,
                 ),
                 Text(
-                  title,
+                  widget.title,
                   style: FooderlichTheme.lightTextTheme.headline3,
                 )
               ],
             ),
           ]),
           IconButton(
-            icon: Icon(Icons.favorite_border),
+            icon: Icon(_isFavorited ? Icons.favorite : Icons.favorite_border),
             iconSize: 30,
-            color: Colors.grey[400],
+            color: Colors.red[400],
             onPressed: () {
-              final snackBar = SnackBar(content: Text('Press Favorite'));
-              Scaffold.of(context).showSnackBar(snackBar);
+              setState(() {
+                _isFavorited = !_isFavorited;
+              });
             },
           ),
         ],

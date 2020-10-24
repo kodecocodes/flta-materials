@@ -44,9 +44,9 @@ class ExploreRecipe {
   String backgroundImage;
   String backgroundImageSource;
   String message;
-  String chef;
+  String authorName;
   String role;
-  String chefImage;
+  String profileImage;
   int durationInMinutes;
   String dietType;
   int calories;
@@ -63,9 +63,9 @@ class ExploreRecipe {
       this.backgroundImage,
       this.backgroundImageSource,
       this.message,
-      this.chef,
+      this.authorName,
       this.role,
-      this.chefImage,
+      this.profileImage,
       this.durationInMinutes,
       this.dietType,
       this.calories,
@@ -82,9 +82,9 @@ class ExploreRecipe {
     backgroundImage = json['backgroundImage'];
     backgroundImageSource = json['backgroundImageSource'];
     message = json['message'];
-    chef = json['chef'];
+    authorName = json['authorName'];
     role = json['role'];
-    chefImage = json['chefImage'];
+    profileImage = json['profileImage'];
     durationInMinutes = json['durationInMinutes'];
     dietType = json['dietType'];
     calories = json['calories'];
