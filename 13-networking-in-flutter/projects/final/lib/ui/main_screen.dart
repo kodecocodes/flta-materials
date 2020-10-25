@@ -96,27 +96,27 @@ class _MainScreenState extends State<MainScreen> {
           items: [
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                'assets/images/icon_recipe.svg',
-                color: _selectedIndex == 0 ? green : Colors.grey,
-                semanticsLabel: 'Recipes',
+                  'assets/images/icon_recipe.svg',
+                  color: _selectedIndex == 0 ? green : Colors.grey ,
+                  semanticsLabel: 'Recipes'
               ),
-              title: Text('Recipes'),
+              label: 'Recipes'
             ),
             BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/images/icon_bookmarks.svg',
-                color: _selectedIndex == 1 ? green : Colors.grey,
-                semanticsLabel: 'Bookmarks',
-              ),
-              title: Text('Bookmarks'),
+                icon: SvgPicture.asset(
+                    'assets/images/icon_bookmarks.svg',
+                    color: _selectedIndex == 1 ? green : Colors.grey ,
+                    semanticsLabel: 'Bookmarks'
+                ),
+                label: 'Bookmarks'
             ),
             BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/images/icon_shopping_list.svg',
-                color: _selectedIndex == 2 ? green : Colors.grey,
-                semanticsLabel: 'Groceries',
-              ),
-              title: Text('Groceries'),
+                icon: SvgPicture.asset(
+                    'assets/images/icon_shopping_list.svg',
+                    color: _selectedIndex == 2 ? green : Colors.grey ,
+                    semanticsLabel: 'Groceries'
+                ),
+                label: 'Groceries'
             ),
           ],
           currentIndex: _selectedIndex,
