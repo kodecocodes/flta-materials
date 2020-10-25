@@ -81,13 +81,9 @@ class _RecipeListState extends State<RecipeList> {
       });
   }
 
-  // 1
   Future<APIRecipeQuery> getRecipeData(String query, int from, int to) async {
-    // 2
     var recipeJson = await RecipeService().getRecipes(query, from, to);
-    // 3
     var recipeMap = json.decode(recipeJson);
-    // 4
     return APIRecipeQuery.fromJson(recipeMap);
   }
 
@@ -207,23 +203,17 @@ class _RecipeListState extends State<RecipeList> {
   }
 
   Widget _buildRecipeLoader(BuildContext context) {
-    // 1
     if (searchTextController.text.length < 3) {
       return Container();
     }
-    // 2
     return FutureBuilder<APIRecipeQuery>(
-      // 3
       future: getRecipeData(
         searchTextController.text.trim(),
         currentStartPosition,
         currentEndPosition,
       ),
-      // 4
       builder: (context, snapshot) {
-        // 5
         if (snapshot.connectionState == ConnectionState.done) {
-          // 6
           if (snapshot.hasError) {
             return Center(
               child: Text(
@@ -234,28 +224,22 @@ class _RecipeListState extends State<RecipeList> {
             );
           }
 
-          // 7
           loading = false;
           final query = snapshot.data;
           inErrorState = false;
           currentCount = query.count;
           hasMore = query.more;
           currentSearchList.addAll(query.hits);
-          // 8
+
           if (query.to < currentEndPosition) {
             currentEndPosition = query.to;
           }
-          // 9
           return _buildRecipeList(context, currentSearchList);
-        }
-        // 10
-        else {
-          // 11
+        } else {
           if (currentCount == 0) {
             // Show a loading indicator while waiting for the movies
             return Center(child: CircularProgressIndicator());
           } else {
-            // 12
             return _buildRecipeList(context, currentSearchList);
           }
         }
@@ -263,26 +247,18 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
-  // 1
   Widget _buildRecipeList(BuildContext recipeListContext, List<APIHits> hits) {
-    // 2
     var size = MediaQuery.of(context).size;
     final double itemHeight = 310;
     final double itemWidth = size.width / 2;
-    // 3
     return Flexible(
-      // 4
       child: GridView.builder(
-        // 5
         controller: _scrollController,
-        // 6
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: (itemWidth / itemHeight),
         ),
-        // 7
         itemCount: hits.length,
-        // 8
         itemBuilder: (BuildContext context, int index) {
           return _buildRecipeCard(recipeListContext, hits, index);
         },
