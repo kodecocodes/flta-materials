@@ -34,6 +34,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recipes/network/recipe_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../colors.dart';
 import '../recipe_card.dart';
 import '../widgets/custom_dropdown.dart';
 
@@ -139,7 +140,7 @@ class _RecipeListState extends State<RecipeList> {
         child: Row(
           children: [
             IconButton(
-              icon: Icon(Icons.search),
+              icon: Icon(Icons.search,),
               onPressed: () {
                 startSearch(searchTextController.text);
               },
@@ -165,7 +166,7 @@ class _RecipeListState extends State<RecipeList> {
                     controller: searchTextController,
                   )),
                   PopupMenuButton<String>(
-                    icon: const Icon(Icons.arrow_drop_down),
+                    icon: const Icon(Icons.arrow_drop_down, color: lightGrey),
                     onSelected: (String value) {
                       searchTextController.text = value;
                       startSearch(searchTextController.text);

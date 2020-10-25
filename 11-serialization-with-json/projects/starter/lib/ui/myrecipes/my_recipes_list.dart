@@ -77,6 +77,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
                           imageUrl:
                               "http://www.seriouseats.com/recipes/2011/12/chicken-vesuvio-recipe.html",
                           height: 120,
+                          width: 60,
                           fit: BoxFit.cover),
                       title: Text("Chicken Vesuvio"),
                     ),

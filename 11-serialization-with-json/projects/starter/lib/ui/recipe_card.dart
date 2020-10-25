@@ -51,6 +51,8 @@ Widget recipeStringCard(String image, String label) {
           padding: const EdgeInsets.only(left: 8.0),
           child: Text(
             label,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
         ),
@@ -61,7 +63,6 @@ Widget recipeStringCard(String image, String label) {
           padding: const EdgeInsets.only(left: 8.0),
           child: Text(
             '100g',
-            overflow: TextOverflow.ellipsis,
             style: TextStyle(fontWeight: FontWeight.normal, fontSize: 11, ),
           ),
         ),

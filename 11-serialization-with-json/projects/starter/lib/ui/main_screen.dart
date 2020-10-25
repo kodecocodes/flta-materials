@@ -100,7 +100,7 @@ class _MainScreenState extends State<MainScreen>  {
                   color: _selectedIndex == 0 ? green : Colors.grey ,
                   semanticsLabel: 'Recipes'
               ),
-              label: title
+              label: 'Recipes'
             ),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -108,7 +108,7 @@ class _MainScreenState extends State<MainScreen>  {
                     color: _selectedIndex == 1 ? green : Colors.grey ,
                     semanticsLabel: 'Bookmarks'
                 ),
-                label: title
+                label: 'Bookmarks'
             ),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -116,7 +116,7 @@ class _MainScreenState extends State<MainScreen>  {
                     color: _selectedIndex == 2 ? green : Colors.grey ,
                     semanticsLabel: 'Groceries'
                 ),
-                label: title
+                label: 'Groceries'
             ),
           ],
           currentIndex: _selectedIndex,
