@@ -74,3 +74,4 @@ Widget recipeCard(APIRecipe recipe) {
     ),
   );
 }
+
