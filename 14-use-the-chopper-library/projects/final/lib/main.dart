@@ -34,6 +34,7 @@ import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'ui/main_screen.dart';
 
 Future<void> main() async {
+  _setupLogging();
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
   await FlutterStatusbarcolor.setStatusBarColor(Colors.white);
