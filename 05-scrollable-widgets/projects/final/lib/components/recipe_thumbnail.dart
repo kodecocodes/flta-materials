@@ -29,67 +29,33 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:fooderlich/fooderlich_theme.dart';
+import 'package:fooderlich/models/models.dart';
 
-import 'circle_image.dart';
+class RecipeThumbnail extends StatelessWidget {
+  final SimpleRecipe recipe;
 
-class AuthorCard extends StatefulWidget {
-  final String authorName;
-  final String title;
-  final ImageProvider imageProvider;
-
-  const AuthorCard({
-    Key key,
-    this.authorName,
-    this.title,
-    this.imageProvider,
-  }) : super(key: key);
-
-  @override
-  _AuthorCardState createState() => _AuthorCardState();
-}
-
-class _AuthorCardState extends State<AuthorCard> {
-
-  bool _isFavorited = false;
+  const RecipeThumbnail({Key key, this.recipe}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-            CircleImage(widget.imageProvider, imageRadius: 28),
-            SizedBox(width: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.authorName,
-                  style: FooderlichTheme.lightTextTheme.headline2,
-                ),
-                Text(
-                  widget.title,
-                  style: FooderlichTheme.lightTextTheme.headline3,
-                )
-              ],
-            ),
-          ]),
-          IconButton(
-            icon: Icon(_isFavorited ? Icons.favorite : Icons.favorite_border),
-            iconSize: 30,
-            color: Colors.red[400],
-            onPressed: () {
-              setState(() {
-                _isFavorited = !_isFavorited;
-              });
-            },
-          ),
-        ],
-      ),
-    );
+        padding: EdgeInsets.all(8),
+        child:
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Expanded(
+              child: Container(
+                  child: ClipRRect(
+                      child: Image.asset("${recipe.dishImage}",
+                          fit: BoxFit.cover),
+                      borderRadius: BorderRadius.circular(12)))),
+          SizedBox(height: 10),
+          Text(
+              recipe.title,
+              maxLines: 1,
+              style: Theme.of(context).textTheme.bodyText1),
+          Text(
+              recipe.duration,
+              style: Theme.of(context).textTheme.bodyText1)
+        ]));
   }
 }

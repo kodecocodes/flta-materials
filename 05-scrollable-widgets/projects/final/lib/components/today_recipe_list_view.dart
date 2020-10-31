@@ -29,67 +29,50 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:fooderlich/fooderlich_theme.dart';
+import 'package:fooderlich/components/components.dart';
+import 'package:fooderlich/models/models.dart';
 
-import 'circle_image.dart';
+class TodayRecipeListView extends StatelessWidget {
+  final List<ExploreRecipe> recipes;
 
-class AuthorCard extends StatefulWidget {
-  final String authorName;
-  final String title;
-  final ImageProvider imageProvider;
-
-  const AuthorCard({
-    Key key,
-    this.authorName,
-    this.title,
-    this.imageProvider,
-  }) : super(key: key);
-
-  @override
-  _AuthorCardState createState() => _AuthorCardState();
-}
-
-class _AuthorCardState extends State<AuthorCard> {
-
-  bool _isFavorited = false;
+  const TodayRecipeListView({Key key, this.recipes}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
+    return Padding(
+        padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            CircleImage(widget.imageProvider, imageRadius: 28),
-            SizedBox(width: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.authorName,
-                  style: FooderlichTheme.lightTextTheme.headline2,
-                ),
-                Text(
-                  widget.title,
-                  style: FooderlichTheme.lightTextTheme.headline3,
-                )
-              ],
-            ),
-          ]),
-          IconButton(
-            icon: Icon(_isFavorited ? Icons.favorite : Icons.favorite_border),
-            iconSize: 30,
-            color: Colors.red[400],
-            onPressed: () {
-              setState(() {
-                _isFavorited = !_isFavorited;
-              });
-            },
-          ),
-        ],
-      ),
-    );
+              Text(
+                  "Recipes of the Day 🍳",
+                  style: Theme.of(context).textTheme.headline1),
+              SizedBox(height: 16),
+              Container(
+              height: 400,
+              color: Colors.transparent,
+              child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: recipes.length,
+                  itemBuilder: (context, index) {
+                    var recipe = recipes[index];
+                    return buildCard(recipe);
+                  },
+                  separatorBuilder: (context, index) {
+                    return SizedBox(width: 16);
+                  })),
+        ]));
+  }
+
+  buildCard(ExploreRecipe recipe) {
+    if (recipe.cardType == RecipeCardType.card1) {
+      return Card1(recipe: recipe);
+    } else if (recipe.cardType == RecipeCardType.card2) {
+      return Card2(recipe: recipe);
+    } else if (recipe.cardType == RecipeCardType.card3) {
+      return Card3(recipe: recipe);
+    } else {
+      throw Exception("This card doesn't exist yet");
+    }
   }
 }

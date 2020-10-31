@@ -60,7 +60,8 @@ class _AuthorCardState extends State<AuthorCard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(children: [
+          Row(
+            children: [
             CircleImage(widget.imageProvider, imageRadius: 28),
             SizedBox(width: 8),
             Column(

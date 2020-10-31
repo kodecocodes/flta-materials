@@ -2,7 +2,7 @@
 {
     "recipes": [
         {
-            "dishImage": "food_salmon.jpg",
+            "dishImage": "assets/food_pics/food_salmon.jpg",
             "title": "Smoked Salmon",
             "duration": "30 mins",
             "source": "https://pixabay.com/photos/salmon-dish-food-meal-fish-518032/",
@@ -15,7 +15,7 @@
             ]
         },
         {
-            "dishImage": "food_cupcake.jpg",
+            "dishImage": "assets/food_pics/food_cupcake.jpg",
             "title": "Chocolate Cup Cake",
             "duration": "1 hour",
             "source": "https://pixabay.com/photos/cupcakes-dessert-frosting-food-690040/",
@@ -28,7 +28,7 @@
             ]
         },
         {
-            "dishImage": "food_pancake.jpg",
+            "dishImage": "assets/food_pics/food_pancake.jpg",
             "title": "Rasberry Maple Pancake",
             "duration": "30 mins",
             "source": "https://pixabay.com/photos/pancakes-maple-syrup-sweet-food-2291908/",
@@ -41,7 +41,7 @@
             ]
         },
         {
-            "dishImage": "food_spaghetti.jpg",
+            "dishImage": "assets/food_pics/food_spaghetti.jpg",
             "title": "Seafood Spaghetti",
             "duration": "50 mins",
             "source": "https://pixabay.com/photos/spaghetti-drunken-line-food-pasta-960978/",
@@ -54,7 +54,7 @@
             ]
         },
         {
-            "dishImage": "food_friedrice.jpg",
+            "dishImage": "assets/food_pics/food_friedrice.jpg",
             "title": "Thai Fried Rice",
             "duration": "35 mins",
             "source": "https://pixabay.com/photos/fried-rice-thai-food-thai-cuisine-3023040/",
@@ -68,7 +68,7 @@
             
         },
         {
-            "dishImage": "food_curry.jpg",
+            "dishImage": "assets/food_pics/food_curry.jpg",
             "title": "Thai Green Curry",
             "duration": "1 hour",
             "source": "https://pixabay.com/photos/green-curry-thai-food-3604721/",
@@ -81,7 +81,7 @@
             ]
         },
         {
-            "dishImage": "food_pho.jpg",
+            "dishImage": "assets/food_pics/food_pho.jpg",
             "title": "Vietnamese Pho",
             "duration": "1 hour",
             "source": "https://pixabay.com/photos/soup-pho-soup-vietnam-vietnamese-5250765/",
@@ -94,7 +94,7 @@
             ]
         },
         {
-            "dishImage": "food_burger.jpg",
+            "dishImage": "assets/food_pics/food_burger.jpg",
             "title": "Bacon Cheese Burger",
             "duration": "30 min",
             "source": "https://pixabay.com/photos/burger-fast-food-hamburger-731298/",
