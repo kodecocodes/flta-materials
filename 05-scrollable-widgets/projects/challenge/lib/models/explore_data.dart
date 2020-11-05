@@ -28,29 +28,11 @@
  * THE SOFTWARE.
  */
 
-import 'package:flutter/material.dart';
-import 'package:fooderlich/api/mock_fooderlich_service.dart';
-import 'package:fooderlich/components/components.dart';
+import 'package:fooderlich/models/models.dart';
 
-class ExploreScreen extends StatelessWidget {
-  final mockService = MockFooderlichService();
+class ExploreData {
+  final List<ExploreRecipe> todayRecipes;
+  final List<Post> friendPosts;
 
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: mockService.getExploreData(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return ListView(
-                scrollDirection: Axis.vertical,
-                children: [
-                  TodayRecipeListView(recipes: snapshot.data.todayRecipes),
-                  SizedBox(height: 16),
-                  FriendPostListView(friendPosts: snapshot.data.friendPosts)
-                ]);
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        });
-  }
+  ExploreData(this.todayRecipes, this.friendPosts);
 }
