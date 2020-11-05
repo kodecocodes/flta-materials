@@ -35,8 +35,16 @@ import 'package:fooderlich/models/models.dart';
 // Mock recipe service that grabs sample json data to mock recipe request/response
 class MockFooderlichService {
 
+  // Batch request that gets both today recipes and friend's feed
+  Future<ExploreData> getExploreData() async {
+    var todayRecipes = await _getTodayRecipes();
+    var friendPosts = await _getFriendFeed();
+
+    return ExploreData(todayRecipes, friendPosts);
+  }
+
   // Get sample explore recipes json to display in ui
-  Future<List<ExploreRecipe>> getTodayRecipes() async {
+  Future<List<ExploreRecipe>> _getTodayRecipes() async {
     // Simulate api request wait time
     await Future.delayed(Duration(milliseconds: 1000));
     // Load json from file system
@@ -57,7 +65,7 @@ class MockFooderlichService {
   }
 
   // Get the sample friend json posts to display in ui
-  Future<List<Post>> getFriendFeed() async {
+  Future<List<Post>> _getFriendFeed() async {
     // Simulate api request wait time
     await Future.delayed(Duration(milliseconds: 1000));
     // Load json from file system

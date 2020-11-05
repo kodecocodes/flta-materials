@@ -63,32 +63,21 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-        controller: _controller,
-        scrollDirection: Axis.vertical,
-        children: [
-          FutureBuilder(
-            future: mockService.getTodayRecipes(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                var recipes = snapshot.data;
-                return TodayRecipeListView(recipes: recipes);
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-          }),
-          SizedBox(height: 16),
-          // TODO: Replace with FriendPostListView FutureBuilder
-          FutureBuilder(
-              future: mockService.getFriendFeed(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  var posts = snapshot.data;
-                  return FriendPostListView(friendPosts: posts);
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              }),
-        ]);
+    return FutureBuilder(
+      future: mockService.getExploreData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return ListView(
+                controller: _controller,
+                scrollDirection: Axis.vertical,
+                children: [
+                  TodayRecipeListView(recipes: snapshot.data.todayRecipes),
+                  SizedBox(height: 16),
+                  FriendPostListView(friendPosts: snapshot.data.friendPosts)
+                ]);
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+    });
   }
 }
