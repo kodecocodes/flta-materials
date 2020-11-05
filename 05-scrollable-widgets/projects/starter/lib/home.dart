@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
         title: "The Art of Dough", 
         subtitle: "Editor's Choice", 
         message: "Learn to make the perfect bread.", 
-        backgroundImage: "assets/magazine_pics/mag1.jpg")),
+        backgroundImage: "assets/magazine_pics/card_bread.jpg")),
     Card2(
       recipe: ExploreRecipe(
         authorName: "Mike Katz", 
