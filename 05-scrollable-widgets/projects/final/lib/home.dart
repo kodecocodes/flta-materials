@@ -29,9 +29,9 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:fooderlich/models/explore_recipe.dart';
-import 'package:fooderlich/screens/explore_screen.dart';
-import 'package:fooderlich/screens/recipes_screen.dart';
+import 'models/explore_recipe.dart';
+import 'screens/explore_screen.dart';
+import 'screens/recipes_screen.dart';
 import 'components/components.dart';
 
 
