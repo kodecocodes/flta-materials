@@ -29,7 +29,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:fooderlich/models/explore_recipe.dart';
+import 'models/explore_recipe.dart';
 import 'components/components.dart';
 
 
