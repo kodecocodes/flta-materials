@@ -21,10 +21,10 @@
  */
 
 import 'dart:convert';
-import 'package:recipes/network/recipe_model.dart';
 import 'package:chopper/chopper.dart';
 
 import 'model_response.dart';
+import 'recipe_model.dart';
 
 class ModelConverter implements Converter {
   @override
