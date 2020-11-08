@@ -5,8 +5,9 @@ import 'package:chopper/chopper.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:recipes/network/model_response.dart';
 import 'package:recipes/network/recipe_model.dart';
+import 'package:recipes/network/service_interface.dart';
 
-class MockService {
+class MockService implements ServiceInterface{
   APIRecipeQuery _currentRecipes1;
   APIRecipeQuery _currentRecipes2;
   Random nextRecipe = Random();

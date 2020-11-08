@@ -93,7 +93,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
                             foregroundColor: Colors.black,
                             iconWidget: Icon(Icons.delete, color: Colors.red),
                             onTap: () => deleteRecipe(
-                                Provider.of<Repository>(context, listen: false),
+                                repository,
                                 recipe)),
                       ],
                       secondaryActions: <Widget>[
@@ -103,7 +103,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
                             foregroundColor: Colors.black,
                             iconWidget: Icon(Icons.delete, color: Colors.red),
                             onTap: () => deleteRecipe(
-                                Provider.of<Repository>(context, listen: false),
+                                repository,
                                 recipe)),
                       ],
                     ),

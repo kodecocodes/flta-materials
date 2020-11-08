@@ -29,6 +29,8 @@
  */
 import 'package:logging/logging.dart';
 import 'data/repository.dart';
+import 'network/recipe_service.dart';
+import 'network/service_interface.dart';
 import 'ui/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
@@ -63,12 +65,8 @@ class MyApp extends StatelessWidget {
             lazy: false,
             create: (_) => MemoryRepository(),
           ),
-          FutureProvider(
-            create: (_) async {
-              var service = MockService();
-              service.create();
-              return service;
-            },
+          Provider<ServiceInterface>(
+            create: (_) => RecipeService.create(),
             lazy: false,
           ),
         ],

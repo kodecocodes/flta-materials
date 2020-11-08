@@ -67,7 +67,8 @@ class RecipeDetails extends StatelessWidget {
               Align(
                 alignment: Alignment.topLeft,
                 child: Container(
-                  decoration: BoxDecoration(shape: BoxShape.circle, color: shim),
+                  decoration:
+                      BoxDecoration(shape: BoxShape.circle, color: shim),
                   child: BackButton(
                     color: Colors.white,
                   ),

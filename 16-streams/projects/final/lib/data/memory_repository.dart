@@ -49,9 +49,8 @@ class MemoryRepository extends Repository {
   @override
   Future<List<Ingredient>> findRecipeIngredients(int id) {
     var recipe = _currentRecipes.firstWhere((element) => element.id == id);
-    var firstWhere = _currentIngredients
-        .firstWhere((element) => element.recipeId == recipe.id);
-    return Future.value(List<Ingredient>.filled(1, firstWhere));
+    var recipeIngredients = _currentIngredients.where((element) => element.recipeId == recipe.id).toList();
+    return Future.value(recipeIngredients);
   }
 
   @override
