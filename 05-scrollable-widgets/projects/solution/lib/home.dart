@@ -29,25 +29,53 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:fooderlich/components/components.dart';
-import 'package:fooderlich/models/models.dart';
+import 'package:fooderlich/models/explore_recipe.dart';
+import 'package:fooderlich/screens/explore_screen.dart';
+import 'package:fooderlich/screens/recipes_screen.dart';
+import 'components/components.dart';
 
-class RecipesGridView extends StatelessWidget {
-  final List<SimpleRecipe> recipes;
 
-  const RecipesGridView({Key key, this.recipes}) : super(key: key);
+class Home extends StatefulWidget {
+  Home({Key key}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
+  int _selectedIndex = 0;
+
+  static List<Widget> pages = <Widget>[
+    ExploreScreen(),
+    RecipesScreen(),
+    Container(color: Colors.blue)
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 16),
-        child: GridView.builder(
-            itemCount: recipes.length,
-            gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemBuilder: (context, index) {
-              var simpleRecipe = recipes[index];
-              return RecipeThumbnail(recipe: simpleRecipe);
-            }));
+    return Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+            title: Text("Fooderlich",
+                style: Theme.of(context).textTheme.headline6)),
+        body: pages[_selectedIndex],
+        bottomNavigationBar: BottomNavigationBar(
+            selectedItemColor: Theme.of(context).textSelectionColor,
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
+              BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Recipes'),
+              BottomNavigationBarItem(icon: Icon(Icons.list), label: 'To Buy'),
+            ]));
   }
 }

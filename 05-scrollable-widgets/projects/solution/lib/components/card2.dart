@@ -29,25 +29,60 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:fooderlich/components/components.dart';
 import 'package:fooderlich/models/models.dart';
 
-class RecipesGridView extends StatelessWidget {
-  final List<SimpleRecipe> recipes;
+import '../fooderlich_theme.dart';
+import 'author_card.dart';
 
-  const RecipesGridView({Key key, this.recipes}) : super(key: key);
+class Card2 extends StatelessWidget {
+  final ExploreRecipe recipe;
 
+  const Card2({Key key, this.recipe}) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 16),
-        child: GridView.builder(
-            itemCount: recipes.length,
-            gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemBuilder: (context, index) {
-              var simpleRecipe = recipes[index];
-              return RecipeThumbnail(recipe: simpleRecipe);
-            }));
+    return Center(
+      child: Container(
+        constraints: BoxConstraints.expand(width: 350, height: 450),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(recipe.backgroundImage),
+                fit: BoxFit.cover),
+            borderRadius: BorderRadius.all(const Radius.circular(10.0))),
+        child: Column(
+          children: [
+            AuthorCard(
+                authorName: recipe.authorName,
+                title: recipe.role,
+                imageProvider: AssetImage(recipe.profileImage)),
+            Expanded(
+              child: Stack(
+                children: [
+                  Positioned(
+                    bottom: 16,
+                    right: 16,
+                    child: Text(
+                      recipe.title,
+                      style: FooderlichTheme.lightTextTheme.headline1,
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 70,
+                    left: 16,
+                    child: RotatedBox(
+                      quarterTurns: 3,
+                      child: Text(
+                        recipe.subtitle,
+                        style: FooderlichTheme.lightTextTheme.headline1,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

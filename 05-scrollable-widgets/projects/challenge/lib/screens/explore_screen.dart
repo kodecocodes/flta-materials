@@ -32,43 +32,16 @@ import 'package:flutter/material.dart';
 import 'package:fooderlich/api/mock_fooderlich_service.dart';
 import 'package:fooderlich/components/components.dart';
 
-class ExploreScreen extends StatefulWidget {
-  @override
-  _ExploreScreenState createState() => _ExploreScreenState();
-}
-
-// 1
-class _ExploreScreenState extends State<ExploreScreen> {
+class ExploreScreen extends StatelessWidget {
   final mockService = MockFooderlichService();
-
-  ScrollController _controller;
-
-  @override
-  void initState() {
-    _controller = ScrollController();
-    _controller.addListener(_scrollListener);
-    super.initState();
-  }
-
-  _scrollListener() {
-    if (_controller.offset >= _controller.position.maxScrollExtent &&
-        !_controller.position.outOfRange) {
-      print("reached the bottom");
-    }
-    if (_controller.offset <= _controller.position.minScrollExtent &&
-        !_controller.position.outOfRange) {
-      print("reached the top!");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: mockService.getExploreData(),
+        future: mockService.getExploreData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return ListView(
-                controller: _controller,
                 scrollDirection: Axis.vertical,
                 children: [
                   TodayRecipeListView(recipes: snapshot.data.todayRecipes),
@@ -78,6 +51,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
           } else {
             return Center(child: CircularProgressIndicator());
           }
-    });
+        });
   }
 }

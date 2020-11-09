@@ -29,25 +29,54 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:fooderlich/api/mock_fooderlich_service.dart';
 import 'package:fooderlich/components/components.dart';
-import 'package:fooderlich/models/models.dart';
 
-class RecipesGridView extends StatelessWidget {
-  final List<SimpleRecipe> recipes;
+class ExploreScreen extends StatefulWidget {
+  @override
+  _ExploreScreenState createState() => _ExploreScreenState();
+}
 
-  const RecipesGridView({Key key, this.recipes}) : super(key: key);
+class _ExploreScreenState extends State<ExploreScreen> {
+  final mockService = MockFooderlichService();
+
+  ScrollController _controller;
+
+  @override
+  void initState() {
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener);
+    super.initState();
+  }
+
+  _scrollListener() {
+    if (_controller.offset >= _controller.position.maxScrollExtent &&
+        !_controller.position.outOfRange) {
+      print("reached the bottom");
+    }
+    if (_controller.offset <= _controller.position.minScrollExtent &&
+        !_controller.position.outOfRange) {
+      print("reached the top!");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 16),
-        child: GridView.builder(
-            itemCount: recipes.length,
-            gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemBuilder: (context, index) {
-              var simpleRecipe = recipes[index];
-              return RecipeThumbnail(recipe: simpleRecipe);
-            }));
+    return FutureBuilder(
+      future: mockService.getExploreData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return ListView(
+                controller: _controller,
+                scrollDirection: Axis.vertical,
+                children: [
+                  TodayRecipeListView(recipes: snapshot.data.todayRecipes),
+                  SizedBox(height: 16),
+                  FriendPostListView(friendPosts: snapshot.data.friendPosts)
+                ]);
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+    });
   }
 }
