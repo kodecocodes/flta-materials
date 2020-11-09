@@ -29,7 +29,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:fooderlich/models/explore_recipe.dart';
+import 'models/explore_recipe.dart';
 import 'components/components.dart';
 
 
@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
         title: "The Art of Dough", 
         subtitle: "Editor's Choice", 
         message: "Learn to make the perfect bread.", 
-        backgroundImage: "assets/magazine_pics/mag1.jpg")),
+        backgroundImage: "assets/magazine_pics/card_bread.jpg")),
     Card2(
       recipe: ExploreRecipe(
         authorName: "Mike Katz", 

@@ -29,8 +29,8 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:fooderlich/components/components.dart';
-import 'package:fooderlich/models/models.dart';
+import '../components/components.dart';
+import '../models/models.dart';
 
 class RecipesGridView extends StatelessWidget {
   final List<SimpleRecipe> recipes;
