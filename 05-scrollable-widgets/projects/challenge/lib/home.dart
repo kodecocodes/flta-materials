@@ -57,13 +57,10 @@ class _HomeState extends State<Home> {
       _selectedIndex = index;
     });
   }
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
         appBar: AppBar(
             title: Text("Fooderlich",
                 style: Theme.of(context).textTheme.headline6)),

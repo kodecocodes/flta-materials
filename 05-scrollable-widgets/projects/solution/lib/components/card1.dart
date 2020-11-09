@@ -29,25 +29,59 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:fooderlich/components/components.dart';
+import 'package:fooderlich/fooderlich_theme.dart';
 import 'package:fooderlich/models/models.dart';
 
-class RecipesGridView extends StatelessWidget {
-  final List<SimpleRecipe> recipes;
-
-  const RecipesGridView({Key key, this.recipes}) : super(key: key);
+class Card1 extends StatelessWidget {
+  final ExploreRecipe recipe;
+  
+  const Card1({Key key, this.recipe}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 16),
-        child: GridView.builder(
-            itemCount: recipes.length,
-            gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemBuilder: (context, index) {
-              var simpleRecipe = recipes[index];
-              return RecipeThumbnail(recipe: simpleRecipe);
-            }));
+    return Center(
+      child: Container(
+        child: Stack(
+          children: [
+            Text(
+              recipe.subtitle,
+              style: FooderlichTheme.darkTextTheme.bodyText1,
+            ),
+            Positioned(
+              child: Text(
+                recipe.title,
+                style: FooderlichTheme.darkTextTheme.headline2,
+              ),
+              top: 20,
+            ),
+            Positioned(
+              child: Text(
+                recipe.message,
+                style: FooderlichTheme.darkTextTheme.bodyText1,
+              ),
+              bottom: 30,
+              right: 0,
+            ),
+            Positioned(
+              child: Text(
+                recipe.authorName,
+                style: FooderlichTheme.darkTextTheme.bodyText1,
+              ),
+              bottom: 10,
+              right: 0,
+            )
+          ],
+        ),
+        padding: EdgeInsets.all(16),
+        constraints: BoxConstraints.expand(width: 350, height: 450),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(recipe.backgroundImage),
+            fit: BoxFit.cover,
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        ),
+      ),
+    );
   }
 }

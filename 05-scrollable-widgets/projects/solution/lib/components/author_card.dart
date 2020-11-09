@@ -29,25 +29,67 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:fooderlich/components/components.dart';
-import 'package:fooderlich/models/models.dart';
+import 'package:fooderlich/fooderlich_theme.dart';
 
-class RecipesGridView extends StatelessWidget {
-  final List<SimpleRecipe> recipes;
+import 'circle_image.dart';
 
-  const RecipesGridView({Key key, this.recipes}) : super(key: key);
+class AuthorCard extends StatefulWidget {
+  final String authorName;
+  final String title;
+  final ImageProvider imageProvider;
+
+  const AuthorCard({
+    Key key,
+    this.authorName,
+    this.title,
+    this.imageProvider,
+  }) : super(key: key);
+
+  @override
+  _AuthorCardState createState() => _AuthorCardState();
+}
+
+class _AuthorCardState extends State<AuthorCard> {
+
+  bool _isFavorited = false;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 16),
-        child: GridView.builder(
-            itemCount: recipes.length,
-            gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemBuilder: (context, index) {
-              var simpleRecipe = recipes[index];
-              return RecipeThumbnail(recipe: simpleRecipe);
-            }));
+    return Container(
+      padding: EdgeInsets.all(16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+            CircleImage(widget.imageProvider, imageRadius: 28),
+            SizedBox(width: 8),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.authorName,
+                  style: FooderlichTheme.lightTextTheme.headline2,
+                ),
+                Text(
+                  widget.title,
+                  style: FooderlichTheme.lightTextTheme.headline3,
+                )
+              ],
+            ),
+          ]),
+          IconButton(
+            icon: Icon(_isFavorited ? Icons.favorite : Icons.favorite_border),
+            iconSize: 30,
+            color: Colors.red[400],
+            onPressed: () {
+              setState(() {
+                _isFavorited = !_isFavorited;
+              });
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -29,25 +29,22 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:fooderlich/api/mock_fooderlich_service.dart';
 import 'package:fooderlich/components/components.dart';
-import 'package:fooderlich/models/models.dart';
 
-class RecipesGridView extends StatelessWidget {
-  final List<SimpleRecipe> recipes;
-
-  const RecipesGridView({Key key, this.recipes}) : super(key: key);
+class RecipesScreen extends StatelessWidget {
+  final exploreService = MockFooderlichService();
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 16),
-        child: GridView.builder(
-            itemCount: recipes.length,
-            gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemBuilder: (context, index) {
-              var simpleRecipe = recipes[index];
-              return RecipeThumbnail(recipe: simpleRecipe);
-            }));
+    return FutureBuilder(
+        future: exploreService.getRecipes(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return RecipesGridView(recipes: snapshot.data);
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        });
   }
 }

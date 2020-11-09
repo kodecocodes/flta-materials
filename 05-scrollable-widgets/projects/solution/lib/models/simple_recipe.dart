@@ -28,26 +28,21 @@
  * THE SOFTWARE.
  */
 
-import 'package:flutter/material.dart';
-import 'package:fooderlich/components/components.dart';
-import 'package:fooderlich/models/models.dart';
+class SimpleRecipe {
+  String dishImage;
+  String title;
+  String duration;
+  String source;
+  List<String> information;
 
-class RecipesGridView extends StatelessWidget {
-  final List<SimpleRecipe> recipes;
+  SimpleRecipe(
+      this.dishImage, this.title, this.duration, this.source, this.information);
 
-  const RecipesGridView({Key key, this.recipes}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 16),
-        child: GridView.builder(
-            itemCount: recipes.length,
-            gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemBuilder: (context, index) {
-              var simpleRecipe = recipes[index];
-              return RecipeThumbnail(recipe: simpleRecipe);
-            }));
+  SimpleRecipe.fromJson(Map<String, dynamic> json) {
+    dishImage = json['dishImage'];
+    title = json['title'];
+    duration = json['duration'];
+    source = json['source'];
+    information = json['information'].cast<String>();
   }
 }

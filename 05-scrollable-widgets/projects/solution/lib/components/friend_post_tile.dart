@@ -29,25 +29,33 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:fooderlich/components/components.dart';
 import 'package:fooderlich/models/models.dart';
+import 'package:fooderlich/components/components.dart';
 
-class RecipesGridView extends StatelessWidget {
-  final List<SimpleRecipe> recipes;
+class FriendPostTile extends StatelessWidget {
+  final Post post;
 
-  const RecipesGridView({Key key, this.recipes}) : super(key: key);
+  const FriendPostTile({Key key, this.post}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 16),
-        child: GridView.builder(
-            itemCount: recipes.length,
-            gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemBuilder: (context, index) {
-              var simpleRecipe = recipes[index];
-              return RecipeThumbnail(recipe: simpleRecipe);
-            }));
+    return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          CircleImage(
+              AssetImage("${post.profileImageUrl}"),
+              imageRadius: 20),
+          SizedBox(width: 16),
+          Expanded(
+              child: Container(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(post.comment),
+                        Text("${post.timestamp} mins ago",
+                            style: Theme.of(context).textTheme.bodyText1)
+                      ])))
+        ]);
   }
 }

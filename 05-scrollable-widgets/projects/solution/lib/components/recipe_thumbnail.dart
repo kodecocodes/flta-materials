@@ -29,25 +29,33 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:fooderlich/components/components.dart';
 import 'package:fooderlich/models/models.dart';
 
-class RecipesGridView extends StatelessWidget {
-  final List<SimpleRecipe> recipes;
+class RecipeThumbnail extends StatelessWidget {
+  final SimpleRecipe recipe;
 
-  const RecipesGridView({Key key, this.recipes}) : super(key: key);
+  const RecipeThumbnail({Key key, this.recipe}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 16),
-        child: GridView.builder(
-            itemCount: recipes.length,
-            gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemBuilder: (context, index) {
-              var simpleRecipe = recipes[index];
-              return RecipeThumbnail(recipe: simpleRecipe);
-            }));
+    return Container(
+        padding: EdgeInsets.all(8),
+        child:
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Expanded(
+              child: Container(
+                  child: ClipRRect(
+                      child: Image.asset("${recipe.dishImage}",
+                          fit: BoxFit.cover),
+                      borderRadius: BorderRadius.circular(12)))),
+          SizedBox(height: 10),
+          Text(
+              recipe.title,
+              maxLines: 1,
+              style: Theme.of(context).textTheme.bodyText1),
+          Text(
+              recipe.duration,
+              style: Theme.of(context).textTheme.bodyText1)
+        ]));
   }
 }
