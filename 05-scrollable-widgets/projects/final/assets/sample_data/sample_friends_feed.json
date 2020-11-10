@@ -1,0 +1,64 @@
+{
+    "feed": [
+        {
+            "profileImageUrl": "assets/profile_pics/person_cesare.jpeg",
+            "comment": "Made this delicious pizza this morning",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "10"
+        },
+        {
+            "profileImageUrl": "assets/profile_pics/person_stef.jpeg",
+            "comment": "Made delicious creamy, shrimp black pepper pasta.",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "80"
+        },
+        {
+            "profileImageUrl": "assets/profile_pics/person_crispy.png",
+            "comment": "Made a delicious salad today!",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "20"
+        },
+        {
+            "profileImageUrl": "assets/profile_pics/person_joe.jpeg",
+            "comment": "Cooked a widget this morning.",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "30"
+        },
+        {
+            "profileImageUrl": "assets/profile_pics/person_katz.jpeg",
+            "comment": "Going to power through my day with this nutty smoothie to finish up Flutter apprentice for our readers!",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "40"
+        },
+        {
+            "profileImageUrl": "assets/profile_pics/person_kevin.jpeg",
+            "comment": "Cooking up some steak 🥩 today, state should be rare, medium or medium well?",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "50"
+        },
+        {
+            "profileImageUrl": "assets/profile_pics/person_sandra.jpeg",
+            "comment": "Kicking off the morning with mike's green smoothie recipe. Time to edit these chapters!",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "50"
+        },
+        {
+            "profileImageUrl": "assets/profile_pics/person_manda.png",
+            "comment": "Not sure where I should travel to eat today.",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "60"
+        },
+        {
+            "profileImageUrl": "assets/profile_pics/person_ray.jpeg",
+            "comment": "Hot off the press, cooking up more books this year!",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "70"
+        },
+        {
+            "profileImageUrl": "assets/profile_pics/person_tiffani.jpeg",
+            "comment": "Hmmm.... Salmon, little broccoli, mash potatos",
+            "foodPictureUrl": "card_carrot.png",
+            "timestamp": "90"
+        }
+    ]
+}
