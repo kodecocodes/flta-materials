@@ -28,6 +28,7 @@
  * THE SOFTWARE.
  */
 import 'package:logging/logging.dart';
+import 'package:recipes/mock_service/mock_service.dart';
 import 'data/repository.dart';
 import 'network/recipe_service.dart';
 import 'network/service_interface.dart';
@@ -36,7 +37,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
 import 'package:provider/provider.dart';
-import 'data/sqlite_repository.dart';
+import 'data/sqlite/sqlite_repository.dart';
+import 'data/moor/moor_repository.dart';
 
 
 Future<void> main() async {
@@ -45,6 +47,7 @@ Future<void> main() async {
   await FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
   await FlutterStatusbarcolor.setStatusBarColor(Colors.white);
   SqliteRepository repository = SqliteRepository();
+  // MoorRepository repository = MoorRepository();
   await repository.init();
   runApp(MyApp(repository));
 }
@@ -71,7 +74,7 @@ class MyApp extends StatelessWidget {
             dispose: (_, Repository repository) => repository.close(),
           ),
           Provider<ServiceInterface>(
-            create: (_) => RecipeService.create(),
+            create: (_) => MockService()..create(), //RecipeService.create(),
             lazy: false,
           ),
         ],

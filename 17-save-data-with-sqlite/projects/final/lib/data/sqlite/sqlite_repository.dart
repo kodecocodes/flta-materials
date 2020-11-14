@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:recipes/data/repository.dart';
 import 'package:recipes/data/sqlite/DatabaseHelper.dart';
-import 'models/models.dart';
+import '../models/models.dart';
 
 
 class SqliteRepository extends Repository {
