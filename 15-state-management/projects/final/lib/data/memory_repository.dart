@@ -68,11 +68,9 @@ class MemoryRepository extends Repository with ChangeNotifier {
 
   @override
   void deleteRecipeIngredients(int recipeId) {
-    _currentIngredients.forEach((ingredient) {
-      if (ingredient.recipeId == recipeId) {
-        _currentIngredients.remove(ingredient);
-      }
-    });
+    _currentIngredients
+        .removeWhere((ingredient) => ingredient.recipeId == recipeId);
+    notifyListeners();
   }
 
   @override
