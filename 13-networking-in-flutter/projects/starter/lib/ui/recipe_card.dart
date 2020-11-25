@@ -31,6 +31,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+// TODO: Replace with new class
 Widget recipeStringCard(String image, String label) {
   return Card(
     elevation: 4.0,
@@ -43,13 +44,17 @@ Widget recipeStringCard(String image, String label) {
         ClipRRect(
             borderRadius: BorderRadius.only(topLeft: Radius.circular(6.0), topRight: Radius.circular(6.0)),
             child: CachedNetworkImage(
-                imageUrl: image, height: 210, fit: BoxFit.fill)),
+                // TODO: Replace with image from recipe
+                imageUrl: image,
+                height: 210,
+                fit: BoxFit.fill)),
         SizedBox(
           height: 12.0,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Text(
+            // TODO: Replace with label from recipe
             label,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
