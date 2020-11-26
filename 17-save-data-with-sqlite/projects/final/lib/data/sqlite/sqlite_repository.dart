@@ -1,71 +1,56 @@
 import 'dart:async';
 
 import 'package:recipes/data/repository.dart';
-import 'package:recipes/data/sqlite/DatabaseHelper.dart';
+import 'package:recipes/data/sqlite/database_helper.dart';
 import '../models/models.dart';
-
 
 class SqliteRepository extends Repository {
   final dbHelper = DatabaseHelper.instance;
 
   @override
-  void close() {
-    dbHelper.close();
-  }
-
-  @override
-  Future<void> deleteIngredient(Ingredient ingredient) {
-    return dbHelper.delete(DatabaseHelper.ingredientTable, ingredient.id);
-  }
-
-  @override
-  Future<void> deleteIngredients(List<Ingredient> ingredients) {
-    if (ingredients != null) {
-      ingredients.forEach((ingredient) {
-        if (ingredient != null) {
-          dbHelper.delete(DatabaseHelper.ingredientTable, ingredient.id);
-        }
-      });
-    }
-    return Future.value();
-  }
-
-  @override
-  Future<void> deleteRecipeIngredients(int recipeId) {
-    dbHelper.deleteIngredients(recipeId);
-
-  }
-
-  @override
-  Future<void> deleteRecipe(Recipe recipe) {
-    dbHelper.delete(DatabaseHelper.recipeTable, recipe.id);
-    deleteIngredients(recipe.ingredients);
-    return Future.value();
-  }
-
-  @override
-  Future<List<Ingredient>> findAllIngredients() {
-    return dbHelper.getAllIngredients();
-  }
-
-  @override
   Future<List<Recipe>> findAllRecipes() {
-    return dbHelper.getRecipes();
+    return dbHelper.findAllRecipes();
+  }
+
+  @override
+  Stream<List<Recipe>> watchAllRecipes() {
+    return dbHelper.watchAllRecipes();
+  }
+
+  @override
+  Stream<List<Ingredient>> watchAllIngredients() {
+    return dbHelper.watchAllIngredients();
   }
 
   @override
   Future<Recipe> findRecipeById(int id) {
-    return dbHelper.getRecipeById(id);
+    return dbHelper.findRecipeById(id);
+  }
+
+  @override
+  Future<List<Ingredient>> findAllIngredients() {
+    return dbHelper.findAllIngredients();
   }
 
   @override
   Future<List<Ingredient>> findRecipeIngredients(int id) {
-    return dbHelper.getIngredients(id);
+    return dbHelper.findRecipeIngredients(id);
   }
 
   @override
-  // ignore: missing_return
-  Future init() {}
+  Future<int> insertRecipe(Recipe recipe) {
+    return Future(() async {
+      int id = await dbHelper.insertRecipe(recipe);
+      recipe.id = id;
+      if (recipe.ingredients != null) {
+        recipe.ingredients.forEach((ingredient) {
+          ingredient.recipeId = id;
+        });
+      }
+      insertIngredients(recipe.ingredients);
+      return id;
+    });
+  }
 
   @override
   Future<List<int>> insertIngredients(List<Ingredient> ingredients) {
@@ -87,28 +72,38 @@ class SqliteRepository extends Repository {
   }
 
   @override
-  Future<int> insertRecipe(Recipe recipe) {
-    return Future(() async {
-      int id = await dbHelper.insertRecipe(recipe);
-      recipe.id = id;
-      print("insertRecipe id: $id");
-      if (recipe.ingredients != null) {
-        recipe.ingredients.forEach((ingredient) {
-          ingredient.recipeId = id;
-        });
-      }
-      insertIngredients(recipe.ingredients);
-      return id;
-    });
+  Future<void> deleteRecipe(Recipe recipe) {
+    dbHelper.deleteRecipe(recipe);
+    deleteIngredients(recipe.ingredients);
+    return Future.value();
   }
 
   @override
-  Stream<List<Ingredient>> watchAllIngredients() {
-    return dbHelper.streamIngredients();
+  Future<void> deleteIngredient(Ingredient ingredient) {
+    dbHelper.deleteIngredient(ingredient);
+    return Future.value();
   }
 
   @override
-  Stream<List<Recipe>> watchAllRecipes() {
-    return dbHelper.streamRecipes();
+  Future<void> deleteIngredients(List<Ingredient> ingredients) {
+    dbHelper.deleteIngredients(ingredients);
+    return Future.value();
+  }
+
+  @override
+  Future<void> deleteRecipeIngredients(int recipeId) {
+    dbHelper.deleteRecipeIngredients(recipeId);
+    return Future.value();
+  }
+
+  @override
+  Future init() async {
+    await dbHelper.database;
+    return Future.value();
+  }
+
+  @override
+  void close() {
+    dbHelper.close();
   }
 }

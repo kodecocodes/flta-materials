@@ -46,8 +46,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
   await FlutterStatusbarcolor.setStatusBarColor(Colors.white);
-  SqliteRepository repository = SqliteRepository();
-  // MoorRepository repository = MoorRepository();
+  // SqliteRepository repository = SqliteRepository();
+  MoorRepository repository = MoorRepository();
   await repository.init();
   runApp(MyApp(repository));
 }
@@ -74,7 +74,8 @@ class MyApp extends StatelessWidget {
             dispose: (_, Repository repository) => repository.close(),
           ),
           Provider<ServiceInterface>(
-            create: (_) => MockService()..create(), //RecipeService.create(),
+            // create: (_) => MockService()..create(),
+            create: (_) => RecipeService.create(),
             lazy: false,
           ),
         ],

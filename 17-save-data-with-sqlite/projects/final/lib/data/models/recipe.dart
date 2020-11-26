@@ -16,19 +16,26 @@ class Recipe extends Equatable {
 
   @override
   List<Object> get props => [label, image, url, calories, totalWeight, totalTime];
+
   // Create a Recipe from JSON data
-  factory Recipe.fromJson(Map<String, dynamic> json) => new Recipe(
+  factory Recipe.fromJson(Map<String, dynamic> json) => Recipe(
     id: json["_id"],
     label: json["label"],
     image: json["image"],
     url: json["url"],
+    calories: json["calories"],
+    totalWeight: json["totalWeight"],
+    totalTime: json["totalTime"],
   );
 
-  // Convert our Note to JSON to make it easier when we store it in the database
+  // Convert our Recipe to JSON to make it easier when we store it in the database
   Map<String, dynamic> toJson() => {
     "_id": id,
     "label": label,
     "image": image,
     "url": url,
+    "calories": calories,
+    "totalWeight": totalWeight,
+    "totalTime": totalTime,
   };
 }

@@ -12,17 +12,24 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
   final String label;
   final String image;
   final String url;
+  final double calories;
+  final double totalWeight;
+  final double totalTime;
   MoorRecipeData(
       {@required this.id,
       @required this.label,
       @required this.image,
-      @required this.url});
+      @required this.url,
+      @required this.calories,
+      @required this.totalWeight,
+      @required this.totalTime});
   factory MoorRecipeData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
+    final doubleType = db.typeSystem.forDartType<double>();
     return MoorRecipeData(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       label:
@@ -30,6 +37,12 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
       image:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}image']),
       url: stringType.mapFromDatabaseResponse(data['${effectivePrefix}url']),
+      calories: doubleType
+          .mapFromDatabaseResponse(data['${effectivePrefix}calories']),
+      totalWeight: doubleType
+          .mapFromDatabaseResponse(data['${effectivePrefix}total_weight']),
+      totalTime: doubleType
+          .mapFromDatabaseResponse(data['${effectivePrefix}total_time']),
     );
   }
   @override
@@ -47,6 +60,15 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
     if (!nullToAbsent || url != null) {
       map['url'] = Variable<String>(url);
     }
+    if (!nullToAbsent || calories != null) {
+      map['calories'] = Variable<double>(calories);
+    }
+    if (!nullToAbsent || totalWeight != null) {
+      map['total_weight'] = Variable<double>(totalWeight);
+    }
+    if (!nullToAbsent || totalTime != null) {
+      map['total_time'] = Variable<double>(totalTime);
+    }
     return map;
   }
 
@@ -58,6 +80,15 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
       image:
           image == null && nullToAbsent ? const Value.absent() : Value(image),
       url: url == null && nullToAbsent ? const Value.absent() : Value(url),
+      calories: calories == null && nullToAbsent
+          ? const Value.absent()
+          : Value(calories),
+      totalWeight: totalWeight == null && nullToAbsent
+          ? const Value.absent()
+          : Value(totalWeight),
+      totalTime: totalTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(totalTime),
     );
   }
 
@@ -69,6 +100,9 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
       label: serializer.fromJson<String>(json['label']),
       image: serializer.fromJson<String>(json['image']),
       url: serializer.fromJson<String>(json['url']),
+      calories: serializer.fromJson<double>(json['calories']),
+      totalWeight: serializer.fromJson<double>(json['totalWeight']),
+      totalTime: serializer.fromJson<double>(json['totalTime']),
     );
   }
   @override
@@ -79,15 +113,28 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
       'label': serializer.toJson<String>(label),
       'image': serializer.toJson<String>(image),
       'url': serializer.toJson<String>(url),
+      'calories': serializer.toJson<double>(calories),
+      'totalWeight': serializer.toJson<double>(totalWeight),
+      'totalTime': serializer.toJson<double>(totalTime),
     };
   }
 
-  MoorRecipeData copyWith({int id, String label, String image, String url}) =>
+  MoorRecipeData copyWith(
+          {int id,
+          String label,
+          String image,
+          String url,
+          double calories,
+          double totalWeight,
+          double totalTime}) =>
       MoorRecipeData(
         id: id ?? this.id,
         label: label ?? this.label,
         image: image ?? this.image,
         url: url ?? this.url,
+        calories: calories ?? this.calories,
+        totalWeight: totalWeight ?? this.totalWeight,
+        totalTime: totalTime ?? this.totalTime,
       );
   @override
   String toString() {
@@ -95,14 +142,25 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
           ..write('id: $id, ')
           ..write('label: $label, ')
           ..write('image: $image, ')
-          ..write('url: $url')
+          ..write('url: $url, ')
+          ..write('calories: $calories, ')
+          ..write('totalWeight: $totalWeight, ')
+          ..write('totalTime: $totalTime')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => $mrjf($mrjc(
-      id.hashCode, $mrjc(label.hashCode, $mrjc(image.hashCode, url.hashCode))));
+      id.hashCode,
+      $mrjc(
+          label.hashCode,
+          $mrjc(
+              image.hashCode,
+              $mrjc(
+                  url.hashCode,
+                  $mrjc(calories.hashCode,
+                      $mrjc(totalWeight.hashCode, totalTime.hashCode)))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -110,7 +168,10 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
           other.id == this.id &&
           other.label == this.label &&
           other.image == this.image &&
-          other.url == this.url);
+          other.url == this.url &&
+          other.calories == this.calories &&
+          other.totalWeight == this.totalWeight &&
+          other.totalTime == this.totalTime);
 }
 
 class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
@@ -118,31 +179,49 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
   final Value<String> label;
   final Value<String> image;
   final Value<String> url;
+  final Value<double> calories;
+  final Value<double> totalWeight;
+  final Value<double> totalTime;
   const MoorRecipeCompanion({
     this.id = const Value.absent(),
     this.label = const Value.absent(),
     this.image = const Value.absent(),
     this.url = const Value.absent(),
+    this.calories = const Value.absent(),
+    this.totalWeight = const Value.absent(),
+    this.totalTime = const Value.absent(),
   });
   MoorRecipeCompanion.insert({
     this.id = const Value.absent(),
     @required String label,
     @required String image,
     @required String url,
+    @required double calories,
+    @required double totalWeight,
+    @required double totalTime,
   })  : label = Value(label),
         image = Value(image),
-        url = Value(url);
+        url = Value(url),
+        calories = Value(calories),
+        totalWeight = Value(totalWeight),
+        totalTime = Value(totalTime);
   static Insertable<MoorRecipeData> custom({
     Expression<int> id,
     Expression<String> label,
     Expression<String> image,
     Expression<String> url,
+    Expression<double> calories,
+    Expression<double> totalWeight,
+    Expression<double> totalTime,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (label != null) 'label': label,
       if (image != null) 'image': image,
       if (url != null) 'url': url,
+      if (calories != null) 'calories': calories,
+      if (totalWeight != null) 'total_weight': totalWeight,
+      if (totalTime != null) 'total_time': totalTime,
     });
   }
 
@@ -150,12 +229,18 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
       {Value<int> id,
       Value<String> label,
       Value<String> image,
-      Value<String> url}) {
+      Value<String> url,
+      Value<double> calories,
+      Value<double> totalWeight,
+      Value<double> totalTime}) {
     return MoorRecipeCompanion(
       id: id ?? this.id,
       label: label ?? this.label,
       image: image ?? this.image,
       url: url ?? this.url,
+      calories: calories ?? this.calories,
+      totalWeight: totalWeight ?? this.totalWeight,
+      totalTime: totalTime ?? this.totalTime,
     );
   }
 
@@ -174,6 +259,15 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
     if (url.present) {
       map['url'] = Variable<String>(url.value);
     }
+    if (calories.present) {
+      map['calories'] = Variable<double>(calories.value);
+    }
+    if (totalWeight.present) {
+      map['total_weight'] = Variable<double>(totalWeight.value);
+    }
+    if (totalTime.present) {
+      map['total_time'] = Variable<double>(totalTime.value);
+    }
     return map;
   }
 
@@ -183,7 +277,10 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
           ..write('id: $id, ')
           ..write('label: $label, ')
           ..write('image: $image, ')
-          ..write('url: $url')
+          ..write('url: $url, ')
+          ..write('calories: $calories, ')
+          ..write('totalWeight: $totalWeight, ')
+          ..write('totalTime: $totalTime')
           ..write(')'))
         .toString();
   }
@@ -239,8 +336,47 @@ class $MoorRecipeTable extends MoorRecipe
     );
   }
 
+  final VerificationMeta _caloriesMeta = const VerificationMeta('calories');
+  GeneratedRealColumn _calories;
   @override
-  List<GeneratedColumn> get $columns => [id, label, image, url];
+  GeneratedRealColumn get calories => _calories ??= _constructCalories();
+  GeneratedRealColumn _constructCalories() {
+    return GeneratedRealColumn(
+      'calories',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _totalWeightMeta =
+      const VerificationMeta('totalWeight');
+  GeneratedRealColumn _totalWeight;
+  @override
+  GeneratedRealColumn get totalWeight =>
+      _totalWeight ??= _constructTotalWeight();
+  GeneratedRealColumn _constructTotalWeight() {
+    return GeneratedRealColumn(
+      'total_weight',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _totalTimeMeta = const VerificationMeta('totalTime');
+  GeneratedRealColumn _totalTime;
+  @override
+  GeneratedRealColumn get totalTime => _totalTime ??= _constructTotalTime();
+  GeneratedRealColumn _constructTotalTime() {
+    return GeneratedRealColumn(
+      'total_time',
+      $tableName,
+      false,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, label, image, url, calories, totalWeight, totalTime];
   @override
   $MoorRecipeTable get asDslTable => this;
   @override
@@ -272,6 +408,26 @@ class $MoorRecipeTable extends MoorRecipe
           _urlMeta, url.isAcceptableOrUnknown(data['url'], _urlMeta));
     } else if (isInserting) {
       context.missing(_urlMeta);
+    }
+    if (data.containsKey('calories')) {
+      context.handle(_caloriesMeta,
+          calories.isAcceptableOrUnknown(data['calories'], _caloriesMeta));
+    } else if (isInserting) {
+      context.missing(_caloriesMeta);
+    }
+    if (data.containsKey('total_weight')) {
+      context.handle(
+          _totalWeightMeta,
+          totalWeight.isAcceptableOrUnknown(
+              data['total_weight'], _totalWeightMeta));
+    } else if (isInserting) {
+      context.missing(_totalWeightMeta);
+    }
+    if (data.containsKey('total_time')) {
+      context.handle(_totalTimeMeta,
+          totalTime.isAcceptableOrUnknown(data['total_time'], _totalTimeMeta));
+    } else if (isInserting) {
+      context.missing(_totalTimeMeta);
     }
     return context;
   }

@@ -11,15 +11,15 @@ class Ingredient extends Equatable {
   @override
   List<Object> get props => [recipeId, name, weight];
 
-  // Create a Recipe from JSON data
-  factory Ingredient.fromJson(Map<String, dynamic> json) => new Ingredient(
+  // Create a Ingredient from JSON data
+  factory Ingredient.fromJson(Map<String, dynamic> json) => Ingredient(
     id: json["_id"],
     recipeId: json["recipeId"],
     name: json["name"],
     weight: json["weight"],
   );
 
-  // Convert our Note to JSON to make it easier when we store it in the database
+  // Convert our Ingredient to JSON to make it easier when we store it in the database
   Map<String, dynamic> toJson() => {
     "_id": id,
     "recipeId": recipeId,
