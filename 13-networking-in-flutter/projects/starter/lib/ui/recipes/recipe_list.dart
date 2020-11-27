@@ -232,6 +232,7 @@ class _RecipeListState extends State<RecipeList> {
     return GestureDetector(
       onTap: () {
       },
+      // TODO: Replace with new card method
       child: recipeStringCard(recipe.image, recipe.label),
     );
   }
