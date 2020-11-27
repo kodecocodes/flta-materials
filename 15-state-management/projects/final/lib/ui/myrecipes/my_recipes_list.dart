@@ -76,6 +76,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
                         leading: CachedNetworkImage(
                             imageUrl: recipe.image,
                             height: 120,
+                            width: 60,
                             fit: BoxFit.cover),
                         title: Text(recipe.label),
                       ),
@@ -109,9 +110,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
   }
 
   void deleteRecipe(MemoryRepository repository, Recipe recipe) async {
-    if (recipe.ingredients != null) {
-      await repository.deleteIngredients(recipe.ingredients);
-    }
+    await repository.deleteRecipeIngredients(recipe.id);
     await repository.deleteRecipe(recipe);
     setState(() {});
   }
