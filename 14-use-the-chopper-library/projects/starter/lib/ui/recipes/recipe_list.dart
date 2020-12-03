@@ -215,9 +215,10 @@ class _RecipeListState extends State<RecipeList> {
     if (searchTextController.text.length < 3) {
       return Container();
     }
+    // TODO: change with new response
     return FutureBuilder<APIRecipeQuery>(
-      future: getRecipeData(searchTextController.text.trim(),
-          currentStartPosition, currentEndPosition),
+      // TODO: change with new RecipeService
+      future: getRecipeData(searchTextController.text.trim(), currentStartPosition, currentEndPosition),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
@@ -231,6 +232,7 @@ class _RecipeListState extends State<RecipeList> {
           }
 
           loading = false;
+          // TODO: change with new snapshot
           final query = snapshot.data;
           inErrorState = false;
           currentCount = query.count;
