@@ -29,7 +29,7 @@
  */
 import 'dart:math';
 
-import 'package:recipes/ui/widgets/custom_dropdown.dart';
+import '../widgets/custom_dropdown.dart';
 
 import '../../network/recipe_service.dart';
 import 'package:chopper/chopper.dart';
