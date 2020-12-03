@@ -31,9 +31,9 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:recipes/network/recipe_model.dart';
-import 'package:recipes/network/recipe_service.dart';
-import 'package:recipes/ui/widgets/custom_dropdown.dart';
+import '../../network/recipe_model.dart';
+import '../../network/recipe_service.dart';
+import '../widgets/custom_dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../colors.dart';
