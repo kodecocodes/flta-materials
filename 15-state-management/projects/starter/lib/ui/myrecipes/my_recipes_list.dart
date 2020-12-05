@@ -37,8 +37,10 @@ class MyRecipesList extends StatefulWidget {
 }
 
 class _MyRecipesListState extends State<MyRecipesList> {
+  // TODO 1
   List<String> recipes;
 
+  // TODO 2
   @override
   void initState() {
     super.initState();
@@ -54,9 +56,11 @@ class _MyRecipesListState extends State<MyRecipesList> {
   }
 
   Widget _buildRecipeList(BuildContext context) {
+    // TODO 3
     return ListView.builder(
         itemCount: recipes.length,
         itemBuilder: (BuildContext context, int index) {
+          // TODO 4
           return SizedBox(
             height: 100,
             child: Slidable(
@@ -74,11 +78,13 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
                       leading: CachedNetworkImage(
-                          imageUrl:
+                        // TODO 5
+                      imageUrl:
                               "http://www.seriouseats.com/recipes/2011/12/chicken-vesuvio-recipe.html",
                           height: 120,
                           width: 60,
                           fit: BoxFit.cover),
+                      // TODO 6
                       title: Text("Chicken Vesuvio"),
                     ),
                   ),
@@ -90,6 +96,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     color: Colors.transparent,
                     foregroundColor: Colors.black,
                     iconWidget: Icon(Icons.delete, color: Colors.red),
+                    // TODO 7
                     onTap: () {})
               ],
               secondaryActions: <Widget>[
@@ -98,10 +105,12 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     color: Colors.transparent,
                     foregroundColor: Colors.black,
                     iconWidget: Icon(Icons.delete, color: Colors.red),
+                    // TODO 8
                     onTap: () {})
               ],
             ),
           );
         });
+    // TODO 9
   }
 }

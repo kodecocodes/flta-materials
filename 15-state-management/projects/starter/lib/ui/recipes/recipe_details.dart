@@ -53,6 +53,7 @@ class RecipeDetails extends StatelessWidget {
               Align(
                 alignment: Alignment.topLeft,
                 child: CachedNetworkImage(
+                  // TODO 1
                   imageUrl: "https://www.edamam.com/web-img/e42/e42f9119813e890af34c259785ae1cfb.jpg",
                   alignment: Alignment.topLeft,
                   fit: BoxFit.fill,
@@ -76,7 +77,8 @@ class RecipeDetails extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 16.0),
             child: Text(
-              "Chicken Vesuvio",
+              // TODO 2
+            "Chicken Vesuvio",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
           ),
@@ -86,7 +88,8 @@ class RecipeDetails extends StatelessWidget {
           Padding(
               padding: const EdgeInsets.only(left: 16.0),
               child: Chip(
-                label: Text('16CAL'),
+                // TODO 3
+              label: Text('16CAL'),
               )),
           SizedBox(
             height: 16,
@@ -98,6 +101,7 @@ class RecipeDetails extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16.0),
               ),
               onPressed: ()  {
+                // TODO 4
                 Navigator.pop(context);
               },
               icon: SvgPicture.asset(
