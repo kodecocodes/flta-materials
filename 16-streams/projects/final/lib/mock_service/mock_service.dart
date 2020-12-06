@@ -3,9 +3,9 @@ import 'dart:math';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:recipes/network/model_response.dart';
-import 'package:recipes/network/recipe_model.dart';
-import 'package:recipes/network/service_interface.dart';
+import '../network/model_response.dart';
+import '../network/recipe_model.dart';
+import '../network/service_interface.dart';
 
 class MockService implements ServiceInterface{
   APIRecipeQuery _currentRecipes1;

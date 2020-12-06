@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
           FutureProvider(
             create: (_) async {
               var service = MockService();
-              service.create();
+              await service.create();
               return service;
             },
             lazy: false,

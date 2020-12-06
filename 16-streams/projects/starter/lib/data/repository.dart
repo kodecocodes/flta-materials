@@ -8,7 +8,7 @@ abstract class Repository {
 
   List<Ingredient> findAllIngredients();
 
-  List<Ingredient> findRecipeIngredients(int id);
+  List<Ingredient> findRecipeIngredients(int recipeId);
 
   int insertRecipe(Recipe recipe);
 

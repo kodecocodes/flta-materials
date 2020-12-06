@@ -32,7 +32,6 @@ import 'dart:math';
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:recipes/network/service_interface.dart';
 import 'package:recipes/ui/widgets/custom_dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -42,6 +41,7 @@ import '../../network/model_response.dart';
 import '../../network/recipe_model.dart';
 import '../recipe_card.dart';
 import '../recipes/recipe_details.dart';
+import '../../network/service_interface.dart';
 
 class RecipeList extends StatefulWidget {
   @override

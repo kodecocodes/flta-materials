@@ -2,7 +2,7 @@
 
 import 'dart:core';
 import 'package:flutter/foundation.dart';
-import 'package:recipes/data/repository.dart';
+import 'repository.dart';
 import 'models/models.dart';
 
 class MemoryRepository extends Repository with ChangeNotifier {
@@ -16,7 +16,7 @@ class MemoryRepository extends Repository with ChangeNotifier {
 
   @override
   Recipe findRecipeById(int id) {
-    return _currentRecipes.firstWhere((element) => element.id == id);
+    return _currentRecipes.firstWhere((recipe) => recipe.id == id);
   }
 
   @override
@@ -25,9 +25,9 @@ class MemoryRepository extends Repository with ChangeNotifier {
   }
 
   @override
-  List<Ingredient> findRecipeIngredients(int id) {
-    var recipe = _currentRecipes.firstWhere((element) => element.id == id);
-    var recipeIngredients = _currentIngredients.where((element) => element.recipeId == recipe.id).toList();
+  List<Ingredient> findRecipeIngredients(int recipeId) {
+    var recipe = _currentRecipes.firstWhere((recipe) => recipe.id == recipeId);
+    var recipeIngredients = _currentIngredients.where((ingredient) => ingredient.recipeId == recipe.id).toList();
     return recipeIngredients;
   }
 
@@ -68,7 +68,9 @@ class MemoryRepository extends Repository with ChangeNotifier {
 
   @override
   void deleteRecipeIngredients(int recipeId) {
-    _currentIngredients.removeWhere((ingredient) => ingredient.recipeId == recipeId);
+    _currentIngredients
+        .removeWhere((ingredient) => ingredient.recipeId == recipeId);
+    notifyListeners();
   }
 
   @override

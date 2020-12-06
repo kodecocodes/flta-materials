@@ -30,7 +30,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:recipes/data/models/models.dart';
+import '../data/models/models.dart';
 
 part 'recipe_model.g.dart';
 
