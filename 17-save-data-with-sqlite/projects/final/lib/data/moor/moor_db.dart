@@ -1,8 +1,6 @@
-import 'dart:io';
 
-import 'package:moor/moor.dart';
 import 'package:moor_flutter/moor_flutter.dart';
-import 'package:recipes/data/models/models.dart';
+import '../models/models.dart';
 
 part 'moor_db.g.dart';
 

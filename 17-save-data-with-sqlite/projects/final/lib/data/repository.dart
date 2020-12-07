@@ -12,7 +12,7 @@ abstract class Repository {
 
   Future<List<Ingredient>> findAllIngredients();
 
-  Future<List<Ingredient>> findRecipeIngredients(int id);
+  Future<List<Ingredient>> findRecipeIngredients(int recipeId);
 
   Future<int> insertRecipe(Recipe recipe);
 

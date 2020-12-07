@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:recipes/data/models/models.dart';
+import '../models/models.dart';
 
 import '../repository.dart';
 import 'moor_db.dart';
@@ -70,8 +70,8 @@ class MoorRepository extends Repository {
   }
 
   @override
-  Future<List<Ingredient>> findRecipeIngredients(int id) {
-    return _ingredientDao.findRecipeIngredients(id).then((listOfIngredients) {
+  Future<List<Ingredient>> findRecipeIngredients(int recipeId) {
+    return _ingredientDao.findRecipeIngredients(recipeId).then((listOfIngredients) {
       List<Ingredient> ingredients = List<Ingredient>();
       listOfIngredients.forEach((ingredient) {
         ingredients.add(moorIngredientToIngredient(ingredient));

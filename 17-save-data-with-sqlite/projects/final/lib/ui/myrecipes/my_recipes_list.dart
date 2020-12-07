@@ -31,8 +31,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
-import 'package:recipes/data/models/recipe.dart';
-import 'package:recipes/data/repository.dart';
+import '../../data/models/recipe.dart';
+import '../../data/repository.dart';
 
 class MyRecipesList extends StatefulWidget {
   @override

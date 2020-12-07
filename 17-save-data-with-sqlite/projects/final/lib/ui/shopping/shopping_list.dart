@@ -29,8 +29,8 @@
  */
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:recipes/data/models/ingredient.dart';
-import 'package:recipes/data/repository.dart';
+import '../../data/models/ingredient.dart';
+import '../../data/repository.dart';
 
 class ShoppingList extends StatelessWidget {
   @override

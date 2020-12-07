@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:core';
 
-import 'package:recipes/data/repository.dart';
+import 'repository.dart';
 
 import 'models/models.dart';
 
@@ -38,7 +38,7 @@ class MemoryRepository extends Repository {
   @override
   Future<Recipe> findRecipeById(int id) {
     return Future.value(
-        _currentRecipes.firstWhere((element) => element.id == id));
+        _currentRecipes.firstWhere((recipe) => recipe.id == id));
   }
 
   @override
@@ -47,9 +47,9 @@ class MemoryRepository extends Repository {
   }
 
   @override
-  Future<List<Ingredient>> findRecipeIngredients(int id) {
-    var recipe = _currentRecipes.firstWhere((element) => element.id == id);
-    var recipeIngredients = _currentIngredients.where((element) => element.recipeId == recipe.id).toList();
+  Future<List<Ingredient>> findRecipeIngredients(int recipeId) {
+    var recipe = _currentRecipes.firstWhere((recipe) => recipe.id == recipeId);
+    var recipeIngredients = _currentIngredients.where((ingredient) => ingredient.recipeId == recipe.id).toList();
     return Future.value(recipeIngredients);
   }
 
@@ -75,7 +75,7 @@ class MemoryRepository extends Repository {
   Future<void> deleteRecipe(Recipe recipe) {
     _currentRecipes.remove(recipe);
     _recipeStreamController.sink.add(_currentRecipes);
-    deleteIngredients(recipe.ingredients);
+    deleteRecipeIngredients(recipe.id);
     return Future.value();
   }
 

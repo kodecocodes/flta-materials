@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:recipes/data/repository.dart';
-import 'package:recipes/data/sqlite/database_helper.dart';
+import '../repository.dart';
+import 'database_helper.dart';
 import '../models/models.dart';
 
 class SqliteRepository extends Repository {
@@ -74,7 +74,7 @@ class SqliteRepository extends Repository {
   @override
   Future<void> deleteRecipe(Recipe recipe) {
     dbHelper.deleteRecipe(recipe);
-    deleteIngredients(recipe.ingredients);
+    deleteRecipeIngredients(recipe.id);
     return Future.value();
   }
 
