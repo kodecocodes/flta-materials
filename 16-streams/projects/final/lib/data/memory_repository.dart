@@ -75,7 +75,7 @@ class MemoryRepository extends Repository {
   Future<void> deleteRecipe(Recipe recipe) {
     _currentRecipes.remove(recipe);
     _recipeStreamController.sink.add(_currentRecipes);
-    deleteIngredients(recipe.ingredients);
+    deleteRecipeIngredients(recipe.id);
     return Future.value();
   }
 

@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'ingredient.dart';
 
 class Recipe extends Equatable {
-  final int id;
+  int id;
   final String label;
   final String image;
   final String url;

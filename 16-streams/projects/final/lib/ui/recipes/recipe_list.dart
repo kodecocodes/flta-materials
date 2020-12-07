@@ -39,6 +39,7 @@ import '../../data/models/models.dart';
 import '../../mock_service/mock_service.dart';
 import '../../network/model_response.dart';
 import '../../network/recipe_model.dart';
+import '../colors.dart';
 import '../recipe_card.dart';
 import '../recipes/recipe_details.dart';
 import '../../network/service_interface.dart';
@@ -163,7 +164,7 @@ class _RecipeListState extends State<RecipeList> {
                     controller: searchTextController,
                   )),
                   PopupMenuButton<String>(
-                    icon: const Icon(Icons.arrow_drop_down),
+                    icon: const Icon(Icons.arrow_drop_down, color: lightGrey,),
                     onSelected: (String value) {
                       searchTextController.text = value;
                       startSearch(searchTextController.text);

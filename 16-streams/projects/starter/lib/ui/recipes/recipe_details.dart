@@ -46,78 +46,82 @@ class RecipeDetails extends StatelessWidget {
     MemoryRepository repository = Provider.of<MemoryRepository>(context);
     var size = MediaQuery.of(context).size;
     return Scaffold(
-        body: SafeArea(
-            child: SingleChildScrollView(
-                child: Container(
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Stack(
-            children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: CachedNetworkImage(
-                  imageUrl: recipe.image,
-                  alignment: Alignment.topLeft,
-                  fit: BoxFit.fill,
-                  width: size.width,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: CachedNetworkImage(
+                        imageUrl: recipe.image,
+                        alignment: Alignment.topLeft,
+                        fit: BoxFit.fill,
+                        width: size.width,
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        decoration:
+                            BoxDecoration(shape: BoxShape.circle, color: shim),
+                        child: BackButton(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Container(
-                  decoration: BoxDecoration(shape: BoxShape.circle, color: shim),
-                  child: BackButton(
-                    color: Colors.white,
+                SizedBox(
+                  height: 16,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Text(
+                    recipe.label,
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: Text(
-              recipe.label,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                SizedBox(
+                  height: 16,
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: Chip(
+                      label: Text(getCalories(recipe.calories)),
+                    )),
+                SizedBox(
+                  height: 16,
+                ),
+                Center(
+                  child: RaisedButton.icon(
+                    color: green,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    onPressed: () {
+                      repository.insertRecipe(recipe);
+                      Navigator.pop(context);
+                    },
+                    icon: SvgPicture.asset(
+                      'assets/images/icon_bookmark.svg',
+                      color: Colors.white,
+                    ),
+                    label: Text(
+                      "Bookmark",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          SizedBox(
-            height: 16,
-          ),
-          Padding(
-              padding: const EdgeInsets.only(left: 16.0),
-              child: Chip(
-                label: Text(getCalories(recipe.calories)),
-              )),
-          SizedBox(
-            height: 16,
-          ),
-          Center(
-            child: RaisedButton.icon(
-              color: green,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              onPressed: () {
-                repository.insertRecipe(recipe);
-                Navigator.pop(context);
-              },
-              icon: SvgPicture.asset(
-                'assets/images/icon_bookmark.svg',
-                color: Colors.white,
-              ),
-              label: Text(
-                "Bookmark",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
-    ))));
+    );
   }
 }
