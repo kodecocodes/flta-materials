@@ -32,22 +32,23 @@ import 'package:chopper/chopper.dart';
 import 'recipe_model.dart';
 import 'model_response.dart';
 import 'model_converter.dart';
+import 'service_interface.dart';
 
 part 'recipe_service.chopper.dart';
 
 const String apiKey = '<Your Key Here>';
 const String apiId = '<Your Id here>';
-const String APIURL = 'https://api.edamam.com';
+const String apiUrl = 'https://api.edamam.com';
 
 @ChopperApi()
-abstract class RecipeService extends ChopperService {
+abstract class RecipeService extends ChopperService implements ServiceInterface {
 
   @Get(path: 'search')
   Future<Response<Result<APIRecipeQuery>>> queryRecipes(@Query('q') String query, @Query('from') int from, @Query('to') int to);
 
   static RecipeService create() {
     final client = ChopperClient(
-      baseUrl: APIURL,
+      baseUrl: apiUrl,
       interceptors: [_addQuery, HttpLoggingInterceptor()],
       converter: ModelConverter(),
       errorConverter: JsonConverter(),
