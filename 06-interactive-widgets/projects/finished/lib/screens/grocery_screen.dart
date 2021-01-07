@@ -29,40 +29,55 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'empty_grocery_screen.dart';
 import '../models/models.dart';
+import 'package:provider/provider.dart';
+import 'grocery_item_screen.dart';
+import 'grocery_list_screen.dart';
 
-class EmptyGroceryScreen extends StatelessWidget {
-  const EmptyGroceryScreen({Key key}) : super(key: key);
-
+class GroceryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 1
-    return Padding(
-      padding: EdgeInsets.all(30.0),
+    return Scaffold(
       // 2
-      child: Center(
-          // 3
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, 
-            children: [
-              AspectRatio(
-                aspectRatio: 1,
-                child: Image.asset("assets/fooderlich_assets/empty_list.png")),
-              SizedBox(height: 16),
-              Text("No Groceries", style: TextStyle(fontSize: 21)),
-              SizedBox(height: 16),
-              Text("Shopping for ingredients? Write them down!", textAlign: TextAlign.center),
-              MaterialButton(
-                textColor: Colors.white,
-                child: Text("Browse Recipes"),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0)),
-                color: Colors.green,
-                onPressed: () {
-                  Provider.of<TabManager>(context, listen: false).goToRecipes();
-              })
-            ]))
-    );
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            // 1
+            GroceryManager manager = Provider.of<GroceryManager>(context, listen: false);
+            // 2
+            Navigator.push(
+              context,
+              // 3
+              MaterialPageRoute(
+                // 4
+                builder: (context) => GroceryItemScreen(
+                  // 5
+                  onCreate: (item) {
+                    // 6
+                    manager.addItem(item);
+                    // 7
+                    Navigator.pop(context);
+                  },
+                )));
+          }),
+      // 3
+      body: buildGroceryScreen());
   }
+
+  buildGroceryScreen() {
+      // 4
+      return Consumer<GroceryManager>(
+        // 5
+        builder: (context, manager, child) {
+        // 6
+        if (manager.groceryItems.isNotEmpty) {
+          return GroceryListScreen(manager: manager);
+        } else {
+          // 7
+          return EmptyGroceryScreen();
+        }
+      });
+    }
 }

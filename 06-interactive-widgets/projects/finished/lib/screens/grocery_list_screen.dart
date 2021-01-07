@@ -1,87 +1,98 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+/*
+ * Copyright (c) 2020 Razeware LLC
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
+ * distribute, sublicense, create a derivative work, and/or sell copies of the
+ * Software in any work that is designed, intended, or marketed for pedagogical or
+ * instructional purposes related to programming, coding, application development,
+ * or information technology.  Permission for such use, copying, modification,
+ * merger, publication, distribution, sublicensing, creation of derivative works,
+ * or sale is expressly withheld.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
-import '../models/grocery_manager.dart';
+import 'package:flutter/material.dart';
 import '../components/grocery_tile.dart';
-import '../screens/empty_grocery_screen.dart';
+import '../models/models.dart';
 import 'grocery_item_screen.dart';
 
-class GroceryListScreen extends StatefulWidget {
-  @override
-  _GroceryListScreenState createState() => _GroceryListScreenState();
-}
+class GroceryListScreen extends StatelessWidget {
+  final GroceryManager manager;
 
-class _GroceryListScreenState extends State<GroceryListScreen> {
+  const GroceryListScreen({Key key, this.manager}) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
-    GroceryManager manager =
-        Provider.of<GroceryManager>(context, listen: false);
-
-    return Scaffold(
-        floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => GroceryItemScreen(
-                            onCreate: (item) {
-                              manager.addItem(item);
-                              // manager.addItem(item);
-                              Navigator.pop(context);
-                            },
-                          )));
-            }),
-        body: buildGroceryScreen());
-  }
-
-  buildGroceryScreen() {
-    // GroceryManager manager = Provider.of<GroceryManager>(context, listen: false);
-    return Consumer<GroceryManager>(builder: (context, manager, child) {
-      var groceryItems = manager.groceryItems;
-      if (groceryItems.isNotEmpty) {
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: ListView.separated(
-              itemCount: groceryItems.length,
-              itemBuilder: (context, index) {
-                var item = groceryItems[index];
-                return Dismissible(
-                    key: Key(item.id),
-                    background: Container(color: Colors.red),
-                    onDismissed: (direction) {
-                      manager.deleteItem(index);
-                      // Show a snackbar. This snackbar could also contain "Undo" actions.
-                      Scaffold.of(context).showSnackBar(
-                          SnackBar(content: Text("${item.title} dismissed")));
-                    },
-                    child: InkWell(
-                        child: GroceryTile(
-                            key: Key(item.id),
-                            item: item,
-                            onComplete: (change) {
-                              manager.completeItem(index, change);
-                            }),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => GroceryItemScreen(
-                                        originalItem: item,
-                                        onUpdate: (item) {
-                                          manager.updateItem(item, index);
-                                          Navigator.pop(context);
-                                        },
-                                      )));
-                        }));
+    // 1
+    var groceryItems = manager.groceryItems;
+    // 2
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      // 3
+      child: ListView.separated(
+          // 4
+          itemCount: groceryItems.length,
+          itemBuilder: (context, index) {
+            var item = groceryItems[index];
+            return Dismissible(
+              // 1
+              key: Key(item.id),
+              // 2
+              background: Container(color: Colors.red),
+              // 3
+              onDismissed: (direction) {
+                // 4
+                manager.deleteItem(index);
+                // 5
+                Scaffold.of(context).showSnackBar(
+                    SnackBar(content: Text("${item.name} dismissed")));
               },
-              separatorBuilder: (context, index) {
-                return SizedBox(height: 16);
-              }),
-        );
-      } else {
-        return EmptyGroceryScreen();
-      }
-    });
+              child: InkWell(
+                child: GroceryTile(
+                  key: Key(item.id),
+                  item: item,
+                  onComplete: (change) {
+                    manager.completeItem(index, change);
+                }),
+                // 2
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => GroceryItemScreen(
+                          originalItem: item,
+                          // 3
+                          onUpdate: (item) {
+                            // 4
+                            manager.updateItem(item, index);
+                            // 5
+                            Navigator.pop(context);
+                          },
+                        )));
+              },
+            ));
+          },
+          // 8
+          separatorBuilder: (context, index) {
+            return SizedBox(height: 16);
+          }),
+    );
   }
 }

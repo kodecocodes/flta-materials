@@ -11,8 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^1.1.0
-  provider: ^4.3.2+2
-  equatable: ^1.2.5
+  provider: ^4.3.2+3
   flutter_colorpicker: ^0.3.4
   intl: ^0.16.1
   uuid: ^2.2.2
