@@ -56,7 +56,7 @@ class ModelConverter implements Converter {
     try {
       var mapData = json.decode(body);
       if (mapData["status"] != null) {
-        return response.copyWith<BodyType>(body: Error(Exception(mapData["status"])) as BodyType);
+        return response.copyWith<BodyType>(body: null);
       }
       var recipeQuery = APIRecipeQuery.fromJson(mapData);
       return response.copyWith<BodyType>(body: Success(recipeQuery) as BodyType);

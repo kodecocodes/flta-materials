@@ -29,17 +29,20 @@
  */
 import 'dart:math';
 
-import '../../ui/widgets/custom_dropdown.dart';
-
-import '../../network/recipe_service.dart';
 import 'package:chopper/chopper.dart';
-import '../../network/model_response.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:recipes/ui/widgets/custom_dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../data/models/models.dart';
+import '../../mock_service/mock_service.dart';
+import '../../network/model_response.dart';
+import '../../network/recipe_model.dart';
 import '../colors.dart';
 import '../recipe_card.dart';
 import '../recipes/recipe_details.dart';
-import '../../network/recipe_model.dart';
-import 'package:flutter/material.dart';
+import '../../network/service_interface.dart';
 
 class RecipeList extends StatefulWidget {
   @override
@@ -65,6 +68,7 @@ class _RecipeListState extends State<RecipeList> {
   void initState() {
     super.initState();
     getPreviousSearches();
+
     searchTextController = TextEditingController(text: "");
     _scrollController
       ..addListener(() {
@@ -160,7 +164,7 @@ class _RecipeListState extends State<RecipeList> {
                     controller: searchTextController,
                   )),
                   PopupMenuButton<String>(
-                    icon: const Icon(Icons.arrow_drop_down, color: lightGrey),
+                    icon: const Icon(Icons.arrow_drop_down, color: lightGrey,),
                     onSelected: (String value) {
                       searchTextController.text = value;
                       startSearch(searchTextController.text);
@@ -190,7 +194,7 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
-   void startSearch(String value) {
+  void startSearch(String value) {
     setState(() {
       currentSearchList.clear();
       currentCount = 0;
@@ -205,13 +209,15 @@ class _RecipeListState extends State<RecipeList> {
     });
   }
 
- Widget _buildRecipeLoader(BuildContext context) {
+  Widget _buildRecipeLoader(BuildContext context) {
     if (searchTextController.text.length < 3) {
       return Container();
     }
     return FutureBuilder<Response<Result<APIRecipeQuery>>>(
-      future: RecipeService.create().queryRecipes(searchTextController.text.trim(),
-          currentStartPosition, currentEndPosition),
+      future: Provider.of<ServiceInterface>(context).queryRecipes(
+          searchTextController.text.trim(),
+          currentStartPosition,
+          currentEndPosition),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
@@ -273,13 +279,22 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
-  Widget _buildRecipeCard(BuildContext topLevelContext, List hits, int index) {
+  Widget _buildRecipeCard(BuildContext topLevelContext, List<APIHits> hits,
+      int index) {
     APIRecipe recipe = hits[index].recipe;
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(
           builder: (context) {
-            return RecipeDetails();
+            var detailRecipe = Recipe(
+                label: recipe.label,
+                image: recipe.image,
+                url: recipe.url,
+                calories: recipe.calories,
+                totalTime: recipe.totalTime,
+                totalWeight: recipe.totalWeight);
+            detailRecipe.ingredients = convertIngredients(recipe.ingredients);
+            return RecipeDetails(detailRecipe);
           },
         ));
       },
