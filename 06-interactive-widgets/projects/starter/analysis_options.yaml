@@ -21,42 +21,42 @@ analyzer:
 linter:
   rules:
     - always_declare_return_types
+    - always_require_non_null_named_parameters
+    - annotate_overrides
+    - avoid_annotating_with_dynamic
+    - avoid_bool_literals_in_conditional_expressions
+    - avoid_empty_else
+    - avoid_unnecessary_containers
     - avoid_web_libraries_in_flutter
-    - file_names
+    - await_only_futures
     - camel_case_types
+    - cancel_subscriptions
+    - close_sinks
     - empty_statements
+    - file_names
+    - hash_and_equals
     - iterable_contains_unrelated_type
+    - lines_longer_than_80_chars
     - list_remove_unrelated_type
     - no_duplicate_case_values
-    - unrelated_type_equality_checks
+    - no_logic_in_create_state
     - omit_local_variable_types
+    - only_throw_errors
     - prefer_const_constructors
     - prefer_const_constructors_in_immutables
     - prefer_const_declarations
     - prefer_final_fields
-    - prefer_final_locals
     - prefer_final_in_for_each
-    - await_only_futures
-    - hash_and_equals
-    - avoid_annotating_with_dynamic
-    - avoid_unnecessary_containers
+    - prefer_final_locals
     - prefer_if_null_operators
     - prefer_null_aware_operators
-    - unnecessary_this
-    - unnecessary_const
-    - unnecessary_new
-    - avoid_empty_else
-    - cancel_subscriptions
-    - close_sinks
-    - no_logic_in_create_state
+    - prefer_single_quotes
     - prefer_void_to_null
-    - unnecessary_statements
-    - use_key_in_widget_constructors
-    - always_require_non_null_named_parameters
-    - annotate_overrides
-    - avoid_bool_literals_in_conditional_expressions
-    - lines_longer_than_80_chars
-    - only_throw_errors
     - sized_box_for_whitespace
     - unnecessary_await_in_return
-    - prefer_single_quotes
+    - unnecessary_const
+    - unnecessary_new
+    - unnecessary_statements
+    - unnecessary_this
+    - unrelated_type_equality_checks
+    - use_key_in_widget_constructors
