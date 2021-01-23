@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 
+// ignore: must_be_immutable
 class Ingredient extends Equatable {
-  final int id;
+  int id;
   int recipeId;
   final String name;
   final double weight;
