@@ -75,12 +75,13 @@ class _RecipeListState extends State<RecipeList> {
         padding: const EdgeInsets.all(4.0),
         child: Row(
           children: [
+            // Replace
             const Icon(Icons.search),
             const SizedBox(
               width: 6.0,
             ),
+            // ******** Replace ****************
             Expanded(
-              // ******** Replace ****************
               child: TextField(
                 decoration: const InputDecoration(
                     border: InputBorder.none, hintText: 'Search'),
@@ -99,8 +100,8 @@ class _RecipeListState extends State<RecipeList> {
                     }
                 },
               ),
-              // ******** Replace ****************
             ),
+            // ******** Replace ****************
           ],
         ),
       ),
