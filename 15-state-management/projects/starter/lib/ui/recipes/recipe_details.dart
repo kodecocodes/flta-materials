@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../colors.dart';
 
 class RecipeDetails extends StatelessWidget {
+  // TODO: Replace with new constructor
   const RecipeDetails({Key key}) : super(key: key);
 
   @override
