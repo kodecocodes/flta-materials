@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../colors.dart';
 import '../recipe_card.dart';
 import '../widgets/custom_dropdown.dart';
+import 'recipe_details.dart';
 
 class RecipeList extends StatefulWidget {
   @override
@@ -204,6 +205,11 @@ class _RecipeListState extends State<RecipeList> {
     final recipe = hits[index].recipe;
     return GestureDetector(
       onTap: () {
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) {
+            return const RecipeDetails();
+          },
+        ));
       },
       child: recipeStringCard(recipe.image, recipe.label),
     );
