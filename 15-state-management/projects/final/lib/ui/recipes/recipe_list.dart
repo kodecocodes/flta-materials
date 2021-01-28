@@ -268,7 +268,7 @@ class _RecipeListState extends State<RecipeList> {
                 totalTime: recipe.totalTime,
                 totalWeight: recipe.totalWeight);
             detailRecipe.ingredients = convertIngredients(recipe.ingredients);
-            return RecipeDetails(key: UniqueKey(), recipe: detailRecipe);
+            return RecipeDetails(recipe: detailRecipe);
           },
         ));
       },
