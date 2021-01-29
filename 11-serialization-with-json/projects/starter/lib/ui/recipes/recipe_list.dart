@@ -6,6 +6,7 @@ import '../colors.dart';
 import '../widgets/custom_dropdown.dart';
 
 class RecipeList extends StatefulWidget {
+  const RecipeList({Key key}) : super(key: key);
   @override
   _RecipeListState createState() => _RecipeListState();
 }

@@ -11,6 +11,7 @@ import '../widgets/custom_dropdown.dart';
 import 'recipe_details.dart';
 
 class RecipeList extends StatefulWidget {
+  const RecipeList({Key key}) : super(key: key);
   @override
   _RecipeListState createState() => _RecipeListState();
 }
@@ -200,8 +201,7 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
-  Widget _buildRecipeCard(BuildContext context, List<APIHits> hits,
-      int index) {
+  Widget _buildRecipeCard(BuildContext context, List<APIHits> hits, int index) {
     final recipe = hits[index].recipe;
     return GestureDetector(
       onTap: () {
