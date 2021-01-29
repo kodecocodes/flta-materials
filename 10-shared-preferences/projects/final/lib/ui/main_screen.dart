@@ -1,34 +1,5 @@
-/*
- * Copyright (c) 2020 Razeware LLC
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
- * distribute, sublicense, create a derivative work, and/or sell copies of the
- * Software in any work that is designed, intended, or marketed for pedagogical or
- * instructional purposes related to programming, coding, application development,
- * or information technology.  Permission for such use, copying, modification,
- * merger, publication, distribution, sublicensing, creation of derivative works,
- * or sale is expressly withheld.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:recipes/ui/colors.dart';
+import 'colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'myrecipes/my_recipes_list.dart';
@@ -37,31 +8,32 @@ import 'shopping/shopping_list.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
+  const MainScreen({Key key}) : super(key: key);
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen>  {
+class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   List<Widget> pageList = List<Widget>();
-  static const String prefSelectedIndexKey = "selectedIndex";
+  static const String prefSelectedIndexKey = 'selectedIndex';
 
   @override
   void initState() {
     super.initState();
-    pageList.add(RecipeList());
-    pageList.add(MyRecipesList());
+    pageList.add(const RecipeList());
+    pageList.add(const MyRecipesList());
     pageList.add(ShoppingList());
     getCurrentIndex();
   }
 
   void saveCurrentIndex() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     prefs.setInt(prefSelectedIndexKey, _selectedIndex);
   }
 
   void getCurrentIndex() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey(prefSelectedIndexKey)) {
       setState(() {
         _selectedIndex = prefs.getInt(prefSelectedIndexKey);
@@ -79,7 +51,7 @@ class _MainScreenState extends State<MainScreen>  {
   @override
   Widget build(BuildContext context) {
     String title;
-    switch(_selectedIndex) {
+    switch (_selectedIndex) {
       case 0:
         title = 'Recipes';
         break;
@@ -95,29 +67,20 @@ class _MainScreenState extends State<MainScreen>  {
         bottomNavigationBar: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                  'assets/images/icon_recipe.svg',
-                  color: _selectedIndex == 0 ? green : Colors.grey ,
-                  semanticsLabel: 'Recipes'
-              ),
-              title: Text("Recipes")
-            ),
+                icon: SvgPicture.asset('assets/images/icon_recipe.svg',
+                    color: _selectedIndex == 0 ? green : Colors.grey,
+                    semanticsLabel: 'Recipes'),
+                label: 'Recipes'),
             BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                    'assets/images/icon_bookmarks.svg',
-                    color: _selectedIndex == 1 ? green : Colors.grey ,
-                    semanticsLabel: 'Bookmarks'
-                ),
-              title: Text("Bookmarks")
-            ),
+                icon: SvgPicture.asset('assets/images/icon_bookmarks.svg',
+                    color: _selectedIndex == 1 ? green : Colors.grey,
+                    semanticsLabel: 'Bookmarks'),
+                label: 'Bookmarks'),
             BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                    'assets/images/icon_shopping_list.svg',
-                    color: _selectedIndex == 2 ? green : Colors.grey ,
-                    semanticsLabel: 'Groceries'
-                ),
-              title: Text("Groceries")
-            ),
+                icon: SvgPicture.asset('assets/images/icon_shopping_list.svg',
+                    color: _selectedIndex == 2 ? green : Colors.grey,
+                    semanticsLabel: 'Groceries'),
+                label: 'Groceries'),
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: green,
@@ -126,7 +89,11 @@ class _MainScreenState extends State<MainScreen>  {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
-          title: Text(title, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.black),),
+          title: Text(
+            title,
+            style: const TextStyle(
+                fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black),
+          ),
         ),
         body: IndexedStack(
           index: _selectedIndex,
@@ -135,5 +102,4 @@ class _MainScreenState extends State<MainScreen>  {
       ),
     );
   }
-
 }
