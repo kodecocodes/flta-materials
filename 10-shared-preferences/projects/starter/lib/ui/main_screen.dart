@@ -7,6 +7,7 @@ import 'shopping/shopping_list.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
+  const MainScreen({Key key}) : super(key: key);
   @override
   _MainScreenState createState() => _MainScreenState();
 }
@@ -18,8 +19,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    pageList.add(RecipeList());
-    pageList.add(MyRecipesList());
+    pageList.add(const RecipeList());
+    pageList.add(const MyRecipesList());
     pageList.add(ShoppingList());
   }
 
