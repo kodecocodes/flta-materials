@@ -11,6 +11,7 @@ import '../widgets/custom_dropdown.dart';
 import '../../network/recipe_service.dart';
 
 class RecipeList extends StatefulWidget {
+  const RecipeList({Key key}) : super(key: key);
   @override
   _RecipeListState createState() => _RecipeListState();
 }
