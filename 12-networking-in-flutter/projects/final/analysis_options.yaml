@@ -1,0 +1,62 @@
+analyzer:
+  exclude: [build/**]
+  errors:
+    missing_return: error
+    dead_code: error
+    always_declare_return_types: error
+    avoid_web_libraries_in_flutter: error
+    missing_required_param: error
+    file_names: error
+    camel_case_types: error
+    empty_statements: error
+    iterable_contains_unrelated_type: error
+    list_remove_unrelated_type: error
+    no_duplicate_case_values: error
+    unrelated_type_equality_checks: error
+
+    #This is added as an error to make viewing code on the web easier
+    lines_longer_than_80_chars: error
+    prefer_single_quotes: error
+
+linter:
+  rules:
+    - always_declare_return_types
+    - always_require_non_null_named_parameters
+    - annotate_overrides
+    - avoid_annotating_with_dynamic
+    - avoid_bool_literals_in_conditional_expressions
+    - avoid_empty_else
+    - avoid_unnecessary_containers
+    - avoid_web_libraries_in_flutter
+    - await_only_futures
+    - camel_case_types
+    - cancel_subscriptions
+    - close_sinks
+    - empty_statements
+    - file_names
+    - hash_and_equals
+    - iterable_contains_unrelated_type
+    - lines_longer_than_80_chars
+    - list_remove_unrelated_type
+    - no_duplicate_case_values
+    - no_logic_in_create_state
+    - omit_local_variable_types
+    - only_throw_errors
+    - prefer_const_constructors
+    - prefer_const_constructors_in_immutables
+    - prefer_const_declarations
+    - prefer_final_fields
+    - prefer_final_in_for_each
+    - prefer_final_locals
+    - prefer_if_null_operators
+    - prefer_null_aware_operators
+    - prefer_single_quotes
+    - prefer_void_to_null
+    - sized_box_for_whitespace
+    - unnecessary_await_in_return
+    - unnecessary_const
+    - unnecessary_new
+    - unnecessary_statements
+    - unnecessary_this
+    - unrelated_type_equality_checks
+    - use_key_in_widget_constructors

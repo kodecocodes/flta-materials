@@ -1,32 +1,3 @@
-/*
- * Copyright (c) 2020 Razeware LLC
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
- * distribute, sublicense, create a derivative work, and/or sell copies of the
- * Software in any work that is designed, intended, or marketed for pedagogical or
- * instructional purposes related to programming, coding, application development,
- * or information technology.  Permission for such use, copying, modification,
- * merger, publication, distribution, sublicensing, creation of derivative works,
- * or sale is expressly withheld.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
 import 'dart:convert';
 import 'dart:math';
 
@@ -40,15 +11,16 @@ import '../widgets/custom_dropdown.dart';
 import '../../network/recipe_service.dart';
 
 class RecipeList extends StatefulWidget {
+  const RecipeList({Key key}) : super(key: key);
   @override
   _RecipeListState createState() => _RecipeListState();
 }
 
 class _RecipeListState extends State<RecipeList> {
-  static const String prefSearchKey = "previousSearches";
+  static const String prefSearchKey = 'previousSearches';
 
   TextEditingController searchTextController;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   List<APIHits> currentSearchList = List();
   int currentCount = 0;
   int currentStartPosition = 0;
@@ -63,17 +35,23 @@ class _RecipeListState extends State<RecipeList> {
   void initState() {
     super.initState();
     getPreviousSearches();
-    searchTextController = TextEditingController(text: "");
+
+    searchTextController = TextEditingController(text: '');
     _scrollController
       ..addListener(() {
-        var triggerFetchMoreSize = 0.7 * _scrollController.position.maxScrollExtent;
+        final triggerFetchMoreSize =
+            0.7 * _scrollController.position.maxScrollExtent;
 
         if (_scrollController.position.pixels > triggerFetchMoreSize) {
-          if (hasMore && currentEndPosition < currentCount && !loading && !inErrorState) {
+          if (hasMore &&
+              currentEndPosition < currentCount &&
+              !loading &&
+              !inErrorState) {
             setState(() {
               loading = true;
               currentStartPosition = currentEndPosition;
-              currentEndPosition = min(currentStartPosition + pageCount, currentCount);
+              currentEndPosition =
+                  min(currentStartPosition + pageCount, currentCount);
             });
           }
         }
@@ -81,8 +59,8 @@ class _RecipeListState extends State<RecipeList> {
   }
 
   Future<APIRecipeQuery> getRecipeData(String query, int from, int to) async {
-    var recipeJson = await RecipeService().getRecipes(query, from, to);
-    var recipeMap = json.decode(recipeJson);
+    final recipeJson = await RecipeService().getRecipes(query, from, to);
+    final recipeMap = json.decode(recipeJson);
     return APIRecipeQuery.fromJson(recipeMap);
   }
 
@@ -93,12 +71,12 @@ class _RecipeListState extends State<RecipeList> {
   }
 
   void savePreviousSearches() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     prefs.setStringList(prefSearchKey, previousSearches);
   }
 
   void getPreviousSearches() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey(prefSearchKey)) {
       previousSearches = prefs.getStringList(prefSearchKey);
       if (previousSearches == null) {
@@ -126,22 +104,23 @@ class _RecipeListState extends State<RecipeList> {
   Widget _buildSearchCard() {
     return Card(
       elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0))),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Row(
           children: [
             IconButton(
-              icon: Icon(Icons.search),
+              icon: const Icon(Icons.search),
               onPressed: () {
                 startSearch(searchTextController.text);
-                FocusScopeNode currentFocus = FocusScope.of(context);
+                final currentFocus = FocusScope.of(context);
                 if (!currentFocus.hasPrimaryFocus) {
                   currentFocus.unfocus();
                 }
               },
             ),
-            SizedBox(
+            const SizedBox(
               width: 6.0,
             ),
             Expanded(
@@ -149,7 +128,8 @@ class _RecipeListState extends State<RecipeList> {
                 children: <Widget>[
                   Expanded(
                       child: TextField(
-                    decoration: InputDecoration(border: InputBorder.none, hintText: 'Search'),
+                    decoration: const InputDecoration(
+                        border: InputBorder.none, hintText: 'Search'),
                     autofocus: false,
                     textInputAction: TextInputAction.done,
                     onSubmitted: (value) {
@@ -161,13 +141,17 @@ class _RecipeListState extends State<RecipeList> {
                     controller: searchTextController,
                   )),
                   PopupMenuButton<String>(
-                    icon: const Icon(Icons.arrow_drop_down, color: lightGrey),
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: lightGrey,
+                    ),
                     onSelected: (String value) {
                       searchTextController.text = value;
                       startSearch(searchTextController.text);
                     },
                     itemBuilder: (BuildContext context) {
-                      return previousSearches.map<CustomDropdownMenuItem<String>>((String value) {
+                      return previousSearches
+                          .map<CustomDropdownMenuItem<String>>((String value) {
                         return CustomDropdownMenuItem<String>(
                           text: value,
                           value: value,
@@ -241,7 +225,9 @@ class _RecipeListState extends State<RecipeList> {
         } else {
           if (currentCount == 0) {
             // Show a loading indicator while waiting for the movies
-            return Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           } else {
             return _buildRecipeList(context, currentSearchList);
           }
@@ -251,9 +237,9 @@ class _RecipeListState extends State<RecipeList> {
   }
 
   Widget _buildRecipeList(BuildContext recipeListContext, List<APIHits> hits) {
-    var size = MediaQuery.of(context).size;
-    final double itemHeight = 310;
-    final double itemWidth = size.width / 2;
+    final size = MediaQuery.of(context).size;
+    const itemHeight = 310;
+    final itemWidth = size.width / 2;
     return Flexible(
       child: GridView.builder(
         controller: _scrollController,
@@ -269,8 +255,8 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
-  Widget _buildRecipeCard(BuildContext context, List<APIHits> hits, int index) {
-    APIRecipe recipe = hits[index].recipe;
+  Widget _buildRecipeCard(BuildContext topLevelContext, List hits, int index) {
+    final recipe = hits[index].recipe;
     return GestureDetector(
       onTap: () {},
       child: recipeCard(recipe),
