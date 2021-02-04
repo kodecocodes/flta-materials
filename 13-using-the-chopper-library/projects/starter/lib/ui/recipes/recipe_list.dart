@@ -12,6 +12,7 @@ import '../recipes/recipe_details.dart';
 import '../colors.dart';
 
 class RecipeList extends StatefulWidget {
+  const RecipeList({Key key}) : super(key: key);
   @override
   _RecipeListState createState() => _RecipeListState();
 }

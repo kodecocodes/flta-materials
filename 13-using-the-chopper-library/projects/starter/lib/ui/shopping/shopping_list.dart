@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ShoppingList extends StatelessWidget {
+  ShoppingList({Key key}) : super(key: key);
   // TODO 1
   final ingredients = List<String>();
 
