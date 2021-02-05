@@ -4,11 +4,12 @@ import 'recipe.dart';
 import 'recipe_detail.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  const MyApp({Key key}) : super(key: key);
 // 1
   @override
   Widget build(BuildContext context) {
@@ -21,13 +22,13 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.white,
           accentColor: Colors.black),
       // 5
-      home: MyHomePage(title: 'Recipe Calculator'),
+      home: const MyHomePage(title: 'Recipe Calculator'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  const MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -62,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(
                     builder: (context) {
                       // 10
-                      return RecipeDetail(Recipe.samples[index]);
+                      return RecipeDetail(recipe: Recipe.samples[index]);
                     },
                   ),
                 );
@@ -90,13 +91,13 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Image(image: AssetImage(recipe.imageUrl)),
             // 5
-            SizedBox(
+            const SizedBox(
               height: 14.0,
             ),
             // 6
             Text(
               recipe.label,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w700,
                 fontFamily: 'Palatino',
