@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:recipes/ui/widgets/custom_dropdown.dart';
+import '../widgets/custom_dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/models/models.dart';
@@ -134,7 +134,10 @@ class _RecipeListState extends State<RecipeList> {
                     controller: searchTextController,
                   )),
                   PopupMenuButton<String>(
-                    icon: const Icon(Icons.arrow_drop_down, color: lightGrey,),
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: lightGrey,
+                    ),
                     onSelected: (String value) {
                       searchTextController.text = value;
                       startSearch(searchTextController.text);
@@ -249,8 +252,8 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
-  Widget _buildRecipeCard(BuildContext topLevelContext, List<APIHits> hits,
-      int index) {
+  Widget _buildRecipeCard(
+      BuildContext topLevelContext, List<APIHits> hits, int index) {
     final recipe = hits[index].recipe;
     return GestureDetector(
       onTap: () {

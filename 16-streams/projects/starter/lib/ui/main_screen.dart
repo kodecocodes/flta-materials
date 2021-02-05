@@ -1,5 +1,5 @@
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:recipes/ui/colors.dart';
+import 'colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'myrecipes/my_recipes_list.dart';
