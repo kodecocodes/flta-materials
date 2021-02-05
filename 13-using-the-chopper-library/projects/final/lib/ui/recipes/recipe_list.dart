@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
-import 'package:recipes/ui/widgets/custom_dropdown.dart';
+import '../widgets/custom_dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../network/model_response.dart';
