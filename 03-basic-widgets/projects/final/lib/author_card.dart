@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fooderlich/fooderlich_theme.dart';
+import 'fooderlich_theme.dart';
 
 import 'circle_image.dart';
 
