@@ -5,7 +5,7 @@ import 'explore_card.dart';
 
 // 1
 class Home extends StatefulWidget {
-  Home({Key key}) : super(key: key);
+  const Home({Key key}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
@@ -17,9 +17,9 @@ class _HomeState extends State<Home> {
 
   // 8
   static List<Widget> pages = <Widget>[
-    Card1(),
-    Card2(),
-    Card3(),
+    const Card1(),
+    const Card2(),
+    const Card3(),
   ];
 
   // 9
@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text("Fooderlich",
+            title: Text('Fooderlich',
                 // 2
                 style: Theme.of(context).textTheme.headline6)),
         body: pages[_selectedIndex],
@@ -47,12 +47,12 @@ class _HomeState extends State<Home> {
             onTap: _onItemTapped,
             // 6
             items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.card_giftcard), title: Text('Card')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.card_giftcard), title: Text('Card2')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.card_giftcard), title: Text('Card3')),
+              const BottomNavigationBarItem(
+                  icon: Icon(Icons.card_giftcard), label: 'Card'),
+              const BottomNavigationBarItem(
+                  icon: Icon(Icons.card_giftcard), label: 'Card2'),
+              const BottomNavigationBarItem(
+                  icon: Icon(Icons.card_giftcard), label: 'Card3'),
             ]));
   }
 }

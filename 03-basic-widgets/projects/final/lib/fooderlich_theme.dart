@@ -27,7 +27,7 @@ class FooderlichTheme {
   );
 
   // 3
-  static light() {
+  static ThemeData light() {
     return ThemeData(
       brightness: Brightness.light,
       primaryColor: Colors.white,
@@ -38,7 +38,7 @@ class FooderlichTheme {
   }
 
   // 4
-  static dark() {
+  static ThemeData dark() {
     return ThemeData(
       brightness: Brightness.dark,
       primaryColor: Colors.grey[900],
