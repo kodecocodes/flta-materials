@@ -55,8 +55,9 @@ class _RecipeDetailState extends State {
                 itemBuilder: (BuildContext context, int index) {
                   final ingredient = recipe.ingredients[index];
                   // 9
-                  return Text(
-                      "${ingredient.quantity * _sliderVal} ${ingredient.measure} ${ingredient.name}");
+                  return Text('${ingredient.quantity * _sliderVal} '
+                      '${ingredient.measure} '
+                      '${ingredient.name}');
                 },
               ),
             ),
@@ -66,7 +67,7 @@ class _RecipeDetailState extends State {
               max: 10,
               divisions: 10,
               // 11
-              label: "${_sliderVal * recipe.servings} servings",
+              label: '${_sliderVal * recipe.servings} servings',
               // 12
               value: _sliderVal.toDouble(),
               // 13

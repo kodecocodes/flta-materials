@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w700,
-                fontFamily: "Palatino",
+                fontFamily: 'Palatino',
               ),
             )
           ],
