@@ -9,22 +9,19 @@ class RecipeDetail extends StatefulWidget {
 
   @override
   _RecipeDetailState createState() {
-    return _RecipeDetailState(recipe);
+    return _RecipeDetailState();
   }
 }
 
-class _RecipeDetailState extends State {
-  final Recipe recipe;
+class _RecipeDetailState extends State<RecipeDetail> {
   int _sliderVal = 1;
-
-  _RecipeDetailState(this.recipe);
 
   @override
   Widget build(BuildContext context) {
     // 1
     return Scaffold(
       appBar: AppBar(
-        title: Text(recipe.label),
+        title: Text(widget.recipe.label),
       ),
       // 2
       body: SafeArea(
@@ -35,7 +32,7 @@ class _RecipeDetailState extends State {
             SizedBox(
               height: 300,
               width: double.infinity,
-              child: Image(image: AssetImage(recipe.imageUrl)),
+              child: Image(image: AssetImage(widget.recipe.imageUrl)),
             ),
             // 5
             const SizedBox(
@@ -43,7 +40,7 @@ class _RecipeDetailState extends State {
             ),
             // 6
             Text(
-              recipe.label,
+              widget.recipe.label,
               style: const TextStyle(fontSize: 18),
             ),
             // 7
@@ -51,9 +48,9 @@ class _RecipeDetailState extends State {
               // 8
               child: ListView.builder(
                 padding: const EdgeInsets.all(7.0),
-                itemCount: recipe.ingredients.length,
+                itemCount: widget.recipe.ingredients.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final ingredient = recipe.ingredients[index];
+                  final ingredient = widget.recipe.ingredients[index];
                   // 9
                   return Text('${ingredient.quantity * _sliderVal} '
                       '${ingredient.measure} '
@@ -67,7 +64,7 @@ class _RecipeDetailState extends State {
               max: 10,
               divisions: 10,
               // 11
-              label: '${_sliderVal * recipe.servings} servings',
+              label: '${_sliderVal * widget.recipe.servings} servings',
               // 12
               value: _sliderVal.toDouble(),
               // 13

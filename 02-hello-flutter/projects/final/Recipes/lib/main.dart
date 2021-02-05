@@ -4,12 +4,12 @@ import 'recipe.dart';
 import 'recipe_detail.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const RecipeApp());
 }
 
-class MyApp extends StatelessWidget {
+class RecipeApp extends StatelessWidget {
   // This widget is the root of your application.
-  const MyApp({Key key}) : super(key: key);
+  const RecipeApp({Key key}) : super(key: key);
 // 1
   @override
   Widget build(BuildContext context) {
