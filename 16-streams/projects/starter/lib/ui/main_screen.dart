@@ -22,9 +22,9 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    pageList.add(RecipeList());
-    pageList.add(MyRecipesList());
-    pageList.add(ShoppingList());
+    pageList.add(const RecipeList());
+    pageList.add(const MyRecipesList());
+    pageList.add(const ShoppingList());
     getCurrentIndex();
   }
 
