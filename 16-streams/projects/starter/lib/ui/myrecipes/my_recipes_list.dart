@@ -6,6 +6,8 @@ import '../../data/models/recipe.dart';
 import '../../data/memory_repository.dart';
 
 class MyRecipesList extends StatefulWidget {
+  const MyRecipesList({Key key}) : super(key: key);
+
   @override
   _MyRecipesListState createState() => _MyRecipesListState();
 }
@@ -31,7 +33,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
             return SizedBox(
               height: 100,
               child: Slidable(
-                      actionPane: const SlidableDrawerActionPane(),
+                actionPane: const SlidableDrawerActionPane(),
                 actionExtentRatio: 0.25,
                 child: Card(
                   elevation: 1.0,
@@ -59,18 +61,16 @@ class _MyRecipesListState extends State<MyRecipesList> {
                       caption: 'Delete',
                       color: Colors.transparent,
                       foregroundColor: Colors.black,
-                            iconWidget:
-                                const Icon(Icons.delete, color: Colors.red),
-                            onTap: () => deleteRecipe(repository, recipe)),
+                      iconWidget: const Icon(Icons.delete, color: Colors.red),
+                      onTap: () => deleteRecipe(repository, recipe)),
                 ],
                 secondaryActions: <Widget>[
                   IconSlideAction(
                       caption: 'Delete',
                       color: Colors.transparent,
                       foregroundColor: Colors.black,
-                            iconWidget:
-                                const Icon(Icons.delete, color: Colors.red),
-                            onTap: () => deleteRecipe(repository, recipe)),
+                      iconWidget: const Icon(Icons.delete, color: Colors.red),
+                      onTap: () => deleteRecipe(repository, recipe)),
                 ],
               ),
             );

@@ -15,6 +15,8 @@ import '../recipe_card.dart';
 import '../recipes/recipe_details.dart';
 
 class RecipeList extends StatefulWidget {
+  const RecipeList({Key key}) : super(key: key);
+
   @override
   _RecipeListState createState() => _RecipeListState();
 }
@@ -267,7 +269,7 @@ class _RecipeListState extends State<RecipeList> {
                 totalTime: recipe.totalTime,
                 totalWeight: recipe.totalWeight);
             detailRecipe.ingredients = convertIngredients(recipe.ingredients);
-            return RecipeDetails(detailRecipe);
+            return RecipeDetails(recipe: detailRecipe);
           },
         ));
       },

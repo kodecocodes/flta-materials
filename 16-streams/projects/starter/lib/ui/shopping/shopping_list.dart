@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import '../../data/memory_repository.dart';
 
 class ShoppingList extends StatelessWidget {
+  const ShoppingList({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<MemoryRepository>(builder: (context, repository, child) {
