@@ -20,13 +20,13 @@ class AuthorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(children: [
             CircleImage(imageProvider, imageRadius: 28),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -42,11 +42,11 @@ class AuthorCard extends StatelessWidget {
             ),
           ]),
           IconButton(
-            icon: Icon(Icons.favorite_border),
+            icon: const Icon(Icons.favorite_border),
             iconSize: 30,
             color: Colors.grey[400],
             onPressed: () {
-              final snackBar = SnackBar(content: Text('Press Favorite'));
+              const snackBar = SnackBar(content: Text('Press Favorite'));
               Scaffold.of(context).showSnackBar(snackBar);
             },
           ),

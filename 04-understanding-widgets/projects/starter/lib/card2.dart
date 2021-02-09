@@ -8,14 +8,14 @@ class Card2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        constraints: BoxConstraints.expand(width: 350, height: 450),
-        decoration: BoxDecoration(
+        constraints: const BoxConstraints.expand(width: 350, height: 450),
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/mag5.png'), fit: BoxFit.cover),
-            borderRadius: BorderRadius.all(const Radius.circular(10.0))),
+            borderRadius: BorderRadius.all(Radius.circular(10.0))),
         child: Column(
           children: [
-            AuthorCard(
+            const AuthorCard(
                 authorName: 'Mike Katz',
                 title: 'Smoothie Connoisseur',
                 imageProvider: AssetImage('assets/author_katz.jpeg')),
