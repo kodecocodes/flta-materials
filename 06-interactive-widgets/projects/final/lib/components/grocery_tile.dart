@@ -1,33 +1,3 @@
-/*
- * Copyright (c) 2020 Razeware LLC
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
- * distribute, sublicense, create a derivative work, and/or sell copies of the
- * Software in any work that is designed, intended, or marketed for pedagogical or
- * instructional purposes related to programming, coding, application development,
- * or information technology.  Permission for such use, copying, modification,
- * merger, publication, distribution, sublicensing, creation of derivative works,
- * or sale is expressly withheld.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -42,16 +12,21 @@ class GroceryTile extends StatelessWidget {
   final TextDecoration textDecoration;
 
   // 4
-  GroceryTile({Key key, this.item, this.onComplete}) 
-  : textDecoration = item.isComplete ? TextDecoration.lineThrough : TextDecoration.none,
+  GroceryTile({
+    Key key, 
+    this.item, 
+    this.onComplete}) : 
+    textDecoration = 
+    item.isComplete ? TextDecoration.lineThrough : TextDecoration.none,
     super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // ignore: sized_box_for_whitespace
     return Container(
       height: 100,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // 1
           Row(
@@ -59,7 +34,7 @@ class GroceryTile extends StatelessWidget {
               // 2
               Container(width: 5, color: item.color),
               // 3
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               // 4
               Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -71,9 +46,9 @@ class GroceryTile extends StatelessWidget {
                             decoration: textDecoration,
                             fontSize: 21,
                             fontWeight: FontWeight.bold)),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     buildDate(),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     buildImportance()
                   ]),
             ],
@@ -85,7 +60,7 @@ class GroceryTile extends StatelessWidget {
               Text(item.quantity.toString(),
                   style:
                       GoogleFonts.lato(
-                        decoration: textDecoration, 
+                        decoration: textDecoration,
                         fontSize: 21)),
               // 8
               buildCheckbox()
@@ -94,39 +69,43 @@ class GroceryTile extends StatelessWidget {
     );
   }
 
-  buildImportance() {
+  Widget buildImportance() {
     if (item.importance == Importance.low) {
       return Text(
-        "Low", 
+        'Low',
         style: GoogleFonts.lato(decoration: textDecoration));
     } else if (item.importance == Importance.medium) {
       return Text(
-        "Medium",
-        style: GoogleFonts.lato(fontWeight: FontWeight.w800, decoration: textDecoration));
+        'Medium',
+        style: GoogleFonts.lato(
+          fontWeight: FontWeight.w800, 
+          decoration: textDecoration));
     } else if (item.importance == Importance.high) {
       return Text(
-        "High",
-        style: GoogleFonts.lato(color: Colors.red, fontWeight: FontWeight.w900, decoration: textDecoration));
+        'High',
+        style: GoogleFonts.lato(
+          color: Colors.red, 
+          fontWeight: FontWeight.w900, 
+          decoration: textDecoration));
     } else {
-      throw Exception("This importance type does not exist");
+      throw Exception('This importance type does not exist');
     }
   }
 
-  buildDate() {
-    var dateFormatter = DateFormat('MMMM dd h:mm a');
-    var dateString = dateFormatter.format(item.date);
+  Widget buildDate() {
+    final dateFormatter = DateFormat('MMMM dd h:mm a');
+    final dateString = dateFormatter.format(item.date);
     return Text(
-      dateString, 
+      dateString,
       style: TextStyle(
         decoration: textDecoration));
   }
 
-  buildCheckbox() {
+  Widget buildCheckbox() {
     return Checkbox(
       // 1
-      value: item.isComplete, 
+      value: item.isComplete,
       // 2
       onChanged: onComplete);
   }
 }
-
