@@ -42,14 +42,14 @@ class Card1 extends StatelessWidget {
             )
           ],
         ),
-        padding: EdgeInsets.all(16),
-        constraints: BoxConstraints.expand(width: 350, height: 450),
+        padding: const EdgeInsets.all(16),
+        constraints: const BoxConstraints.expand(width: 350, height: 450),
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(recipe.backgroundImage),
             fit: BoxFit.cover,
           ),
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
         ),
       ),
     );

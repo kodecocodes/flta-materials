@@ -14,22 +14,20 @@ class FriendPostTile extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CircleImage(
-          AssetImage('${post.profileImageUrl}'),
+          imageProvider: AssetImage('${post.profileImageUrl}'),
           imageRadius: 20,
         ),
-        SizedBox(width: 16),
+        const SizedBox(width: 16),
         Expanded(
-          child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(post.comment),
-                Text(
-                  '${post.timestamp} mins ago',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(post.comment),
+              Text(
+                '${post.timestamp} mins ago',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ],
           ),
         ),
       ],
