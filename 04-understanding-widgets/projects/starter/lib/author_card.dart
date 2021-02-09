@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fooderlich/fooderlich_theme.dart';
+import 'fooderlich_theme.dart';
 
 import 'circle_image.dart';
 
@@ -25,7 +25,7 @@ class AuthorCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(children: [
-            CircleImage(imageProvider, imageRadius: 28),
+            CircleImage(imageProvider: imageProvider, imageRadius: 28),
             const SizedBox(width: 8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
