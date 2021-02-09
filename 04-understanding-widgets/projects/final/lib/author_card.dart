@@ -30,7 +30,7 @@ class _AuthorCardState extends State<AuthorCard> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(children: [
-            CircleImage(widget.imageProvider, imageRadius: 28),
+            CircleImage(imageProvider: widget.imageProvider, imageRadius: 28),
             const SizedBox(width: 8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
