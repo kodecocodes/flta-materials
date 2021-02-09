@@ -10,27 +10,27 @@ class FriendPostListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 0),
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
             'Social Chefs 👩‍🍳',
             style: Theme.of(context).textTheme.headline1,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ListView.separated(
               primary: false,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               itemCount: friendPosts.length,
               itemBuilder: (context, index) {
-                var post = friendPosts[index];
+                final post = friendPosts[index];
                 return FriendPostTile(post: post);
               },
               separatorBuilder: (context, index) {
-                return SizedBox(height: 16);
+                return const SizedBox(height: 16);
               }),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
         ]));
   }
 }

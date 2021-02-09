@@ -5,6 +5,8 @@ import '../components/components.dart';
 class ExploreScreen extends StatelessWidget {
   final mockService = MockFooderlichService();
 
+  ExploreScreen({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -13,11 +15,11 @@ class ExploreScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             return ListView(scrollDirection: Axis.vertical, children: [
               TodayRecipeListView(recipes: snapshot.data.todayRecipes),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               FriendPostListView(friendPosts: snapshot.data.friendPosts)
             ]);
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         });
   }

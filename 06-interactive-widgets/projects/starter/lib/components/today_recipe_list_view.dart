@@ -10,13 +10,13 @@ class TodayRecipeListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
             'Recipes of the Day 🍳',
             style: Theme.of(context).textTheme.headline1,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Container(
               height: 400,
               color: Colors.transparent,
@@ -24,16 +24,16 @@ class TodayRecipeListView extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: recipes.length,
                   itemBuilder: (context, index) {
-                    var recipe = recipes[index];
+                    final recipe = recipes[index];
                     return buildCard(recipe);
                   },
                   separatorBuilder: (context, index) {
-                    return SizedBox(width: 16);
+                    return const SizedBox(width: 16);
                   })),
         ]));
   }
 
-  buildCard(ExploreRecipe recipe) {
+  Widget buildCard(ExploreRecipe recipe) {
     if (recipe.cardType == RecipeCardType.card1) {
       return Card1(recipe: recipe);
     } else if (recipe.cardType == RecipeCardType.card2) {

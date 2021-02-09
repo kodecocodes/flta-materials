@@ -8,9 +8,9 @@ class Card3 extends StatelessWidget {
   const Card3({Key key, this.recipe}) : super(key: key);
 
   List<Widget> createTagChips() {
-    var chips = List<Widget>();
+    final chips = <Widget>[];
     recipe.tags.take(6).forEach((element) {
-      var chip = Chip(
+      final chip = Chip(
         label: Text(element, style: FooderlichTheme.darkTextTheme.bodyText1),
         backgroundColor: Colors.black.withOpacity(0.7),
       );
@@ -24,34 +24,34 @@ class Card3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        constraints: BoxConstraints.expand(width: 350, height: 450),
+        constraints: const BoxConstraints.expand(width: 350, height: 450),
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(recipe.backgroundImage),
             fit: BoxFit.cover,
           ),
-          borderRadius: BorderRadius.all(const Radius.circular(10.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
         ),
         child: Stack(
           children: [
             Container(
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.6),
-                borderRadius: BorderRadius.all(const Radius.circular(10.0)),
+                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.book, color: Colors.white, size: 40),
-                  SizedBox(height: 8),
+                  const Icon(Icons.book, color: Colors.white, size: 40),
+                  const SizedBox(height: 8),
                   Text(
                     recipe.title,
                     style: FooderlichTheme.darkTextTheme.headline2,
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),

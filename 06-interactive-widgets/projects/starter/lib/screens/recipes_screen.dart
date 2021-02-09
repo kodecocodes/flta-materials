@@ -5,6 +5,8 @@ import '../components/components.dart';
 class RecipesScreen extends StatelessWidget {
   final exploreService = MockFooderlichService();
 
+  RecipesScreen({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -13,7 +15,7 @@ class RecipesScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             return RecipesGridView(recipes: snapshot.data);
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         });
   }
