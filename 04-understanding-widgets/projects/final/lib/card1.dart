@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fooderlich/fooderlich_theme.dart';
+import 'fooderlich_theme.dart';
 
 class Card1 extends StatelessWidget {
   // 1
@@ -43,9 +43,9 @@ class Card1 extends StatelessWidget {
             )
           ],
         ),
-        padding: EdgeInsets.all(16),
-        constraints: BoxConstraints.expand(width: 350, height: 450),
-        decoration: BoxDecoration(
+        padding: const EdgeInsets.all(16),
+        constraints: const BoxConstraints.expand(width: 350, height: 450),
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/mag1.png'),
             fit: BoxFit.cover,

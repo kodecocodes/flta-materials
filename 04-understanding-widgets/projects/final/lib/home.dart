@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fooderlich/card1.dart';
-import 'package:fooderlich/card2.dart';
-import 'package:fooderlich/explore_card.dart';
+import 'card1.dart';
+import 'card2.dart';
+import 'explore_card.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -37,11 +37,11 @@ class _HomeState extends State<Home> {
             currentIndex: _selectedIndex,
             onTap: _onItemTapped,
             items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                   icon: Icon(Icons.card_giftcard), label: 'Card'),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                   icon: Icon(Icons.card_giftcard), label: 'Card2'),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                   icon: Icon(Icons.card_giftcard), label: 'Card3'),
             ]));
   }
