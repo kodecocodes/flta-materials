@@ -1,37 +1,6 @@
-/*
- * Copyright (c) 2020 Razeware LLC
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
- * distribute, sublicense, create a derivative work, and/or sell copies of the
- * Software in any work that is designed, intended, or marketed for pedagogical or
- * instructional purposes related to programming, coding, application development,
- * or information technology.  Permission for such use, copying, modification,
- * merger, publication, distribution, sublicensing, creation of derivative works,
- * or sale is expressly withheld.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 import 'package:flutter/material.dart';
 import 'models/explore_recipe.dart';
 import 'components/components.dart';
-
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -41,30 +10,40 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   int _selectedIndex = 0;
 
   static List<Widget> pages = <Widget>[
     Card1(
-      recipe: ExploreRecipe(
-        authorName: "Ray Wenderlich", 
-        title: "The Art of Dough", 
-        subtitle: "Editor's Choice", 
-        message: "Learn to make the perfect bread.", 
-        backgroundImage: "assets/magazine_pics/card_bread.jpg")),
+        recipe: ExploreRecipe(
+            authorName: "Ray Wenderlich",
+            title: "The Art of Dough",
+            subtitle: "Editor's Choice",
+            message: "Learn to make the perfect bread.",
+            backgroundImage: "assets/magazine_pics/card_bread.jpg")),
     Card2(
-      recipe: ExploreRecipe(
-        authorName: "Mike Katz", 
-        role: "Smoothie Connoisseur", 
-        profileImage: "assets/profile_pics/person_katz.jpeg", 
-        title: "Recipe", 
-        subtitle: "Smoothies", 
-        backgroundImage: "assets/magazine_pics/mag2.png")),
+        recipe: ExploreRecipe(
+            authorName: "Mike Katz",
+            role: "Smoothie Connoisseur",
+            profileImage: "assets/profile_pics/person_katz.jpeg",
+            title: "Recipe",
+            subtitle: "Smoothies",
+            backgroundImage: "assets/magazine_pics/mag2.png")),
     Card3(
-      recipe: ExploreRecipe(
-        title: "Vegan Trends",
-        tags: ["Healthy", "Vegan", "Carrots", "Greens", "Wheat", "Pescetarian", "Mint", "Lemongrass", "Salad", "Water"],
-        backgroundImage: "assets/magazine_pics/mag3.png")),
+        recipe: ExploreRecipe(
+            title: "Vegan Trends",
+            tags: [
+              "Healthy",
+              "Vegan",
+              "Carrots",
+              "Greens",
+              "Wheat",
+              "Pescetarian",
+              "Mint",
+              "Lemongrass",
+              "Salad",
+              "Water"
+            ],
+            backgroundImage: "assets/magazine_pics/mag3.png")),
   ];
 
   void _onItemTapped(int index) {
@@ -85,9 +64,12 @@ class _HomeState extends State<Home> {
             currentIndex: _selectedIndex,
             onTap: _onItemTapped,
             items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(icon: Icon(Icons.card_giftcard), label: 'Card'),
-              BottomNavigationBarItem(icon: Icon(Icons.card_giftcard), label: 'Card2'),
-              BottomNavigationBarItem(icon: Icon(Icons.card_giftcard), label: 'Card3'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.card_giftcard), label: 'Card'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.card_giftcard), label: 'Card2'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.card_giftcard), label: 'Card3'),
             ]));
   }
 }
