@@ -2,9 +2,9 @@ part 'ingredient.dart';
 part 'instruction.dart';
 
 class RecipeCardType {
-  static final String card1 = "card1";
-  static final String card2 = "card2";
-  static final String card3 = "card3";
+  static final String card1 = 'card1';
+  static final String card2 = 'card2';
+  static final String card3 = 'card3';
 }
 
 class ExploreRecipe {

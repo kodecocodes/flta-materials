@@ -24,7 +24,7 @@ class FooderlichTheme {
         fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.white),
   );
 
-  static light() {
+  static ThemeData light() {
     return ThemeData(
       brightness: Brightness.light,
       primaryColor: Colors.white,
@@ -34,7 +34,7 @@ class FooderlichTheme {
     );
   }
 
-  static dark() {
+  static ThemeData dark() {
     return ThemeData(
       brightness: Brightness.dark,
       primaryColor: Colors.grey[900],
