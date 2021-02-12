@@ -2,9 +2,9 @@ part 'ingredient.dart';
 part 'instruction.dart';
 
 class RecipeCardType {
-  static final String card1 = 'card1';
-  static final String card2 = 'card2';
-  static final String card3 = 'card3';
+  static const String card1 = 'card1';
+  static const String card2 = 'card2';
+  static const String card3 = 'card3';
 }
 
 class ExploreRecipe {
@@ -62,15 +62,15 @@ class ExploreRecipe {
     description = json['description'];
     source = json['source'];
     if (json['ingredients'] != null) {
-      ingredients = new List<Ingredients>();
+      ingredients = List<Ingredients>();
       json['ingredients'].forEach((v) {
-        ingredients.add(new Ingredients.fromJson(v));
+        ingredients.add(Ingredients.fromJson(v));
       });
     }
     if (json['instructions'] != null) {
-      instructions = new List<Instruction>();
+      instructions = List<Instruction>();
       json['instructions'].forEach((v) {
-        instructions.add(new Instruction.fromJson(v));
+        instructions.add(Instruction.fromJson(v));
       });
     }
   }
