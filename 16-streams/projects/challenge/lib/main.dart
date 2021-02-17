@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:logging/logging.dart';
-import 'package:provider/provider.dart';
 
+import 'package:provider/provider.dart';
 import 'data/memory_repository.dart';
-import 'data/repository.dart';
-import 'network/recipe_service.dart';
-import 'network/service_interface.dart';
+import 'mock_service/mock_service.dart';
 import 'ui/main_screen.dart';
 
 Future<void> main() async {
@@ -32,12 +30,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          Provider<Repository>(
+          ChangeNotifierProvider<MemoryRepository>(
             lazy: false,
             create: (_) => MemoryRepository(),
           ),
-          Provider<ServiceInterface>(
-            create: (_) => RecipeService.create(),
+          FutureProvider(
+            create: (_) async {
+              final service = MockService();
+              service.create();
+              return service;
+            },
             lazy: false,
           ),
         ],

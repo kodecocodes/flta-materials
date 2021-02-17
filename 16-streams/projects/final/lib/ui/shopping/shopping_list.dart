@@ -4,6 +4,8 @@ import '../../data/models/ingredient.dart';
 import '../../data/repository.dart';
 
 class ShoppingList extends StatelessWidget {
+  const ShoppingList({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final repository = Provider.of<Repository>(context);
