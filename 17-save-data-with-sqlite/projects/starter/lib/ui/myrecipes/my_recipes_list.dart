@@ -6,6 +6,8 @@ import '../../data/models/recipe.dart';
 import '../../data/repository.dart';
 
 class MyRecipesList extends StatefulWidget {
+  const MyRecipesList({Key key}) : super(key: key);
+
   @override
   _MyRecipesListState createState() => _MyRecipesListState();
 }

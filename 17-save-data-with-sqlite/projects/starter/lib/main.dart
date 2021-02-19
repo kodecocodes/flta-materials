@@ -14,7 +14,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
   await FlutterStatusbarcolor.setStatusBarColor(Colors.white);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 void _setupLogging() {
@@ -25,6 +25,7 @@ void _setupLogging() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: MainScreen(),
+          home: const MainScreen(),
         ));
   }
 }

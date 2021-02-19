@@ -15,6 +15,8 @@ import '../recipe_card.dart';
 import '../recipes/recipe_details.dart';
 
 class RecipeList extends StatefulWidget {
+  const RecipeList({Key key}) : super(key: key);
+
   @override
   _RecipeListState createState() => _RecipeListState();
 }
@@ -134,7 +136,10 @@ class _RecipeListState extends State<RecipeList> {
                     controller: searchTextController,
                   )),
                   PopupMenuButton<String>(
-                    icon: const Icon(Icons.arrow_drop_down, color: lightGrey,),
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: lightGrey,
+                    ),
                     onSelected: (String value) {
                       searchTextController.text = value;
                       startSearch(searchTextController.text);
@@ -249,8 +254,8 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
-  Widget _buildRecipeCard(BuildContext topLevelContext, List<APIHits> hits,
-      int index) {
+  Widget _buildRecipeCard(
+      BuildContext topLevelContext, List<APIHits> hits, int index) {
     final recipe = hits[index].recipe;
     return GestureDetector(
       onTap: () {
@@ -264,7 +269,7 @@ class _RecipeListState extends State<RecipeList> {
                 totalTime: recipe.totalTime,
                 totalWeight: recipe.totalWeight);
             detailRecipe.ingredients = convertIngredients(recipe.ingredients);
-            return RecipeDetails(detailRecipe);
+            return RecipeDetails(recipe: detailRecipe);
           },
         ));
       },

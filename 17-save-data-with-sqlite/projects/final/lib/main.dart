@@ -17,7 +17,7 @@ Future<void> main() async {
   // final repository = SqliteRepository();
   final repository = MoorRepository();
   await repository.init();
-  runApp(MyApp(repository));
+  runApp(MyApp(repository: repository));
 }
 
 void _setupLogging() {
@@ -30,7 +30,7 @@ void _setupLogging() {
 class MyApp extends StatelessWidget {
   final Repository repository;
 
-  const MyApp(this.repository) : super();
+  const MyApp({Key key, this.repository}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: MainScreen(),
+        home: const MainScreen(),
       ),
     );
   }
