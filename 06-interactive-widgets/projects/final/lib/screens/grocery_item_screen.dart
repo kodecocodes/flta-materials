@@ -16,9 +16,12 @@ class GroceryItemScreen extends StatefulWidget {
   // 4
   final bool isUpdating;
 
-  const GroceryItemScreen(
-      {Key key, this.onCreate, this.onUpdate, this.originalItem})
-      : isUpdating = (originalItem != null),
+  const GroceryItemScreen({
+    Key key,
+    this.onCreate,
+    this.onUpdate,
+    this.originalItem,
+  })  : isUpdating = (originalItem != null),
         super(key: key);
 
   @override
@@ -26,7 +29,6 @@ class GroceryItemScreen extends StatefulWidget {
 }
 
 class _GroceryItemScreenState extends State<GroceryItemScreen> {
-
   final _nameController = TextEditingController();
   String _name = '';
   Importance _importance = Importance.low;
@@ -52,8 +54,13 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
                     importance: _importance,
                     color: _currentColor,
                     quantity: _currentSliderValue,
-                    date: DateTime(_dueDate.year, _dueDate.month,
-                        _dueDate.day, _timeOfDay.hour, _timeOfDay.minute));
+                    date: DateTime(
+                      _dueDate.year,
+                      _dueDate.month,
+                      _dueDate.day,
+                      _timeOfDay.hour,
+                      _timeOfDay.minute,
+                    ));
 
                 if (widget.isUpdating) {
                   // 2
@@ -67,32 +74,37 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
         // 3
         elevation: 0.0,
         // 4
-        title: Text('Grocery Item',
-            style: GoogleFonts.lato(fontWeight: FontWeight.w600))),
+        title: Text(
+          'Grocery Item',
+          style: GoogleFonts.lato(fontWeight: FontWeight.w600),
+        ),
+      ),
       // 5
       body: Container(
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
-          buildNameField(),
-          buildImportanceField(),
-          buildDateField(context),
-          buildTimeField(context),
-          const SizedBox(height: 10),
-          buildColorPicker(context),
-          const SizedBox(height: 10),
-          buildQuantityField(),
-          const SizedBox(height: 16),
-          GroceryTile(
-            item: GroceryItem(
-              name: _name,
-              importance: _importance,
-              color: _currentColor,
-              quantity: _currentSliderValue,
-              date: DateTime(_dueDate.year, _dueDate.month, _dueDate.day,
-                  _timeOfDay.hour, _timeOfDay.minute)))
-        ])),
-      );
+            buildNameField(),
+            buildImportanceField(),
+            buildDateField(context),
+            buildTimeField(context),
+            const SizedBox(height: 10),
+            buildColorPicker(context),
+            const SizedBox(height: 10),
+            buildQuantityField(),
+            const SizedBox(height: 16),
+            GroceryTile(
+                item: GroceryItem(
+                    name: _name,
+                    importance: _importance,
+                    color: _currentColor,
+                    quantity: _currentSliderValue,
+                    date: DateTime(_dueDate.year, _dueDate.month, _dueDate.day,
+                        _timeOfDay.hour, _timeOfDay.minute)))
+          ],
+        ),
+      ),
+    );
   }
 
   Widget buildNameField() {
@@ -102,7 +114,10 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // 3
-        Text('Item Name', style: GoogleFonts.lato(fontSize: 28)),
+        Text(
+          'Item Name',
+          style: GoogleFonts.lato(fontSize: 28.0),
+        ),
         // 4
         TextField(
           // 5
@@ -115,68 +130,61 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
             hintText: 'E.g. Apples, Banana, 1 Bag of salt',
             // 9
             enabledBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white)),
+              borderSide: BorderSide(color: Colors.white),
+            ),
             focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: _currentColor)),
+              borderSide: BorderSide(color: _currentColor),
+            ),
             border: UnderlineInputBorder(
-                borderSide: BorderSide(color: _currentColor)),
-          ))
-    ]);
+              borderSide: BorderSide(color: _currentColor),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   Widget buildImportanceField() {
     // 1
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // 2
-        Text('Importance', style: GoogleFonts.lato(fontSize: 28)),
-        // 3
-        Wrap(
-          spacing: 10,
-          children: [
-            // 4
-            ChoiceChip(
-              // 5
-              selectedColor: Colors.black,
-              // 6
-              selected: _importance == Importance.low,
-              label: const Text(
-                'low', 
-                style: TextStyle(color: Colors.white)),
-              // 7
-              onSelected: (selected) {
-                setState(() => _importance = Importance.low);
-              }),
-            ChoiceChip(
-              selectedColor: Colors.black,
-              selected: _importance == Importance.medium,
-              label: const Text(
-                'medium', 
-                style: TextStyle(color: Colors.white)),
-              onSelected: (selected) {
-                setState(() => _importance = Importance.medium);
-              }),
-            ChoiceChip(
-              selectedColor: Colors.black,
-              selected: _importance == Importance.high,
-              label: const Text(
-                'high', 
-                style: TextStyle(color: Colors.white)),
-              onSelected: (selected) {
-                setState(() => _importance = Importance.high);
-              }),
-          ])
-      ]);
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      // 2
+      Text('Importance', style: GoogleFonts.lato(fontSize: 28.0)),
+      // 3
+      Wrap(spacing: 10.0, children: [
+        // 4
+        ChoiceChip(
+            // 5
+            selectedColor: Colors.black,
+            // 6
+            selected: _importance == Importance.low,
+            label: const Text('low', style: TextStyle(color: Colors.white)),
+            // 7
+            onSelected: (selected) {
+              setState(() => _importance = Importance.low);
+            }),
+        ChoiceChip(
+            selectedColor: Colors.black,
+            selected: _importance == Importance.medium,
+            label: const Text('medium', style: TextStyle(color: Colors.white)),
+            onSelected: (selected) {
+              setState(() => _importance = Importance.medium);
+            }),
+        ChoiceChip(
+            selectedColor: Colors.black,
+            selected: _importance == Importance.high,
+            label: const Text('high', style: TextStyle(color: Colors.white)),
+            onSelected: (selected) {
+              setState(() => _importance = Importance.high);
+            }),
+      ])
+    ]);
   }
 
   Widget buildDateField(BuildContext context) {
     // 1
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // 2
-        Row(
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      // 2
+      Row(
           // 3
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -184,41 +192,36 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
             Text('Date', style: GoogleFonts.lato(fontSize: 28)),
             // 5
             FlatButton(
-              child: const Text('Select'),
-              // 6
-              onPressed: () async {
-                final currentDate = DateTime.now();
-                // 7
-                final selectedDate = await showDatePicker(
-                  context: context,
-                  initialDate: currentDate,
-                  firstDate: currentDate,
-                  lastDate: DateTime(currentDate.year + 5),
-                );
+                child: const Text('Select'),
+                // 6
+                onPressed: () async {
+                  final currentDate = DateTime.now();
+                  // 7
+                  final selectedDate = await showDatePicker(
+                    context: context,
+                    initialDate: currentDate,
+                    firstDate: currentDate,
+                    lastDate: DateTime(currentDate.year + 5),
+                  );
 
-                // 8
-                setState(() {
-                  if (selectedDate != null) {
-                    _dueDate = selectedDate;
-                  }
-                });
-            }),
+                  // 8
+                  setState(() {
+                    if (selectedDate != null) {
+                      _dueDate = selectedDate;
+                    }
+                  });
+                }),
           ]),
-        // 9
-        if (_dueDate != null)
-        Text('${DateFormat('yyyy-MM-dd').format(_dueDate)}')
+      // 9
+      if (_dueDate != null) Text('${DateFormat('yyyy-MM-dd').format(_dueDate)}')
     ]);
   }
 
   Widget buildTimeField(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-          Text('Time of Day', style: GoogleFonts.lato(fontSize: 28)),
-          FlatButton(
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Text('Time of Day', style: GoogleFonts.lato(fontSize: 28)),
+        FlatButton(
             child: const Text('Select'),
             onPressed: () async {
               // 1
@@ -235,31 +238,28 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
                 }
               });
             }),
-        ]),
-      if (_timeOfDay != null)
-      Text('${_timeOfDay.format(context)}')
+      ]),
+      if (_timeOfDay != null) Text('${_timeOfDay.format(context)}')
     ]);
   }
 
   Widget buildColorPicker(BuildContext context) {
     // 1
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // 2
-        Row(
-          children: [
-            Container(height: 50, width: 10, color: _currentColor),
-            const SizedBox(width: 8),
-            Text('Color', style: GoogleFonts.lato(fontSize: 28)),
-          ],
-        ),
-        // 3
-        FlatButton(
-            child: const Text('Select'),
-            onPressed: () {
-              // 4
-              showDialog(
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      // 2
+      Row(
+        children: [
+          Container(height: 50, width: 10, color: _currentColor),
+          const SizedBox(width: 8),
+          Text('Color', style: GoogleFonts.lato(fontSize: 28)),
+        ],
+      ),
+      // 3
+      FlatButton(
+          child: const Text('Select'),
+          onPressed: () {
+            // 4
+            showDialog(
                 context: context,
                 builder: (context) {
                   // 5
@@ -280,40 +280,38 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
                       ),
                     ],
                   );
-              });
-            })
+                });
+          })
     ]);
   }
 
   Widget buildQuantityField() {
     // 1
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // 2
-        Text('Quantity', style: GoogleFonts.lato(fontSize: 28)),
-        // 3
-        Slider(
-          // 4
-          inactiveColor: _currentColor.withOpacity(0.5),
-          activeColor: _currentColor,
-          // 5
-          value: _currentSliderValue.toDouble(),
-          // 6
-          min: 0,
-          max: 100,
-          // 7
-          divisions: 100,
-          // 8
-          label: _currentSliderValue.toInt().toString(),
-          // 9
-          onChanged: (double value) {
-            setState(() {
-              _currentSliderValue = value.toInt();
-            });
-          },
-        )
-      ]);
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      // 2
+      Text('Quantity', style: GoogleFonts.lato(fontSize: 28)),
+      // 3
+      Slider(
+        // 4
+        inactiveColor: _currentColor.withOpacity(0.5),
+        activeColor: _currentColor,
+        // 5
+        value: _currentSliderValue.toDouble(),
+        // 6
+        min: 0,
+        max: 100,
+        // 7
+        divisions: 100,
+        // 8
+        label: _currentSliderValue.toInt().toString(),
+        // 9
+        onChanged: (double value) {
+          setState(() {
+            _currentSliderValue = value.toInt();
+          });
+        },
+      )
+    ]);
   }
 
   @override
