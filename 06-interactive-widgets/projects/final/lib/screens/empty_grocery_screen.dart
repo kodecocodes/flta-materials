@@ -27,7 +27,8 @@ class EmptyGroceryScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16.0),
             const Text(
-              'Shopping for ingredients? Write them down!',
+              'Shopping for ingredients?\n'
+              'Tap the + button to write them down!',
               textAlign: TextAlign.center,
             ),
             MaterialButton(
