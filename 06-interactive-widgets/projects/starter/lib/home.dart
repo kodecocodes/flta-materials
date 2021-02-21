@@ -30,8 +30,11 @@ class _HomeState extends State<Home> {
     // TODO 9: Wrap inside a Consumer Widget
     return Scaffold(
       appBar: AppBar(
-          title:
-              Text('Fooderlich', style: Theme.of(context).textTheme.headline6)),
+        title: Text(
+          'Fooderlich',
+          style: Theme.of(context).textTheme.headline6,
+        ),
+      ),
       body: pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Theme.of(context).textSelectionColor,
