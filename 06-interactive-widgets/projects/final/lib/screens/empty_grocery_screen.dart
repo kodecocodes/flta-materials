@@ -20,12 +20,12 @@ class EmptyGroceryScreen extends StatelessWidget {
               aspectRatio: 1 / 1,
               child: Image.asset('assets/fooderlich_assets/empty_list.png'),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 16.0),
             const Text(
               'No Groceries',
-              style: TextStyle(fontSize: 21),
+              style: TextStyle(fontSize: 21.0),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 16.0),
             const Text(
               'Shopping for ingredients? Write them down!',
               textAlign: TextAlign.center,
@@ -34,7 +34,8 @@ class EmptyGroceryScreen extends StatelessWidget {
               textColor: Colors.white,
               child: const Text('Browse Recipes'),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0)),
+                borderRadius: BorderRadius.circular(30.0),
+              ),
               color: Colors.green,
               onPressed: () {
                 Provider.of<TabManager>(context, listen: false).goToRecipes();
