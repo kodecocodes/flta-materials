@@ -30,29 +30,40 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     // 1
-    return Consumer<TabManager>(builder: (context, tabManager, child) {
-      return Scaffold(
+    return Consumer<TabManager>(
+      builder: (context, tabManager, child) {
+        return Scaffold(
           appBar: AppBar(
-              title: Text('Fooderlich',
-                  style: Theme.of(context).textTheme.headline6)),
+            title: Text('Fooderlich',
+                style: Theme.of(context).textTheme.headline6),
+          ),
           // 2
           body: pages[tabManager.selectedTab],
           bottomNavigationBar: BottomNavigationBar(
-              selectedItemColor: Theme.of(context).textSelectionColor,
-              // 3
-              currentIndex: tabManager.selectedTab,
-              onTap: (index) {
-                // 4
-                tabManager.goToTab(index);
-              },
-              items: <BottomNavigationBarItem>[
-                const BottomNavigationBarItem(
-                    icon: Icon(Icons.explore), label: 'Explore',),
-                const BottomNavigationBarItem(
-                    icon: Icon(Icons.book), label: 'Recipes',),
-                const BottomNavigationBarItem(
-                    icon: Icon(Icons.list), label: 'To Buy',),
-              ],),);
-    },);
+            selectedItemColor: Theme.of(context).textSelectionColor,
+            // 3
+            currentIndex: tabManager.selectedTab,
+            onTap: (index) {
+              // 4
+              tabManager.goToTab(index);
+            },
+            items: <BottomNavigationBarItem>[
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.explore),
+                label: 'Explore',
+              ),
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.book),
+                label: 'Recipes',
+              ),
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.list),
+                label: 'To Buy',
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
