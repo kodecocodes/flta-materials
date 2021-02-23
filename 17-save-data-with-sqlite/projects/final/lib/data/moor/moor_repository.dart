@@ -62,7 +62,7 @@ class MoorRepository extends Repository {
         .findAllIngredients()
         .then<List<Ingredient>>((List<MoorIngredientData> moorIngredients) {
       final ingredients = List<Ingredient>();
-      moorIngredients.forEach((ingredient) async {
+      moorIngredients.forEach((ingredient) {
         ingredients.add(moorIngredientToIngredient(ingredient));
       });
       return ingredients;
