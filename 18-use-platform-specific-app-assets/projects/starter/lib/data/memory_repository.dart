@@ -6,18 +6,14 @@ import 'repository.dart';
 import 'models/models.dart';
 
 class MemoryRepository extends Repository {
-  List<Recipe> _currentRecipes = List<Recipe>();
-  List<Ingredient> _currentIngredients = List<Ingredient>();
+  final List<Recipe> _currentRecipes = List<Recipe>();
+  final List<Ingredient> _currentIngredients = List<Ingredient>();
   Stream<List<Recipe>> _recipeStream;
   Stream<List<Ingredient>> _ingredientStream;
-  StreamController _recipeStreamController = StreamController<List<Recipe>>();
-  StreamController _ingredientStreamController =
+  final StreamController _recipeStreamController =
+      StreamController<List<Recipe>>();
+  final StreamController _ingredientStreamController =
       StreamController<List<Ingredient>>();
-
-  @override
-  Future<List<Recipe>> findAllRecipes() {
-    return Future.value(_currentRecipes);
-  }
 
   @override
   Stream<List<Recipe>> watchAllRecipes() {
@@ -36,6 +32,11 @@ class MemoryRepository extends Repository {
   }
 
   @override
+  Future<List<Recipe>> findAllRecipes() {
+    return Future.value(_currentRecipes);
+  }
+
+  @override
   Future<Recipe> findRecipeById(int id) {
     return Future.value(
         _currentRecipes.firstWhere((recipe) => recipe.id == id));
@@ -48,8 +49,11 @@ class MemoryRepository extends Repository {
 
   @override
   Future<List<Ingredient>> findRecipeIngredients(int recipeId) {
-    var recipe = _currentRecipes.firstWhere((recipe) => recipe.id == recipeId);
-    var recipeIngredients = _currentIngredients.where((ingredient) => ingredient.recipeId == recipe.id).toList();
+    final recipe =
+        _currentRecipes.firstWhere((recipe) => recipe.id == recipeId);
+    final recipeIngredients = _currentIngredients
+        .where((ingredient) => ingredient.recipeId == recipe.id)
+        .toList();
     return Future.value(recipeIngredients);
   }
 
@@ -70,7 +74,6 @@ class MemoryRepository extends Repository {
     return Future.value(List<int>());
   }
 
-
   @override
   Future<void> deleteRecipe(Recipe recipe) {
     _currentRecipes.remove(recipe);
@@ -81,7 +84,7 @@ class MemoryRepository extends Repository {
 
   @override
   Future<void> deleteIngredient(Ingredient ingredient) {
-   _currentIngredients.remove(ingredient);
+    _currentIngredients.remove(ingredient);
     _ingredientStreamController.sink.add(_currentIngredients);
     return Future.value();
   }

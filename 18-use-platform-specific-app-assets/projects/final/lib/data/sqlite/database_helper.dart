@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:path/path.dart';
 import '../models/models.dart';
@@ -8,12 +7,12 @@ import 'package:sqlbrite/sqlbrite.dart';
 import 'package:synchronized/synchronized.dart';
 
 class DatabaseHelper {
-  static final _databaseName = "MyDatabase.db";
-  static final _databaseVersion = 1;
+  static const _databaseName = 'MyDatabase.db';
+  static const _databaseVersion = 1;
 
-  static final recipeTable = 'Recipe';
-  static final ingredientTable = 'Ingredient';
-  static final columnId = '_id';
+  static const recipeTable = 'Recipe';
+  static const ingredientTable = 'Ingredient';
+  static const columnId = '_id';
 
   static BriteDatabase _streamDatabase;
 
@@ -21,7 +20,7 @@ class DatabaseHelper {
   DatabaseHelper._privateConstructor();
 
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
-  static var lock = new Lock();
+  static var lock = Lock();
 
   // only have a single app-wide reference to the database
   static Database _database;
@@ -51,10 +50,10 @@ class DatabaseHelper {
 
   // this opens the database (and creates it if it doesn't exist)
   Future<Database> _initDatabase() async {
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, _databaseName);
+    final documentsDirectory = await getApplicationDocumentsDirectory();
+    final path = join(documentsDirectory.path, _databaseName);
     Sqflite.setDebugModeOn(true);
-    return await openDatabase(path,
+    return openDatabase(path,
         version: _databaseVersion, onCreate: _onCreate);
   }
 
@@ -77,67 +76,67 @@ class DatabaseHelper {
   }
 
   List<Recipe> parseRecipes(List<Map<String, dynamic>> recipeList) {
-    List<Recipe> recipes = List<Recipe>();
+    final recipes = List<Recipe>();
     recipeList.forEach((recipeMap) {
-      Recipe recipe = Recipe.fromJson(recipeMap);
+      final recipe = Recipe.fromJson(recipeMap);
       recipes.add(recipe);
     });
     return recipes;
   }
 
   List<Ingredient> parseIngredients(List<Map<String, dynamic>> ingredientList) {
-    List<Ingredient> ingredients = List<Ingredient>();
+    final ingredients = List<Ingredient>();
     ingredientList.forEach((ingredientMap) {
-      Ingredient ingredient = Ingredient.fromJson(ingredientMap);
+      final ingredient = Ingredient.fromJson(ingredientMap);
       ingredients.add(ingredient);
     });
     return ingredients;
   }
 
   Future<List<Recipe>> findAllRecipes() async {
-    BriteDatabase db = await instance.streamDatabase;
-    var recipeList = await db.query(recipeTable);
-    List<Recipe> recipes = parseRecipes(recipeList);
+    final db = await instance.streamDatabase;
+    final recipeList = await db.query(recipeTable);
+    final recipes = parseRecipes(recipeList);
     return recipes;
   }
 
   Stream<List<Recipe>> watchAllRecipes() async* {
-    BriteDatabase db = await instance.streamDatabase;
+    final db = await instance.streamDatabase;
     yield* db.createQuery(recipeTable).mapToList((row) => Recipe.fromJson(row));
   }
 
   Stream<List<Ingredient>> watchAllIngredients() async* {
-    BriteDatabase db = await instance.streamDatabase;
+    final db = await instance.streamDatabase;
     yield* db
         .createQuery(ingredientTable)
         .mapToList((row) => Ingredient.fromJson(row));
   }
 
   Future<Recipe> findRecipeById(int id) async {
-    BriteDatabase db = await instance.streamDatabase;
-    var recipeList = await db.query(recipeTable, where: "id = $id");
-    List<Recipe> recipes = parseRecipes(recipeList);
+    final db = await instance.streamDatabase;
+    final recipeList = await db.query(recipeTable, where: 'id = $id');
+    final recipes = parseRecipes(recipeList);
     return recipes.first;
   }
 
   Future<List<Ingredient>> findAllIngredients() async {
-    BriteDatabase db = await instance.streamDatabase;
-    var ingredientList = await db.query(ingredientTable);
-    List<Ingredient> ingredients = parseIngredients(ingredientList);
+    final db = await instance.streamDatabase;
+    final ingredientList = await db.query(ingredientTable);
+    final ingredients = parseIngredients(ingredientList);
     return ingredients;
   }
 
   Future<List<Ingredient>> findRecipeIngredients(int recipeId) async {
-    BriteDatabase db = await instance.streamDatabase;
-    var ingredientList =
-        await db.query(ingredientTable, where: "recipeId = $recipeId");
-    List<Ingredient> ingredients = parseIngredients(ingredientList);
+    final db = await instance.streamDatabase;
+    final ingredientList =
+        await db.query(ingredientTable, where: 'recipeId = $recipeId');
+    final ingredients = parseIngredients(ingredientList);
     return ingredients;
   }
 
   Future<int> insert(String table, Map<String, dynamic> row) async {
-    BriteDatabase db = await instance.streamDatabase;
-    return await db.insert(table, row);
+    final db = await instance.streamDatabase;
+    return db.insert(table, row);
   }
 
   Future<int> insertRecipe(Recipe recipe) {
@@ -149,16 +148,16 @@ class DatabaseHelper {
   }
 
   Future<int> _delete(String table, int id) async {
-    BriteDatabase db = await instance.streamDatabase;
-    return await db.delete(table, where: '$columnId = ?', whereArgs: [id]);
+    final db = await instance.streamDatabase;
+    return db.delete(table, where: '$columnId = ?', whereArgs: [id]);
   }
 
   Future<int> deleteRecipe(Recipe recipe) async {
-    return await _delete(recipeTable, recipe.id);
+    return  _delete(recipeTable, recipe.id);
   }
 
   Future<int> deleteIngredient(Ingredient ingredient) async {
-    return await _delete(ingredientTable, ingredient.id);
+    return  _delete(ingredientTable, ingredient.id);
   }
 
   Future<void> deleteIngredients(List<Ingredient> ingredients) {
@@ -173,8 +172,8 @@ class DatabaseHelper {
   }
 
   Future<int> deleteRecipeIngredients(int recipeId) async {
-    BriteDatabase db = await instance.streamDatabase;
-    return await db
+    final db = await instance.streamDatabase;
+    return db
         .delete(ingredientTable, where: 'recipeId = ?', whereArgs: [recipeId]);
   }
 

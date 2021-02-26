@@ -7,7 +7,7 @@ import '../network/model_response.dart';
 import '../network/recipe_model.dart';
 import '../network/service_interface.dart';
 
-class MockService implements ServiceInterface{
+class MockService implements ServiceInterface {
   APIRecipeQuery _currentRecipes1;
   APIRecipeQuery _currentRecipes2;
   Random nextRecipe = Random();
@@ -23,13 +23,19 @@ class MockService implements ServiceInterface{
     _currentRecipes2 = APIRecipeQuery.fromJson(jsonDecode(jsonString));
   }
 
-  Future<Response<Result<APIRecipeQuery>>> queryRecipes(String query, int from, int to) {
-    switch(nextRecipe.nextInt(2)) {
+  @override
+  Future<Response<Result<APIRecipeQuery>>> queryRecipes(
+      String query, int from, int to) {
+    switch (nextRecipe.nextInt(2)) {
       case 0:
-        return Future.value(Response(null, Success<APIRecipeQuery>(_currentRecipes1)));
+        return Future.value(
+            Response(null, Success<APIRecipeQuery>(_currentRecipes1)));
       case 1:
-        return Future.value(Response(null, Success<APIRecipeQuery>(_currentRecipes2)));
+        return Future.value(
+            Response(null, Success<APIRecipeQuery>(_currentRecipes2)));
+      default:
+        return Future.value(
+            Response(null, Success<APIRecipeQuery>(_currentRecipes1)));
     }
   }
-
 }

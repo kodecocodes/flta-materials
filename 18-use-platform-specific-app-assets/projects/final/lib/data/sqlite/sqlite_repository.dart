@@ -40,7 +40,7 @@ class SqliteRepository extends Repository {
   @override
   Future<int> insertRecipe(Recipe recipe) {
     return Future(() async {
-      int id = await dbHelper.insertRecipe(recipe);
+      final id = await dbHelper.insertRecipe(recipe);
       recipe.id = id;
       if (recipe.ingredients != null) {
         recipe.ingredients.forEach((ingredient) {
@@ -56,10 +56,10 @@ class SqliteRepository extends Repository {
   Future<List<int>> insertIngredients(List<Ingredient> ingredients) {
     return Future(() async {
       if (ingredients != null && ingredients.length != 0) {
-        List<int> ingredientIds = List<int>();
+        final ingredientIds = List<int>();
         await Future.forEach(ingredients, (ingredient) async {
           if (ingredient != null) {
-            var futureId = await dbHelper.insertIngredient(ingredient);
+            final futureId = await dbHelper.insertIngredient(ingredient);
             ingredient.id = futureId;
             ingredientIds.add(futureId);
           }
