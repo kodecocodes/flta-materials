@@ -325,7 +325,7 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
                   actions: [
                     // 7
                     FlatButton(
-                      child: const Text('Got it'),
+                      child: const Text('Save'),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
