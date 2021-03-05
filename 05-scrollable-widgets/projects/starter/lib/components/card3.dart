@@ -8,7 +8,7 @@ class Card3 extends StatelessWidget {
   const Card3({Key key, this.recipe}) : super(key: key);
 
   List<Widget> createTagChips() {
-    final chips = List<Widget>();
+    final chips = <Widget>[];
     recipe.tags.take(6).forEach((element) {
       final chip = Chip(
           label: Text(element, style: FooderlichTheme.darkTextTheme.bodyText1),
