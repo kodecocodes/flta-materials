@@ -43,9 +43,7 @@ class FooderlichTheme {
       fontWeight: FontWeight.w600, 
       color: Colors.white),
     headline6: GoogleFonts.openSans(
-      fontSize: 20.0, 
-      fontWeight: FontWeight.w600, 
-      color: Colors.white),
+        fontSize: 20.0, fontWeight: FontWeight.w600, color: Colors.white),
   );
 
   static ThemeData light() {
@@ -53,7 +51,8 @@ class FooderlichTheme {
       brightness: Brightness.light,
       primaryColor: Colors.white,
       accentColor: Colors.black,
-      textSelectionColor: Colors.green,
+      textSelectionTheme:
+          const TextSelectionThemeData(selectionColor: Colors.green),
       textTheme: lightTextTheme,
     );
   }
