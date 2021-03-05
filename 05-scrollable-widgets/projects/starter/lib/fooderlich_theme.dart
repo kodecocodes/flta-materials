@@ -53,7 +53,8 @@ class FooderlichTheme {
       brightness: Brightness.light,
       primaryColor: Colors.white,
       accentColor: Colors.black,
-      textSelectionColor: Colors.green,
+      textSelectionTheme:
+          const TextSelectionThemeData(selectionColor: Colors.green),
       textTheme: lightTextTheme,
     );
   }
