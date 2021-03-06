@@ -76,7 +76,7 @@ class DatabaseHelper {
   }
 
   List<Recipe> parseRecipes(List<Map<String, dynamic>> recipeList) {
-    final recipes = List<Recipe>();
+    final recipes = <Recipe>[];
     recipeList.forEach((recipeMap) {
       final recipe = Recipe.fromJson(recipeMap);
       recipes.add(recipe);
@@ -85,7 +85,7 @@ class DatabaseHelper {
   }
 
   List<Ingredient> parseIngredients(List<Map<String, dynamic>> ingredientList) {
-    final ingredients = List<Ingredient>();
+    final ingredients = <Ingredient>[];
     ingredientList.forEach((ingredientMap) {
       final ingredient = Ingredient.fromJson(ingredientMap);
       ingredients.add(ingredient);

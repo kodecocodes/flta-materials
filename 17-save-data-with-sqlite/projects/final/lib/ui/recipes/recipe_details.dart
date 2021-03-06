@@ -2,9 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+
+import '../../data/models/recipe.dart';
 import '../../data/repository.dart';
 import '../../network/recipe_model.dart';
-import '../../data/models/recipe.dart';
 import '../colors.dart';
 
 class RecipeDetails extends StatelessWidget {
@@ -70,10 +71,11 @@ class RecipeDetails extends StatelessWidget {
                   height: 16,
                 ),
                 Center(
-                  child: RaisedButton.icon(
-                    color: green,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      primary: green,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0)),
                     ),
                     onPressed: () {
                       repository.insertRecipe(recipe);
