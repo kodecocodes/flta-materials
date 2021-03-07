@@ -14,7 +14,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
-  List<Widget> pageList = List<Widget>();
+  List<Widget> pageList = <Widget>[];
 
   @override
   void initState() {
