@@ -6,8 +6,8 @@ import 'repository.dart';
 import 'models/models.dart';
 
 class MemoryRepository extends Repository {
-  final List<Recipe> _currentRecipes = List<Recipe>();
-  final List<Ingredient> _currentIngredients = List<Ingredient>();
+  final List<Recipe> _currentRecipes = <Recipe>[];
+  final List<Ingredient> _currentIngredients = <Ingredient>[];
   Stream<List<Recipe>> _recipeStream;
   Stream<List<Ingredient>> _ingredientStream;
   final StreamController _recipeStreamController =
@@ -71,7 +71,7 @@ class MemoryRepository extends Repository {
       _currentIngredients.addAll(ingredients);
       _ingredientStreamController.sink.add(_currentIngredients);
     }
-    return Future.value(List<int>());
+    return Future.value(<int>[]);
   }
 
   @override
