@@ -4,8 +4,8 @@ import 'repository.dart';
 import 'models/models.dart';
 
 class MemoryRepository extends Repository with ChangeNotifier {
-  final List<Recipe> _currentRecipes = List<Recipe>();
-  final List<Ingredient> _currentIngredients = List<Ingredient>();
+  final List<Recipe> _currentRecipes = <Recipe>[];
+  final List<Ingredient> _currentIngredients = <Ingredient>[];
 
   @override
   List<Recipe> findAllRecipes() {
@@ -46,7 +46,7 @@ class MemoryRepository extends Repository with ChangeNotifier {
       _currentIngredients.addAll(ingredients);
       notifyListeners();
     }
-    return List<int>();
+    return <int>[];
   }
 
   @override

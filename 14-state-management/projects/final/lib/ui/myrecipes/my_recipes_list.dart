@@ -7,6 +7,7 @@ import '../../data/memory_repository.dart';
 
 class MyRecipesList extends StatefulWidget {
   const MyRecipesList({Key key}) : super(key: key);
+
   @override
   _MyRecipesListState createState() => _MyRecipesListState();
 }
@@ -24,7 +25,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
 
   Widget _buildRecipeList(BuildContext context) {
     return Consumer<MemoryRepository>(builder: (context, repository, child) {
-      recipes = repository.findAllRecipes() ?? List();
+      recipes = repository.findAllRecipes() ?? [];
       return ListView.builder(
           itemCount: recipes.length,
           itemBuilder: (BuildContext context, int index) {
