@@ -11,7 +11,7 @@ class RecipeList extends StatefulWidget {
 class _RecipeListState extends State<RecipeList> {
   TextEditingController searchTextController;
   final _scrollController = ScrollController();
-  List currentSearchList = List();
+  List currentSearchList = [];
   int currentCount = 0;
   int currentStartPosition = 0;
   int currentEndPosition = 20;
