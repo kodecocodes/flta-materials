@@ -21,7 +21,7 @@ class _RecipeListState extends State<RecipeList> {
   TextEditingController searchTextController;
   final ScrollController _scrollController = ScrollController();
   // TODO: Replace with new API class
-  List<APIHits> currentSearchList = [];
+  List currentSearchList = [];
   int currentCount = 0;
   int currentStartPosition = 0;
   int currentEndPosition = 20;
