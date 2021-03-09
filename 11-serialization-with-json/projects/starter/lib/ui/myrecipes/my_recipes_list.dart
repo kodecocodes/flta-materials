@@ -16,7 +16,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
   @override
   void initState() {
     super.initState();
-    recipes = List<String>();
+    recipes = <String>[];
   }
 
   @override
