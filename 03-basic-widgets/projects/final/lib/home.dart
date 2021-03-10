@@ -40,7 +40,8 @@ class _HomeState extends State<Home> {
         // 4
         bottomNavigationBar: BottomNavigationBar(
             // 5
-            selectedItemColor: Theme.of(context).textSelectionColor,
+            selectedItemColor:
+                Theme.of(context).textSelectionTheme.selectionColor,
             // 10
             currentIndex: _selectedIndex,
             // 11
