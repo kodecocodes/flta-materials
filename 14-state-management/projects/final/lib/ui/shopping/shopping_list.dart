@@ -4,10 +4,11 @@ import '../../data/memory_repository.dart';
 
 class ShoppingList extends StatelessWidget {
   const ShoppingList({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<MemoryRepository>(builder: (context, repository, child) {
-      final ingredients = repository.findAllIngredients() ?? List();
+      final ingredients = repository.findAllIngredients() ?? [];
       return ListView.builder(
           itemCount: ingredients.length,
           itemBuilder: (BuildContext context, int index) {

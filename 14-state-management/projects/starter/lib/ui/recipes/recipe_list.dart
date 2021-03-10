@@ -23,7 +23,7 @@ class _RecipeListState extends State<RecipeList> {
 
   TextEditingController searchTextController;
   final ScrollController _scrollController = ScrollController();
-  List<APIHits> currentSearchList = List();
+  List<APIHits> currentSearchList = [];
   int currentCount = 0;
   int currentStartPosition = 0;
   int currentEndPosition = 20;
@@ -31,7 +31,7 @@ class _RecipeListState extends State<RecipeList> {
   bool hasMore = false;
   bool loading = false;
   bool inErrorState = false;
-  List<String> previousSearches = List<String>();
+  List<String> previousSearches = <String>[];
 
   @override
   void initState() {
@@ -76,7 +76,7 @@ class _RecipeListState extends State<RecipeList> {
     if (prefs.containsKey(prefSearchKey)) {
       previousSearches = prefs.getStringList(prefSearchKey);
       if (previousSearches == null) {
-        previousSearches = List<String>();
+        previousSearches = <String>[];
       }
     }
   }
