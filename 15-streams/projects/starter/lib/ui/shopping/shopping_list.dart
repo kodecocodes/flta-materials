@@ -8,7 +8,7 @@ class ShoppingList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<MemoryRepository>(builder: (context, repository, child) {
-      final ingredients = repository.findAllIngredients() ?? List();
+      final ingredients = repository.findAllIngredients() ?? [];
       return ListView.builder(
           itemCount: ingredients.length,
           itemBuilder: (BuildContext context, int index) {

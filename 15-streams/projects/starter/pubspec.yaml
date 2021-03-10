@@ -12,25 +12,25 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.0
-  cached_network_image: ^2.3.2+1
+  cupertino_icons: ^1.0.2
+  cached_network_image: ^2.5.0
   flutter_slidable: ^0.5.7
-  flutter_svg: ^0.19.0
+  flutter_svg: ^0.19.3
   shared_preferences: ">=0.5.8 <2.0.0"
   flutter_statusbarcolor: ^0.2.3
-  json_annotation: ^3.1.0
-  chopper: ^3.0.3
+  json_annotation: ^3.1.1
+  chopper: ^3.0.6
   logging: ^0.11.4
-  provider: ^4.3.2+2
-  equatable: ^1.2.5
+  provider: ^4.3.3
+  equatable: ^1.2.6
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   build_runner: ^1.10.0
-  json_serializable: ^3.5.0
-  chopper_generator: ^3.0.5
+  json_serializable: ^3.5.1
+  chopper_generator: ^3.0.6
 
 flutter:
 
