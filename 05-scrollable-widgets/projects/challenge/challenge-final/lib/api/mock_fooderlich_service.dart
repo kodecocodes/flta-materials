@@ -24,7 +24,7 @@ class MockFooderlichService {
 
     // Go through each recipe and convert json to ExploreRecipe object.
     if (json['recipes'] != null) {
-      final recipes = List<ExploreRecipe>();
+      final recipes = <ExploreRecipe>[];
       json['recipes'].forEach((v) {
         recipes.add(ExploreRecipe.fromJson(v));
       });
@@ -46,7 +46,7 @@ class MockFooderlichService {
 
     // Go through each post and convert json to Post object.
     if (json['feed'] != null) {
-      final posts = List<Post>();
+      final posts = <Post>[];
       json['feed'].forEach((v) {
         posts.add(Post.fromJson(v));
       });
@@ -68,7 +68,7 @@ class MockFooderlichService {
 
     // Go through each recipe and convert json to SimpleRecipe object.
     if (json['recipes'] != null) {
-      final recipes = List<SimpleRecipe>();
+      final recipes = <SimpleRecipe>[];
       json['recipes'].forEach((v) {
         recipes.add(SimpleRecipe.fromJson(v));
       });

@@ -35,7 +35,8 @@ class _HomeState extends State<Home> {
                 style: Theme.of(context).textTheme.headline6)),
         body: pages[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
-            selectedItemColor: Theme.of(context).textSelectionColor,
+            selectedItemColor:
+                Theme.of(context).textSelectionTheme.selectionColor,
             currentIndex: _selectedIndex,
             onTap: _onItemTapped,
             items: <BottomNavigationBarItem>[
