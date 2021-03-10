@@ -70,10 +70,11 @@ class RecipeDetails extends StatelessWidget {
                   height: 16,
                 ),
                 Center(
-                  child: RaisedButton.icon(
-                    color: green,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      primary: green,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0)),
                     ),
                     onPressed: () {
                       repository.insertRecipe(recipe);
