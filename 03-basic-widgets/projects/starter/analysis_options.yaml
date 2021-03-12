@@ -1,5 +1,8 @@
 analyzer:
-  exclude: [build/**]
+  exclude:
+    - build/**
+    - lib/**.chopper.dart
+    - lib/**.g.dart
   errors:
     missing_return: error
     dead_code: error
