@@ -29,7 +29,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
         stream: repository.watchAllRecipes(),
         builder: (context, AsyncSnapshot<List<Recipe>> snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
-            final recipes = snapshot.data ?? List();
+            final recipes = snapshot.data ?? [];
             return ListView.builder(
                 itemCount: recipes.length,
                 itemBuilder: (BuildContext context, int index) {

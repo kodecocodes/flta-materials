@@ -56,7 +56,7 @@ class SqliteRepository extends Repository {
   Future<List<int>> insertIngredients(List<Ingredient> ingredients) {
     return Future(() async {
       if (ingredients != null && ingredients.length != 0) {
-        final ingredientIds = List<int>();
+        final ingredientIds = <int>[];
         await Future.forEach(ingredients, (ingredient) async {
           if (ingredient != null) {
             final futureId = await dbHelper.insertIngredient(ingredient);
@@ -66,7 +66,7 @@ class SqliteRepository extends Repository {
         });
         return Future.value(ingredientIds);
       } else {
-        return Future.value(List<int>());
+        return Future.value(<int>[]);
       }
     });
   }
