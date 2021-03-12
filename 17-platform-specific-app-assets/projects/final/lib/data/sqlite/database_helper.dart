@@ -1,4 +1,3 @@
-
 import 'package:path/path.dart';
 import '../models/models.dart';
 import 'package:sqflite/sqflite.dart';
@@ -53,8 +52,7 @@ class DatabaseHelper {
     final documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, _databaseName);
     Sqflite.setDebugModeOn(true);
-    return openDatabase(path,
-        version: _databaseVersion, onCreate: _onCreate);
+    return openDatabase(path, version: _databaseVersion, onCreate: _onCreate);
   }
 
   Future<Database> get database async {
@@ -76,7 +74,7 @@ class DatabaseHelper {
   }
 
   List<Recipe> parseRecipes(List<Map<String, dynamic>> recipeList) {
-    final recipes = List<Recipe>();
+    final recipes = <Recipe>[];
     recipeList.forEach((recipeMap) {
       final recipe = Recipe.fromJson(recipeMap);
       recipes.add(recipe);
@@ -85,7 +83,7 @@ class DatabaseHelper {
   }
 
   List<Ingredient> parseIngredients(List<Map<String, dynamic>> ingredientList) {
-    final ingredients = List<Ingredient>();
+    final ingredients = <Ingredient>[];
     ingredientList.forEach((ingredientMap) {
       final ingredient = Ingredient.fromJson(ingredientMap);
       ingredients.add(ingredient);
@@ -153,11 +151,11 @@ class DatabaseHelper {
   }
 
   Future<int> deleteRecipe(Recipe recipe) async {
-    return  _delete(recipeTable, recipe.id);
+    return _delete(recipeTable, recipe.id);
   }
 
   Future<int> deleteIngredient(Ingredient ingredient) async {
-    return  _delete(ingredientTable, ingredient.id);
+    return _delete(ingredientTable, ingredient.id);
   }
 
   Future<void> deleteIngredients(List<Ingredient> ingredients) {

@@ -16,7 +16,7 @@ class MoorRepository extends Repository {
     return _recipeDao
         .findAllRecipes()
         .then<List<Recipe>>((List<MoorRecipeData> moorRecipes) {
-      final recipes = List<Recipe>();
+      final recipes = <Recipe>[];
       moorRecipes.forEach((moorRecipe) async {
         final recipe = moorRecipeToRecipe(moorRecipe);
         recipe.ingredients = await findRecipeIngredients(recipe.id);
@@ -39,7 +39,7 @@ class MoorRepository extends Repository {
     if (ingredientStream == null) {
       final stream = _ingredientDao.watchAllIngredients();
       ingredientStream = stream.map((moorIngredients) {
-        final ingredients = List<Ingredient>();
+        final ingredients = <Ingredient>[];
         moorIngredients.forEach((moorIngredient) {
           ingredients.add(moorIngredientToIngredient(moorIngredient));
         });
@@ -61,7 +61,7 @@ class MoorRepository extends Repository {
     return _ingredientDao
         .findAllIngredients()
         .then<List<Ingredient>>((List<MoorIngredientData> moorIngredients) {
-      final ingredients = List<Ingredient>();
+      final ingredients = <Ingredient>[];
       moorIngredients.forEach((ingredient) {
         ingredients.add(moorIngredientToIngredient(ingredient));
       });
@@ -74,7 +74,7 @@ class MoorRepository extends Repository {
     return _ingredientDao
         .findRecipeIngredients(recipeId)
         .then((listOfIngredients) {
-      final ingredients = List<Ingredient>();
+      final ingredients = <Ingredient>[];
       listOfIngredients.forEach((ingredient) {
         ingredients.add(moorIngredientToIngredient(ingredient));
       });
@@ -99,9 +99,9 @@ class MoorRepository extends Repository {
   Future<List<int>> insertIngredients(List<Ingredient> ingredients) {
     return Future(() {
       if (ingredients == null || ingredients.length == 0) {
-        return List<int>();
+        return <int>[];
       }
-      final resultIds = List<int>();
+      final resultIds = <int>[];
       ingredients.forEach((ingredient) {
         final moorIngredient = ingredientToInsertableMoorIngredient(ingredient);
         _ingredientDao
