@@ -15,9 +15,6 @@ import 'data/moor/moor_repository.dart';
 Future<void> main() async {
   _setupLogging();
   WidgetsFlutterBinding.ensureInitialized();
-  await FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
-  await FlutterStatusbarcolor.setStatusBarColor(Colors.white);
-  // SqliteRepository repository = SqliteRepository();
   MoorRepository repository = MoorRepository();
   await repository.init();
   runApp(MyApp(repository));
