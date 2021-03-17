@@ -28,7 +28,7 @@ class Recipe extends Equatable {
 
   // Create a Recipe from JSON data
   factory Recipe.fromJson(Map<String, dynamic> json) => Recipe(
-        id: json['_id'],
+        id: json['recipeId'],
         label: json['label'],
         image: json['image'],
         url: json['url'],
@@ -40,7 +40,7 @@ class Recipe extends Equatable {
   // Convert our Recipe to JSON to make it easier
   // when we store it in the database
   Map<String, dynamic> toJson() => {
-        '_id': id,
+        'recipeId': id,
         'label': label,
         'image': image,
         'url': url,
