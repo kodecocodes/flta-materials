@@ -25,6 +25,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+// Add keystore properties here
+
 android {
     compileSdkVersion 28
 
@@ -45,6 +47,8 @@ android {
         versionName flutterVersionName
     }
 
+    // add signing release config here
+    
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
