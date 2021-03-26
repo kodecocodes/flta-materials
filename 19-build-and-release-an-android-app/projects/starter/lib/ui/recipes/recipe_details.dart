@@ -10,12 +10,12 @@ import '../colors.dart';
 class RecipeDetails extends StatelessWidget {
   final Recipe recipe;
 
-  RecipeDetails(this.recipe);
+  const RecipeDetails({Key key, this.recipe}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Repository repository = Provider.of<Repository>(context);
-    var size = MediaQuery.of(context).size;
+    final repository = Provider.of<Repository>(context);
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -38,26 +38,27 @@ class RecipeDetails extends StatelessWidget {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Container(
-                        decoration:
-                            BoxDecoration(shape: BoxShape.circle, color: shim),
-                        child: BackButton(
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle, color: shim),
+                        child: const BackButton(
                           color: Colors.white,
                         ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0),
                   child: Text(
                     recipe.label,
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 Padding(
@@ -65,14 +66,15 @@ class RecipeDetails extends StatelessWidget {
                     child: Chip(
                       label: Text(getCalories(recipe.calories)),
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 Center(
-                  child: RaisedButton.icon(
-                    color: green,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      primary: green,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0)),
                     ),
                     onPressed: () {
                       repository.insertRecipe(recipe);
@@ -82,7 +84,7 @@ class RecipeDetails extends StatelessWidget {
                       'assets/images/icon_bookmark.svg',
                       color: Colors.white,
                     ),
-                    label: Text(
+                    label: const Text(
                       'Bookmark',
                       style: TextStyle(color: Colors.white),
                     ),

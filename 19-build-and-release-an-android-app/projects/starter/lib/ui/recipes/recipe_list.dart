@@ -3,19 +3,20 @@ import 'dart:math';
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:recipes/ui/widgets/custom_dropdown.dart';
+import '../widgets/custom_dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/models/models.dart';
-import '../../mock_service/mock_service.dart';
 import '../../network/model_response.dart';
 import '../../network/recipe_model.dart';
+import '../../network/service_interface.dart';
 import '../colors.dart';
 import '../recipe_card.dart';
 import '../recipes/recipe_details.dart';
-import '../../network/service_interface.dart';
 
 class RecipeList extends StatefulWidget {
+  const RecipeList({Key key}) : super(key: key);
+
   @override
   _RecipeListState createState() => _RecipeListState();
 }
@@ -24,8 +25,8 @@ class _RecipeListState extends State<RecipeList> {
   static const String prefSearchKey = 'previousSearches';
 
   TextEditingController searchTextController;
-  ScrollController _scrollController = ScrollController();
-  List<APIHits> currentSearchList = List();
+  final ScrollController _scrollController = ScrollController();
+  List<APIHits> currentSearchList = [];
   int currentCount = 0;
   int currentStartPosition = 0;
   int currentEndPosition = 20;
@@ -33,7 +34,7 @@ class _RecipeListState extends State<RecipeList> {
   bool hasMore = false;
   bool loading = false;
   bool inErrorState = false;
-  List<String> previousSearches = List<String>();
+  List<String> previousSearches = <String>[];
 
   @override
   void initState() {
@@ -43,7 +44,7 @@ class _RecipeListState extends State<RecipeList> {
     searchTextController = TextEditingController(text: '');
     _scrollController
       ..addListener(() {
-        var triggerFetchMoreSize =
+        final triggerFetchMoreSize =
             0.7 * _scrollController.position.maxScrollExtent;
 
         if (_scrollController.position.pixels > triggerFetchMoreSize) {
@@ -69,16 +70,16 @@ class _RecipeListState extends State<RecipeList> {
   }
 
   void savePreviousSearches() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     prefs.setStringList(prefSearchKey, previousSearches);
   }
 
   void getPreviousSearches() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey(prefSearchKey)) {
       previousSearches = prefs.getStringList(prefSearchKey);
       if (previousSearches == null) {
-        previousSearches = List<String>();
+        previousSearches = <String>[];
       }
     }
   }
@@ -102,19 +103,19 @@ class _RecipeListState extends State<RecipeList> {
   Widget _buildSearchCard() {
     return Card(
       elevation: 4,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Row(
           children: [
             IconButton(
-              icon: Icon(Icons.search),
+              icon: const Icon(Icons.search),
               onPressed: () {
                 startSearch(searchTextController.text);
               },
             ),
-            SizedBox(
+            const SizedBox(
               width: 6.0,
             ),
             Expanded(
@@ -122,7 +123,7 @@ class _RecipeListState extends State<RecipeList> {
                 children: <Widget>[
                   Expanded(
                       child: TextField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: InputBorder.none, hintText: 'Search'),
                     autofocus: false,
                     textInputAction: TextInputAction.done,
@@ -135,7 +136,10 @@ class _RecipeListState extends State<RecipeList> {
                     controller: searchTextController,
                   )),
                   PopupMenuButton<String>(
-                    icon: const Icon(Icons.arrow_drop_down, color: lightGrey,),
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: lightGrey,
+                    ),
                     onSelected: (String value) {
                       searchTextController.text = value;
                       startSearch(searchTextController.text);
@@ -220,7 +224,7 @@ class _RecipeListState extends State<RecipeList> {
         } else {
           if (currentCount == 0) {
             // Show a loading indicator while waiting for the movies
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else {
@@ -232,9 +236,9 @@ class _RecipeListState extends State<RecipeList> {
   }
 
   Widget _buildRecipeList(BuildContext recipeListContext, List<APIHits> hits) {
-    var size = MediaQuery.of(context).size;
-    final double itemHeight = 310;
-    final double itemWidth = size.width / 2;
+    final size = MediaQuery.of(context).size;
+    const itemHeight = 310;
+    final itemWidth = size.width / 2;
     return Flexible(
       child: GridView.builder(
         controller: _scrollController,
@@ -250,14 +254,14 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
-  Widget _buildRecipeCard(BuildContext topLevelContext, List<APIHits> hits,
-      int index) {
-    APIRecipe recipe = hits[index].recipe;
+  Widget _buildRecipeCard(
+      BuildContext topLevelContext, List<APIHits> hits, int index) {
+    final recipe = hits[index].recipe;
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(
           builder: (context) {
-            var detailRecipe = Recipe(
+            final detailRecipe = Recipe(
                 label: recipe.label,
                 image: recipe.image,
                 url: recipe.url,
@@ -265,7 +269,7 @@ class _RecipeListState extends State<RecipeList> {
                 totalTime: recipe.totalTime,
                 totalWeight: recipe.totalWeight);
             detailRecipe.ingredients = convertIngredients(recipe.ingredients);
-            return RecipeDetails(detailRecipe);
+            return RecipeDetails(recipe: detailRecipe);
           },
         ));
       },

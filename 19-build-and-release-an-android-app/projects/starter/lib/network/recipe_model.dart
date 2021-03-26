@@ -6,9 +6,9 @@ part 'recipe_model.g.dart';
 
 @JsonSerializable()
 class APIRecipeQuery {
-
   factory APIRecipeQuery.fromJson(Map<String, dynamic> json) =>
       _$APIRecipeQueryFromJson(json);
+
   Map<String, dynamic> toJson() => _$APIRecipeQueryToJson(this);
   @JsonKey(name: 'q')
   String query;
@@ -38,6 +38,7 @@ class APIHits {
 
   factory APIHits.fromJson(Map<String, dynamic> json) =>
       _$APIHitsFromJson(json);
+
   Map<String, dynamic> toJson() => _$APIHitsToJson(this);
 }
 
@@ -60,8 +61,10 @@ class APIRecipe {
     @required this.totalWeight,
     @required this.totalTime,
   });
+
   factory APIRecipe.fromJson(Map<String, dynamic> json) =>
       _$APIRecipeFromJson(json);
+
   Map<String, dynamic> toJson() => _$APIRecipeToJson(this);
 }
 
@@ -89,14 +92,18 @@ class APIIngredients {
     @required this.name,
     @required this.weight,
   });
+
   factory APIIngredients.fromJson(Map<String, dynamic> json) =>
       _$APIIngredientsFromJson(json);
+
   Map<String, dynamic> toJson() => _$APIIngredientsToJson(this);
 }
 
 List<Ingredient> convertIngredients(List<APIIngredients> apiIngredients) {
-  List<Ingredient> ingredients = List<Ingredient>();
-  apiIngredients.forEach((ingredient) { ingredients.add(
-      Ingredient(name: ingredient.name, weight: ingredient.weight)); });
+  final ingredients = <Ingredient>[];
+  apiIngredients.forEach((ingredient) {
+    ingredients
+        .add(Ingredient(name: ingredient.name, weight: ingredient.weight));
+  });
   return ingredients;
 }
