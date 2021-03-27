@@ -28,6 +28,7 @@
 .pub-cache/
 .pub/
 /build/
+**/flutter_export_environment.sh
 
 # Web related
 lib/generated_plugin_registrant.dart
