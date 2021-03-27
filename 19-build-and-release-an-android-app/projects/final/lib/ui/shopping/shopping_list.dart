@@ -4,14 +4,16 @@ import '../../data/models/ingredient.dart';
 import '../../data/repository.dart';
 
 class ShoppingList extends StatelessWidget {
+  const ShoppingList({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    Repository repository = Provider.of<Repository>(context);
+    final repository = Provider.of<Repository>(context);
     return StreamBuilder(
       stream: repository.watchAllIngredients(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
-          List<Ingredient> ingredients = snapshot.data;
+          final List<Ingredient> ingredients = snapshot.data;
           if (ingredients == null) {
             return Container();
           }

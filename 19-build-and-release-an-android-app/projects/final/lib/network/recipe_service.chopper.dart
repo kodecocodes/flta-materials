@@ -6,8 +6,7 @@ part of 'recipe_service.dart';
 // ChopperGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: always_specify_types, prefer_const_declarations
+// ignore_for_file: always_put_control_body_on_new_line, always_specify_types, prefer_const_declarations
 class _$RecipeService extends RecipeService {
   _$RecipeService([ChopperClient client]) {
     if (client == null) return;

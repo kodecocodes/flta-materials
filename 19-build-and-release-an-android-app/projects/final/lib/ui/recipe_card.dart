@@ -12,11 +12,11 @@ Widget recipeCard(APIRecipe recipe) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         ClipRRect(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(6.0),
-                topRight: Radius.circular(6.0)),
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(6.0), topRight: Radius.circular(6.0)),
             child: CachedNetworkImage(
                 imageUrl: recipe.image, height: 210, fit: BoxFit.fill)),
-        SizedBox(
+        const SizedBox(
           height: 12.0,
         ),
         Padding(
@@ -25,20 +25,23 @@ Widget recipeCard(APIRecipe recipe) {
             recipe.label,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8.0,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Text(
             getCalories(recipe.calories),
-            style: TextStyle(fontWeight: FontWeight.normal, fontSize: 11, ),
+            style: const TextStyle(
+              fontWeight: FontWeight.normal,
+              fontSize: 11,
+            ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8.0,
         ),
       ],
