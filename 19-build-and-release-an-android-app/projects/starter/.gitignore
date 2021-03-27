@@ -28,6 +28,9 @@
 .pub-cache/
 .pub/
 /build/
+
+
+# This is a generated file; do not edit or check into version control.
 **/flutter_export_environment.sh
 
 # Web related
@@ -103,6 +106,10 @@ build/
 **/ios/Flutter/flutter_assets/
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
+
+# NOTE: This podspec is NOT to be published. It is only used as a local source!
+#       This is a generated file; do not edit or check into version control.
+**/ios/**/Flutter.podspec
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
