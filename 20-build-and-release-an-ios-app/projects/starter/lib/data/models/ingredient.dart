@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+// ignore: must_be_immutable
 class Ingredient extends Equatable {
   int id;
   int recipeId;
@@ -19,7 +20,8 @@ class Ingredient extends Equatable {
     weight: json['weight'],
   );
 
-  // Convert our Ingredient to JSON to make it easier when we store it
+  // Convert our Ingredient to JSON to make it
+  // easier when we store it in the database
   Map<String, dynamic> toJson() => {
     '_id': id,
     'recipeId': recipeId,

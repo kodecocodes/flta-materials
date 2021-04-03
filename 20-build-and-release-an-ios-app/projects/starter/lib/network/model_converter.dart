@@ -18,7 +18,7 @@ class ModelConverter implements Converter {
   }
 
   Request encodeJson(Request request) {
-    var contentType = request.headers[contentTypeKey];
+    final contentType = request.headers[contentTypeKey];
     if (contentType != null && contentType.contains(jsonHeaders)) {
       return request.copyWith(body: json.encode(request.body));
     }
@@ -26,17 +26,17 @@ class ModelConverter implements Converter {
   }
 
   Response decodeJson<BodyType, InnerType>(Response response) {
-    var contentType = response.headers[contentTypeKey];
+    final contentType = response.headers[contentTypeKey];
     var body = response.body;
     if (contentType != null && contentType.contains(jsonHeaders)) {
       body = utf8.decode(response.bodyBytes);
     }
     try {
-      var mapData = json.decode(body);
+      final mapData = json.decode(body);
       if (mapData['status'] != null) {
         return response.copyWith<BodyType>(body: null);
       }
-      var recipeQuery = APIRecipeQuery.fromJson(mapData);
+      final recipeQuery = APIRecipeQuery.fromJson(mapData);
       return response.copyWith<BodyType>(
           body: Success(recipeQuery) as BodyType);
     } catch (e) {
