@@ -25,7 +25,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
-// Add keystore properties here
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
@@ -52,7 +51,6 @@ android {
         versionName flutterVersionName
     }
 
-    // add signing release config here
     signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']
