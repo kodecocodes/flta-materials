@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+//import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-// import 'data/memory_repository.dart';
-// import 'data/sqlite/sqlite_repository.dart';
 import 'data/moor/moor_repository.dart';
 import 'data/repository.dart';
 import 'network/recipe_service.dart';
@@ -14,8 +12,8 @@ import 'ui/main_screen.dart';
 Future<void> main() async {
   _setupLogging();
   WidgetsFlutterBinding.ensureInitialized();
-  await FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
-  await FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+  //await FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
+  //await FlutterStatusbarcolor.setStatusBarColor(Colors.white);
   // final repository = SqliteRepository();
   final repository = MoorRepository();
   await repository.init();
