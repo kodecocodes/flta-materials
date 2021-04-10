@@ -16,7 +16,6 @@ dependencies:
   cached_network_image: ^2.5.0
   flutter_slidable: ^0.5.7
   flutter_svg: ^0.19.3
-  flutter_statusbarcolor: ^0.2.3
 
 dev_dependencies:
   flutter_test:
