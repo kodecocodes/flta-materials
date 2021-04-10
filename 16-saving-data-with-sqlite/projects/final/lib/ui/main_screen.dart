@@ -93,18 +93,13 @@ class _MainScreenState extends State<MainScreen> {
         backwardsCompatibility: false,
         systemOverlayStyle: const SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.white,
-          // navigation bar color
           statusBarColor: Colors.white,
-          // status bar color
           statusBarBrightness: Brightness.light,
-          //status bar brightness
-          statusBarIconBrightness: Brightness.light,
-          //status barIcon Brightness
+          statusBarIconBrightness: Brightness.dark,
           systemNavigationBarDividerColor: Colors.white,
           //Navigation bar divider color
           systemNavigationBarIconBrightness:
-          Brightness.light, //navigation bar icon
-
+              Brightness.light, //navigation bar icon
         ),
         title: Text(
           title,
