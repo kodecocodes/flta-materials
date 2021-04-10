@@ -22,7 +22,6 @@ class MockService {
     _currentRecipes2 = APIRecipeQuery.fromJson(jsonDecode(jsonString));
   }
 
-  @override
   Future<Response<Result<APIRecipeQuery>>> queryRecipes(
       String query, int from, int to) {
     switch (nextRecipe.nextInt(2)) {
