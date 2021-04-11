@@ -73,6 +73,7 @@ app.*.map.json
 **/ios/Flutter/flutter_assets/
 **/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
+**/ios/Flutter/flutter.podspec
 **/ios/Runner/GeneratedPluginRegistrant.*
 
 # Exceptions to above rules.
