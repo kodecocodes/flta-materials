@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'colors.dart';
 
@@ -44,43 +45,50 @@ class _MainScreenState extends State<MainScreen> {
         title = 'Groceries';
         break;
     }
-    return SafeArea(
-      child: Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/images/icon_recipe.svg',
-                    color: _selectedIndex == 0 ? green : Colors.grey,
-                    semanticsLabel: 'Recipes'),
-                label: 'Recipes'),
-            BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/images/icon_bookmarks.svg',
-                    color: _selectedIndex == 1 ? green : Colors.grey,
-                    semanticsLabel: 'Bookmarks'),
-                label: 'Bookmarks'),
-            BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/images/icon_shopping_list.svg',
-                    color: _selectedIndex == 2 ? green : Colors.grey,
-                    semanticsLabel: 'Groceries'),
-                label: 'Groceries'),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: green,
-          onTap: _onItemTapped,
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+              icon: SvgPicture.asset('assets/images/icon_recipe.svg',
+                  color: _selectedIndex == 0 ? green : Colors.grey,
+                  semanticsLabel: 'Recipes'),
+              label: 'Recipes'),
+          BottomNavigationBarItem(
+              icon: SvgPicture.asset('assets/images/icon_bookmarks.svg',
+                  color: _selectedIndex == 1 ? green : Colors.grey,
+                  semanticsLabel: 'Bookmarks'),
+              label: 'Bookmarks'),
+          BottomNavigationBarItem(
+              icon: SvgPicture.asset('assets/images/icon_shopping_list.svg',
+                  color: _selectedIndex == 2 ? green : Colors.grey,
+                  semanticsLabel: 'Groceries'),
+              label: 'Groceries'),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: green,
+        onTap: _onItemTapped,
+      ),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        backwardsCompatibility: false,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white,
+          statusBarColor: Colors.white,
+          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
+          systemNavigationBarDividerColor: Colors.white,
+          systemNavigationBarIconBrightness: Brightness.light,
         ),
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          title: Text(
-            title,
-            style: const TextStyle(
-                fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black),
-          ),
+        title: Text(
+          title,
+          style: const TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black),
         ),
-        body: IndexedStack(
-          index: _selectedIndex,
-          children: pageList,
-        ),
+      ),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: pageList,
       ),
     );
   }
