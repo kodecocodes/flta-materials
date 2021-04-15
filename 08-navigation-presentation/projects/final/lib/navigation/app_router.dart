@@ -3,9 +3,9 @@ import '../screens/screens.dart';
 import '../models/models.dart';
 import 'app_link.dart';
 
-//xcrun simctl openurl booted fooderlich://open/onboarding
-//xcrun simctl openurl booted fooderlich://open/home?tab=2
-//xcrun simctl openurl booted fooderlich://open/profile
+// xcrun simctl openurl booted fooderlich://open/onboarding
+// xcrun simctl openurl booted fooderlich://open/home?tab=2
+// xcrun simctl openurl booted fooderlich://open/profile
 
 class AppRouter extends RouterDelegate<AppLink>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
@@ -106,8 +106,12 @@ class AppRouter extends RouterDelegate<AppLink>
   Future<void> setNewRoutePath(AppLink newLink) async {
     print('setNewRoutePath: ${newLink.toLocation()}');
 
-    if (newLink.location == AppLink.kOnboardingPath) {
+    if (newLink.location == AppLink.kLoginPath) {
       appStateManager.logout();
+    }
+
+    if (newLink.location == AppLink.kOnboardingPath) {
+      appStateManager.onboarded(false);
     }
 
     if (newLink.location == AppLink.kProfilePath) {
@@ -120,6 +124,5 @@ class AppRouter extends RouterDelegate<AppLink>
       profileManager.tapOnUser(false);
       return;
     }
-
   }
 }

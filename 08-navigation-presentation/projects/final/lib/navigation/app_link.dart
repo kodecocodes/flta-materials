@@ -9,17 +9,18 @@ class AppLink {
   String location;
   int currentTab;
 
-  AppLink(
-      {this.location,
-      this.currentTab});
+  AppLink({this.location, this.currentTab});
 
   static AppLink fromLocation(String location) {
     print('fromLocation: $location');
 
     location = Uri.decodeFull(location);
     // Shared function to inject keys if they are not null
-    final params = Uri.parse(location).queryParameters;
+    final uri = Uri.parse(location);
+    final params = uri.queryParameters;
+    location = uri.path;
 
+    print('path: ${uri.path}');
     print('params ${params.toString()}');
 
     void trySet(String key, void Function(String) setter) {
