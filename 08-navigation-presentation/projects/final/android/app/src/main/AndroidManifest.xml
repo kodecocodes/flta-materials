@@ -44,8 +44,8 @@
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
             <data
-              android:scheme="fooderlich"
-              android:host="open" />
+              android:scheme="open"
+              android:host="fooderlich" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

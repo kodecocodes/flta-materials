@@ -6,6 +6,13 @@ import 'app_link.dart';
 // xcrun simctl openurl booted fooderlich://open/onboarding
 // xcrun simctl openurl booted fooderlich://open/home?tab=2
 // xcrun simctl openurl booted fooderlich://open/profile
+// 
+
+/*
+adb shell am start -a android.intent.action.VIEW \
+    -c android.intent.category.BROWSABLE \
+    -d "open://fooderlich/login"
+*/
 
 class AppRouter extends RouterDelegate<AppLink>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
@@ -120,6 +127,7 @@ class AppRouter extends RouterDelegate<AppLink>
     }
 
     if (newLink.currentTab != null) {
+      appStateManager.onboarded(true);
       appStateManager.goToTab(newLink.currentTab);
       profileManager.tapOnUser(false);
       return;
