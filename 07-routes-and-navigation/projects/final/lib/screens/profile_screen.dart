@@ -35,8 +35,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
               const SizedBox(height: 16.0),
               buildProfile(),
-              Expanded(child: buildMenu())
-            ])));
+              Expanded(child: buildMenu(),)
+            ],),),);
   }
 
 
