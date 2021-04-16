@@ -45,8 +45,10 @@ class _FooderlichState extends State<Fooderlich> {
             theme: theme,
             title: 'Fooderlich',
             // TODO: Replace with Router widget
-            home: const SplashScreen()
+            home: const SplashScreen(),
           );
-      }));
+      },
+      ),
+    );
   }
 }
