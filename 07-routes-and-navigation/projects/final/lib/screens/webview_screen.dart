@@ -10,7 +10,7 @@ class WebviewScreen extends StatefulWidget {
     return MaterialPage(
         name: FooderlichPages.raywenderlich,
         key: ValueKey(FooderlichPages.raywenderlich),
-        child: const WebviewScreen());
+        child: const WebviewScreen(),);
   }
   
   const WebviewScreen({Key key}) : super(key: key);
