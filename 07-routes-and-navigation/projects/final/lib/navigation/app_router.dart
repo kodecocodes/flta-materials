@@ -18,7 +18,7 @@ class AppRouter extends RouterDelegate
   AppRouter({
     this.appStateManager, 
     this.groceryManager,
-    this.profileManager
+    this.profileManager,
     })
       : navigatorKey = GlobalKey<NavigatorState>() {
     appStateManager.addListener(notifyListeners);
