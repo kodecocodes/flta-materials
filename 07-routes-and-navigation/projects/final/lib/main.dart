@@ -52,14 +52,15 @@ class _FooderlichState extends State<Fooderlich> {
             }
 
             return MaterialApp(
-              theme: theme,
-              title: 'Fooderlich',
-              home: Router(
-                routerDelegate: _appRouter,
-                backButtonDispatcher: RootBackButtonDispatcher(),
-              ));
-          }
-        )
-      );
+            theme: theme,
+            title: 'Fooderlich',
+            home: Router(
+              routerDelegate: _appRouter,
+              backButtonDispatcher: RootBackButtonDispatcher(),
+            ),
+          );
+        },
+      ),
+    );
   }
 }
