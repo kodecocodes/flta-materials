@@ -8,7 +8,7 @@ class OnboardingScreen extends StatefulWidget {
   return MaterialPage(
       name: FooderlichPages.onboardingPath,
       key: ValueKey(FooderlichPages.onboardingPath),
-      child: const OnboardingScreen());
+      child: const OnboardingScreen(),);
 }
   
   const OnboardingScreen({Key key}) : super(key: key);
