@@ -8,4 +8,4 @@ export 'user.dart';
 export 'fooderlich_pages.dart';
 export 'app_state_manager.dart';
 export 'profile_manager.dart';
-export 'user_cache.dart';
+export 'app_cache.dart';

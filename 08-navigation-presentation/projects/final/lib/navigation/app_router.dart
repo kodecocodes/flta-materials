@@ -3,15 +3,15 @@ import '../screens/screens.dart';
 import '../models/models.dart';
 import 'app_link.dart';
 
-// xcrun simctl openurl booted fooderlich://open/onboarding
-// xcrun simctl openurl booted fooderlich://open/home?tab=2
-// xcrun simctl openurl booted fooderlich://open/profile
-// 
+// xcrun simctl openurl booted open://fooderlich/onboarding
+// xcrun simctl openurl booted open://fooderlich/home?tab=2
+// xcrun simctl openurl booted open://fooderlich/profile
+//
 
 /*
 adb shell am start -a android.intent.action.VIEW \
     -c android.intent.category.BROWSABLE \
-    -d "open://fooderlich/login"
+    -d "open://fooderlich/home?tab=2"
 */
 
 class AppRouter extends RouterDelegate<AppLink>
@@ -47,24 +47,26 @@ class AppRouter extends RouterDelegate<AppLink>
         if (!appStateManager.isInitialized) SplashScreen.page(),
         if (appStateManager.isInitialized && !appStateManager.isLoggedIn)
           LoginScreen.page(),
-        if (appStateManager.isLoggedIn && !appStateManager.isOnboardingComplete)
-          OnboardingScreen.page(),
-        if (appStateManager.isOnboardingComplete)
-          Home.page(appStateManager.getSelectedTab),
-        if (groceryManager.isCreatingNewItem)
-          GroceryItemScreen.page(onCreate: (item) {
-            groceryManager.addItem(item);
-          }),
-        if (groceryManager.selectedIndex != null)
-          GroceryItemScreen.page(
-              item: groceryManager.selectedGroceryItem,
-              index: groceryManager.selectedIndex,
-              onUpdate: (item, index) {
-                groceryManager.updateItem(item, index);
+        if (appStateManager.isLoggedIn) ...[
+          if (!appStateManager.isOnboardingComplete) OnboardingScreen.page(),
+          if (appStateManager.isOnboardingComplete) ...[
+            Home.page(appStateManager.getSelectedTab),
+            if (groceryManager.isCreatingNewItem)
+              GroceryItemScreen.page(onCreate: (item) {
+                groceryManager.addItem(item);
               }),
-        if (profileManager.didSelectUser)
-          ProfileScreen.page(profileManager.getUser),
-        if (profileManager.didTapOnRaywenderlich) WebviewScreen.page()
+            if (groceryManager.selectedIndex != null)
+              GroceryItemScreen.page(
+                  item: groceryManager.selectedGroceryItem,
+                  index: groceryManager.selectedIndex,
+                  onUpdate: (item, index) {
+                    groceryManager.updateItem(item, index);
+                  }),
+            if (profileManager.didSelectUser)
+              ProfileScreen.page(profileManager.getUser),
+            if (profileManager.didTapOnRaywenderlich) WebviewScreen.page()
+          ]
+        ]
       ],
     );
   }
@@ -96,6 +98,7 @@ class AppRouter extends RouterDelegate<AppLink>
   AppLink get currentConfiguration => getCurrentPath();
 
   AppLink getCurrentPath() {
+    print('getCurrentPath');
     if (!appStateManager.isLoggedIn) {
       return AppLink(location: AppLink.kLoginPath);
     } else if (!appStateManager.isOnboardingComplete) {
@@ -113,21 +116,13 @@ class AppRouter extends RouterDelegate<AppLink>
   Future<void> setNewRoutePath(AppLink newLink) async {
     print('setNewRoutePath: ${newLink.toLocation()}');
 
-    if (newLink.location == AppLink.kLoginPath) {
-      appStateManager.logout();
-    }
-
-    if (newLink.location == AppLink.kOnboardingPath) {
-      appStateManager.onboarded(false);
-    }
-
     if (newLink.location == AppLink.kProfilePath) {
       profileManager.tapOnUser(true);
       return;
     }
 
     if (newLink.currentTab != null) {
-      appStateManager.onboarded(true);
+      // appStateManager.onboarded(true);
       appStateManager.goToTab(newLink.currentTab);
       profileManager.tapOnUser(false);
       return;
