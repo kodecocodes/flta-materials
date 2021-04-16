@@ -90,6 +90,7 @@ class AppRouter extends RouterDelegate<AppLink>
     if (route.settings.name == FooderlichPages.raywenderlich) {
       profileManager.tapOnRaywenderlich(false);
     }
+
     return true;
   }
 
@@ -105,6 +106,11 @@ class AppRouter extends RouterDelegate<AppLink>
       return AppLink(location: AppLink.kOnboardingPath);
     } else if (profileManager.didSelectUser) {
       return AppLink(location: AppLink.kProfilePath);
+    } else if (groceryManager.isCreatingNewItem) {
+      return AppLink(location: AppLink.kItem);
+    } else if (groceryManager.selectedGroceryItem != null) {
+      final id = groceryManager.selectedGroceryItem.id;
+      return AppLink(location: AppLink.kItem, itemId: id);
     } else {
       return AppLink(
           location: AppLink.kHomePath,
@@ -121,10 +127,18 @@ class AppRouter extends RouterDelegate<AppLink>
       return;
     }
 
-    if (newLink.currentTab != null) {
-      // appStateManager.onboarded(true);
-      appStateManager.goToTab(newLink.currentTab);
+    if (newLink.location == AppLink.kItem) {
+      if (newLink.itemId != null) {
+        groceryManager.setSelectedGroceryItem(newLink.itemId);
+      } else {
+        groceryManager.createNewItem();
+      }
+    }
+
+    if (newLink.location == AppLink.kHomePath) {
+      appStateManager.goToTab(newLink.currentTab ?? 0);
       profileManager.tapOnUser(false);
+      groceryManager.groceryItemTapped(null);
       return;
     }
   }

@@ -3,13 +3,16 @@ class AppLink {
   static const String kOnboardingPath = '/onboarding';
   static const String kLoginPath = '/login';
   static const String kProfilePath = '/profile';
+  static const String kItem = '/item';
 
   static const String kTabParam = 'tab';
+  static const String kIdParam = 'id';
 
   String location;
   int currentTab;
+  String itemId;
 
-  AppLink({this.location, this.currentTab});
+  AppLink({this.location, this.currentTab, this.itemId});
 
   static AppLink fromLocation(String location) {
     print('fromLocation: $location');
@@ -30,6 +33,7 @@ class AppLink {
     // Create the applink, inject any params we've found
     final link = AppLink()..location = location;
     trySet(AppLink.kTabParam, (s) => link.currentTab = int.tryParse(s));
+    trySet(AppLink.kIdParam, (s) => link.itemId = s);
     return link;
   }
 
@@ -43,6 +47,10 @@ class AppLink {
       return '$kLoginPath?';
     } else if (location == kProfilePath) {
       return '$kProfilePath';
+    } else if (location == kItem) {
+      var loc = '$kItem?';
+      loc += addKeyValPair(key: kIdParam, value: itemId);
+      return Uri.encodeFull(loc);
     } else {
       var loc = '$kHomePath?';
       loc += addKeyValPair(key: kTabParam, value: currentTab.toString());
