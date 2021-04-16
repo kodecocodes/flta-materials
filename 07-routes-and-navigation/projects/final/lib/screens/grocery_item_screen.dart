@@ -26,7 +26,7 @@ class GroceryItemScreen extends StatefulWidget {
           index: index,
           onCreate: onCreate,
           onUpdate: onUpdate,
-        ));
+        ),);
   }
 
   const GroceryItemScreen(
@@ -67,7 +67,7 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
                     _dueDate.day,
                     _timeOfDay.hour,
                     _timeOfDay.minute,
-                  ));
+                  ),);
 
               if (widget.isUpdating) {
                 widget.onUpdate(groceryItem, widget.index);
