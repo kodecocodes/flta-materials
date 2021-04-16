@@ -44,28 +44,29 @@ class AppRouter extends RouterDelegate<AppLink>
       key: navigatorKey,
       onPopPage: _handlePopPage,
       pages: [
-        if (!appStateManager.isInitialized) SplashScreen.page(),
-        if (appStateManager.isInitialized && !appStateManager.isLoggedIn)
+        if (!appStateManager.isInitialized) ... [
+          SplashScreen.page(),
+        ] else if (!appStateManager.isLoggedIn) ... [
           LoginScreen.page(),
-        if (appStateManager.isLoggedIn) ...[
-          if (!appStateManager.isOnboardingComplete) OnboardingScreen.page(),
-          if (appStateManager.isOnboardingComplete) ...[
-            Home.page(appStateManager.getSelectedTab),
-            if (groceryManager.isCreatingNewItem)
-              GroceryItemScreen.page(onCreate: (item) {
-                groceryManager.addItem(item);
-              }),
-            if (groceryManager.selectedIndex != null)
-              GroceryItemScreen.page(
-                  item: groceryManager.selectedGroceryItem,
-                  index: groceryManager.selectedIndex,
-                  onUpdate: (item, index) {
-                    groceryManager.updateItem(item, index);
-                  }),
-            if (profileManager.didSelectUser)
-              ProfileScreen.page(profileManager.getUser),
-            if (profileManager.didTapOnRaywenderlich) WebviewScreen.page()
-          ]
+        ] else if (!appStateManager.isOnboardingComplete) ... [
+          OnboardingScreen.page(),
+        ] else ... [
+          Home.page(appStateManager.getSelectedTab),
+          if (groceryManager.isCreatingNewItem)
+          GroceryItemScreen.page(onCreate: (item) {
+            groceryManager.addItem(item);
+          }),
+          if (groceryManager.selectedIndex != null)
+          GroceryItemScreen.page(
+            item: groceryManager.selectedGroceryItem,
+            index: groceryManager.selectedIndex,
+            onUpdate: (item, index) {
+              groceryManager.updateItem(item, index);
+            }),
+          if (profileManager.didSelectUser)
+          ProfileScreen.page(profileManager.getUser),
+          if (profileManager.didTapOnRaywenderlich)
+          WebviewScreen.page(),
         ]
       ],
     );
@@ -122,24 +123,24 @@ class AppRouter extends RouterDelegate<AppLink>
   Future<void> setNewRoutePath(AppLink newLink) async {
     print('setNewRoutePath: ${newLink.toLocation()}');
 
-    if (newLink.location == AppLink.kProfilePath) {
-      profileManager.tapOnUser(true);
-      return;
-    }
-
-    if (newLink.location == AppLink.kItem) {
-      if (newLink.itemId != null) {
-        groceryManager.setSelectedGroceryItem(newLink.itemId);
-      } else {
-        groceryManager.createNewItem();
-      }
-    }
-
-    if (newLink.location == AppLink.kHomePath) {
-      appStateManager.goToTab(newLink.currentTab ?? 0);
-      profileManager.tapOnUser(false);
-      groceryManager.groceryItemTapped(null);
-      return;
+    switch (newLink.location) {
+      case AppLink.kProfilePath:
+        profileManager.tapOnUser(true);
+        break;
+      case AppLink.kItem:
+        if (newLink.itemId != null) {
+          groceryManager.setSelectedGroceryItem(newLink.itemId);
+        } else {
+          groceryManager.createNewItem();
+        }
+        break;
+      case AppLink.kHomePath:
+        appStateManager.goToTab(newLink.currentTab ?? 0);
+        profileManager.tapOnUser(false);
+        groceryManager.groceryItemTapped(null);
+        break;
+      default:
+        break;
     }
   }
 }

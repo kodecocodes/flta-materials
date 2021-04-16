@@ -41,20 +41,21 @@ class AppLink {
     String addKeyValPair({String key, String value}) =>
         value == null ? '' : '${key}=$value&';
 
-    if (location == kOnboardingPath) {
-      return '$kOnboardingPath';
-    } else if (location == kLoginPath) {
-      return '$kLoginPath?';
-    } else if (location == kProfilePath) {
-      return '$kProfilePath';
-    } else if (location == kItem) {
-      var loc = '$kItem?';
-      loc += addKeyValPair(key: kIdParam, value: itemId);
-      return Uri.encodeFull(loc);
-    } else {
-      var loc = '$kHomePath?';
-      loc += addKeyValPair(key: kTabParam, value: currentTab.toString());
-      return Uri.encodeFull(loc);
+    switch (location) {
+      case kOnboardingPath:
+        return '$kOnboardingPath';
+      case kLoginPath:
+        return '$kLoginPath';
+      case kProfilePath:
+        return '$kProfilePath';
+      case kItem:
+        var loc = '$kItem?';
+        loc += addKeyValPair(key: kIdParam, value: itemId);
+        return Uri.encodeFull(loc);
+      default:
+        var loc = '$kHomePath?';
+        loc += addKeyValPair(key: kTabParam, value: currentTab.toString());
+        return Uri.encodeFull(loc);
     }
   }
 }
