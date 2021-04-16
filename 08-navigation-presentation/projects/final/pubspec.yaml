@@ -17,6 +17,7 @@ dependencies:
   uuid: ^2.2.2
   smooth_page_indicator: ^0.2.0
   webview_flutter: ^2.0.1
+  universal_html: ^1.2.4
   shared_preferences: ^2.0.5
 
 dev_dependencies:
