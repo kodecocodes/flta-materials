@@ -26,7 +26,7 @@ class LoginScreen extends StatelessWidget {
                   height: 200,
                   child: Image(
                       image:
-                          AssetImage('assets/fooderlich_assets/rw_logo.png'))),
+                          AssetImage('assets/fooderlich_assets/rw_logo.png'),),),
               const SizedBox(height: 16),
               buildTextfield(username ?? '🍔 username'),
               const SizedBox(height: 16),
