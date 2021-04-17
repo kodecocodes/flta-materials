@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
-
   // TODO: SplashScreen MaterialPage Helper
 
   const SplashScreen({Key key}) : super(key: key);
@@ -26,8 +25,9 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             const Image(
               height: 200,
-              image: AssetImage('assets/fooderlich_assets/rw_logo.png'),),
-            const Text('Initializing...')
+              image: AssetImage('assets/fooderlich_assets/rw_logo.png'),
+            ),
+            const Text('Initializing...'),
           ],
         ),
       ),

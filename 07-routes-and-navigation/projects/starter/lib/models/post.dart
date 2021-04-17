@@ -5,12 +5,13 @@ class Post {
   String foodPictureUrl;
   String timestamp;
 
-  Post(
-      {this.id,
-      this.profileImageUrl,
-      this.comment,
-      this.foodPictureUrl,
-      this.timestamp});
+  Post({
+    this.id,
+    this.profileImageUrl,
+    this.comment,
+    this.foodPictureUrl,
+    this.timestamp,
+  });
 
   Post.fromJson(Map<String, dynamic> json) {
     id = json['id'];

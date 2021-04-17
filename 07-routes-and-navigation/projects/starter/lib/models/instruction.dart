@@ -5,7 +5,11 @@ class Instruction {
   String description;
   int durationInMinutes;
 
-  Instruction({this.imageUrl, this.description, this.durationInMinutes});
+  Instruction({
+    this.imageUrl,
+    this.description,
+    this.durationInMinutes,
+  });
 
   Instruction.fromJson(Map<String, dynamic> json) {
     imageUrl = json['imageUrl'] ?? '';

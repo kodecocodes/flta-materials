@@ -4,7 +4,6 @@ import '../components/circle_image.dart';
 import '../models/models.dart';
 
 class ProfileScreen extends StatefulWidget {
-
   // TODO: ProfileScreen MaterialPage Helper
 
   final User user;
@@ -18,22 +17,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            leading: IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () {
-                  // TODO: Close Profile Screen
-                })),
-        body: Center(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-              const SizedBox(height: 16.0),
-              buildProfile(),
-              Expanded(child: buildMenu())
-            ])));
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            // TODO: Close Profile Screen
+          },
+        ),
+      ),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 16.0),
+            buildProfile(),
+            Expanded(
+              child: buildMenu(),
+            )
+          ],
+        ),
+      ),
+    );
   }
-
 
   Widget buildMenu() {
     return ListView(
@@ -42,7 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ListTile(
           title: const Text('View raywenderlich.com'),
           onTap: () {
-              // TODO: Open raywenderlich.com webview
+            // TODO: Open raywenderlich.com webview
           },
         ),
         ListTile(
@@ -63,11 +68,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           const Text('Dark Mode'),
           Switch(
-              value: widget.user.darkMode,
-              onChanged: (value) {
-                Provider.of<ProfileManager>(context, listen: false).darkMode =
-                    value;
-              })
+            value: widget.user.darkMode,
+            onChanged: (value) {
+              Provider.of<ProfileManager>(context, listen: false).darkMode =
+                  value;
+            },
+          )
         ],
       ),
     );
@@ -81,11 +87,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
           imageRadius: 60.0,
         ),
         const SizedBox(height: 16.0),
-        Text(widget.user.firstName, style: const TextStyle(fontSize: 21)),
+        Text(
+          widget.user.firstName,
+          style: const TextStyle(
+            fontSize: 21,
+          ),
+        ),
         Text(widget.user.role),
         Text(
           '${widget.user.points} points',
-          style: const TextStyle(fontSize: 30, color: Colors.green),
+          style: const TextStyle(
+            fontSize: 30,
+            color: Colors.green,
+          ),
         ),
       ],
     );

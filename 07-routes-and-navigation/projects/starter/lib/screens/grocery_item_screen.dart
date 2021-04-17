@@ -46,18 +46,19 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
             icon: const Icon(Icons.check),
             onPressed: () {
               final groceryItem = GroceryItem(
-                  id: widget.originalItem?.id ?? Uuid().v1(),
-                  name: _nameController.text,
-                  importance: _importance,
-                  color: _currentColor,
-                  quantity: _currentSliderValue,
-                  date: DateTime(
-                    _dueDate.year,
-                    _dueDate.month,
-                    _dueDate.day,
-                    _timeOfDay.hour,
-                    _timeOfDay.minute,
-                  ));
+                id: widget.originalItem?.id ?? Uuid().v1(),
+                name: _nameController.text,
+                importance: _importance,
+                color: _currentColor,
+                quantity: _currentSliderValue,
+                date: DateTime(
+                  _dueDate.year,
+                  _dueDate.month,
+                  _dueDate.day,
+                  _timeOfDay.hour,
+                  _timeOfDay.minute,
+                ),
+              );
 
               if (widget.isUpdating) {
                 widget.onUpdate(groceryItem, widget.index);
@@ -70,7 +71,9 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
         elevation: 0.0,
         title: Text(
           'Grocery Item',
-          style: GoogleFonts.lato(fontWeight: FontWeight.w600),
+          style: GoogleFonts.lato(
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       body: Container(
@@ -113,7 +116,9 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
       children: [
         Text(
           'Item Name',
-          style: GoogleFonts.lato(fontSize: 28.0),
+          style: GoogleFonts.lato(
+            fontSize: 28.0,
+          ),
         ),
         TextField(
           controller: _nameController,
@@ -121,13 +126,19 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
           decoration: InputDecoration(
             hintText: 'E.g. Apples, Banana, 1 Bag of salt',
             enabledBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
+              borderSide: BorderSide(
+                color: Colors.white,
+              ),
             ),
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: _currentColor),
+              borderSide: BorderSide(
+                color: _currentColor,
+              ),
             ),
             border: UnderlineInputBorder(
-              borderSide: BorderSide(color: _currentColor),
+              borderSide: BorderSide(
+                color: _currentColor,
+              ),
             ),
           ),
         ),
@@ -180,7 +191,7 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
               },
             ),
           ],
-        )
+        ),
       ],
     );
   }
@@ -207,13 +218,11 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
                   lastDate: DateTime(currentDate.year + 5),
                 );
 
-                setState(
-                  () {
-                    if (selectedDate != null) {
-                      _dueDate = selectedDate;
-                    }
-                  },
-                );
+                setState(() {
+                  if (selectedDate != null) {
+                    _dueDate = selectedDate;
+                  }
+                });
               },
             ),
           ],
@@ -276,10 +285,11 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
               builder: (context) {
                 return AlertDialog(
                   content: BlockPicker(
-                      pickerColor: Colors.white,
-                      onColorChanged: (color) {
-                        setState(() => _currentColor = color);
-                      }),
+                    pickerColor: Colors.white,
+                    onColorChanged: (color) {
+                      setState(() => _currentColor = color);
+                    },
+                  ),
                   actions: [
                     TextButton(
                       child: const Text('Save'),

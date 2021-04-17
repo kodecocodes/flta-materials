@@ -8,8 +8,11 @@ class GroceryTile extends StatelessWidget {
   final Function(bool) onComplete;
   final TextDecoration textDecoration;
 
-  GroceryTile({Key key, this.item, this.onComplete})
-      : textDecoration =
+  GroceryTile({
+    Key key,
+    this.item,
+    this.onComplete,
+  })  : textDecoration =
             item.isComplete ? TextDecoration.lineThrough : TextDecoration.none,
         super(key: key);
 
@@ -22,7 +25,10 @@ class GroceryTile extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(width: 5.0, color: item.color),
+              Container(
+                width: 5.0,
+                color: item.color,
+              ),
               const SizedBox(width: 16.0),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -31,9 +37,10 @@ class GroceryTile extends StatelessWidget {
                   Text(
                     item.name,
                     style: GoogleFonts.lato(
-                        decoration: textDecoration,
-                        fontSize: 21.0,
-                        fontWeight: FontWeight.bold),
+                      decoration: textDecoration,
+                      fontSize: 21.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 4.0),
                   buildDate(),
@@ -45,12 +52,16 @@ class GroceryTile extends StatelessWidget {
           ),
           Row(
             children: [
-              Text(item.quantity.toString(),
-                  style: GoogleFonts.lato(
-                      decoration: textDecoration, fontSize: 21)),
+              Text(
+                item.quantity.toString(),
+                style: GoogleFonts.lato(
+                  decoration: textDecoration,
+                  fontSize: 21,
+                ),
+              ),
               buildCheckbox()
             ],
-          )
+          ),
         ],
       ),
     );

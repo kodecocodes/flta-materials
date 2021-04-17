@@ -6,7 +6,9 @@ import 'models/models.dart';
 // TODO: Import app_router
 
 void main() {
-  runApp(const Fooderlich());
+  runApp(
+    const Fooderlich(),
+  );
 }
 
 class Fooderlich extends StatefulWidget {
@@ -21,33 +23,37 @@ class _FooderlichState extends State<Fooderlich> {
   final _profileManager = ProfileManager();
   // TODO: Create AppStateManager
   // TODO: Define AppRouter
-  
+
   // TODO: Initialize app router
-  
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => _groceryManager,),
-        ChangeNotifierProvider(create: (context) => _profileManager,),
+        ChangeNotifierProvider(
+          create: (context) => _groceryManager,
+        ),
+        ChangeNotifierProvider(
+          create: (context) => _profileManager,
+        ),
         // TODO: Add AppStateManager ChangeNotifierProvider
       ],
       child: Consumer<ProfileManager>(
         builder: (context, profileManager, child) {
-            ThemeData theme;
-            if (profileManager.darkMode) {
-              theme = FooderlichTheme.dark();
-            } else {
-              theme = FooderlichTheme.light();
-            }
+          ThemeData theme;
+          if (profileManager.darkMode) {
+            theme = FooderlichTheme.dark();
+          } else {
+            theme = FooderlichTheme.light();
+          }
 
-            return MaterialApp(
+          return MaterialApp(
             theme: theme,
             title: 'Fooderlich',
             // TODO: Replace with Router widget
             home: const SplashScreen(),
           );
-      },
+        },
       ),
     );
   }
