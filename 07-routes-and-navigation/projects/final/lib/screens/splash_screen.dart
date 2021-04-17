@@ -3,13 +3,13 @@ import 'package:provider/provider.dart';
 import '../models/models.dart';
 
 class SplashScreen extends StatefulWidget {
-
   static MaterialPage page() {
-  return MaterialPage(
-    name: FooderlichPages.splashPath,
-      key: ValueKey(FooderlichPages.splashPath), 
-      child: const SplashScreen());
-}
+    return MaterialPage(
+      name: FooderlichPages.splashPath,
+      key: ValueKey(FooderlichPages.splashPath),
+      child: const SplashScreen(),
+    );
+  }
 
   const SplashScreen({Key key}) : super(key: key);
 
@@ -21,9 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    Provider.of<AppStateManager>(
-      context, 
-      listen: false).initializeApp();
+    Provider.of<AppStateManager>(context, listen: false).initializeApp();
   }
 
   @override
@@ -35,7 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             const Image(
               height: 200,
-              image: AssetImage('assets/fooderlich_assets/rw_logo.png'),),
+              image: AssetImage('assets/fooderlich_assets/rw_logo.png'),
+            ),
             const Text('Initializing...')
           ],
         ),

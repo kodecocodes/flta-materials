@@ -5,12 +5,13 @@ import '../models/models.dart';
 
 class OnboardingScreen extends StatefulWidget {
   static MaterialPage page() {
-  return MaterialPage(
+    return MaterialPage(
       name: FooderlichPages.onboardingPath,
       key: ValueKey(FooderlichPages.onboardingPath),
-      child: const OnboardingScreen(),);
-}
-  
+      child: const OnboardingScreen(),
+    );
+  }
+
   const OnboardingScreen({Key key}) : super(key: key);
 
   @override
@@ -25,15 +26,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          title: const Text('Getting Started'),
-          leading: GestureDetector(
-            child: const Icon(Icons.chevron_left, size: 35),
-            onTap: () {
-              Navigator.pop(context, true);
-            },
-          )),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        title: const Text('Getting Started'),
+        leading: GestureDetector(
+          child: const Icon(
+            Icons.chevron_left,
+            size: 35,
+          ),
+          onTap: () {
+            Navigator.pop(context, true);
+          },
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -52,7 +57,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         child: const Text('Skip'),
         onPressed: () {
           Provider.of<AppStateManager>(context, listen: false)
-            .completeOnboarding();
+              .completeOnboarding();
         },
       )
     ]);
@@ -63,8 +68,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       controller: controller,
       children: [
         onboardPageView(
-            const AssetImage('assets/fooderlich_assets/recommend.png'),
-            '''Checkout weekly recommended recipes and what your friends are cooking!'''),
+          const AssetImage('assets/fooderlich_assets/recommend.png'),
+          '''Checkout weekly recommended recipes and what your friends are cooking!''',
+        ),
         onboardPageView(const AssetImage('assets/fooderlich_assets/sheet.png'),
             'Cook with step by step instructions!'),
         onboardPageView(const AssetImage('assets/fooderlich_assets/list.png'),
@@ -77,19 +83,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Padding(
       padding: const EdgeInsets.all(40),
       child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(child: Image(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Image(
               fit: BoxFit.fitWidth,
               image: imageProvider,
-            )),
-            const SizedBox(height: 16),
-            Text(text,
-                style: const TextStyle(fontSize: 20),
-                textAlign: TextAlign.center),
-            const SizedBox(height: 16),
-          ]),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            text,
+            style: const TextStyle(fontSize: 20),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
     );
   }
 

@@ -13,25 +13,31 @@ class GroceryItemScreen extends StatefulWidget {
   final int index;
   final bool isUpdating;
 
-  static MaterialPage page(
-      {GroceryItem item,
-      int index,
-      Function(GroceryItem) onCreate,
-      Function(GroceryItem, int) onUpdate}) {
+  static MaterialPage page({
+    GroceryItem item,
+    int index,
+    Function(GroceryItem) onCreate,
+    Function(GroceryItem, int) onUpdate,
+  }) {
     return MaterialPage(
-        name: FooderlichPages.groceryItemDetails,
-        key: ValueKey(FooderlichPages.groceryItemDetails),
-        child: GroceryItemScreen(
-          originalItem: item,
-          index: index,
-          onCreate: onCreate,
-          onUpdate: onUpdate,
-        ),);
+      name: FooderlichPages.groceryItemDetails,
+      key: ValueKey(FooderlichPages.groceryItemDetails),
+      child: GroceryItemScreen(
+        originalItem: item,
+        index: index,
+        onCreate: onCreate,
+        onUpdate: onUpdate,
+      ),
+    );
   }
 
-  const GroceryItemScreen(
-      {Key key, this.onCreate, this.onUpdate, this.originalItem, this.index})
-      : isUpdating = (originalItem != null),
+  const GroceryItemScreen({
+    Key key,
+    this.onCreate,
+    this.onUpdate,
+    this.originalItem,
+    this.index,
+  })  : isUpdating = (originalItem != null),
         super(key: key);
 
   @override
@@ -56,18 +62,19 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
             icon: const Icon(Icons.check),
             onPressed: () {
               final groceryItem = GroceryItem(
-                  id: widget.originalItem?.id ?? Uuid().v1(),
-                  name: _nameController.text,
-                  importance: _importance,
-                  color: _currentColor,
-                  quantity: _currentSliderValue,
-                  date: DateTime(
-                    _dueDate.year,
-                    _dueDate.month,
-                    _dueDate.day,
-                    _timeOfDay.hour,
-                    _timeOfDay.minute,
-                  ),);
+                id: widget.originalItem?.id ?? Uuid().v1(),
+                name: _nameController.text,
+                importance: _importance,
+                color: _currentColor,
+                quantity: _currentSliderValue,
+                date: DateTime(
+                  _dueDate.year,
+                  _dueDate.month,
+                  _dueDate.day,
+                  _timeOfDay.hour,
+                  _timeOfDay.minute,
+                ),
+              );
 
               if (widget.isUpdating) {
                 widget.onUpdate(groceryItem, widget.index);
@@ -190,7 +197,7 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
               },
             ),
           ],
-        )
+        ),
       ],
     );
   }
@@ -217,13 +224,11 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
                   lastDate: DateTime(currentDate.year + 5),
                 );
 
-                setState(
-                  () {
-                    if (selectedDate != null) {
-                      _dueDate = selectedDate;
-                    }
-                  },
-                );
+                setState(() {
+                  if (selectedDate != null) {
+                    _dueDate = selectedDate;
+                  }
+                });
               },
             ),
           ],
@@ -273,9 +278,16 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
       children: [
         Row(
           children: [
-            Container(height: 50, width: 10, color: _currentColor),
+            Container(
+              height: 50,
+              width: 10,
+              color: _currentColor,
+            ),
             const SizedBox(width: 8),
-            Text('Color', style: GoogleFonts.lato(fontSize: 28)),
+            Text(
+              'Color',
+              style: GoogleFonts.lato(fontSize: 28),
+            ),
           ],
         ),
         TextButton(
@@ -286,10 +298,11 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
               builder: (context) {
                 return AlertDialog(
                   content: BlockPicker(
-                      pickerColor: Colors.white,
-                      onColorChanged: (color) {
-                        setState(() => _currentColor = color);
-                      }),
+                    pickerColor: Colors.white,
+                    onColorChanged: (color) {
+                      setState(() => _currentColor = color);
+                    },
+                  ),
                   actions: [
                     TextButton(
                       child: const Text('Save'),

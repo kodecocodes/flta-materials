@@ -26,14 +26,17 @@ class AppStateManager extends ChangeNotifier {
 
   void initializeApp() {
     // 7
-    Timer(const Duration(milliseconds: 2000), () {
-      // 8
-      _initialized = true;
-      // 9
-      notifyListeners();
-    });
+    Timer(
+      const Duration(milliseconds: 2000),
+      () {
+        // 8
+        _initialized = true;
+        // 9
+        notifyListeners();
+      },
+    );
   }
-  
+
   void login(String username, String password) {
     // 10
     _loggedIn = true;
@@ -62,7 +65,7 @@ class AppStateManager extends ChangeNotifier {
     _onboardingComplete = false;
     _initialized = false;
     _selectedTab = 0;
-    
+
     // 13
     initializeApp();
     // 14

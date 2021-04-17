@@ -5,7 +5,11 @@ class Ingredients {
   String title;
   String source;
 
-  Ingredients({this.imageUrl, this.title, this.source});
+  Ingredients({
+    this.imageUrl,
+    this.title,
+    this.source,
+  });
 
   Ingredients.fromJson(Map<String, dynamic> json) {
     imageUrl = json['imageUrl'];

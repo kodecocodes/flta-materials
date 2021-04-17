@@ -6,7 +6,7 @@ class ProfileManager extends ChangeNotifier {
   User get getUser => User(
         firstName: 'Stef',
         lastName: 'Patt',
-        role: 'Flutterisa',
+        role: 'Flutterista',
         profileImageUrl: 'assets/profile_pics/person_stef.jpeg',
         points: 100,
         darkMode: _darkMode,

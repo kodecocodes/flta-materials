@@ -27,25 +27,26 @@ class ExploreRecipe {
   List<Ingredients> ingredients;
   List<Instruction> instructions;
 
-  ExploreRecipe(
-      {this.id,
-      this.cardType,
-      this.title,
-      this.subtitle,
-      this.backgroundImage,
-      this.backgroundImageSource,
-      this.message,
-      this.authorName,
-      this.role,
-      this.profileImage,
-      this.durationInMinutes,
-      this.dietType,
-      this.calories,
-      this.tags,
-      this.description,
-      this.source,
-      this.ingredients,
-      this.instructions});
+  ExploreRecipe({
+    this.id,
+    this.cardType,
+    this.title,
+    this.subtitle,
+    this.backgroundImage,
+    this.backgroundImageSource,
+    this.message,
+    this.authorName,
+    this.role,
+    this.profileImage,
+    this.durationInMinutes,
+    this.dietType,
+    this.calories,
+    this.tags,
+    this.description,
+    this.source,
+    this.ingredients,
+    this.instructions,
+  });
 
   ExploreRecipe.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -5,7 +5,10 @@ import '../components/components.dart';
 class FriendPostTile extends StatelessWidget {
   final Post post;
 
-  const FriendPostTile({Key key, this.post}) : super(key: key);
+  const FriendPostTile({
+    Key key,
+    this.post,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
