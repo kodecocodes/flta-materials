@@ -20,7 +20,7 @@ class _FooderlichState extends State<Fooderlich> {
   final _groceryManager = GroceryManager();
   final _profileManager = ProfileManager();
   final _appStateManager = AppStateManager();
-  AppRouteParser routeParser = AppRouteParser();
+  final routeParser = AppRouteParser();
   AppRouter _appRouter;
 
   @override
@@ -56,6 +56,7 @@ class _FooderlichState extends State<Fooderlich> {
             return MaterialApp.router(
               theme: theme,
               title: 'Fooderlich',
+              backButtonDispatcher: RootBackButtonDispatcher(),
               // Convert appState to (and from) a string "location"
               routeInformationParser: routeParser,
               // Builds a stack that represents your appState.

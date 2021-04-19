@@ -1,9 +1,5 @@
-// import 'package:flutter/material.dart';
-// import 'package:fooderlich/navigation/fooderlich_route_path.dart';
-// import 'package:fooderlich/screens/onboarding_screen.dart';
 
 import 'package:flutter/material.dart';
-
 import 'app_link.dart';
 
 class AppRouteParser extends RouteInformationParser<AppLink> {
@@ -18,7 +14,6 @@ class AppRouteParser extends RouteInformationParser<AppLink> {
   @override
   // Convert an applink into a string used for the browser location
   RouteInformation restoreRouteInformation(AppLink appLink) {
-    print('restoreRouteInformation: ${appLink.location}');
     // Ask the applink to give us a string
     final location = appLink.toLocation();
 

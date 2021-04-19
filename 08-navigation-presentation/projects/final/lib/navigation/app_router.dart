@@ -100,7 +100,6 @@ class AppRouter extends RouterDelegate<AppLink>
   AppLink get currentConfiguration => getCurrentPath();
 
   AppLink getCurrentPath() {
-    print('getCurrentPath');
     if (!appStateManager.isLoggedIn) {
       return AppLink(location: AppLink.kLoginPath);
     } else if (!appStateManager.isOnboardingComplete) {
@@ -121,8 +120,6 @@ class AppRouter extends RouterDelegate<AppLink>
 
   @override
   Future<void> setNewRoutePath(AppLink newLink) async {
-    print('setNewRoutePath: ${newLink.toLocation()}');
-
     switch (newLink.location) {
       case AppLink.kProfilePath:
         profileManager.tapOnUser(true);

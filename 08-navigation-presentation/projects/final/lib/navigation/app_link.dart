@@ -15,23 +15,17 @@ class AppLink {
   AppLink({this.location, this.currentTab, this.itemId});
 
   static AppLink fromLocation(String location) {
-    print('fromLocation: $location');
-
     location = Uri.decodeFull(location);
     // Shared function to inject keys if they are not null
     final uri = Uri.parse(location);
     final params = uri.queryParameters;
-    location = uri.path;
-
-    print('path: ${uri.path}');
-    print('params ${params.toString()}');
 
     void trySet(String key, void Function(String) setter) {
       if (params.containsKey(key)) setter?.call(params[key]);
     }
 
     // Create the applink, inject any params we've found
-    final link = AppLink()..location = location;
+    final link = AppLink()..location = uri.path;
     trySet(AppLink.kTabParam, (s) => link.currentTab = int.tryParse(s));
     trySet(AppLink.kIdParam, (s) => link.itemId = s);
     return link;
@@ -43,11 +37,11 @@ class AppLink {
 
     switch (location) {
       case kOnboardingPath:
-        return '$kOnboardingPath';
+        return kOnboardingPath;
       case kLoginPath:
-        return '$kLoginPath';
+        return kLoginPath;
       case kProfilePath:
-        return '$kProfilePath';
+        return kProfilePath;
       case kItem:
         var loc = '$kItem?';
         loc += addKeyValPair(key: kIdParam, value: itemId);
