@@ -57,12 +57,10 @@ class _FooderlichState extends State<Fooderlich> {
               theme: theme,
               title: 'Fooderlich',
               backButtonDispatcher: RootBackButtonDispatcher(),
-              // Convert appState to (and from) a string "location"
+              // 1
               routeInformationParser: routeParser,
-              // Builds a stack that represents your appState.
+              // 2
               routerDelegate: _appRouter,
-              // Disable debug banner
-              debugShowCheckedModeBanner: false,
             );
           }
         )

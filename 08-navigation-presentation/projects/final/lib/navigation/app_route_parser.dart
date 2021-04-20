@@ -1,23 +1,23 @@
-
 import 'package:flutter/material.dart';
 import 'app_link.dart';
 
+// 1
 class AppRouteParser extends RouteInformationParser<AppLink> {
+  // 2
   @override
-  // Take a url bar location, and create an AppLink from it
   Future<AppLink> parseRouteInformation(
       RouteInformation routeInformation) async {
+    // 3
     final link = AppLink.fromLocation(routeInformation.location);
     return link;
   }
-
+	
+  // 4
   @override
-  // Convert an applink into a string used for the browser location
   RouteInformation restoreRouteInformation(AppLink appLink) {
-    // Ask the applink to give us a string
+    // 5
     final location = appLink.toLocation();
-
-    // Pass that string back to the OS so it can update the url bar
+    // 6
     return RouteInformation(location: location);
   }
 }
