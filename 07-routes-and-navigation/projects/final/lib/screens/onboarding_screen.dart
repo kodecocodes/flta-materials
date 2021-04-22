@@ -69,7 +69,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       children: [
         onboardPageView(
           const AssetImage('assets/fooderlich_assets/recommend.png'),
-          '''Checkout weekly recommended recipes and what your friends are cooking!''',
+          '''Check out weekly recommended recipes and what your friends are cooking!''',
         ),
         onboardPageView(const AssetImage('assets/fooderlich_assets/sheet.png'),
             'Cook with step by step instructions!'),
