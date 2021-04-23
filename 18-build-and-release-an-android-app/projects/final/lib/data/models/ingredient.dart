@@ -14,18 +14,18 @@ class Ingredient extends Equatable {
 
   // Create a Ingredient from JSON data
   factory Ingredient.fromJson(Map<String, dynamic> json) => Ingredient(
-    id: json['_id'],
-    recipeId: json['recipeId'],
-    name: json['name'],
-    weight: json['weight'],
-  );
+        id: json['ingredientId'],
+        recipeId: json['recipeId'],
+        name: json['name'],
+        weight: json['weight'],
+      );
 
   // Convert our Ingredient to JSON to make it
   // easier when we store it in the database
   Map<String, dynamic> toJson() => {
-    '_id': id,
-    'recipeId': recipeId,
-    'name': name,
-    'weight': weight,
-  };
+        'ingredientId': id,
+        'recipeId': recipeId,
+        'name': name,
+        'weight': weight,
+      };
 }
