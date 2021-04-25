@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import '../screens/screens.dart';
 import '../models/models.dart';
 
-class AppRouter extends RouterDelegate
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin {
+class AppRouter extends RouterDelegate //TODO: Add <AppLink>
+    with
+        ChangeNotifier,
+        PopNavigatorRouterDelegateMixin {
   @override
   final GlobalKey<NavigatorState> navigatorKey;
 
@@ -89,7 +91,7 @@ class AppRouter extends RouterDelegate
   // TODO: Convert app state to applink
 
   // TODO: Apply configuration helper
-  
+
   // TODO: Replace setNewRoutePath
   @override
   Future<void> setNewRoutePath(configuration) async => null;
