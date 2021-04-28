@@ -92,7 +92,7 @@ class AppRouter extends RouterDelegate
     }
 
     if (route.settings.name == FooderlichPages.profilePath) {
-      profileManager.tapOnUser(false);
+      profileManager.tapOnProfile(false);
     }
 
     if (route.settings.name == FooderlichPages.raywenderlich) {

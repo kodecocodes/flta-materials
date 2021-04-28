@@ -31,7 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           icon: const Icon(Icons.close),
           onPressed: () {
             Provider.of<ProfileManager>(context, listen: false)
-                .tapOnUser(false);
+                .tapOnProfile(false);
           },
         ),
       ),
@@ -66,7 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           onTap: () {
             // 1
             Provider.of<ProfileManager>(context, listen: false)
-                .tapOnUser(false);
+                .tapOnProfile(false);
             // 2
             Provider.of<AppStateManager>(context, listen: false).logout();
           },

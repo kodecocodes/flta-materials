@@ -30,7 +30,7 @@ class ProfileManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void tapOnUser(bool selected) {
+  void tapOnProfile(bool selected) {
     _didSelectUser = selected;
     notifyListeners();
   }
