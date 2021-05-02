@@ -33,29 +33,28 @@ class AppRouter extends RouterDelegate<AppLink>
       key: navigatorKey,
       onPopPage: _handlePopPage,
       pages: [
-        if (!appStateManager.isInitialized) ... [
+        if (!appStateManager.isInitialized) ...[
           SplashScreen.page(),
-        ] else if (!appStateManager.isLoggedIn) ... [
+        ] else if (!appStateManager.isLoggedIn) ...[
           LoginScreen.page(),
-        ] else if (!appStateManager.isOnboardingComplete) ... [
+        ] else if (!appStateManager.isOnboardingComplete) ...[
           OnboardingScreen.page(),
-        ] else ... [
+        ] else ...[
           Home.page(appStateManager.getSelectedTab),
           if (groceryManager.isCreatingNewItem)
-          GroceryItemScreen.page(onCreate: (item) {
-            groceryManager.addItem(item);
-          }),
-          if (groceryManager.selectedIndex != null)
-          GroceryItemScreen.page(
-            item: groceryManager.selectedGroceryItem,
-            index: groceryManager.selectedIndex,
-            onUpdate: (item, index) {
-              groceryManager.updateItem(item, index);
+            GroceryItemScreen.page(onCreate: (item) {
+              groceryManager.addItem(item);
             }),
+          if (groceryManager.selectedIndex != null)
+            GroceryItemScreen.page(
+                item: groceryManager.selectedGroceryItem,
+                index: groceryManager.selectedIndex,
+                onUpdate: (item, index) {
+                  groceryManager.updateItem(item, index);
+                }),
           if (profileManager.didSelectUser)
-          ProfileScreen.page(profileManager.getUser),
-          if (profileManager.didTapOnRaywenderlich)
-          WebviewScreen.page(),
+            ProfileScreen.page(profileManager.getUser),
+          if (profileManager.didTapOnRaywenderlich) WebViewScreen.page(),
         ]
       ],
     );

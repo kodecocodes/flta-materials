@@ -58,7 +58,7 @@ class AppRouter extends RouterDelegate //TODO: Add <AppLink>
                 }),
           if (profileManager.didSelectUser)
             ProfileScreen.page(profileManager.getUser),
-          if (profileManager.didTapOnRaywenderlich) WebviewScreen.page(),
+          if (profileManager.didTapOnRaywenderlich) WebViewScreen.page(),
         ]
       ],
     );

@@ -3,22 +3,22 @@ import '../models/models.dart';
 import 'dart:io';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class WebviewScreen extends StatefulWidget {
+class WebViewScreen extends StatefulWidget {
   static MaterialPage page() {
     return MaterialPage(
       name: FooderlichPages.raywenderlich,
       key: ValueKey(FooderlichPages.raywenderlich),
-      child: const WebviewScreen(),
+      child: const WebViewScreen(),
     );
   }
 
-  const WebviewScreen({Key key}) : super(key: key);
+  const WebViewScreen({Key key}) : super(key: key);
 
   @override
   WebViewScreenState createState() => WebViewScreenState();
 }
 
-class WebViewScreenState extends State<WebviewScreen> {
+class WebViewScreenState extends State<WebViewScreen> {
   @override
   void initState() {
     super.initState();
