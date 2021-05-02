@@ -30,7 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 icon: const Icon(Icons.close),
                 onPressed: () {
                   Provider.of<ProfileManager>(context, listen: false)
-                    .tapOnUser(false);
+                      .tapOnProfile(false);
                 })),
         body: Center(
             child: Column(
@@ -42,7 +42,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ])));
   }
 
-
   Widget buildMenu() {
     return ListView(
       children: [
@@ -50,11 +49,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ListTile(
           title: const Text('View raywenderlich.com'),
           onTap: () {
-              if (kIsWeb) {
+            if (kIsWeb) {
               js.context.callMethod('open', ['https://www.raywenderlich.com/']);
             } else {
               Provider.of<ProfileManager>(context, listen: false)
-                .tapOnRaywenderlich(true);
+                  .tapOnRaywenderlich(true);
             }
           },
         ),
@@ -63,7 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           onTap: () {
             // 1
             Provider.of<ProfileManager>(context, listen: false)
-                .tapOnUser(false);
+                .tapOnProfile(false);
             // 2
             Provider.of<AppStateManager>(context, listen: false).logout();
           },

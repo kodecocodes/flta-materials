@@ -82,7 +82,7 @@ class _HomeState extends State<Home> {
             ),
             onTap: () {
               Provider.of<ProfileManager>(context, listen: false)
-                  .tapOnUser(true);
+                  .tapOnProfile(true);
             }));
   }
 }

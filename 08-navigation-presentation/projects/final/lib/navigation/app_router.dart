@@ -73,7 +73,7 @@ class AppRouter extends RouterDelegate<AppLink>
     }
 
     if (route.settings.name == FooderlichPages.profilePath) {
-      profileManager.tapOnUser(false);
+      profileManager.tapOnProfile(false);
     }
 
     if (route.settings.name == FooderlichPages.raywenderlich) {
@@ -112,7 +112,7 @@ class AppRouter extends RouterDelegate<AppLink>
     switch (newLink.location) {
       // 3
       case AppLink.kProfilePath:
-        profileManager.tapOnUser(true);
+        profileManager.tapOnProfile(true);
         break;
       // 4
       case AppLink.kItemPath:
@@ -124,14 +124,14 @@ class AppRouter extends RouterDelegate<AppLink>
           groceryManager.createNewItem();
         }
         // 7
-        profileManager.tapOnUser(false);
+        profileManager.tapOnProfile(false);
         break;
       // 8
       case AppLink.kHomePath:
         // 9
         appStateManager.goToTab(newLink.currentTab ?? 0);
         // 10
-        profileManager.tapOnUser(false);
+        profileManager.tapOnProfile(false);
         groceryManager.groceryItemTapped(null);
         break;
       // 11

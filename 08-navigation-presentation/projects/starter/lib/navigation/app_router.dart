@@ -78,7 +78,7 @@ class AppRouter extends RouterDelegate //TODO: Add <AppLink>
     }
 
     if (route.settings.name == FooderlichPages.profilePath) {
-      profileManager.tapOnUser(false);
+      profileManager.tapOnProfile(false);
     }
 
     if (route.settings.name == FooderlichPages.raywenderlich) {
