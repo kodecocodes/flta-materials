@@ -1,6 +1,7 @@
 class Recipe {
   String label;
   String imageUrl;
+
   int servings;
   List<Ingredient> ingredients;
 

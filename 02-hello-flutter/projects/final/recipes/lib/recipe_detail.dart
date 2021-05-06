@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'recipe.dart';
 
 class RecipeDetail extends StatefulWidget {
@@ -14,6 +13,7 @@ class RecipeDetail extends StatefulWidget {
 }
 
 class _RecipeDetailState extends State<RecipeDetail> {
+
   int _sliderVal = 1;
 
   @override
@@ -32,7 +32,8 @@ class _RecipeDetailState extends State<RecipeDetail> {
             SizedBox(
               height: 300,
               width: double.infinity,
-              child: Image(image: AssetImage(widget.recipe.imageUrl)),
+              child: Image(image:
+              AssetImage(widget.recipe.imageUrl)),
             ),
             // 5
             const SizedBox(
