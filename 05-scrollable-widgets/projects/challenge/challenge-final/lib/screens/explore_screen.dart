@@ -32,6 +32,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
   }
 
   @override
+  void dispose() {
+    _controller.removeListener(_scrollListener);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: mockService.getExploreData(),
