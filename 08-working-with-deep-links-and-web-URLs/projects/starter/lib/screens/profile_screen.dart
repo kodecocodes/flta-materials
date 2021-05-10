@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import '../components/circle_image.dart';
 import '../models/models.dart';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:universal_html/prefer_universal/js.dart' as js;
+
 class ProfileScreen extends StatefulWidget {
   static MaterialPage page(User user) {
     return MaterialPage(
@@ -57,8 +60,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ListTile(
           title: const Text('View raywenderlich.com'),
           onTap: () {
-            Provider.of<ProfileManager>(context, listen: false)
-                .tapOnRaywenderlich(true);
+            if (kIsWeb) {
+              js.context.callMethod('open', ['https://www.raywenderlich.com/']);
+            } else {
+              Provider.of<ProfileManager>(context, listen: false)
+                  .tapOnRaywenderlich(true);
+            }
           },
         ),
         ListTile(
