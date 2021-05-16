@@ -10,7 +10,7 @@
 		<key>CFBundleTypeRole</key>
 		<string>Editor</string>
 		<key>CFBundleURLName</key>
-		<string>fooderlich.com</string>
+		<string>raywenderlich.com</string>
 		<key>CFBundleURLSchemes</key>
 		<array>
 		<string>fooderlich</string>
