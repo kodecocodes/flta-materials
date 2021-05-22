@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'card1.dart';
 import 'card2.dart';
-import 'explore_card.dart';
+import 'card3.dart';
 
 // 1
 class Home extends StatefulWidget {
