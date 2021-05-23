@@ -79,7 +79,7 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
             onPressed: () {
               // 1
               final groceryItem = GroceryItem(
-                  id: widget.originalItem?.id ?? Uuid().v1(),
+                  id: widget.originalItem?.id ?? const Uuid().v1(),
                   name: _nameController.text,
                   importance: _importance,
                   color: _currentColor,
