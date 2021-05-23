@@ -10,13 +10,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_fonts: ^1.1.0
-  provider: ^4.3.2+3
-  flutter_colorpicker: ^0.3.4
-  intl: ^0.16.1
-  uuid: ^2.2.2
-  smooth_page_indicator: ^0.2.0
-  webview_flutter: ^2.0.1
+  google_fonts: ^2.1.0
+  provider: ^5.0.0
+  flutter_colorpicker: ^0.4.0
+  intl: ^0.17.0
+  uuid: ^3.0.4
+  smooth_page_indicator: ^0.2.3
+  webview_flutter: ^2.0.7
 
 dev_dependencies:
   flutter_test:
