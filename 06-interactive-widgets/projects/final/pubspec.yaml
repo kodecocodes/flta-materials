@@ -10,11 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_fonts: ^1.1.0
-  provider: ^4.3.2+3
-  flutter_colorpicker: ^0.3.4
-  intl: ^0.16.1
-  uuid: ^2.2.2
+  google_fonts: ^2.1.0
+  provider: ^5.0.0
+  flutter_colorpicker: ^0.4.0
+  intl: ^0.17.0
+  uuid: ^3.0.4
 
 dev_dependencies:
   flutter_test:
