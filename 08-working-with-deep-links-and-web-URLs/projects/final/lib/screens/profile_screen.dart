@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../components/circle_image.dart';
 import '../models/models.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:universal_html/prefer_universal/js.dart' as js;
 
 class ProfileScreen extends StatefulWidget {
   static MaterialPage page(User user) {
@@ -48,9 +47,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         buildDarkModeRow(),
         ListTile(
           title: const Text('View raywenderlich.com'),
-          onTap: () {
+          onTap: () async {
             if (kIsWeb) {
-              js.context.callMethod('open', ['https://www.raywenderlich.com/']);
+              await launch('https://www.raywenderlich.com/');
             } else {
               Provider.of<ProfileManager>(context, listen: false)
                   .tapOnRaywenderlich(true);
