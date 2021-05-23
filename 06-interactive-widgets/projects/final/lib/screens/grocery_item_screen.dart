@@ -38,6 +38,36 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
   int _currentSliderValue = 0;
 
   @override
+  void initState() {
+    // 1
+    if (widget.originalItem != null) {
+      _nameController.text = widget.originalItem.name;
+      _name = widget.originalItem.name;
+      _currentSliderValue = widget.originalItem.quantity;
+      _importance = widget.originalItem.importance;
+      _currentColor = widget.originalItem.color;
+      final date = widget.originalItem.date;
+      _timeOfDay = TimeOfDay(hour: date.hour, minute: date.minute);
+      _dueDate = date;
+    }
+
+    // 2
+    _nameController.addListener(() {
+      setState(() {
+        _name = _nameController.text;
+      });
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // 1
     return Scaffold(
@@ -384,35 +414,5 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
         ),
       ],
     );
-  }
-
-  @override
-  void initState() {
-    // 1
-    if (widget.originalItem != null) {
-      _nameController.text = widget.originalItem.name;
-      _name = widget.originalItem.name;
-      _currentSliderValue = widget.originalItem.quantity;
-      _importance = widget.originalItem.importance;
-      _currentColor = widget.originalItem.color;
-      final date = widget.originalItem.date;
-      _timeOfDay = TimeOfDay(hour: date.hour, minute: date.minute);
-      _dueDate = date;
-    }
-
-    // 2
-    _nameController.addListener(() {
-      setState(() {
-        _name = _nameController.text;
-      });
-    });
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    super.dispose();
   }
 }
