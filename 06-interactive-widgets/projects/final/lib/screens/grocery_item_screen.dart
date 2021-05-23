@@ -391,6 +391,7 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
     // 1
     if (widget.originalItem != null) {
       _nameController.text = widget.originalItem.name;
+      _name = widget.originalItem.name;
       _currentSliderValue = widget.originalItem.quantity;
       _importance = widget.originalItem.importance;
       _currentColor = widget.originalItem.color;
