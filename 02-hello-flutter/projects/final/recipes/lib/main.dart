@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-
 import 'recipe.dart';
 import 'recipe_detail.dart';
 
 void main() {
-  runApp(const RecipeApp());
+  runApp(RecipeApp());
 }
 
 class RecipeApp extends StatelessWidget {
-  // This widget is the root of your application.
-  const RecipeApp({Key key}) : super(key: key);
-// 1
+  // 1
   @override
   Widget build(BuildContext context) {
     // 2
@@ -18,17 +15,18 @@ class RecipeApp extends StatelessWidget {
       // 3
       title: 'Recipe Calculator',
       theme: ThemeData(
-          // 4
+        // 4
           primaryColor: Colors.white,
-          accentColor: Colors.black),
+          accentColor: Colors.black
+      ),
       // 5
-      home: const MyHomePage(title: 'Recipe Calculator'),
+      home: MyHomePage(title: 'Recipe Calculator'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -48,6 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // 3
       body: SafeArea(
         // 4
+        // 4
         child: ListView.builder(
           // 5
           itemCount: Recipe.samples.length,
@@ -58,8 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
               // 8
               onTap: () {
                 // 9
-                Navigator.push(
-                  context,
+                Navigator.push(context,
                   MaterialPageRoute(
                     builder: (context) {
                       // 10
@@ -82,7 +80,8 @@ class _MyHomePageState extends State<MyHomePage> {
       // 1
       elevation: 2.0,
       // 2
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0)),
       // 3
       child: Padding(
         padding: const EdgeInsets.all(16.0),
