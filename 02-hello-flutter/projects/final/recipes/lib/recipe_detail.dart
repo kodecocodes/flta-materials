@@ -4,7 +4,7 @@ import 'recipe.dart';
 class RecipeDetail extends StatefulWidget {
   final Recipe recipe;
 
-  const RecipeDetail({Key key, this.recipe}) : super(key: key);
+  const RecipeDetail({Key? key, required this.recipe}) : super(key: key);
 
   @override
   _RecipeDetailState createState() {
@@ -13,7 +13,6 @@ class RecipeDetail extends StatefulWidget {
 }
 
 class _RecipeDetailState extends State<RecipeDetail> {
-
   int _sliderVal = 1;
 
   @override
