@@ -43,11 +43,11 @@ class SqliteRepository extends Repository {
       final id = await dbHelper.insertRecipe(recipe);
       recipe.id = id;
       if (recipe.ingredients != null) {
-        recipe.ingredients.forEach((ingredient) {
+        recipe.ingredients!.forEach((ingredient) {
           ingredient.recipeId = id;
         });
+        insertIngredients(recipe.ingredients!);
       }
-      insertIngredients(recipe.ingredients);
       return id;
     });
   }
@@ -55,14 +55,12 @@ class SqliteRepository extends Repository {
   @override
   Future<List<int>> insertIngredients(List<Ingredient> ingredients) {
     return Future(() async {
-      if (ingredients != null && ingredients.length != 0) {
+      if (ingredients.length != 0) {
         final ingredientIds = <int>[];
-        await Future.forEach(ingredients, (ingredient) async {
-          if (ingredient != null) {
-            final futureId = await dbHelper.insertIngredient(ingredient);
-            ingredient.id = futureId;
-            ingredientIds.add(futureId);
-          }
+        await Future.forEach(ingredients, (Ingredient ingredient) async {
+          final futureId = await dbHelper.insertIngredient(ingredient);
+          ingredient.id = futureId;
+          ingredientIds.add(futureId);
         });
         return Future.value(ingredientIds);
       } else {
@@ -74,7 +72,9 @@ class SqliteRepository extends Repository {
   @override
   Future<void> deleteRecipe(Recipe recipe) {
     dbHelper.deleteRecipe(recipe);
-    deleteRecipeIngredients(recipe.id);
+    if (recipe.id != null) {
+      deleteRecipeIngredients(recipe.id!);
+    }
     return Future.value();
   }
 

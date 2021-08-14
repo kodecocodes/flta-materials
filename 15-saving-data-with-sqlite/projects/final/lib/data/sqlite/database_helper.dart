@@ -1,4 +1,3 @@
-
 import 'package:path/path.dart';
 import '../models/models.dart';
 import 'package:sqflite/sqflite.dart';
@@ -14,7 +13,7 @@ class DatabaseHelper {
   static const ingredientTable = 'Ingredient';
   static const columnId = '_id';
 
-  static BriteDatabase _streamDatabase;
+  static late BriteDatabase _streamDatabase;
 
   // make this a singleton class
   DatabaseHelper._privateConstructor();
@@ -23,7 +22,7 @@ class DatabaseHelper {
   static var lock = Lock();
 
   // only have a single app-wide reference to the database
-  static Database _database;
+  static late Database _database;
 
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
@@ -53,8 +52,7 @@ class DatabaseHelper {
     final documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, _databaseName);
     Sqflite.setDebugModeOn(true);
-    return openDatabase(path,
-        version: _databaseVersion, onCreate: _onCreate);
+    return openDatabase(path, version: _databaseVersion, onCreate: _onCreate);
   }
 
   Future<Database> get database async {
@@ -64,7 +62,7 @@ class DatabaseHelper {
       // lazily instantiate the db the first time it is accessed
       if (_database == null) {
         _database = await _initDatabase();
-        _streamDatabase = BriteDatabase(_database, true);
+        _streamDatabase = BriteDatabase(_database);
       }
     });
     return _database;
@@ -153,21 +151,27 @@ class DatabaseHelper {
   }
 
   Future<int> deleteRecipe(Recipe recipe) async {
-    return  _delete(recipeTable, recipe.id);
+    if (recipe.id != null) {
+      return _delete(recipeTable, recipe.id!);
+    } else {
+      return Future.value(-1);
+    }
   }
 
   Future<int> deleteIngredient(Ingredient ingredient) async {
-    return  _delete(ingredientTable, ingredient.id);
+    if (ingredient.id != null) {
+      return _delete(ingredientTable, ingredient.id!);
+    } else {
+      return Future.value(-1);
+    }
   }
 
   Future<void> deleteIngredients(List<Ingredient> ingredients) {
-    if (ingredients != null) {
-      ingredients.forEach((ingredient) {
-        if (ingredient != null) {
-          _delete(DatabaseHelper.ingredientTable, ingredient.id);
-        }
-      });
-    }
+    ingredients.forEach((ingredient) {
+      if (ingredient.id != null) {
+        _delete(DatabaseHelper.ingredientTable, ingredient.id!);
+      }
+    });
     return Future.value();
   }
 
