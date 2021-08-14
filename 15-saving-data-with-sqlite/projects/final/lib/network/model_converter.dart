@@ -25,7 +25,7 @@ class ModelConverter implements Converter {
     return request;
   }
 
-  Response decodeJson<BodyType, InnerType>(Response response) {
+  Response<BodyType> decodeJson<BodyType, InnerType>(Response response) {
     final contentType = response.headers[contentTypeKey];
     var body = response.body;
     if (contentType != null && contentType.contains(jsonHeaders)) {
@@ -41,7 +41,8 @@ class ModelConverter implements Converter {
           body: Success(recipeQuery) as BodyType);
     } catch (e) {
       chopperLogger.warning(e);
-      return response.copyWith<BodyType>(body: Error(e) as BodyType);
+      return response.copyWith<BodyType>(
+          body: Error(e as Exception) as BodyType);
     }
   }
 
