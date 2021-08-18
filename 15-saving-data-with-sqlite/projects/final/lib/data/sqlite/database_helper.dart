@@ -22,7 +22,7 @@ class DatabaseHelper {
   static var lock = Lock();
 
   // only have a single app-wide reference to the database
-  static late Database _database;
+  static Database? _database;
 
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
@@ -56,16 +56,16 @@ class DatabaseHelper {
   }
 
   Future<Database> get database async {
-    if (_database != null) return _database;
+    if (_database != null) return _database!;
     // Use this object to prevent concurrent access to data
     await lock.synchronized(() async {
       // lazily instantiate the db the first time it is accessed
       if (_database == null) {
         _database = await _initDatabase();
-        _streamDatabase = BriteDatabase(_database);
+        _streamDatabase = BriteDatabase(_database!);
       }
     });
-    return _database;
+    return _database!;
   }
 
   Future<BriteDatabase> get streamDatabase async {
