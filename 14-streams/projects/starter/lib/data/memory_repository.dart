@@ -35,14 +35,16 @@ class MemoryRepository extends Repository with ChangeNotifier {
   @override
   int insertRecipe(Recipe recipe) {
     _currentRecipes.add(recipe);
-    insertIngredients(recipe.ingredients);
+    if (recipe.ingredients != null) {
+      insertIngredients(recipe.ingredients!);
+    }
     notifyListeners();
     return 0;
   }
 
   @override
   List<int> insertIngredients(List<Ingredient> ingredients) {
-    if (ingredients != null && ingredients.length != 0) {
+    if (ingredients.length != 0) {
       _currentIngredients.addAll(ingredients);
       notifyListeners();
     }
@@ -52,7 +54,9 @@ class MemoryRepository extends Repository with ChangeNotifier {
   @override
   void deleteRecipe(Recipe recipe) {
     _currentRecipes.remove(recipe);
-    deleteRecipeIngredients(recipe.id);
+    if (recipe.id != null) {
+      deleteRecipeIngredients(recipe.id!);
+    }
     notifyListeners();
   }
 
