@@ -6,13 +6,14 @@ import '../../data/models/recipe.dart';
 import '../../data/memory_repository.dart';
 
 class MyRecipesList extends StatefulWidget {
-  const MyRecipesList({Key key}) : super(key: key);
+  const MyRecipesList({Key? key}) : super(key: key);
+
   @override
   _MyRecipesListState createState() => _MyRecipesListState();
 }
 
 class _MyRecipesListState extends State<MyRecipesList> {
-  List<Recipe> recipes;
+  List<Recipe> recipes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
 
   Widget _buildRecipeList(BuildContext context) {
     return Consumer<MemoryRepository>(builder: (context, repository, child) {
-      recipes = repository.findAllRecipes() ?? [];
+      recipes = repository.findAllRecipes();
       return ListView.builder(
           itemCount: recipes.length,
           itemBuilder: (BuildContext context, int index) {
@@ -46,11 +47,11 @@ class _MyRecipesListState extends State<MyRecipesList> {
                       padding: const EdgeInsets.all(8.0),
                       child: ListTile(
                         leading: CachedNetworkImage(
-                            imageUrl: recipe.image,
+                                  imageUrl: recipe.image ?? '',
                             height: 120,
                             width: 60,
                             fit: BoxFit.cover),
-                        title: Text(recipe.label),
+                              title: Text(recipe.label ?? ''),
                       ),
                     ),
                   ),
@@ -78,8 +79,12 @@ class _MyRecipesListState extends State<MyRecipesList> {
   }
 
   void deleteRecipe(MemoryRepository repository, Recipe recipe) async {
-    repository.deleteRecipeIngredients(recipe.id);
-    repository.deleteRecipe(recipe);
-    setState(() {});
+    if (recipe.id != null) {
+      repository.deleteRecipeIngredients(recipe.id!);
+      repository.deleteRecipe(recipe);
+      setState(() {});
+    } else {
+      print('Recipe id is null');
+    }
   }
 }
