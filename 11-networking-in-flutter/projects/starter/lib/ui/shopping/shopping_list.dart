@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ShoppingList extends StatelessWidget {
-  ShoppingList({Key key}) : super(key: key);
+  const ShoppingList({Key? key}) : super(key: key);
   // TODO 1
-  final ingredients = <String>[];
+  static const ingredients = <String>[];
 
   @override
   Widget build(BuildContext context) {

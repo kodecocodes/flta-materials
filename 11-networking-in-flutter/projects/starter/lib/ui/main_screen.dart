@@ -9,7 +9,7 @@ import 'shopping/shopping_list.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key key}) : super(key: key);
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -25,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     pageList.add(const RecipeList());
     pageList.add(const MyRecipesList());
-    pageList.add(ShoppingList());
+    pageList.add(const ShoppingList());
     getCurrentIndex();
   }
 
@@ -38,7 +38,10 @@ class _MainScreenState extends State<MainScreen> {
     final prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey(prefSelectedIndexKey)) {
       setState(() {
-        _selectedIndex = prefs.getInt(prefSelectedIndexKey);
+        final index = prefs.getInt(prefSelectedIndexKey);
+        if (index != null) {
+          _selectedIndex = index;
+        }
       });
     }
   }
@@ -62,6 +65,9 @@ class _MainScreenState extends State<MainScreen> {
         break;
       case 2:
         title = 'Groceries';
+        break;
+      default:
+        title = 'Recipes';
         break;
     }
     return Scaffold(
@@ -90,14 +96,15 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        backwardsCompatibility: false,
         systemOverlayStyle: const SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.white,
           statusBarColor: Colors.white,
           statusBarBrightness: Brightness.light,
           statusBarIconBrightness: Brightness.dark,
           systemNavigationBarDividerColor: Colors.white,
-          systemNavigationBarIconBrightness: Brightness.light,
+          //Navigation bar divider color
+          systemNavigationBarIconBrightness:
+              Brightness.light, //navigation bar icon
         ),
         title: Text(
           title,
