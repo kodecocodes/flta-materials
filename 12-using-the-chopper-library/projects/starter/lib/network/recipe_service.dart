@@ -13,7 +13,7 @@ class RecipeService {
 
   Future getData(String url) async {
     print('Calling uri: $url');
-    final response = await get(url);
+    final response = await get(Uri.parse(url));
     if (response.statusCode == 200) {
       return response.body;
     } else {

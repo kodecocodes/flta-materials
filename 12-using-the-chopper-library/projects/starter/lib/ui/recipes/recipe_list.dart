@@ -12,7 +12,8 @@ import '../recipes/recipe_details.dart';
 import '../colors.dart';
 
 class RecipeList extends StatefulWidget {
-  const RecipeList({Key key}) : super(key: key);
+  const RecipeList({Key? key}) : super(key: key);
+
   @override
   _RecipeListState createState() => _RecipeListState();
 }
@@ -20,7 +21,7 @@ class RecipeList extends StatefulWidget {
 class _RecipeListState extends State<RecipeList> {
   static const String prefSearchKey = 'previousSearches';
 
-  TextEditingController searchTextController;
+  late TextEditingController searchTextController;
   final ScrollController _scrollController = ScrollController();
   List<APIHits> currentSearchList = [];
   int currentCount = 0;
@@ -79,8 +80,10 @@ class _RecipeListState extends State<RecipeList> {
   void getPreviousSearches() async {
     final prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey(prefSearchKey)) {
-      previousSearches = prefs.getStringList(prefSearchKey);
-      if (previousSearches == null) {
+      final searches = prefs.getStringList(prefSearchKey);
+      if (searches != null) {
+        previousSearches = searches;
+      } else {
         previousSearches = <String>[];
       }
     }
@@ -215,11 +218,13 @@ class _RecipeListState extends State<RecipeList> {
           // TODO: change with new snapshot
           final query = snapshot.data;
           inErrorState = false;
-          currentCount = query.count;
-          hasMore = query.more;
-          currentSearchList.addAll(query.hits);
-          if (query.to < currentEndPosition) {
-            currentEndPosition = query.to;
+          if (query != null) {
+            currentCount = query.count;
+            hasMore = query.more;
+            currentSearchList.addAll(query.hits);
+            if (query.to < currentEndPosition) {
+              currentEndPosition = query.to;
+            }
           }
           return _buildRecipeList(context, currentSearchList);
         } else {
