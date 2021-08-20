@@ -3,14 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class RecipeList extends StatefulWidget {
-  const RecipeList({Key key}) : super(key: key);
+  const RecipeList({Key? key}) : super(key: key);
+
   @override
   _RecipeListState createState() => _RecipeListState();
 }
 
 class _RecipeListState extends State<RecipeList> {
-  TextEditingController searchTextController;
-  final _scrollController = ScrollController();
+  late TextEditingController searchTextController;
+  final ScrollController _scrollController = ScrollController();
   List currentSearchList = [];
   int currentCount = 0;
   int currentStartPosition = 0;
