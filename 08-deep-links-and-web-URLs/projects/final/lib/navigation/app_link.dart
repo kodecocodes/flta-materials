@@ -9,23 +9,26 @@ class AppLink {
   static const String kTabParam = 'tab';
   static const String kIdParam = 'id';
 	// 3
-  String location;
+  String? location;
   // 4
-  int currentTab;
+  int? currentTab;
   // 5
-  String itemId;
+  String? itemId;
   // 6
-  AppLink({this.location, this.currentTab, this.itemId});
+  AppLink({
+    this.location, 
+    this.currentTab, 
+    this.itemId});
 
-  static AppLink fromLocation(String location) {
+  static AppLink fromLocation(String? location) {
     // 1
-    location = Uri.decodeFull(location);
+    location = Uri.decodeFull(location ?? '');
     // 2
     final uri = Uri.parse(location);
     final params = uri.queryParameters;
     // 3
     void trySet(String key, void Function(String) setter) {
-      if (params.containsKey(key)) setter?.call(params[key]);
+      if (params.containsKey(key)) setter.call(params[key] as String);
     }
     // 4
     final link = AppLink()..location = uri.path;
@@ -38,7 +41,7 @@ class AppLink {
 
   String toLocation() {
     // 1
-    String addKeyValPair({String key, String value}) =>
+    String addKeyValPair({required String key, String? value}) =>
         value == null ? '' : '${key}=$value&';
     // 2
     switch (location) {

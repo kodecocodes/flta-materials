@@ -12,7 +12,10 @@ class AppRouter extends RouterDelegate<AppLink>
   final GroceryManager groceryManager;
   final ProfileManager profileManager;
 
-  AppRouter({this.appStateManager, this.groceryManager, this.profileManager})
+  AppRouter(
+      {required this.appStateManager,
+      required this.groceryManager,
+      required this.profileManager})
       : navigatorKey = GlobalKey<NavigatorState>() {
     appStateManager.addListener(notifyListeners);
     groceryManager.addListener(notifyListeners);
@@ -42,13 +45,20 @@ class AppRouter extends RouterDelegate<AppLink>
         ] else ...[
           Home.page(appStateManager.getSelectedTab),
           if (groceryManager.isCreatingNewItem)
-            GroceryItemScreen.page(onCreate: (item) {
-              groceryManager.addItem(item);
-            }),
-          if (groceryManager.selectedIndex != null)
+            GroceryItemScreen.page(
+                onCreate: (item) {
+                  groceryManager.addItem(item);
+                },
+                onUpdate: (item, index) {
+                  // No update
+                }),
+          if (groceryManager.selectedIndex != -1)
             GroceryItemScreen.page(
                 item: groceryManager.selectedGroceryItem,
                 index: groceryManager.selectedIndex,
+                onCreate: (_) {
+                  // No create
+                },
                 onUpdate: (item, index) {
                   groceryManager.updateItem(item, index);
                 }),
@@ -69,7 +79,7 @@ class AppRouter extends RouterDelegate<AppLink>
       appStateManager.logout();
     }
     if (route.settings.name == FooderlichPages.groceryItemDetails) {
-      groceryManager.groceryItemTapped(null);
+      groceryManager.groceryItemTapped(-1);
     }
 
     if (route.settings.name == FooderlichPages.profilePath) {
@@ -96,7 +106,7 @@ class AppRouter extends RouterDelegate<AppLink>
     } else if (groceryManager.isCreatingNewItem) {
       return AppLink(location: AppLink.kItemPath);
     } else if (groceryManager.selectedGroceryItem != null) {
-      final id = groceryManager.selectedGroceryItem.id;
+      final id = groceryManager.selectedGroceryItem?.id;
       return AppLink(location: AppLink.kItemPath, itemId: id);
     } else {
       return AppLink(
@@ -116,9 +126,10 @@ class AppRouter extends RouterDelegate<AppLink>
         break;
       // 4
       case AppLink.kItemPath:
+        final itemId = newLink.itemId;
         // 5
-        if (newLink.itemId != null) {
-          groceryManager.setSelectedGroceryItem(newLink.itemId);
+        if (itemId != null) {
+          groceryManager.setSelectedGroceryItem(itemId);
         } else {
           // 6
           groceryManager.createNewItem();
@@ -132,7 +143,7 @@ class AppRouter extends RouterDelegate<AppLink>
         appStateManager.goToTab(newLink.currentTab ?? 0);
         // 10
         profileManager.tapOnProfile(false);
-        groceryManager.groceryItemTapped(null);
+        groceryManager.groceryItemTapped(-1);
         break;
       // 11
       default:

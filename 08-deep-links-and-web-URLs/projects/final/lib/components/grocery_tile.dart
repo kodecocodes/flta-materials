@@ -5,10 +5,10 @@ import '../models/grocery_item.dart';
 
 class GroceryTile extends StatelessWidget {
   final GroceryItem item;
-  final Function(bool) onComplete;
+  final Function(bool?)? onComplete;
   final TextDecoration textDecoration;
 
-  GroceryTile({Key key, this.item, this.onComplete})
+  GroceryTile({Key? key, required this.item, this.onComplete})
       : textDecoration =
             item.isComplete ? TextDecoration.lineThrough : TextDecoration.none,
         super(key: key);

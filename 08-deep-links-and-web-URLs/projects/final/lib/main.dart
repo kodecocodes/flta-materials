@@ -10,7 +10,7 @@ void main() {
 }
 
 class Fooderlich extends StatefulWidget {
-  const Fooderlich({Key key}) : super(key: key);
+  const Fooderlich({Key? key}) : super(key: key);
 
   @override
   _FooderlichState createState() => _FooderlichState();
@@ -21,7 +21,7 @@ class _FooderlichState extends State<Fooderlich> {
   final _profileManager = ProfileManager();
   final _appStateManager = AppStateManager();
   final routeParser = AppRouteParser();
-  AppRouter _appRouter;
+  late AppRouter _appRouter;
 
   @override
   void initState() {
