@@ -6,7 +6,8 @@ import '../colors.dart';
 import '../widgets/custom_dropdown.dart';
 
 class RecipeList extends StatefulWidget {
-  const RecipeList({Key key}) : super(key: key);
+  const RecipeList({Key? key}) : super(key: key);
+
   @override
   _RecipeListState createState() => _RecipeListState();
 }
@@ -14,8 +15,8 @@ class RecipeList extends StatefulWidget {
 class _RecipeListState extends State<RecipeList> {
   static const String prefSearchKey = 'previousSearches';
 
-  TextEditingController searchTextController;
-  final _scrollController = ScrollController();
+  late TextEditingController searchTextController;
+  final ScrollController _scrollController = ScrollController();
   List currentSearchList = [];
   int currentCount = 0;
   int currentStartPosition = 0;
@@ -66,8 +67,10 @@ class _RecipeListState extends State<RecipeList> {
   void getPreviousSearches() async {
     final prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey(prefSearchKey)) {
-      previousSearches = prefs.getStringList(prefSearchKey);
-      if (previousSearches == null) {
+      final searches = prefs.getStringList(prefSearchKey);
+      if (searches != null) {
+        previousSearches = searches;
+      } else {
         previousSearches = <String>[];
       }
     }
