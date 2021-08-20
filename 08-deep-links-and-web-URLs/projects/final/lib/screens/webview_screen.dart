@@ -13,7 +13,7 @@ class WebViewScreen extends StatefulWidget {
         child: const WebViewScreen());
   }
 
-  const WebViewScreen({Key key}) : super(key: key);
+  const WebViewScreen({Key? key}) : super(key: key);
 
   @override
   WebViewScreenState createState() => WebViewScreenState();

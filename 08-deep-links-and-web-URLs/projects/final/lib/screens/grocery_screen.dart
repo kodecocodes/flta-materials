@@ -5,7 +5,7 @@ import 'empty_grocery_screen.dart';
 import 'grocery_list_screen.dart';
 
 class GroceryScreen extends StatelessWidget {
-  const GroceryScreen({Key key}) : super(key: key);
+  const GroceryScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

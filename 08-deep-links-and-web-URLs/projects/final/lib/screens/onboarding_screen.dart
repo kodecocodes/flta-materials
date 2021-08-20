@@ -11,7 +11,7 @@ class OnboardingScreen extends StatefulWidget {
       child: const OnboardingScreen());
 }
   
-  const OnboardingScreen({Key key}) : super(key: key);
+  const OnboardingScreen({Key? key}) : super(key: key);
 
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
