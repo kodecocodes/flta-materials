@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 import '../data/models/models.dart';
 
@@ -19,12 +18,12 @@ class APIRecipeQuery {
   List<APIHits> hits;
 
   APIRecipeQuery({
-    @required this.query,
-    @required this.from,
-    @required this.to,
-    @required this.more,
-    @required this.count,
-    @required this.hits,
+    required this.query,
+    required this.from,
+    required this.to,
+    required this.more,
+    required this.count,
+    required this.hits,
   });
 }
 
@@ -33,7 +32,7 @@ class APIHits {
   APIRecipe recipe;
 
   APIHits({
-    @required this.recipe,
+    required this.recipe,
   });
 
   factory APIHits.fromJson(Map<String, dynamic> json) =>
@@ -53,13 +52,13 @@ class APIRecipe {
   double totalTime;
 
   APIRecipe({
-    @required this.label,
-    @required this.image,
-    @required this.url,
-    @required this.ingredients,
-    @required this.calories,
-    @required this.totalWeight,
-    @required this.totalTime,
+    required this.label,
+    required this.image,
+    required this.url,
+    required this.ingredients,
+    required this.calories,
+    required this.totalWeight,
+    required this.totalTime,
   });
 
   factory APIRecipe.fromJson(Map<String, dynamic> json) =>
@@ -68,14 +67,14 @@ class APIRecipe {
   Map<String, dynamic> toJson() => _$APIRecipeToJson(this);
 }
 
-String getCalories(double calories) {
+String getCalories(double? calories) {
   if (calories == null) {
     return '0 KCAL';
   }
   return calories.floor().toString() + ' KCAL';
 }
 
-String getWeight(double weight) {
+String getWeight(double? weight) {
   if (weight == null) {
     return '0g';
   }
@@ -89,8 +88,8 @@ class APIIngredients {
   double weight;
 
   APIIngredients({
-    @required this.name,
-    @required this.weight,
+    required this.name,
+    required this.weight,
   });
 
   factory APIIngredients.fromJson(Map<String, dynamic> json) =>

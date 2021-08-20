@@ -10,10 +10,11 @@ import '../colors.dart';
 class RecipeDetails extends StatelessWidget {
   final Recipe recipe;
 
-  const RecipeDetails({Key key, this.recipe}) : super(key: key);
+  const RecipeDetails({Key? key, required this.recipe}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // TODO: change to new repository
     final repository = Provider.of<MemoryRepository>(context);
     final size = MediaQuery.of(context).size;
     return Scaffold(
@@ -29,7 +30,7 @@ class RecipeDetails extends StatelessWidget {
                     Align(
                       alignment: Alignment.topLeft,
                       child: CachedNetworkImage(
-                        imageUrl: recipe.image,
+                        imageUrl: recipe.image ?? '',
                         alignment: Alignment.topLeft,
                         fit: BoxFit.fill,
                         width: size.width,
@@ -53,7 +54,7 @@ class RecipeDetails extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0),
                   child: Text(
-                    recipe.label,
+                    recipe.label ?? '',
                     style: const TextStyle(
                         fontSize: 22, fontWeight: FontWeight.bold),
                   ),

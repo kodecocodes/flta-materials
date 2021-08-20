@@ -6,7 +6,7 @@ import '../colors.dart';
 
 class RecipeDetails extends StatelessWidget {
   // TODO: Replace with new constructor
-  const RecipeDetails({Key key}) : super(key: key);
+  const RecipeDetails({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
