@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class MyRecipesList extends StatefulWidget {
-  const MyRecipesList({Key key}) : super(key: key);
+  const MyRecipesList({Key? key}) : super(key: key);
+
   @override
   _MyRecipesListState createState() => _MyRecipesListState();
 }
 
 class _MyRecipesListState extends State<MyRecipesList> {
   // TODO 1
-  List<String> recipes;
+  List<String> recipes = [];
 
   // TODO 2
   @override
