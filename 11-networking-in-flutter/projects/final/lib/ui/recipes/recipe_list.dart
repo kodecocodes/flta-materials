@@ -260,11 +260,12 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
-  Widget _buildRecipeCard(BuildContext topLevelContext, List hits, int index) {
+  Widget _buildRecipeCard(
+      BuildContext topLevelContext, List<APIHits> hits, int index) {
     final recipe = hits[index].recipe;
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(
+        Navigator.push(topLevelContext, MaterialPageRoute(
           builder: (context) {
             return const RecipeDetails();
           },
