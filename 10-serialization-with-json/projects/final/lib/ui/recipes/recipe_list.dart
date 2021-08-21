@@ -22,6 +22,7 @@ class _RecipeListState extends State<RecipeList> {
 
   late TextEditingController searchTextController;
   final ScrollController _scrollController = ScrollController();
+
   // TODO: Replace with new API class
   List currentSearchList = [];
   int currentCount = 0;
@@ -205,11 +206,12 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
-  Widget _buildRecipeCard(BuildContext context, List<APIHits> hits, int index) {
+  Widget _buildRecipeCard(
+      BuildContext topLevelContext, List<APIHits> hits, int index) {
     final recipe = hits[index].recipe;
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(
+        Navigator.push(topLevelContext, MaterialPageRoute(
           builder: (context) {
             return const RecipeDetails();
           },
