@@ -84,23 +84,29 @@ class _RecipeListState extends State<RecipeList> {
             ),
             // *** Start Replace
             Expanded(
-              child: TextField(
-                decoration: const InputDecoration(
-                    border: InputBorder.none, hintText: 'Search'),
-                autofocus: false,
-                controller: searchTextController,
-                onChanged: (query) => {
-                  if (query.length >= 3)
-                    {
-                      // Rebuild list
-                      setState(() {
-                        currentSearchList.clear();
-                        currentCount = 0;
-                        currentEndPosition = pageCount;
-                        currentStartPosition = 0;
-                      })
-                    }
-                },
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: TextField(
+                      decoration: const InputDecoration(
+                          border: InputBorder.none, hintText: 'Search'),
+                      autofocus: false,
+                      controller: searchTextController,
+                      onChanged: (query) => {
+                        if (query.length >= 3) {
+                            // Rebuild list
+                            setState(() {
+                                currentSearchList.clear();
+                                currentCount = 0;
+                                currentEndPosition = pageCount;
+                                currentStartPosition = 0;
+                              },
+                            )
+                          }
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
             // *** End Replace
