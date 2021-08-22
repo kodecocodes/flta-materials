@@ -47,22 +47,22 @@ class RecipeDetails extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
+                // TODO 2
+                const Padding(
+                  padding: EdgeInsets.only(left: 16.0),
                   child: Text(
-                    // TODO 2
                     'Chicken Vesuvio',
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
+                // TODO 3
+                const Padding(
+                    padding: EdgeInsets.only(left: 16.0),
                     child: Chip(
-                      // TODO 3
                       label: Text('16CAL'),
                     )),
                 const SizedBox(

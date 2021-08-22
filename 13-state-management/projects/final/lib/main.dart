@@ -32,13 +32,8 @@ class MyApp extends StatelessWidget {
             lazy: false,
             create: (_) => MemoryRepository(),
           ),
-          FutureProvider(
-            initialData: null,
-            create: (_) async {
-              final service = MockService();
-              service.create();
-              return service;
-            },
+          Provider(
+            create: (_)  => MockService()..create(),
             lazy: false,
           ),
         ],
