@@ -6,12 +6,13 @@ import 'package:sqlbrite/sqlbrite.dart';
 import 'package:synchronized/synchronized.dart';
 
 class DatabaseHelper {
-  static const _databaseName = 'MyDatabase.db';
+  static const _databaseName = 'MyRecipes.db';
   static const _databaseVersion = 1;
 
   static const recipeTable = 'Recipe';
   static const ingredientTable = 'Ingredient';
-  static const columnId = '_id';
+  static const recipeId = 'recipeId';
+  static const ingredientId = 'ingredientId';
 
   static late BriteDatabase _streamDatabase;
 
@@ -27,24 +28,25 @@ class DatabaseHelper {
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
     await db.execute('''
-          CREATE TABLE $recipeTable (
-            _id INTEGER PRIMARY KEY,
-            label TEXT,
-            image TEXT,
-            url TEXT,
-            calories REAL,
-            totalWeight REAL,
-            totalTime REAL
-          )
-          ''');
+        CREATE TABLE $recipeTable (
+          $recipeId INTEGER PRIMARY KEY,
+          label TEXT,
+          image TEXT,
+          url TEXT,
+          calories REAL,
+          totalWeight REAL,
+          totalTime REAL
+        )
+        ''');
+    // 3
     await db.execute('''
-          CREATE TABLE $ingredientTable (
-            _id INTEGER PRIMARY KEY,
-            recipeId INTEGER,
-            name TEXT,
-            weight REAL
-          )
-          ''');
+        CREATE TABLE $ingredientTable (
+          $ingredientId INTEGER PRIMARY KEY,
+          $recipeId INTEGER,
+          name TEXT,
+          weight REAL
+        )
+        ''');
   }
 
   // this opens the database (and creates it if it doesn't exist)
@@ -145,14 +147,15 @@ class DatabaseHelper {
     return insert(ingredientTable, ingredient.toJson());
   }
 
-  Future<int> _delete(String table, int id) async {
+
+  Future<int> _delete(String table, String columnId, int id) async {
     final db = await instance.streamDatabase;
     return db.delete(table, where: '$columnId = ?', whereArgs: [id]);
   }
 
   Future<int> deleteRecipe(Recipe recipe) async {
     if (recipe.id != null) {
-      return _delete(recipeTable, recipe.id!);
+      return _delete(recipeTable, recipeId, recipe.id!);
     } else {
       return Future.value(-1);
     }
@@ -160,7 +163,7 @@ class DatabaseHelper {
 
   Future<int> deleteIngredient(Ingredient ingredient) async {
     if (ingredient.id != null) {
-      return _delete(ingredientTable, ingredient.id!);
+      return _delete(ingredientTable, ingredientId, ingredient.id!);
     } else {
       return Future.value(-1);
     }
@@ -169,16 +172,16 @@ class DatabaseHelper {
   Future<void> deleteIngredients(List<Ingredient> ingredients) {
     ingredients.forEach((ingredient) {
       if (ingredient.id != null) {
-        _delete(DatabaseHelper.ingredientTable, ingredient.id!);
+        _delete(ingredientTable, ingredientId, ingredient.id!);
       }
     });
     return Future.value();
   }
 
-  Future<int> deleteRecipeIngredients(int recipeId) async {
+  Future<int> deleteRecipeIngredients(int id) async {
     final db = await instance.streamDatabase;
     return db
-        .delete(ingredientTable, where: 'recipeId = ?', whereArgs: [recipeId]);
+        .delete(ingredientTable, where: '$recipeId = ?', whereArgs: [id]);
   }
 
   void close() {
