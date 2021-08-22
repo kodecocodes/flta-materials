@@ -115,6 +115,10 @@ class _RecipeListState extends State<RecipeList> {
               icon: const Icon(Icons.search),
               onPressed: () {
                 startSearch(searchTextController.text);
+                final currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
               },
             ),
             const SizedBox(
@@ -216,11 +220,13 @@ class _RecipeListState extends State<RecipeList> {
           }
           final query = (result as Success).value;
           inErrorState = false;
-          currentCount = query.count;
-          hasMore = query.more;
-          currentSearchList.addAll(query.hits);
-          if (query.to < currentEndPosition) {
-            currentEndPosition = query.to;
+          if (query != null) {
+            currentCount = query.count;
+            hasMore = query.more;
+            currentSearchList.addAll(query.hits);
+            if (query.to < currentEndPosition) {
+              currentEndPosition = query.to;
+            }
           }
           return _buildRecipeList(context, currentSearchList);
         } else {
@@ -261,7 +267,7 @@ class _RecipeListState extends State<RecipeList> {
     final recipe = hits[index].recipe;
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(
+        Navigator.push(topLevelContext, MaterialPageRoute(
           builder: (context) {
             final detailRecipe = Recipe(
                 label: recipe.label,

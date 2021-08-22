@@ -96,7 +96,6 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        backwardsCompatibility: false,
         systemOverlayStyle: const SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.white,
           statusBarColor: Colors.white,

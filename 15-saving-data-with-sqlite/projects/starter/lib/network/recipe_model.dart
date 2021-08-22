@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 import '../data/models/models.dart';
 
@@ -75,7 +74,7 @@ String getCalories(double? calories) {
   return calories.floor().toString() + ' KCAL';
 }
 
-String getWeight(double weight) {
+String getWeight(double? weight) {
   if (weight == null) {
     return '0g';
   }

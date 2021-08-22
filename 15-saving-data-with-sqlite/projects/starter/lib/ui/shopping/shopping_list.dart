@@ -19,14 +19,15 @@ class ShoppingList extends StatelessWidget {
             return Container();
           }
           return ListView.builder(
-              itemCount: ingredients.length,
-              itemBuilder: (BuildContext context, int index) {
-                return CheckboxListTile(
-                  value: false,
-                  title: Text(ingredients[index].name ?? ''),
-                  onChanged: (newValue) {},
-                );
-              });
+            itemCount: ingredients.length,
+            itemBuilder: (BuildContext context, int index) {
+              return CheckboxListTile(
+                value: false,
+                title: Text(ingredients[index].name ?? ''),
+                onChanged: (newValue) {},
+              );
+            },
+          );
         } else {
           return Container();
         }
