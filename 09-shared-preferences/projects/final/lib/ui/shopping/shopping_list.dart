@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 
-class ShoppingList extends StatelessWidget {
+class ShoppingList extends StatefulWidget {
   const ShoppingList({Key? key}) : super(key: key);
+
   // TODO 1
+  @override
+  State<ShoppingList> createState() => _ShoppingListState();
+}
+
+class _ShoppingListState extends State<ShoppingList> {
+  final checkBoxValues = Map<int, bool>();
   static const ingredients = <String>[];
 
   @override
@@ -12,10 +19,16 @@ class ShoppingList extends StatelessWidget {
         itemCount: ingredients.length,
         itemBuilder: (BuildContext context, int index) {
           return CheckboxListTile(
-            value: false,
+            value: checkBoxValues.containsKey(index) && checkBoxValues[index]!,
             // TODO 3
             title: Text(ingredients[index]),
-            onChanged: (newValue) {},
+            onChanged: (newValue) {
+              if (newValue != null) {
+                setState(() {
+                  checkBoxValues[index] = newValue;
+                });
+              }
+            },
           );
         });
     // TODO 4
