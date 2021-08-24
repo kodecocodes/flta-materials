@@ -11,10 +11,10 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  final String username;
+  final String? username;
 
   const LoginScreen({
-    Key key,
+    Key? key,
     this.username,
   }) : super(key: key);
 

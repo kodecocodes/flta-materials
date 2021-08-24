@@ -14,9 +14,9 @@ class AppRouter extends RouterDelegate //TODO: Add <AppLink>
   final ProfileManager profileManager;
 
   AppRouter({
-    this.appStateManager,
-    this.groceryManager,
-    this.profileManager,
+    required this.appStateManager,
+    required this.groceryManager,
+    required this.profileManager,
   }) : navigatorKey = GlobalKey<NavigatorState>() {
     appStateManager.addListener(notifyListeners);
     groceryManager.addListener(notifyListeners);
@@ -46,13 +46,20 @@ class AppRouter extends RouterDelegate //TODO: Add <AppLink>
         ] else ...[
           Home.page(appStateManager.getSelectedTab),
           if (groceryManager.isCreatingNewItem)
-            GroceryItemScreen.page(onCreate: (item) {
-              groceryManager.addItem(item);
-            }),
-          if (groceryManager.selectedIndex != null)
+            GroceryItemScreen.page(
+                onCreate: (item) {
+                  groceryManager.addItem(item);
+                },
+                onUpdate: (item, index) {
+                  // No update
+                }),
+          if (groceryManager.selectedIndex != -1)
             GroceryItemScreen.page(
                 item: groceryManager.selectedGroceryItem,
                 index: groceryManager.selectedIndex,
+                onCreate: (_) {
+                  // No create
+                },
                 onUpdate: (item, index) {
                   groceryManager.updateItem(item, index);
                 }),
@@ -74,7 +81,7 @@ class AppRouter extends RouterDelegate //TODO: Add <AppLink>
     }
 
     if (route.settings.name == FooderlichPages.groceryItemDetails) {
-      groceryManager.groceryItemTapped(null);
+      groceryManager.groceryItemTapped(-1);
     }
 
     if (route.settings.name == FooderlichPages.profilePath) {

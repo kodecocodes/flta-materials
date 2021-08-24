@@ -5,7 +5,10 @@ import '../models/models.dart';
 class GroceryListScreen extends StatelessWidget {
   final GroceryManager manager;
 
-  const GroceryListScreen({Key? key, required this.manager}) : super(key: key);
+  const GroceryListScreen({
+    Key? key, 
+    required this.manager
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

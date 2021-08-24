@@ -7,11 +7,10 @@ class User {
   final bool darkMode;
 
   User({
-    this.firstName,
-    this.lastName,
-    this.role,
-    this.profileImageUrl,
-    this.points,
-    this.darkMode,
-  });
+    required this.firstName,
+    required this.lastName,
+    required this.role,
+    required this.profileImageUrl,
+    required this.points,
+    required this.darkMode});
 }
