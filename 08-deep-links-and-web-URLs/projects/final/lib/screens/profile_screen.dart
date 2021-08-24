@@ -25,8 +25,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            backgroundColor: Theme.of(context).primaryColor,
             leading: IconButton(
-                icon: const Icon(Icons.close),
+                icon: Icon(
+                  Icons.close,
+                  color: Theme.of(context).dividerColor),
                 onPressed: () {
                   Provider.of<ProfileManager>(context, listen: false)
                       .tapOnProfile(false);
