@@ -3,8 +3,15 @@ import 'package:provider/provider.dart';
 import '../../data/models/ingredient.dart';
 import '../../data/repository.dart';
 
-class ShoppingList extends StatelessWidget {
+class ShoppingList extends StatefulWidget {
   const ShoppingList({Key? key}) : super(key: key);
+
+  @override
+  State<ShoppingList> createState() => _ShoppingListState();
+}
+
+class _ShoppingListState extends State<ShoppingList> {
+  final checkBoxValues = Map<int, bool>();
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +20,7 @@ class ShoppingList extends StatelessWidget {
       stream: repository.watchAllIngredients(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
-          final ingredients =
-              snapshot.data as List<Ingredient>?;
+          final ingredients = snapshot.data as List<Ingredient>?;
           if (ingredients == null) {
             return Container();
           }
@@ -22,9 +28,16 @@ class ShoppingList extends StatelessWidget {
             itemCount: ingredients.length,
             itemBuilder: (BuildContext context, int index) {
               return CheckboxListTile(
-                value: false,
+                value:
+                    checkBoxValues.containsKey(index) && checkBoxValues[index]!,
                 title: Text(ingredients[index].name ?? ''),
-                onChanged: (newValue) {},
+                onChanged: (newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      checkBoxValues[index] = newValue;
+                    });
+                  }
+                },
               );
             },
           );
