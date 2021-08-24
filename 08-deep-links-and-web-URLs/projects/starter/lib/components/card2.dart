@@ -8,8 +8,8 @@ class Card2 extends StatelessWidget {
   final ExploreRecipe recipe;
 
   const Card2({
-    Key key,
-    this.recipe,
+    Key? key,
+    required this.recipe,
   }) : super(key: key);
 
   @override
