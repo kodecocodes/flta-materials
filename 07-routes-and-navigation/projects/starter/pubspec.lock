@@ -82,7 +82,7 @@ packages:
       name: flutter_colorpicker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.0"
+    version: "0.5.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -213,7 +213,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.0"
+    version: "6.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -225,7 +225,7 @@ packages:
       name: smooth_page_indicator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.3"
+    version: "0.3.0-nullsafety.0"
   source_span:
     dependency: transitive
     description:
@@ -295,7 +295,7 @@ packages:
       name: webview_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.7"
+    version: "2.0.12"
   win32:
     dependency: transitive
     description:
@@ -312,4 +312,4 @@ packages:
     version: "0.2.0"
 sdks:
   dart: ">=2.13.0 <3.0.0"
-  flutter: ">=1.22.0"
+  flutter: ">=2.0.0"
