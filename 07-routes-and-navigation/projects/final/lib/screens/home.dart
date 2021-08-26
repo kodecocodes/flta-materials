@@ -17,8 +17,8 @@ class Home extends StatefulWidget {
   }
 
   const Home({
-    Key key,
-    this.currentTab,
+    Key? key,
+    required this.currentTab,
   }) : super(key: key);
 
   final int currentTab;
