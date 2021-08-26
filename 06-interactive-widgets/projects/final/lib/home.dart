@@ -6,7 +6,7 @@ import 'screens/recipes_screen.dart';
 import 'screens/grocery_screen.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key key}) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
