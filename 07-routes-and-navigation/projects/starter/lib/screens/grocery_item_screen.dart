@@ -9,18 +9,18 @@ import '../components/grocery_tile.dart';
 class GroceryItemScreen extends StatefulWidget {
   final Function(GroceryItem) onCreate;
   final Function(GroceryItem, int) onUpdate;
-  final GroceryItem originalItem;
+  final GroceryItem? originalItem;
   final int index;
   final bool isUpdating;
 
   // TODO: GroceryItemScreen MaterialPage Helper
 
   const GroceryItemScreen({
-    Key key,
-    this.onCreate,
-    this.onUpdate,
+    Key? key,
+    required this.onCreate,
+    required this.onUpdate,
     this.originalItem,
-    this.index,
+    this.index = -1,
   })  : isUpdating = (originalItem != null),
         super(key: key);
 
@@ -91,6 +91,7 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
             const SizedBox(height: 16.0),
             GroceryTile(
               item: GroceryItem(
+                id: 'previewMode',
                 name: _name,
                 importance: _importance,
                 color: _currentColor,
@@ -346,13 +347,14 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
 
   @override
   void initState() {
-    if (widget.originalItem != null) {
-      _name = widget.originalItem.name;
-      _nameController.text = widget.originalItem.name;
-      _currentSliderValue = widget.originalItem.quantity;
-      _importance = widget.originalItem.importance;
-      _currentColor = widget.originalItem.color;
-      final date = widget.originalItem.date;
+    final originalItem = widget.originalItem;
+    if (originalItem != null) {
+      _name = originalItem.name;
+      _nameController.text = originalItem.name;
+      _currentSliderValue = originalItem.quantity;
+      _importance = originalItem.importance;
+      _currentColor = originalItem.color;
+      final date = originalItem.date;
       _timeOfDay = TimeOfDay(hour: date.hour, minute: date.minute);
       _dueDate = date;
     }
