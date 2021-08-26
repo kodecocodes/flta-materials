@@ -16,9 +16,9 @@ class AppRouter extends RouterDelegate
   final ProfileManager profileManager;
 
   AppRouter({
-    this.appStateManager,
-    this.groceryManager,
-    this.profileManager,
+    required this.appStateManager,
+    required this.groceryManager,
+    required this.profileManager,
   }) : navigatorKey = GlobalKey<NavigatorState>() {
     appStateManager.addListener(notifyListeners);
     groceryManager.addListener(notifyListeners);
@@ -53,9 +53,11 @@ class AppRouter extends RouterDelegate
         if (groceryManager.isCreatingNewItem)
           GroceryItemScreen.page(onCreate: (item) {
             groceryManager.addItem(item);
+          }, onUpdate: (item, index) {
+            // No update
           }),
         // 1
-        if (groceryManager.selectedIndex != null)
+        if (groceryManager.selectedIndex != -1)
           // 2
           GroceryItemScreen.page(
             item: groceryManager.selectedGroceryItem,
@@ -64,6 +66,9 @@ class AppRouter extends RouterDelegate
               // 3
               groceryManager.updateItem(item, index);
             },
+            onCreate: (_) {
+              // No create
+            }
           ),
         if (profileManager.didSelectUser)
           ProfileScreen.page(profileManager.getUser),
@@ -88,7 +93,7 @@ class AppRouter extends RouterDelegate
       appStateManager.logout();
     }
     if (route.settings.name == FooderlichPages.groceryItemDetails) {
-      groceryManager.groceryItemTapped(null);
+      groceryManager.groceryItemTapped(-1);
     }
 
     if (route.settings.name == FooderlichPages.profilePath) {

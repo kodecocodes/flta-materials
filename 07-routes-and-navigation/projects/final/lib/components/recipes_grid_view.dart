@@ -6,8 +6,8 @@ class RecipesGridView extends StatelessWidget {
   final List<SimpleRecipe> recipes;
 
   const RecipesGridView({
-    Key key,
-    this.recipes,
+    Key? key,
+    required this.recipes,
   }) : super(key: key);
 
   @override

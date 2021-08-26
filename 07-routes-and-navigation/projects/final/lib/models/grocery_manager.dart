@@ -3,12 +3,15 @@ import 'grocery_item.dart';
 
 class GroceryManager extends ChangeNotifier {
   final _groceryItems = <GroceryItem>[];
-  int _selectedIndex = null;
+  int _selectedIndex = -1;
   bool _createNewItem = false;
 
   List<GroceryItem> get groceryItems => List.unmodifiable(_groceryItems);
   int get selectedIndex => _selectedIndex;
-  GroceryItem get selectedGroceryItem => _groceryItems[selectedIndex];
+
+  GroceryItem? get selectedGroceryItem =>
+      _selectedIndex != -1 ? _groceryItems[_selectedIndex] : null;
+
   bool get isCreatingNewItem => _createNewItem;
 
   void createNewItem() {
@@ -27,6 +30,13 @@ class GroceryManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setSelectedGroceryItem(String id) {
+    final index = groceryItems.indexWhere((element) => element.id == id);
+    _selectedIndex = index;
+    _createNewItem = false;
+    notifyListeners();
+  }
+
   void addItem(GroceryItem item) {
     _groceryItems.add(item);
     _createNewItem = false;
@@ -35,7 +45,7 @@ class GroceryManager extends ChangeNotifier {
 
   void updateItem(GroceryItem item, int index) {
     _groceryItems[index] = item;
-    _selectedIndex = null;
+    _selectedIndex = -1;
     _createNewItem = false;
     notifyListeners();
   }
