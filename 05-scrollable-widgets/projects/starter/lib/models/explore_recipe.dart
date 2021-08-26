@@ -2,12 +2,13 @@ part 'ingredient.dart';
 part 'instruction.dart';
 
 class RecipeCardType {
-  static const String card1 = 'card1';
-  static const String card2 = 'card2';
-  static const String card3 = 'card3';
+  static const card1 = 'card1';
+  static const card2 = 'card2';
+  static const card3 = 'card3';
 }
 
 class ExploreRecipe {
+  String id;
   String cardType;
   String title;
   String subtitle;
@@ -27,51 +28,60 @@ class ExploreRecipe {
   List<Instruction> instructions;
 
   ExploreRecipe(
-      {this.cardType,
-      this.title,
-      this.subtitle,
-      this.backgroundImage,
-      this.backgroundImageSource,
-      this.message,
-      this.authorName,
-      this.role,
-      this.profileImage,
-      this.durationInMinutes,
-      this.dietType,
-      this.calories,
-      this.tags,
-      this.description,
-      this.source,
-      this.ingredients,
-      this.instructions});
+      {required this.id,
+      required this.cardType,
+      required this.title,
+      this.subtitle = '',
+      this.backgroundImage = '',
+      this.backgroundImageSource = '',
+      this.message = '',
+      this.authorName = '',
+      this.role = '',
+      this.profileImage = '',
+      this.durationInMinutes = 0,
+      this.dietType = '',
+      this.calories = 0,
+      this.tags = const [],
+      this.description = '',
+      this.source = '',
+      this.ingredients = const [],
+      this.instructions = const []});
 
-  ExploreRecipe.fromJson(Map<String, dynamic> json) {
-    cardType = json['cardType'];
-    title = json['title'];
-    subtitle = json['subtitle'];
-    backgroundImage = json['backgroundImage'];
-    backgroundImageSource = json['backgroundImageSource'];
-    message = json['message'];
-    authorName = json['authorName'];
-    role = json['role'];
-    profileImage = json['profileImage'];
-    durationInMinutes = json['durationInMinutes'];
-    dietType = json['dietType'];
-    calories = json['calories'];
-    tags = json['tags'].cast<String>();
-    description = json['description'];
-    source = json['source'];
+  factory ExploreRecipe.fromJson(Map<String, dynamic> json) {
+    final ingredients = <Ingredients>[];
+    final instructions = <Instruction>[];
+
     if (json['ingredients'] != null) {
-      ingredients = <Ingredients>[];
       json['ingredients'].forEach((v) {
         ingredients.add(Ingredients.fromJson(v));
       });
     }
+
+
     if (json['instructions'] != null) {
-      instructions = <Instruction>[];
       json['instructions'].forEach((v) {
         instructions.add(Instruction.fromJson(v));
       });
     }
+
+    return ExploreRecipe(
+        id: json['id'] ?? '',
+        cardType: json['cardType'] ?? '',
+        title: json['title'] ?? '',
+        subtitle: json['subtitle'] ?? '',
+        backgroundImage: json['backgroundImage'] ?? '',
+        backgroundImageSource: json['backgroundImageSource'] ?? '',
+        message: json['message'] ?? '',
+        authorName: json['authorName'] ?? '',
+        role: json['role'] ?? '',
+        profileImage: json['profileImage'] ?? '',
+        durationInMinutes: json['durationInMinutes'] ?? 0,
+        dietType: json['dietType'] ?? '',
+        calories: json['calories'] ?? 0,
+        tags: json['tags'].cast<String>() ?? [],
+        description: json['description'] ?? '',
+        source: json['source'] ?? '',
+        ingredients: ingredients,
+        instructions: instructions);
   }
 }
