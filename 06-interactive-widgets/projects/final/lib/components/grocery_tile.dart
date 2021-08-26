@@ -7,12 +7,15 @@ class GroceryTile extends StatelessWidget {
   // 1
   final GroceryItem item;
   // 2
-  final Function(bool) onComplete;
+  final Function(bool?)? onComplete;
   // 3
   final TextDecoration textDecoration;
 
   // 4
-  GroceryTile({Key key, this.item, this.onComplete})
+  GroceryTile({
+    Key? key, 
+    required this.item, 
+    this.onComplete})
       : textDecoration =
             item.isComplete ? TextDecoration.lineThrough : TextDecoration.none,
         super(key: key);
