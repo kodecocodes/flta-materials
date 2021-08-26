@@ -5,7 +5,7 @@ import '../fooderlich_theme.dart';
 class Card3 extends StatelessWidget {
   final ExploreRecipe recipe;
 
-  const Card3({Key key, this.recipe}) : super(key: key);
+  const Card3({Key? key, required this.recipe}) : super(key: key);
 
   List<Widget> createTagChips() {
     final chips = <Widget>[];

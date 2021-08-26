@@ -1,11 +1,11 @@
 name: fooderlich
 description: a social recipe app to keep track of new dishes, and share with friends.
 
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
