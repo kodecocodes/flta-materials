@@ -5,15 +5,13 @@ class Ingredients {
   String title;
   String source;
 
-  Ingredients({
-    this.imageUrl,
-    this.title,
-    this.source,
-  });
+  Ingredients(
+      {required this.imageUrl, required this.title, required this.source});
 
-  Ingredients.fromJson(Map<String, dynamic> json) {
-    imageUrl = json['imageUrl'];
-    title = json['title'];
-    source = json['source'];
+  factory Ingredients.fromJson(Map<String, dynamic> json) {
+    return Ingredients(
+        imageUrl: json['imageUrl'] ?? '',
+        title: json['title'] ?? '',
+        source: json['source'] ?? '');
   }
 }

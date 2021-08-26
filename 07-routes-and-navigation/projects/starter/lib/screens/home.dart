@@ -6,7 +6,7 @@ import 'grocery_screen.dart';
 class Home extends StatefulWidget {
   // TODO: Home MaterialPage Helper
 
-  const Home({Key key, this.currentTab}) : super(key: key);
+  const Home({Key? key, required this.currentTab}) : super(key: key);
 
   final int currentTab;
 

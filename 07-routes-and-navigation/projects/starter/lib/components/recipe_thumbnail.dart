@@ -5,8 +5,8 @@ class RecipeThumbnail extends StatelessWidget {
   final SimpleRecipe recipe;
 
   const RecipeThumbnail({
-    Key key,
-    this.recipe,
+    Key? key,
+    required this.recipe,
   }) : super(key: key);
 
   @override

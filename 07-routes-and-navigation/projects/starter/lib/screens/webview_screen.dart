@@ -5,7 +5,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 class WebViewScreen extends StatefulWidget {
   // TODO: WebViewScreen MaterialPage Helper
 
-  const WebViewScreen({Key key}) : super(key: key);
+  const WebViewScreen({Key? key}) : super(key: key);
 
   @override
   WebViewScreenState createState() => WebViewScreenState();

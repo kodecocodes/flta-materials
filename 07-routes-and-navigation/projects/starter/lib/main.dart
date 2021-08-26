@@ -12,7 +12,7 @@ void main() {
 }
 
 class Fooderlich extends StatefulWidget {
-  const Fooderlich({Key key}) : super(key: key);
+  const Fooderlich({Key? key}) : super(key: key);
 
   @override
   _FooderlichState createState() => _FooderlichState();
