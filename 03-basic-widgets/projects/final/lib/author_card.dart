@@ -7,12 +7,12 @@ class AuthorCard extends StatelessWidget {
   // 1
   final String authorName;
   final String title;
-  final ImageProvider imageProvider;
+  final ImageProvider? imageProvider;
 
   const AuthorCard({
-    Key key,
-    this.authorName,
-    this.title,
+    Key? key,
+    required this.authorName,
+    required this.title,
     this.imageProvider,
   }) : super(key: key);
 
