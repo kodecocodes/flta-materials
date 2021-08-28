@@ -2,6 +2,14 @@ import 'message_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
+class MessageList extends StatefulWidget {
+  MessageList({Key? key}) : super(key: key);
+
+  @override
+  MessageListState createState() => MessageListState();
+}
+
 class MessageListState extends State<MessageList> {
   TextEditingController _messageController = TextEditingController();
   ScrollController _scrollController = ScrollController();
@@ -9,6 +17,7 @@ class MessageListState extends State<MessageList> {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance!.addPostFrameCallback((_) => _scrollToBottom());
+    // TODO 1
 
     return Scaffold(
       appBar: AppBar(
@@ -18,6 +27,7 @@ class MessageListState extends State<MessageList> {
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
+            // TODO 6
             _getMessageList(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,8 +38,8 @@ class MessageListState extends State<MessageList> {
                     child: TextField(
                       keyboardType: TextInputType.text,
                       controller: _messageController,
-                      onChanged: (text) => setState(() {}),
                       onSubmitted: (input) {
+                        // TODO 2
                         _sendMessage();
                       },
                       decoration:
@@ -42,6 +52,7 @@ class MessageListState extends State<MessageList> {
                         ? CupertinoIcons.arrow_right_circle_fill
                         : CupertinoIcons.arrow_right_circle),
                     onPressed: () {
+                      // TODO 3
                       _sendMessage();
                     })
               ],
@@ -52,12 +63,12 @@ class MessageListState extends State<MessageList> {
     );
   }
 
+  // TODO 4
   void _sendMessage() {
-    // TODO 2
   }
 
+  // TODO 5
   Widget _getMessageList() {
-    // TODO 3
     return SizedBox.shrink();
   }
 
@@ -68,13 +79,4 @@ class MessageListState extends State<MessageList> {
       _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
     }
   }
-}
-
-class MessageList extends StatefulWidget {
-  MessageList({Key? key}) : super(key: key);
-
-  // TODO 1
-
-  @override
-  MessageListState createState() => MessageListState();
 }

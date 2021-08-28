@@ -1,27 +1,46 @@
+import 'package:provider/provider.dart';
+
 import 'message_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'data/message.dart';
-import 'data/message_dao.dart';
+import '../data/message.dart';
+import '../data/message_dao.dart';
+import '../data/user_dao.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+
+class MessageList extends StatefulWidget {
+  MessageList({Key? key}) : super(key: key);
+
+  @override
+  MessageListState createState() => MessageListState();
+}
 
 class MessageListState extends State<MessageList> {
   TextEditingController _messageController = TextEditingController();
   ScrollController _scrollController = ScrollController();
+  String? email;
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance!.addPostFrameCallback((_) => _scrollToBottom());
+    final messageDao = Provider.of<MessageDao>(context, listen: false);
+    final userDao = Provider.of<UserDao>(context, listen: false);
+    email = userDao.email();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('RayChat'),
+        actions: [
+          IconButton(onPressed: () {
+            userDao.logout();
+          }, icon: Icon(Icons.logout))
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
-            _getMessageList(),
+            _getMessageList(messageDao),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -31,9 +50,8 @@ class MessageListState extends State<MessageList> {
                     child: TextField(
                       keyboardType: TextInputType.text,
                       controller: _messageController,
-                      onChanged: (text) => setState(() {}),
                       onSubmitted: (input) {
-                        _sendMessage();
+                        _sendMessage(messageDao);
                       },
                       decoration:
                           const InputDecoration(hintText: 'Enter new message'),
@@ -45,7 +63,7 @@ class MessageListState extends State<MessageList> {
                         ? CupertinoIcons.arrow_right_circle_fill
                         : CupertinoIcons.arrow_right_circle),
                     onPressed: () {
-                      _sendMessage();
+                      _sendMessage(messageDao);
                     })
               ],
             ),
@@ -55,24 +73,24 @@ class MessageListState extends State<MessageList> {
     );
   }
 
-  void _sendMessage() {
+  void _sendMessage(MessageDao messageDao) {
     if (_canSendMessage()) {
-      final message = Message(_messageController.text, DateTime.now());
-      widget.messageDao.saveMessage(message);
+      final message = Message(_messageController.text, DateTime.now(), email);
+      messageDao.saveMessage(message);
       _messageController.clear();
       setState(() {});
     }
   }
 
-  Widget _getMessageList() {
+  Widget _getMessageList(MessageDao messageDao) {
     return Expanded(
       child: FirebaseAnimatedList(
         controller: _scrollController,
-        query: widget.messageDao.getMessageQuery(),
+        query: messageDao.getMessageQuery(),
         itemBuilder: (context, snapshot, animation, index) {
           final json = snapshot.value as Map<dynamic, dynamic>;
           final message = Message.fromJson(json);
-          return MessageWidget(message.text, message.date);
+          return MessageWidget(message.text, message.date, message.email);
         },
       ),
     );
@@ -85,13 +103,4 @@ class MessageListState extends State<MessageList> {
       _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
     }
   }
-}
-
-class MessageList extends StatefulWidget {
-  MessageList({Key? key}) : super(key: key);
-
-  final messageDao = MessageDao();
-
-  @override
-  MessageListState createState() => MessageListState();
 }

@@ -5,8 +5,9 @@ import 'package:intl/intl.dart';
 class MessageWidget extends StatelessWidget {
   final String message;
   final DateTime date;
+  final String? email;
 
-  MessageWidget(this.message, this.date);
+  MessageWidget(this.message, this.date, this.email);
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +15,17 @@ class MessageWidget extends StatelessWidget {
         padding: const EdgeInsets.only(left: 1, top: 5, right: 1, bottom: 2),
         child: Column(
           children: [
+            if (email != null) ...[
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Align(
+                    alignment: Alignment.topRight,
+                    child: Text(
+                      email!,
+                      style: TextStyle(color: Colors.grey),
+                    )),
+              ),
+            ],
             Container(
                 decoration: BoxDecoration(
                     boxShadow: [

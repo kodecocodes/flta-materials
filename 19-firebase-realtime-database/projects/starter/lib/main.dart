@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'message_list.dart';
+import 'ui/message_list.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
