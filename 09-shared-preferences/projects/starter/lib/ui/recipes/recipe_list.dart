@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+// TODO: Add imports
 
 class RecipeList extends StatefulWidget {
   const RecipeList({Key? key}) : super(key: key);
@@ -10,6 +11,7 @@ class RecipeList extends StatefulWidget {
 }
 
 class _RecipeListState extends State<RecipeList> {
+  // TODO: Add key
   late TextEditingController searchTextController;
   final ScrollController _scrollController = ScrollController();
   List currentSearchList = [];
@@ -20,10 +22,12 @@ class _RecipeListState extends State<RecipeList> {
   bool hasMore = false;
   bool loading = false;
   bool inErrorState = false;
+  // TODO: Add searches array
 
   @override
   void initState() {
     super.initState();
+    // TODO: Call getPreviousSearches
     searchTextController = TextEditingController(text: '');
     _scrollController
       ..addListener(() {
@@ -51,6 +55,8 @@ class _RecipeListState extends State<RecipeList> {
     searchTextController.dispose();
     super.dispose();
   }
+
+  // TODO: Add savePreviousSearches
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +121,8 @@ class _RecipeListState extends State<RecipeList> {
       ),
     );
   }
+
+  // TODO: Add startSearch
 
   Widget _buildRecipeLoader(BuildContext context) {
     if (searchTextController.text.length < 3) {
