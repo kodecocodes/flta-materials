@@ -11,7 +11,6 @@ class GroceryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).dividerColor,
         child: const Icon(Icons.add),
         onPressed: () {
           final manager = Provider.of<GroceryManager>(context, listen: false);
