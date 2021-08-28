@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import '../models/models.dart';
 import '../api/mock_fooderlich_service.dart';
 import '../components/components.dart';
 
 class ExploreScreen extends StatefulWidget {
-  const ExploreScreen({Key key}) : super(key: key);
+  const ExploreScreen({Key? key}) : super(key: key);
   @override
   _ExploreScreenState createState() => _ExploreScreenState();
 }
@@ -11,7 +12,7 @@ class ExploreScreen extends StatefulWidget {
 class _ExploreScreenState extends State<ExploreScreen> {
   final mockService = MockFooderlichService();
 
-  ScrollController _controller;
+  late ScrollController _controller;
 
   @override
   void initState() {
@@ -41,15 +42,17 @@ class _ExploreScreenState extends State<ExploreScreen> {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: mockService.getExploreData(),
-        builder: (context, snapshot) {
+        builder: (context, AsyncSnapshot<ExploreData> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return ListView(
                 controller: _controller,
                 scrollDirection: Axis.vertical,
                 children: [
-                  TodayRecipeListView(recipes: snapshot.data.todayRecipes),
+                  TodayRecipeListView(
+                    recipes: snapshot.data?.todayRecipes ?? []),
                   const SizedBox(height: 16),
-                  FriendPostListView(friendPosts: snapshot.data.friendPosts)
+                  FriendPostListView(
+                    friendPosts: snapshot.data?.friendPosts ?? [])
                 ]);
           } else {
             return const Center(child: CircularProgressIndicator());

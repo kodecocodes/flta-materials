@@ -2,6 +2,7 @@
 {
     "recipes": [
         {
+            "id": "rec1",
             "dishImage": "assets/food_pics/food_salmon.jpg",
             "title": "Smoked Salmon",
             "duration": "30 mins",
@@ -15,6 +16,7 @@
             ]
         },
         {
+            "id": "rec2",
             "dishImage": "assets/food_pics/food_cupcake.jpg",
             "title": "Chocolate Cup Cake",
             "duration": "1 hour",
@@ -28,6 +30,7 @@
             ]
         },
         {
+            "id": "rec3",
             "dishImage": "assets/food_pics/food_pancake.jpg",
             "title": "Rasberry Maple Pancake",
             "duration": "30 mins",
@@ -41,6 +44,7 @@
             ]
         },
         {
+            "id": "rec4",
             "dishImage": "assets/food_pics/food_spaghetti.jpg",
             "title": "Seafood Spaghetti",
             "duration": "50 mins",
@@ -54,6 +58,7 @@
             ]
         },
         {
+            "id": "rec5",
             "dishImage": "assets/food_pics/food_friedrice.jpg",
             "title": "Thai Fried Rice",
             "duration": "35 mins",
@@ -68,6 +73,7 @@
             
         },
         {
+            "id": "rec6",
             "dishImage": "assets/food_pics/food_curry.jpg",
             "title": "Thai Green Curry",
             "duration": "1 hour",
@@ -81,6 +87,7 @@
             ]
         },
         {
+            "id": "rec7",
             "dishImage": "assets/food_pics/food_pho.jpg",
             "title": "Vietnamese Pho",
             "duration": "1 hour",
@@ -94,6 +101,7 @@
             ]
         },
         {
+            "id": "rec8",
             "dishImage": "assets/food_pics/food_burger.jpg",
             "title": "Bacon Cheese Burger",
             "duration": "30 min",
