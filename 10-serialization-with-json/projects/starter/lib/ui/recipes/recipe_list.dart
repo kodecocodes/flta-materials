@@ -26,10 +26,12 @@ class _RecipeListState extends State<RecipeList> {
   bool loading = false;
   bool inErrorState = false;
   List<String> previousSearches = <String>[];
+  // TODO: Add _currentRecipes1
 
   @override
   void initState() {
     super.initState();
+    // TODO: Add loadRecipes call
     getPreviousSearches();
     searchTextController = TextEditingController(text: '');
     _scrollController
@@ -52,6 +54,8 @@ class _RecipeListState extends State<RecipeList> {
         }
       });
   }
+
+  // TODO: Add loadRecipes
 
   @override
   void dispose() {
@@ -180,6 +184,7 @@ class _RecipeListState extends State<RecipeList> {
     });
   }
 
+  // TODO: Replace method
   Widget _buildRecipeLoader(BuildContext context) {
     if (searchTextController.text.length < 3) {
       return Container();
@@ -190,3 +195,5 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 }
+
+// TODO: Add _buildRecipeCard
