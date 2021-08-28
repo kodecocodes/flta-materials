@@ -1,13 +1,14 @@
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import '../../network/recipe_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../colors.dart';
-import '../recipe_card.dart';
 import '../widgets/custom_dropdown.dart';
+
+import 'dart:convert';
+import '../../network/recipe_model.dart';
+import 'package:flutter/services.dart';
+import '../recipe_card.dart';
 import 'recipe_details.dart';
 
 class RecipeList extends StatefulWidget {
@@ -22,8 +23,6 @@ class _RecipeListState extends State<RecipeList> {
 
   late TextEditingController searchTextController;
   final ScrollController _scrollController = ScrollController();
-
-  // TODO: Replace with new API class
   List currentSearchList = [];
   int currentCount = 0;
   int currentStartPosition = 0;
@@ -200,7 +199,7 @@ class _RecipeListState extends State<RecipeList> {
     if (_currentRecipes1 == null || _currentRecipes1?.hits == null) {
       return Container();
     }
-    // Show a loading indicator while waiting for the movies
+    // Show a loading indicator while waiting for the recipes
     return Center(
       child: _buildRecipeCard(context, _currentRecipes1!.hits, 0),
     );
