@@ -13,14 +13,12 @@ class EmptyGroceryScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 200,
+            Flexible(
               child: AspectRatio(
                 aspectRatio: 1 / 1,
                 child: Image.asset('assets/fooderlich_assets/empty_list.png'),
               ),
             ),
-            const SizedBox(height: 8.0),
             const Text(
               'No Groceries',
               style: TextStyle(fontSize: 21.0),
