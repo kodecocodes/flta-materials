@@ -6,18 +6,17 @@ part of 'recipe_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-APIRecipeQuery _$APIRecipeQueryFromJson(Map<String, dynamic> json) {
-  return APIRecipeQuery(
-    query: json['q'] as String,
-    from: json['from'] as int,
-    to: json['to'] as int,
-    more: json['more'] as bool,
-    count: json['count'] as int,
-    hits: (json['hits'] as List<dynamic>)
-        .map((e) => APIHits.fromJson(e as Map<String, dynamic>))
-        .toList(),
-  );
-}
+APIRecipeQuery _$APIRecipeQueryFromJson(Map<String, dynamic> json) =>
+    APIRecipeQuery(
+      query: json['q'] as String,
+      from: json['from'] as int,
+      to: json['to'] as int,
+      more: json['more'] as bool,
+      count: json['count'] as int,
+      hits: (json['hits'] as List<dynamic>)
+          .map((e) => APIHits.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
 Map<String, dynamic> _$APIRecipeQueryToJson(APIRecipeQuery instance) =>
     <String, dynamic>{
