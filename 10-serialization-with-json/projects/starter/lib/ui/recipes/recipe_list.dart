@@ -31,7 +31,7 @@ class _RecipeListState extends State<RecipeList> {
   @override
   void initState() {
     super.initState();
-    // TODO: Add loadRecipes call
+    // TODO: Call loadRecipes()
     getPreviousSearches();
     searchTextController = TextEditingController(text: '');
     _scrollController
