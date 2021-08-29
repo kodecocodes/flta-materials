@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../colors.dart';
 import '../recipe_card.dart';
 import '../widgets/custom_dropdown.dart';
+import 'recipe_details.dart';
 
 class RecipeList extends StatefulWidget {
   const RecipeList({Key? key}) : super(key: key);
@@ -199,7 +200,7 @@ class _RecipeListState extends State<RecipeList> {
     if (_currentRecipes1 == null || _currentRecipes1?.hits == null) {
       return Container();
     }
-    // Show a loading indicator while waiting for the movies
+    // Show a loading indicator while waiting for the recipes
     return Center(
       child: _buildRecipeCard(context, _currentRecipes1!.hits, 0),
     );
@@ -209,8 +210,14 @@ class _RecipeListState extends State<RecipeList> {
       BuildContext topLevelContext, List<APIHits> hits, int index) {
     final recipe = hits[index].recipe;
     return GestureDetector(
-      onTap: () {},
-      // TODO: Replace with new card method
+      onTap: () {
+        Navigator.push(topLevelContext, MaterialPageRoute(
+          builder: (context) {
+            return const RecipeDetails();
+          },
+        ));
+      },
+      // TODO: Replace with recipeCard
       child: recipeStringCard(recipe.image, recipe.label),
     );
   }

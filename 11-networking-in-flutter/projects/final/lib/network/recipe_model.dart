@@ -64,6 +64,7 @@ class APIRecipe {
       _$APIRecipeFromJson(json);
 
   Map<String, dynamic> toJson() => _$APIRecipeToJson(this);
+
 }
 
 String getCalories(double? calories) {
