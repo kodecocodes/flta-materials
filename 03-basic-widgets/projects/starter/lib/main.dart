@@ -9,6 +9,7 @@ class Fooderlich extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: Create theme
+    // TODO: Apply Home widget
     return MaterialApp(
       // TODO: Add theme
       title: 'Fooderlich',
