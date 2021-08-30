@@ -38,6 +38,7 @@ class _RecipeListState extends State<RecipeList> {
   @override
   void initState() {
     super.initState();
+    // TODO: Remove call to loadRecipes()
     loadRecipes();
     getPreviousSearches();
     searchTextController = TextEditingController(text: '');
@@ -62,6 +63,9 @@ class _RecipeListState extends State<RecipeList> {
       });
   }
 
+  // TODO: Add getRecipeData() here
+
+  // TODO: Delete loadRecipes()
   Future loadRecipes() async {
     final jsonString = await rootBundle.loadString('assets/recipes1.json');
     setState(() {
@@ -196,6 +200,7 @@ class _RecipeListState extends State<RecipeList> {
     });
   }
 
+  // TODO: Replace this _buildRecipeLoader definition
   Widget _buildRecipeLoader(BuildContext context) {
     if (_currentRecipes1 == null || _currentRecipes1?.hits == null) {
       return Container();
@@ -205,6 +210,8 @@ class _RecipeListState extends State<RecipeList> {
       child: _buildRecipeCard(context, _currentRecipes1!.hits, 0),
     );
   }
+
+  // TODO: Add _buildRecipeList()
 
   Widget _buildRecipeCard(
       BuildContext topLevelContext, List<APIHits> hits, int index) {
