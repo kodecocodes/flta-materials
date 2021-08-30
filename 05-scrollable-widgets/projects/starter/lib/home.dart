@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'models/explore_recipe.dart';
-import 'components/components.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
