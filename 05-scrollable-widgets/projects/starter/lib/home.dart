@@ -13,43 +13,11 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   static List<Widget> pages = <Widget>[
-    Card1(
-        recipe: ExploreRecipe(
-            id: '1',
-            authorName: 'Ray Wenderlich',
-            title: 'The Art of Dough',
-            subtitle: 'Editor\'s Choice',
-            message: 'Learn to make the perfect bread.',
-            backgroundImage: 'assets/magazine_pics/card_bread.jpg',
-            cardType: 'Card1')),
-    Card2(
-        recipe: ExploreRecipe(
-            id: '2',
-            authorName: 'Mike Katz',
-            role: 'Smoothie Connoisseur',
-            profileImage: 'assets/profile_pics/person_katz.jpeg',
-            title: 'Recipe',
-            subtitle: 'Smoothies',
-            backgroundImage: 'assets/magazine_pics/mag2.png',
-            cardType: 'Card2')),
-    Card3(
-        recipe: ExploreRecipe(
-            id: '3',
-            title: 'Vegan Trends',
-            tags: [
-              'Healthy',
-              'Vegan',
-              'Carrots',
-              'Greens',
-              'Wheat',
-              'Pescetarian',
-              'Mint',
-              'Lemongrass',
-              'Salad',
-              'Water'
-            ],
-            backgroundImage: 'assets/magazine_pics/mag3.png',
-            cardType: 'Card3')),
+    // TODO: Replace with ExploreScreen
+    Container(color: Colors.white),
+    // TODO: Replace with RecipesScreen
+    Container(color: Colors.green),
+    Container(color: Colors.blue)
   ];
 
   void _onItemTapped(int index) {
@@ -72,11 +40,11 @@ class _HomeState extends State<Home> {
             onTap: _onItemTapped,
             items: <BottomNavigationBarItem>[
               const BottomNavigationBarItem(
-                  icon: Icon(Icons.card_giftcard), label: 'Card'),
+                icon: Icon(Icons.explore), label: 'Explore'),
               const BottomNavigationBarItem(
-                  icon: Icon(Icons.card_giftcard), label: 'Card2'),
+                icon: Icon(Icons.book), label: 'Recipes'),
               const BottomNavigationBarItem(
-                  icon: Icon(Icons.card_giftcard), label: 'Card3'),
+                icon: Icon(Icons.list), label: 'To Buy'),
             ]));
   }
 }
