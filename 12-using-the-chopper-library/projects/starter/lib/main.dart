@@ -4,9 +4,12 @@ import 'package:flutter/services.dart';
 import 'ui/main_screen.dart';
 
 Future<void> main() async {
+  // TODO: Call _setupLogging()
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
+
+// TODO: Add _setupLogging()
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
