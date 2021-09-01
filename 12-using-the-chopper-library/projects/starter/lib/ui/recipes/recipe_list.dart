@@ -60,6 +60,7 @@ class _RecipeListState extends State<RecipeList> {
       });
   }
 
+  // TODO: Delete getRecipeData()
   Future<APIRecipeQuery> getRecipeData(String query, int from, int to) async {
     final recipeJson = await RecipeService().getRecipes(query, from, to);
     final recipeMap = json.decode(recipeJson);
