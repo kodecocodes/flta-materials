@@ -103,7 +103,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 620b677f70f5470a8e59cb77f3ddc666f6f09785
   FirebaseCoreDiagnostics: 3721920bde3a9a6d5aa093c1d25e9d3e47f694af
   FirebaseDatabase: 917fbeed577a68eb1ba0eb48c52a3aa10ac13f92
-  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
   GoogleUtilities: 3df19e3c24f7bbc291d8b5809aa6b0d41e642437
   GTMSessionFetcher: 36689134877faeb055b27dfa4ccc9ceaa42e029e
