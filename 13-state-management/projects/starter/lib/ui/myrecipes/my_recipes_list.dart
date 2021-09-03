@@ -10,10 +10,10 @@ class MyRecipesList extends StatefulWidget {
 }
 
 class _MyRecipesListState extends State<MyRecipesList> {
-  // TODO 1
+  // TODO: Update recipes declaration
   List<String> recipes = [];
 
-  // TODO 2
+  // TODO: Remove initState()
   @override
   void initState() {
     super.initState();
@@ -29,11 +29,11 @@ class _MyRecipesListState extends State<MyRecipesList> {
   }
 
   Widget _buildRecipeList(BuildContext context) {
-    // TODO 3
+    // TODO: Add Consumer
     return ListView.builder(
         itemCount: recipes.length,
         itemBuilder: (BuildContext context, int index) {
-          // TODO 4
+          // TODO: Add recipe definition
           return SizedBox(
             height: 100,
             child: Slidable(
@@ -51,13 +51,13 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
                       leading: CachedNetworkImage(
-                          // TODO 5
+                          // TODO: Replace imageUrl hardcoding 
                           imageUrl:
                               'http://www.seriouseats.com/recipes/2011/12/chicken-vesuvio-recipe.html',
                           height: 120,
                           width: 60,
                           fit: BoxFit.cover),
-                      // TODO 6
+                      // TODO: Replace title hardcoding
                       title: const Text('Chicken Vesuvio'),
                     ),
                   ),
@@ -69,7 +69,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     color: Colors.transparent,
                     foregroundColor: Colors.black,
                     iconWidget: const Icon(Icons.delete, color: Colors.red),
-                    // TODO 7
+                    // TODO: Update first onTap
                     onTap: () {})
               ],
               secondaryActions: <Widget>[
@@ -78,12 +78,14 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     color: Colors.transparent,
                     foregroundColor: Colors.black,
                     iconWidget: const Icon(Icons.delete, color: Colors.red),
-                    // TODO 8
+                    // TODO: Update second onTap
                     onTap: () {})
               ],
             ),
           );
         });
-    // TODO 9
+    // TODO: Add final brace and parenthesis
   }
+
+  // TODO: Add deleteRecipe() here
 }
