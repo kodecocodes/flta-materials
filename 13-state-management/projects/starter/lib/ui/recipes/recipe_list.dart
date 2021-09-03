@@ -269,7 +269,7 @@ class _RecipeListState extends State<RecipeList> {
           builder: (context) {
             return const RecipeDetails();
           },
-        ));
+        ),);
       },
       child: recipeCard(recipe),
     );
