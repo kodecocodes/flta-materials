@@ -7,7 +7,8 @@ class MessageWidget extends StatelessWidget {
   final DateTime date;
   final String? email;
 
-  MessageWidget(this.message, this.date, this.email);
+  const MessageWidget(this.message, this.date, this.email, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class MessageWidget extends StatelessWidget {
                     alignment: Alignment.topRight,
                     child: Text(
                       email!,
-                      style: TextStyle(color: Colors.grey),
+                      style: const TextStyle(color: Colors.grey),
                     )),
               ),
             ],
@@ -32,13 +33,13 @@ class MessageWidget extends StatelessWidget {
                       BoxShadow(
                           color: Colors.grey[350]!,
                           blurRadius: 2.0,
-                          offset: Offset(0, 1.0))
+                          offset: const Offset(0, 1.0))
                     ],
                     borderRadius: BorderRadius.circular(50.0),
                     color: Colors.white),
                 child: MaterialButton(
                     disabledTextColor: Colors.black87,
-                    padding: EdgeInsets.only(left: 18),
+                    padding: const EdgeInsets.only(left: 18),
                     onPressed: null,
                     child: Wrap(
                       children: <Widget>[
@@ -56,7 +57,7 @@ class MessageWidget extends StatelessWidget {
                   alignment: Alignment.topRight,
                   child: Text(
                     DateFormat('yyyy-MM-dd, kk:mma').format(date).toString(),
-                    style: TextStyle(color: Colors.grey),
+                    style: const TextStyle(color: Colors.grey),
                   )),
             ),
           ],

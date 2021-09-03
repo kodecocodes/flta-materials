@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:raychat/data/user_dao.dart';
+import '../data/user_dao.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -31,17 +31,17 @@ class _LoginState extends State<Login> {
         title: const Text('RayChat'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(32.0),
+        padding: const EdgeInsets.all(32.0),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
               Row(
                 children: [
-                  SizedBox(height: 80),
+                  const SizedBox(height: 80),
                   Expanded(
                       child: TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: UnderlineInputBorder(),
                         hintText: 'Email Address'),
                     autofocus: false,
@@ -60,10 +60,10 @@ class _LoginState extends State<Login> {
               ),
               Row(
                 children: [
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Expanded(
                       child: TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: UnderlineInputBorder(), hintText: 'Password'),
                     autofocus: false,
                     obscureText: true,
@@ -80,34 +80,34 @@ class _LoginState extends State<Login> {
                   )),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               Row(
                 children: [
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
                         userDao.login(
                             _emailController.text, _passwordController.text);
                       },
-                      child: Text("Login"),
+                      child: const Text('Login'),
                     ),
                   )
                 ],
               ),
               Row(
                 children: [
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
                         userDao.signup(
                             _emailController.text, _passwordController.text);
                       },
-                      child: Text("Sign Up"),
+                      child: const Text('Sign Up'),
                     ),
                   ),
-                  SizedBox(height: 60),
+                  const SizedBox(height: 60),
                 ],
               ),
             ],

@@ -9,15 +9,15 @@ import '../data/user_dao.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 class MessageList extends StatefulWidget {
-  MessageList({Key? key}) : super(key: key);
+  const MessageList({Key? key}) : super(key: key);
 
   @override
   MessageListState createState() => MessageListState();
 }
 
 class MessageListState extends State<MessageList> {
-  TextEditingController _messageController = TextEditingController();
-  ScrollController _scrollController = ScrollController();
+  final TextEditingController _messageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
   String? email;
 
   @override
@@ -33,11 +33,11 @@ class MessageListState extends State<MessageList> {
         actions: [
           IconButton(onPressed: () {
             userDao.logout();
-          }, icon: Icon(Icons.logout))
+          }, icon: const Icon(Icons.logout))
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             _getMessageList(messageDao),
