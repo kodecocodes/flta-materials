@@ -74,8 +74,9 @@ class _MyRecipesListState extends State<MyRecipesList> {
                 ],
               ),
             );
-          });
-    });
+          },);
+    // TODO: Add else here
+    },);
   }
 
   void deleteRecipe(MemoryRepository repository, Recipe recipe) async {
