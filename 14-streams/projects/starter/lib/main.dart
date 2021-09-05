@@ -27,27 +27,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider<MemoryRepository>(
-            lazy: false,
-            create: (_) => MemoryRepository(),
-          ),
-          Provider(
-            create: (_)  => MockService()..create(),
-            lazy: false,
-          ),
-        ],
-        child: MaterialApp(
-          title: 'Recipes',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
+      providers: [
+        // TODO: Update ChangeNotifierProvider
+        ChangeNotifierProvider<MemoryRepository>(
+          lazy: false,
+          create: (_) => MemoryRepository(),
+        ),
+        Provider(
+          create: (_) => MockService()..create(),
+          lazy: false,
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Recipes',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
           brightness: Brightness.light,
           primaryColor: Colors.white,
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          home: const MainScreen(),
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
+        home: const MainScreen(),
+      ),
     );
   }
 }
