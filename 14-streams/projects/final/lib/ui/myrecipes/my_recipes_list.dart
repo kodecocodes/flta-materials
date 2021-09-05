@@ -80,11 +80,11 @@ class _MyRecipesListState extends State<MyRecipesList> {
                       ],
                     ),
                   );
-                });
+                },);
           } else {
             return Container();
           }
-        });
+        },);
   }
 
   void deleteRecipe(Repository repository, Recipe recipe) async {
