@@ -3,6 +3,7 @@ import 'ui/message_list.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // TODO Add Firebase Initialization
   runApp(const App());
 }
 
@@ -11,6 +12,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO Add MultiProvider
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'RayChat',

@@ -12,15 +12,19 @@ class MessageList extends StatefulWidget {
 class MessageListState extends State<MessageList> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  // TODO Add Email String
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance!.addPostFrameCallback((_) => _scrollToBottom());
-    // TODO Add Providers
+    // TODO Add MessageDao
+
+    // TODO Add UserDao
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('RayChat'),
+        // TODO: Replace with actions
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
