@@ -24,7 +24,7 @@ class APIRecipeQuery {
     required this.more,
     required this.count,
     required this.hits,
-  });
+  },);
 }
 
 @JsonSerializable()
