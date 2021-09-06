@@ -154,11 +154,13 @@ class MoorRepository extends Repository {
 
   @override
   Future<void> deleteIngredients(List<Ingredient> ingredients) {
-    ingredients.forEach((ingredient) {
-      if (ingredient.id != null) {
-        _ingredientDao.deleteIngredient(ingredient.id!);
-      }
-    }, s);
+    ingredients.forEach(
+      (ingredient) {
+        if (ingredient.id != null) {
+          _ingredientDao.deleteIngredient(ingredient.id!);
+        }
+      },
+    );
     return Future.value();
   }
 
