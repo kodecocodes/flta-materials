@@ -158,7 +158,7 @@ class MoorRepository extends Repository {
       if (ingredient.id != null) {
         _ingredientDao.deleteIngredient(ingredient.id!);
       }
-    }, s);
+    });
     return Future.value();
   }
 
