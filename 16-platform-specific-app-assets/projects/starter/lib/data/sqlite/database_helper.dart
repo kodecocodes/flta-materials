@@ -60,13 +60,15 @@ class DatabaseHelper {
   Future<Database> get database async {
     if (_database != null) return _database!;
     // Use this object to prevent concurrent access to data
-    await lock.synchronized(() async {
-      // lazily instantiate the db the first time it is accessed
-      if (_database == null) {
-        _database = await _initDatabase();
-        _streamDatabase = BriteDatabase(_database!);
-      }
-    });
+    await lock.synchronized(
+      () async {
+        // lazily instantiate the db the first time it is accessed
+        if (_database == null) {
+          _database = await _initDatabase();
+          _streamDatabase = BriteDatabase(_database!);
+        }
+      },
+    );
     return _database!;
   }
 
@@ -77,19 +79,23 @@ class DatabaseHelper {
 
   List<Recipe> parseRecipes(List<Map<String, dynamic>> recipeList) {
     final recipes = <Recipe>[];
-    recipeList.forEach((recipeMap) {
-      final recipe = Recipe.fromJson(recipeMap);
-      recipes.add(recipe);
-    });
+    recipeList.forEach(
+      (recipeMap) {
+        final recipe = Recipe.fromJson(recipeMap);
+        recipes.add(recipe);
+      },
+    );
     return recipes;
   }
 
   List<Ingredient> parseIngredients(List<Map<String, dynamic>> ingredientList) {
     final ingredients = <Ingredient>[];
-    ingredientList.forEach((ingredientMap) {
-      final ingredient = Ingredient.fromJson(ingredientMap);
-      ingredients.add(ingredient);
-    });
+    ingredientList.forEach(
+      (ingredientMap) {
+        final ingredient = Ingredient.fromJson(ingredientMap);
+        ingredients.add(ingredient);
+      },
+    );
     return ingredients;
   }
 
@@ -147,7 +153,6 @@ class DatabaseHelper {
     return insert(ingredientTable, ingredient.toJson());
   }
 
-
   Future<int> _delete(String table, String columnId, int id) async {
     final db = await instance.streamDatabase;
     return db.delete(table, where: '$columnId = ?', whereArgs: [id]);
@@ -180,8 +185,7 @@ class DatabaseHelper {
 
   Future<int> deleteRecipeIngredients(int id) async {
     final db = await instance.streamDatabase;
-    return db
-        .delete(ingredientTable, where: '$recipeId = ?', whereArgs: [id]);
+    return db.delete(ingredientTable, where: '$recipeId = ?', whereArgs: [id]);
   }
 
   void close() {
