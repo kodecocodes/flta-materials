@@ -13,10 +13,9 @@ APIRecipeQuery _$APIRecipeQueryFromJson(Map<String, dynamic> json) {
     to: json['to'] as int,
     more: json['more'] as bool,
     count: json['count'] as int,
-    hits: (json['hits'] as List)
-        ?.map((e) =>
-            e == null ? null : APIHits.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    hits: (json['hits'] as List<dynamic>)
+        .map((e) => APIHits.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
@@ -32,9 +31,7 @@ Map<String, dynamic> _$APIRecipeQueryToJson(APIRecipeQuery instance) =>
 
 APIHits _$APIHitsFromJson(Map<String, dynamic> json) {
   return APIHits(
-    recipe: json['recipe'] == null
-        ? null
-        : APIRecipe.fromJson(json['recipe'] as Map<String, dynamic>),
+    recipe: APIRecipe.fromJson(json['recipe'] as Map<String, dynamic>),
   );
 }
 
@@ -47,14 +44,12 @@ APIRecipe _$APIRecipeFromJson(Map<String, dynamic> json) {
     label: json['label'] as String,
     image: json['image'] as String,
     url: json['url'] as String,
-    ingredients: (json['ingredients'] as List)
-        ?.map((e) => e == null
-            ? null
-            : APIIngredients.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
-    calories: (json['calories'] as num)?.toDouble(),
-    totalWeight: (json['totalWeight'] as num)?.toDouble(),
-    totalTime: (json['totalTime'] as num)?.toDouble(),
+    ingredients: (json['ingredients'] as List<dynamic>)
+        .map((e) => APIIngredients.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    calories: (json['calories'] as num).toDouble(),
+    totalWeight: (json['totalWeight'] as num).toDouble(),
+    totalTime: (json['totalTime'] as num).toDouble(),
   );
 }
 
@@ -71,7 +66,7 @@ Map<String, dynamic> _$APIRecipeToJson(APIRecipe instance) => <String, dynamic>{
 APIIngredients _$APIIngredientsFromJson(Map<String, dynamic> json) {
   return APIIngredients(
     name: json['text'] as String,
-    weight: (json['weight'] as num)?.toDouble(),
+    weight: (json['weight'] as num).toDouble(),
   );
 }
 
