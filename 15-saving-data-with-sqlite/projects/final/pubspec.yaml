@@ -23,7 +23,7 @@ dependencies:
   provider: ^6.0.0
   equatable: ^2.0.3
   sqflite: ^2.0.0+4
-  path_provider: ^2.0.2
+  path_provider: ^2.0.3
   synchronized: ^3.0.0
   sqlbrite: ^2.1.0
   moor_flutter: ^4.0.0
