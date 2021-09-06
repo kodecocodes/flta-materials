@@ -6,14 +6,14 @@ import '../../data/models/recipe.dart';
 import '../../data/repository.dart';
 
 class MyRecipesList extends StatefulWidget {
-  const MyRecipesList({Key key}) : super(key: key);
+  const MyRecipesList({Key? key}) : super(key: key);
 
   @override
   _MyRecipesListState createState() => _MyRecipesListState();
 }
 
 class _MyRecipesListState extends State<MyRecipesList> {
-  List<Recipe> recipes;
+  List<Recipe> recipes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +51,11 @@ class _MyRecipesListState extends State<MyRecipesList> {
                             padding: const EdgeInsets.all(8.0),
                             child: ListTile(
                               leading: CachedNetworkImage(
-                                  imageUrl: recipe.image,
+                                  imageUrl: recipe.image ?? '',
                                   height: 120,
                                   width: 60,
                                   fit: BoxFit.cover),
-                              title: Text(recipe.label),
+                              title: Text(recipe.label ?? ''),
                             ),
                           ),
                         ),
@@ -88,8 +88,12 @@ class _MyRecipesListState extends State<MyRecipesList> {
   }
 
   void deleteRecipe(Repository repository, Recipe recipe) async {
-    await repository.deleteRecipeIngredients(recipe.id);
-    await repository.deleteRecipe(recipe);
-    setState(() {});
+    if (recipe.id != null) {
+      await repository.deleteRecipeIngredients(recipe.id!);
+      await repository.deleteRecipe(recipe);
+      setState(() {});
+    } else {
+      print('Recipe id is null');
+    }
   }
 }
