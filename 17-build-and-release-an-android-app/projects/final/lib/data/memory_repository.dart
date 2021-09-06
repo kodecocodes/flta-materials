@@ -8,8 +8,8 @@ import 'models/models.dart';
 class MemoryRepository extends Repository {
   final List<Recipe> _currentRecipes = <Recipe>[];
   final List<Ingredient> _currentIngredients = <Ingredient>[];
-  Stream<List<Recipe>> _recipeStream;
-  Stream<List<Ingredient>> _ingredientStream;
+  Stream<List<Recipe>>? _recipeStream;
+  Stream<List<Ingredient>>? _ingredientStream;
   final StreamController _recipeStreamController =
       StreamController<List<Recipe>>();
   final StreamController _ingredientStreamController =
@@ -18,17 +18,18 @@ class MemoryRepository extends Repository {
   @override
   Stream<List<Recipe>> watchAllRecipes() {
     if (_recipeStream == null) {
-      _recipeStream = _recipeStreamController.stream;
+      _recipeStream = _recipeStreamController.stream as Stream<List<Recipe>>;
     }
-    return _recipeStream;
+    return _recipeStream!;
   }
 
   @override
   Stream<List<Ingredient>> watchAllIngredients() {
     if (_ingredientStream == null) {
-      _ingredientStream = _ingredientStreamController.stream;
+      _ingredientStream =
+          _ingredientStreamController.stream as Stream<List<Ingredient>>;
     }
-    return _ingredientStream;
+    return _ingredientStream!;
   }
 
   @override
@@ -61,13 +62,15 @@ class MemoryRepository extends Repository {
   Future<int> insertRecipe(Recipe recipe) {
     _currentRecipes.add(recipe);
     _recipeStreamController.sink.add(_currentRecipes);
-    insertIngredients(recipe.ingredients);
+    if (recipe.ingredients != null) {
+      insertIngredients(recipe.ingredients!);
+    }
     return Future.value(0);
   }
 
   @override
   Future<List<int>> insertIngredients(List<Ingredient> ingredients) {
-    if (ingredients != null && ingredients.length != 0) {
+    if (ingredients.length != 0) {
       _currentIngredients.addAll(ingredients);
       _ingredientStreamController.sink.add(_currentIngredients);
     }
@@ -78,7 +81,9 @@ class MemoryRepository extends Repository {
   Future<void> deleteRecipe(Recipe recipe) {
     _currentRecipes.remove(recipe);
     _recipeStreamController.sink.add(_currentRecipes);
-    deleteRecipeIngredients(recipe.id);
+    if (recipe.id != null) {
+      deleteRecipeIngredients(recipe.id!);
+    }
     return Future.value();
   }
 
