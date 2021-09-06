@@ -20,15 +20,17 @@ Future<void> main() async {
 
 void _setupLogging() {
   Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((rec) {
-    print('${rec.level.name}: ${rec.time}: ${rec.message}');
-  });
+  Logger.root.onRecord.listen(
+    (rec) {
+      print('${rec.level.name}: ${rec.time}: ${rec.message}');
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
   final Repository repository;
 
-  const MyApp({Key key, this.repository}) : super(key: key);
+  const MyApp({Key? key, required this.repository}) : super(key: key);
 
   // This widget is the root of your application.
   @override
