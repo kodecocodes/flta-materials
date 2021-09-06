@@ -48,17 +48,21 @@ class RecipeDao extends DatabaseAccessor<RecipeDatabase> with _$RecipeDaoMixin {
   Future<List<MoorRecipeData>> findAllRecipes() => select(moorRecipe).get();
 
   Stream<List<Recipe>> watchAllRecipes() {
-    return select(moorRecipe).watch().map((rows) {
-      final recipes = <Recipe>[];
-      rows.forEach((row) {
-        final recipe = moorRecipeToRecipe(row);
-        if (!recipes.contains(recipe)) {
-          recipe.ingredients = <Ingredient>[];
-          recipes.add(recipe);
-        }
-      });
-      return recipes;
-    });
+    return select(moorRecipe).watch().map(
+      (rows) {
+        final recipes = <Recipe>[];
+        rows.forEach(
+          (row) {
+            final recipe = moorRecipeToRecipe(row);
+            if (!recipes.contains(recipe)) {
+              recipe.ingredients = <Ingredient>[];
+              recipes.add(recipe);
+            }
+          },
+        );
+        return recipes;
+      },
+    );
   }
 
   Future<List<MoorRecipeData>> findRecipeById(int id) =>
