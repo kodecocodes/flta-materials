@@ -13,3 +13,4 @@ We’ve set up an official forum for the book at [https://forums.raywenderlich.c
 | Branch                                                                            | Edition | Release Date |
 | --------------------------------------------------------------------------------- |:-------:|:------------:|
 | [editions/1.0](https://github.com/raywenderlich/flta-materials/tree/editions/1.0) | 1.0     | 2021-06-02   |
+| [editions/2.0](https://github.com/raywenderlich/flta-materials/tree/editions/2.0) | 2.0     | YYYY-MM-DD   |
