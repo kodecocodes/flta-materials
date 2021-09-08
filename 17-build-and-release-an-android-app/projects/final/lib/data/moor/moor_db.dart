@@ -48,17 +48,21 @@ class RecipeDao extends DatabaseAccessor<RecipeDatabase> with _$RecipeDaoMixin {
   Future<List<MoorRecipeData>> findAllRecipes() => select(moorRecipe).get();
 
   Stream<List<Recipe>> watchAllRecipes() {
-    return select(moorRecipe).watch().map((rows) {
-      final recipes = <Recipe>[];
-      rows.forEach((row) {
-        final recipe = moorRecipeToRecipe(row);
-        if (!recipes.contains(recipe)) {
-          recipe.ingredients = <Ingredient>[];
-          recipes.add(recipe);
-        }
-      });
-      return recipes;
-    });
+    return select(moorRecipe).watch().map(
+      (rows) {
+        final recipes = <Recipe>[];
+        rows.forEach(
+          (row) {
+            final recipe = moorRecipeToRecipe(row);
+            if (!recipes.contains(recipe)) {
+              recipe.ingredients = <Ingredient>[];
+              recipes.add(recipe);
+            }
+          },
+        );
+        return recipes;
+      },
+    );
   }
 
   Future<List<MoorRecipeData>> findRecipeById(int id) =>
@@ -108,12 +112,12 @@ Recipe moorRecipeToRecipe(MoorRecipeData recipe) {
 
 Insertable<MoorRecipeData> recipeToInsertableMoorRecipe(Recipe recipe) {
   return MoorRecipeCompanion.insert(
-      label: recipe.label,
-      image: recipe.image,
-      url: recipe.url,
-      calories: recipe.calories,
-      totalWeight: recipe.totalWeight,
-      totalTime: recipe.totalTime);
+      label: recipe.label ?? '',
+      image: recipe.image ?? '',
+      url: recipe.url ?? '',
+      calories: recipe.calories ?? 0,
+      totalWeight: recipe.totalWeight ?? 0,
+      totalTime: recipe.totalTime ?? 0);
 }
 
 Ingredient moorIngredientToIngredient(MoorIngredientData ingredient) {
@@ -126,11 +130,8 @@ Ingredient moorIngredientToIngredient(MoorIngredientData ingredient) {
 
 MoorIngredientCompanion ingredientToInsertableMoorIngredient(
     Ingredient ingredient) {
-  if (ingredient == null) {
-    return null;
-  }
   return MoorIngredientCompanion.insert(
-      recipeId: ingredient.recipeId,
-      name: ingredient.name,
-      weight: ingredient.weight);
+      recipeId: ingredient.recipeId ?? 0,
+      name: ingredient.name ?? '',
+      weight: ingredient.weight ?? 0);
 }
