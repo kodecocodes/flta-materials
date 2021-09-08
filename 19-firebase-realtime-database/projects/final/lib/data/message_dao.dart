@@ -1,15 +1,14 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'message.dart';
 
 class MessageDao {
-  final DatabaseReference _messagesRef =
-  FirebaseDatabase.instance.reference().child('messages');
+  final CollectionReference collection =
+  FirebaseFirestore.instance.collection('messages');
 
   void saveMessage(Message message) {
-    _messagesRef.push().set(message.toJson());
+    collection.add(message.toJson());
   }
-
-  Query getMessageQuery() {
-    return _messagesRef;
+  Stream<QuerySnapshot> getMessageStream() {
+    return collection.snapshots();
   }
 }

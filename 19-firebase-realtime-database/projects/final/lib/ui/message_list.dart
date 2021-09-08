@@ -1,12 +1,11 @@
-import 'package:provider/provider.dart';
-
-import 'message_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../data/message.dart';
 import '../data/message_dao.dart';
+import 'message_widget.dart';
 import '../data/user_dao.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 class MessageList extends StatefulWidget {
   const MessageList({Key? key}) : super(key: key);
@@ -75,7 +74,8 @@ class MessageListState extends State<MessageList> {
 
   void _sendMessage(MessageDao messageDao) {
     if (_canSendMessage()) {
-      final message = Message(_messageController.text, DateTime.now(), email);
+      final message = Message(
+          text: _messageController.text, date: DateTime.now(), email: email);
       messageDao.saveMessage(message);
       _messageController.clear();
       setState(() {});
@@ -84,16 +84,30 @@ class MessageListState extends State<MessageList> {
 
   Widget _getMessageList(MessageDao messageDao) {
     return Expanded(
-      child: FirebaseAnimatedList(
-        controller: _scrollController,
-        query: messageDao.getMessageQuery(),
-        itemBuilder: (context, snapshot, animation, index) {
-          final json = snapshot.value as Map<dynamic, dynamic>;
-          final message = Message.fromJson(json);
-          return MessageWidget(message.text, message.date, message.email);
+      child: StreamBuilder<QuerySnapshot>(
+        stream: messageDao.getMessageStream(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return const Center(child: LinearProgressIndicator());
+          return _buildList(context, snapshot.data!.docs);
         },
       ),
     );
+  }
+
+  Widget _buildList(BuildContext context, List<DocumentSnapshot>? snapshot) {
+    return ListView(
+      controller: _scrollController,
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.only(top: 20.0),
+      // 2
+      children: snapshot!.map((data) => _buildListItem(context, data)).toList(),
+    );
+  }
+
+  Widget _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
+    final message = Message.fromSnapshot(snapshot);
+    return MessageWidget(message.text, message.date, message.email);
   }
 
   bool _canSendMessage() => _messageController.text.length > 0;

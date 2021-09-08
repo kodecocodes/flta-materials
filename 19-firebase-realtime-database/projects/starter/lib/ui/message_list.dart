@@ -12,14 +12,14 @@ class MessageList extends StatefulWidget {
 class MessageListState extends State<MessageList> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  // TODO Add Email String
+  // TODO: Add Email String
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance!.addPostFrameCallback((_) => _scrollToBottom());
-    // TODO Add MessageDao
+    // TODO: Add MessageDao
 
-    // TODO Add UserDao
+    // TODO: Add UserDao
 
     return Scaffold(
       appBar: AppBar(
@@ -30,7 +30,7 @@ class MessageListState extends State<MessageList> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // TODO Add Message DAO to _getMessageList
+            // TODO: Add Message DAO to _getMessageList
             _getMessageList(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,7 +42,7 @@ class MessageListState extends State<MessageList> {
                       keyboardType: TextInputType.text,
                       controller: _messageController,
                       onSubmitted: (input) {
-                        // TODO Add Message DAO 1
+                        // TODO: Add Message DAO 1
                         _sendMessage();
                       },
                       decoration:
@@ -55,7 +55,7 @@ class MessageListState extends State<MessageList> {
                         ? CupertinoIcons.arrow_right_circle_fill
                         : CupertinoIcons.arrow_right_circle),
                     onPressed: () {
-                      // TODO Add Message DAO 2
+                      // TODO: Add Message DAO 2
                       _sendMessage();
                     })
               ],
@@ -66,14 +66,18 @@ class MessageListState extends State<MessageList> {
     );
   }
 
-  // TODO Replace _sendMessage
+  // TODO: Replace _sendMessage
   void _sendMessage() {
   }
 
-  // TODO Replace _getMessageList
+  // TODO: Replace _getMessageList
   Widget _getMessageList() {
     return const SizedBox.shrink();
   }
+
+  // TODO: Add _buildList
+
+  // TODO: Add _buildListItem
 
   bool _canSendMessage() => _messageController.text.length > 0;
 
