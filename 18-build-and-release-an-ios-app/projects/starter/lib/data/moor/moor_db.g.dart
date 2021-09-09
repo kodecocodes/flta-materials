@@ -16,84 +16,61 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
   final double totalWeight;
   final double totalTime;
   MoorRecipeData(
-      {@required this.id,
-      @required this.label,
-      @required this.image,
-      @required this.url,
-      @required this.calories,
-      @required this.totalWeight,
-      @required this.totalTime});
+      {required this.id,
+      required this.label,
+      required this.image,
+      required this.url,
+      required this.calories,
+      required this.totalWeight,
+      required this.totalTime});
   factory MoorRecipeData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
-      {String prefix}) {
+      {String? prefix}) {
     final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
-    final doubleType = db.typeSystem.forDartType<double>();
     return MoorRecipeData(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      label:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}label']),
-      image:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}image']),
-      url: stringType.mapFromDatabaseResponse(data['${effectivePrefix}url']),
-      calories: doubleType
-          .mapFromDatabaseResponse(data['${effectivePrefix}calories']),
-      totalWeight: doubleType
-          .mapFromDatabaseResponse(data['${effectivePrefix}total_weight']),
-      totalTime: doubleType
-          .mapFromDatabaseResponse(data['${effectivePrefix}total_time']),
+      id: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      label: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}label'])!,
+      image: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}image'])!,
+      url: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}url'])!,
+      calories: const RealType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}calories'])!,
+      totalWeight: const RealType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}total_weight'])!,
+      totalTime: const RealType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}total_time'])!,
     );
   }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || id != null) {
-      map['id'] = Variable<int>(id);
-    }
-    if (!nullToAbsent || label != null) {
-      map['label'] = Variable<String>(label);
-    }
-    if (!nullToAbsent || image != null) {
-      map['image'] = Variable<String>(image);
-    }
-    if (!nullToAbsent || url != null) {
-      map['url'] = Variable<String>(url);
-    }
-    if (!nullToAbsent || calories != null) {
-      map['calories'] = Variable<double>(calories);
-    }
-    if (!nullToAbsent || totalWeight != null) {
-      map['total_weight'] = Variable<double>(totalWeight);
-    }
-    if (!nullToAbsent || totalTime != null) {
-      map['total_time'] = Variable<double>(totalTime);
-    }
+    map['id'] = Variable<int>(id);
+    map['label'] = Variable<String>(label);
+    map['image'] = Variable<String>(image);
+    map['url'] = Variable<String>(url);
+    map['calories'] = Variable<double>(calories);
+    map['total_weight'] = Variable<double>(totalWeight);
+    map['total_time'] = Variable<double>(totalTime);
     return map;
   }
 
   MoorRecipeCompanion toCompanion(bool nullToAbsent) {
     return MoorRecipeCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      label:
-          label == null && nullToAbsent ? const Value.absent() : Value(label),
-      image:
-          image == null && nullToAbsent ? const Value.absent() : Value(image),
-      url: url == null && nullToAbsent ? const Value.absent() : Value(url),
-      calories: calories == null && nullToAbsent
-          ? const Value.absent()
-          : Value(calories),
-      totalWeight: totalWeight == null && nullToAbsent
-          ? const Value.absent()
-          : Value(totalWeight),
-      totalTime: totalTime == null && nullToAbsent
-          ? const Value.absent()
-          : Value(totalTime),
+      id: Value(id),
+      label: Value(label),
+      image: Value(image),
+      url: Value(url),
+      calories: Value(calories),
+      totalWeight: Value(totalWeight),
+      totalTime: Value(totalTime),
     );
   }
 
   factory MoorRecipeData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer serializer}) {
+      {ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return MoorRecipeData(
       id: serializer.fromJson<int>(json['id']),
@@ -106,7 +83,7 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
     );
   }
   @override
-  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
@@ -120,13 +97,13 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
   }
 
   MoorRecipeData copyWith(
-          {int id,
-          String label,
-          String image,
-          String url,
-          double calories,
-          double totalWeight,
-          double totalTime}) =>
+          {int? id,
+          String? label,
+          String? image,
+          String? url,
+          double? calories,
+          double? totalWeight,
+          double? totalTime}) =>
       MoorRecipeData(
         id: id ?? this.id,
         label: label ?? this.label,
@@ -162,7 +139,7 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
                   $mrjc(calories.hashCode,
                       $mrjc(totalWeight.hashCode, totalTime.hashCode)))))));
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is MoorRecipeData &&
           other.id == this.id &&
@@ -193,12 +170,12 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
   });
   MoorRecipeCompanion.insert({
     this.id = const Value.absent(),
-    @required String label,
-    @required String image,
-    @required String url,
-    @required double calories,
-    @required double totalWeight,
-    @required double totalTime,
+    required String label,
+    required String image,
+    required String url,
+    required double calories,
+    required double totalWeight,
+    required double totalTime,
   })  : label = Value(label),
         image = Value(image),
         url = Value(url),
@@ -206,13 +183,13 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
         totalWeight = Value(totalWeight),
         totalTime = Value(totalTime);
   static Insertable<MoorRecipeData> custom({
-    Expression<int> id,
-    Expression<String> label,
-    Expression<String> image,
-    Expression<String> url,
-    Expression<double> calories,
-    Expression<double> totalWeight,
-    Expression<double> totalTime,
+    Expression<int>? id,
+    Expression<String>? label,
+    Expression<String>? image,
+    Expression<String>? url,
+    Expression<double>? calories,
+    Expression<double>? totalWeight,
+    Expression<double>? totalTime,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -226,13 +203,13 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
   }
 
   MoorRecipeCompanion copyWith(
-      {Value<int> id,
-      Value<String> label,
-      Value<String> image,
-      Value<String> url,
-      Value<double> calories,
-      Value<double> totalWeight,
-      Value<double> totalTime}) {
+      {Value<int>? id,
+      Value<String>? label,
+      Value<String>? image,
+      Value<String>? url,
+      Value<double>? calories,
+      Value<double>? totalWeight,
+      Value<double>? totalTime}) {
     return MoorRecipeCompanion(
       id: id ?? this.id,
       label: label ?? this.label,
@@ -289,129 +266,75 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
 class $MoorRecipeTable extends MoorRecipe
     with TableInfo<$MoorRecipeTable, MoorRecipeData> {
   final GeneratedDatabase _db;
-  final String _alias;
+  final String? _alias;
   $MoorRecipeTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
-  @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _labelMeta = const VerificationMeta('label');
-  GeneratedTextColumn _label;
-  @override
-  GeneratedTextColumn get label => _label ??= _constructLabel();
-  GeneratedTextColumn _constructLabel() {
-    return GeneratedTextColumn(
-      'label',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> label = GeneratedColumn<String?>(
+      'label', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _imageMeta = const VerificationMeta('image');
-  GeneratedTextColumn _image;
-  @override
-  GeneratedTextColumn get image => _image ??= _constructImage();
-  GeneratedTextColumn _constructImage() {
-    return GeneratedTextColumn(
-      'image',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> image = GeneratedColumn<String?>(
+      'image', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _urlMeta = const VerificationMeta('url');
-  GeneratedTextColumn _url;
-  @override
-  GeneratedTextColumn get url => _url ??= _constructUrl();
-  GeneratedTextColumn _constructUrl() {
-    return GeneratedTextColumn(
-      'url',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> url = GeneratedColumn<String?>(
+      'url', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _caloriesMeta = const VerificationMeta('calories');
-  GeneratedRealColumn _calories;
-  @override
-  GeneratedRealColumn get calories => _calories ??= _constructCalories();
-  GeneratedRealColumn _constructCalories() {
-    return GeneratedRealColumn(
-      'calories',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<double?> calories = GeneratedColumn<double?>(
+      'calories', aliasedName, false,
+      typeName: 'REAL', requiredDuringInsert: true);
   final VerificationMeta _totalWeightMeta =
       const VerificationMeta('totalWeight');
-  GeneratedRealColumn _totalWeight;
-  @override
-  GeneratedRealColumn get totalWeight =>
-      _totalWeight ??= _constructTotalWeight();
-  GeneratedRealColumn _constructTotalWeight() {
-    return GeneratedRealColumn(
-      'total_weight',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<double?> totalWeight = GeneratedColumn<double?>(
+      'total_weight', aliasedName, false,
+      typeName: 'REAL', requiredDuringInsert: true);
   final VerificationMeta _totalTimeMeta = const VerificationMeta('totalTime');
-  GeneratedRealColumn _totalTime;
-  @override
-  GeneratedRealColumn get totalTime => _totalTime ??= _constructTotalTime();
-  GeneratedRealColumn _constructTotalTime() {
-    return GeneratedRealColumn(
-      'total_time',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<double?> totalTime = GeneratedColumn<double?>(
+      'total_time', aliasedName, false,
+      typeName: 'REAL', requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
       [id, label, image, url, calories, totalWeight, totalTime];
   @override
-  $MoorRecipeTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'moor_recipe';
   @override
-  String get $tableName => _alias ?? 'moor_recipe';
-  @override
-  final String actualTableName = 'moor_recipe';
+  String get actualTableName => 'moor_recipe';
   @override
   VerificationContext validateIntegrity(Insertable<MoorRecipeData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
     if (data.containsKey('label')) {
       context.handle(
-          _labelMeta, label.isAcceptableOrUnknown(data['label'], _labelMeta));
+          _labelMeta, label.isAcceptableOrUnknown(data['label']!, _labelMeta));
     } else if (isInserting) {
       context.missing(_labelMeta);
     }
     if (data.containsKey('image')) {
       context.handle(
-          _imageMeta, image.isAcceptableOrUnknown(data['image'], _imageMeta));
+          _imageMeta, image.isAcceptableOrUnknown(data['image']!, _imageMeta));
     } else if (isInserting) {
       context.missing(_imageMeta);
     }
     if (data.containsKey('url')) {
       context.handle(
-          _urlMeta, url.isAcceptableOrUnknown(data['url'], _urlMeta));
+          _urlMeta, url.isAcceptableOrUnknown(data['url']!, _urlMeta));
     } else if (isInserting) {
       context.missing(_urlMeta);
     }
     if (data.containsKey('calories')) {
       context.handle(_caloriesMeta,
-          calories.isAcceptableOrUnknown(data['calories'], _caloriesMeta));
+          calories.isAcceptableOrUnknown(data['calories']!, _caloriesMeta));
     } else if (isInserting) {
       context.missing(_caloriesMeta);
     }
@@ -419,13 +342,13 @@ class $MoorRecipeTable extends MoorRecipe
       context.handle(
           _totalWeightMeta,
           totalWeight.isAcceptableOrUnknown(
-              data['total_weight'], _totalWeightMeta));
+              data['total_weight']!, _totalWeightMeta));
     } else if (isInserting) {
       context.missing(_totalWeightMeta);
     }
     if (data.containsKey('total_time')) {
       context.handle(_totalTimeMeta,
-          totalTime.isAcceptableOrUnknown(data['total_time'], _totalTimeMeta));
+          totalTime.isAcceptableOrUnknown(data['total_time']!, _totalTimeMeta));
     } else if (isInserting) {
       context.missing(_totalTimeMeta);
     }
@@ -435,9 +358,9 @@ class $MoorRecipeTable extends MoorRecipe
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  MoorRecipeData map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return MoorRecipeData.fromData(data, _db, prefix: effectivePrefix);
+  MoorRecipeData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return MoorRecipeData.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
@@ -453,58 +376,46 @@ class MoorIngredientData extends DataClass
   final String name;
   final double weight;
   MoorIngredientData(
-      {@required this.id,
-      @required this.recipeId,
-      @required this.name,
-      @required this.weight});
+      {required this.id,
+      required this.recipeId,
+      required this.name,
+      required this.weight});
   factory MoorIngredientData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
-      {String prefix}) {
+      {String? prefix}) {
     final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
-    final doubleType = db.typeSystem.forDartType<double>();
     return MoorIngredientData(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      recipeId:
-          intType.mapFromDatabaseResponse(data['${effectivePrefix}recipe_id']),
-      name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
-      weight:
-          doubleType.mapFromDatabaseResponse(data['${effectivePrefix}weight']),
+      id: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      recipeId: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}recipe_id'])!,
+      name: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}name'])!,
+      weight: const RealType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}weight'])!,
     );
   }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || id != null) {
-      map['id'] = Variable<int>(id);
-    }
-    if (!nullToAbsent || recipeId != null) {
-      map['recipe_id'] = Variable<int>(recipeId);
-    }
-    if (!nullToAbsent || name != null) {
-      map['name'] = Variable<String>(name);
-    }
-    if (!nullToAbsent || weight != null) {
-      map['weight'] = Variable<double>(weight);
-    }
+    map['id'] = Variable<int>(id);
+    map['recipe_id'] = Variable<int>(recipeId);
+    map['name'] = Variable<String>(name);
+    map['weight'] = Variable<double>(weight);
     return map;
   }
 
   MoorIngredientCompanion toCompanion(bool nullToAbsent) {
     return MoorIngredientCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      recipeId: recipeId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(recipeId),
-      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
-      weight:
-          weight == null && nullToAbsent ? const Value.absent() : Value(weight),
+      id: Value(id),
+      recipeId: Value(recipeId),
+      name: Value(name),
+      weight: Value(weight),
     );
   }
 
   factory MoorIngredientData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer serializer}) {
+      {ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return MoorIngredientData(
       id: serializer.fromJson<int>(json['id']),
@@ -514,7 +425,7 @@ class MoorIngredientData extends DataClass
     );
   }
   @override
-  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
@@ -525,7 +436,7 @@ class MoorIngredientData extends DataClass
   }
 
   MoorIngredientData copyWith(
-          {int id, int recipeId, String name, double weight}) =>
+          {int? id, int? recipeId, String? name, double? weight}) =>
       MoorIngredientData(
         id: id ?? this.id,
         recipeId: recipeId ?? this.recipeId,
@@ -547,7 +458,7 @@ class MoorIngredientData extends DataClass
   int get hashCode => $mrjf($mrjc(id.hashCode,
       $mrjc(recipeId.hashCode, $mrjc(name.hashCode, weight.hashCode))));
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is MoorIngredientData &&
           other.id == this.id &&
@@ -569,17 +480,17 @@ class MoorIngredientCompanion extends UpdateCompanion<MoorIngredientData> {
   });
   MoorIngredientCompanion.insert({
     this.id = const Value.absent(),
-    @required int recipeId,
-    @required String name,
-    @required double weight,
+    required int recipeId,
+    required String name,
+    required double weight,
   })  : recipeId = Value(recipeId),
         name = Value(name),
         weight = Value(weight);
   static Insertable<MoorIngredientData> custom({
-    Expression<int> id,
-    Expression<int> recipeId,
-    Expression<String> name,
-    Expression<double> weight,
+    Expression<int>? id,
+    Expression<int>? recipeId,
+    Expression<String>? name,
+    Expression<double>? weight,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -590,10 +501,10 @@ class MoorIngredientCompanion extends UpdateCompanion<MoorIngredientData> {
   }
 
   MoorIngredientCompanion copyWith(
-      {Value<int> id,
-      Value<int> recipeId,
-      Value<String> name,
-      Value<double> weight}) {
+      {Value<int>? id,
+      Value<int>? recipeId,
+      Value<String>? name,
+      Value<double>? weight}) {
     return MoorIngredientCompanion(
       id: id ?? this.id,
       recipeId: recipeId ?? this.recipeId,
@@ -635,84 +546,55 @@ class MoorIngredientCompanion extends UpdateCompanion<MoorIngredientData> {
 class $MoorIngredientTable extends MoorIngredient
     with TableInfo<$MoorIngredientTable, MoorIngredientData> {
   final GeneratedDatabase _db;
-  final String _alias;
+  final String? _alias;
   $MoorIngredientTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
-  @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _recipeIdMeta = const VerificationMeta('recipeId');
-  GeneratedIntColumn _recipeId;
-  @override
-  GeneratedIntColumn get recipeId => _recipeId ??= _constructRecipeId();
-  GeneratedIntColumn _constructRecipeId() {
-    return GeneratedIntColumn(
-      'recipe_id',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<int?> recipeId = GeneratedColumn<int?>(
+      'recipe_id', aliasedName, false,
+      typeName: 'INTEGER', requiredDuringInsert: true);
   final VerificationMeta _nameMeta = const VerificationMeta('name');
-  GeneratedTextColumn _name;
-  @override
-  GeneratedTextColumn get name => _name ??= _constructName();
-  GeneratedTextColumn _constructName() {
-    return GeneratedTextColumn(
-      'name',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
+      'name', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _weightMeta = const VerificationMeta('weight');
-  GeneratedRealColumn _weight;
-  @override
-  GeneratedRealColumn get weight => _weight ??= _constructWeight();
-  GeneratedRealColumn _constructWeight() {
-    return GeneratedRealColumn(
-      'weight',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<double?> weight = GeneratedColumn<double?>(
+      'weight', aliasedName, false,
+      typeName: 'REAL', requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [id, recipeId, name, weight];
   @override
-  $MoorIngredientTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'moor_ingredient';
   @override
-  String get $tableName => _alias ?? 'moor_ingredient';
-  @override
-  final String actualTableName = 'moor_ingredient';
+  String get actualTableName => 'moor_ingredient';
   @override
   VerificationContext validateIntegrity(Insertable<MoorIngredientData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
     if (data.containsKey('recipe_id')) {
       context.handle(_recipeIdMeta,
-          recipeId.isAcceptableOrUnknown(data['recipe_id'], _recipeIdMeta));
+          recipeId.isAcceptableOrUnknown(data['recipe_id']!, _recipeIdMeta));
     } else if (isInserting) {
       context.missing(_recipeIdMeta);
     }
     if (data.containsKey('name')) {
       context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name'], _nameMeta));
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
     if (data.containsKey('weight')) {
       context.handle(_weightMeta,
-          weight.isAcceptableOrUnknown(data['weight'], _weightMeta));
+          weight.isAcceptableOrUnknown(data['weight']!, _weightMeta));
     } else if (isInserting) {
       context.missing(_weightMeta);
     }
@@ -722,9 +604,9 @@ class $MoorIngredientTable extends MoorIngredient
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  MoorIngredientData map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return MoorIngredientData.fromData(data, _db, prefix: effectivePrefix);
+  MoorIngredientData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return MoorIngredientData.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
@@ -735,16 +617,11 @@ class $MoorIngredientTable extends MoorIngredient
 
 abstract class _$RecipeDatabase extends GeneratedDatabase {
   _$RecipeDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
-  $MoorRecipeTable _moorRecipe;
-  $MoorRecipeTable get moorRecipe => _moorRecipe ??= $MoorRecipeTable(this);
-  $MoorIngredientTable _moorIngredient;
-  $MoorIngredientTable get moorIngredient =>
-      _moorIngredient ??= $MoorIngredientTable(this);
-  RecipeDao _recipeDao;
-  RecipeDao get recipeDao => _recipeDao ??= RecipeDao(this as RecipeDatabase);
-  IngredientDao _ingredientDao;
-  IngredientDao get ingredientDao =>
-      _ingredientDao ??= IngredientDao(this as RecipeDatabase);
+  late final $MoorRecipeTable moorRecipe = $MoorRecipeTable(this);
+  late final $MoorIngredientTable moorIngredient = $MoorIngredientTable(this);
+  late final RecipeDao recipeDao = RecipeDao(this as RecipeDatabase);
+  late final IngredientDao ingredientDao =
+      IngredientDao(this as RecipeDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override

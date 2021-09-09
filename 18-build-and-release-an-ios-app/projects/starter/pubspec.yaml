@@ -6,33 +6,36 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
-  cached_network_image: ^2.5.0
-  flutter_slidable: ^0.5.7
-  flutter_svg: ^0.19.3
-  shared_preferences: ^2.0.5
-  json_annotation: ^3.1.1
-  chopper: ^3.0.6
-  logging: ^0.11.4
-  provider: ^4.3.3
-  equatable: ^1.2.6
-  sqlbrite: ^1.2.0
-  moor_flutter: ^3.1.0
+  cupertino_icons: ^1.0.3
+  cached_network_image: ^3.1.0
+  flutter_slidable: ^0.6.0
+  flutter_svg: ^0.22.0
+  shared_preferences: ^2.0.7
+  json_annotation: ^4.1.0
+  chopper: ^4.0.1
+  logging: ^1.0.1
+  provider: ^6.0.0
+  equatable: ^2.0.3
+  sqflite: ^2.0.0+4
+  path_provider: ^2.0.3
+  synchronized: ^3.0.0
+  sqlbrite: ^2.1.0
+  moor_flutter: ^4.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  build_runner: ^1.10.0
-  json_serializable: ^3.5.1
-  chopper_generator: ^3.0.6
-  moor_generator: 3.4.1
+  build_runner: ^2.1.1
+  json_serializable: ^4.1.4
+  chopper_generator: ^4.0.1
+  moor_generator: ^4.4.1
 
 flutter:
 

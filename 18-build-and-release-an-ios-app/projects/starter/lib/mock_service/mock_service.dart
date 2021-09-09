@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:http/http.dart' as http;
 import 'package:chopper/chopper.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import '../network/model_response.dart';
@@ -8,8 +9,8 @@ import '../network/recipe_model.dart';
 import '../network/service_interface.dart';
 
 class MockService implements ServiceInterface {
-  APIRecipeQuery _currentRecipes1;
-  APIRecipeQuery _currentRecipes2;
+  late APIRecipeQuery _currentRecipes1;
+  late APIRecipeQuery _currentRecipes2;
   Random nextRecipe = Random();
 
   void create() {
@@ -28,14 +29,14 @@ class MockService implements ServiceInterface {
       String query, int from, int to) {
     switch (nextRecipe.nextInt(2)) {
       case 0:
-        return Future.value(
-            Response(null, Success<APIRecipeQuery>(_currentRecipes1)));
+        return Future.value(Response(http.Response('Dummy', 200, request: null),
+            Success<APIRecipeQuery>(_currentRecipes1)));
       case 1:
-        return Future.value(
-            Response(null, Success<APIRecipeQuery>(_currentRecipes2)));
+        return Future.value(Response(http.Response('Dummy', 200, request: null),
+            Success<APIRecipeQuery>(_currentRecipes2)));
       default:
-        return Future.value(
-            Response(null, Success<APIRecipeQuery>(_currentRecipes1)));
+        return Future.value(Response(http.Response('Dummy', 200, request: null),
+            Success<APIRecipeQuery>(_currentRecipes1)));
     }
   }
 }
