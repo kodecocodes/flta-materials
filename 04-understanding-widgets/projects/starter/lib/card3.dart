@@ -10,7 +10,9 @@ class Card3 extends StatelessWidget {
         constraints: const BoxConstraints.expand(width: 350, height: 450),
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/mag2.png'), fit: BoxFit.cover),
+            image: AssetImage('assets/mag2.png'), 
+            fit: BoxFit.cover,
+          ),
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
         ),
         child: Stack(
@@ -26,7 +28,11 @@ class Card3 extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.book, color: Colors.white, size: 40),
+                  const Icon(
+                    Icons.book, 
+                    color: Colors.white, 
+                    size: 40,
+                  ),
                   const SizedBox(height: 8),
                   Text('Recipe Trends',
                       style: FooderlichTheme.darkTextTheme.headline2),
