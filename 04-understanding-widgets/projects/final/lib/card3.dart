@@ -7,10 +7,13 @@ class Card3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        constraints: const BoxConstraints.expand(width: 350, height: 450),
+        constraints: const BoxConstraints.expand(
+          width: 350,
+          height: 450,
+        ),
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/mag2.png'), 
+            image: AssetImage('assets/mag2.png'),
             fit: BoxFit.cover,
           ),
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -29,8 +32,8 @@ class Card3 extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Icon(
-                    Icons.book, 
-                    color: Colors.white, 
+                    Icons.book,
+                    color: Colors.white,
                     size: 40,
                   ),
                   const SizedBox(height: 8),

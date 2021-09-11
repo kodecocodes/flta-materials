@@ -31,7 +31,7 @@ class _AuthorCardState extends State<AuthorCard> {
         children: [
           Row(children: [
             CircleImage(
-              imageProvider: widget.imageProvider, 
+              imageProvider: widget.imageProvider,
               imageRadius: 28,
             ),
             const SizedBox(width: 8),
