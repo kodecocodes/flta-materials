@@ -24,26 +24,28 @@ class AuthorCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(children: [
-            CircleImage(
-              imageProvider: imageProvider, 
-              imageRadius: 28,
-            ),
-            const SizedBox(width: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  authorName,
-                  style: FooderlichTheme.lightTextTheme.headline2,
-                ),
-                Text(
-                  title,
-                  style: FooderlichTheme.lightTextTheme.headline3,
-                )
-              ],
-            ),
-          ]),
+          Row(
+            children: [
+              CircleImage(
+                imageProvider: imageProvider,
+                imageRadius: 28,
+              ),
+              const SizedBox(width: 8),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    authorName,
+                    style: FooderlichTheme.lightTextTheme.headline2,
+                  ),
+                  Text(
+                    title,
+                    style: FooderlichTheme.lightTextTheme.headline3,
+                  )
+                ],
+              ),
+            ],
+          ),
           IconButton(
             icon: const Icon(Icons.favorite_border),
             iconSize: 30,
