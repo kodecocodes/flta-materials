@@ -63,12 +63,15 @@ class FooderlichTheme {
       brightness: Brightness.light,
       appBarTheme: const AppBarTheme(
         foregroundColor: Colors.black,
-        backgroundColor: Colors.white),
+        backgroundColor: Colors.white,
+      ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         foregroundColor: Colors.white,
-        backgroundColor: Colors.black),
+        backgroundColor: Colors.black,
+      ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        selectedItemColor: Colors.green),
+        selectedItemColor: Colors.green,
+      ),
       textTheme: lightTextTheme,
     );
   }
@@ -78,12 +81,15 @@ class FooderlichTheme {
       brightness: Brightness.dark,
       appBarTheme: AppBarTheme(
         foregroundColor: Colors.white,
-        backgroundColor: Colors.grey[900]),
+        backgroundColor: Colors.grey[900],
+      ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         foregroundColor: Colors.white,
-        backgroundColor: Colors.green),
+        backgroundColor: Colors.green,
+      ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        selectedItemColor: Colors.green),
+        selectedItemColor: Colors.green,
+      ),
       textTheme: darkTextTheme,
     );
   }
