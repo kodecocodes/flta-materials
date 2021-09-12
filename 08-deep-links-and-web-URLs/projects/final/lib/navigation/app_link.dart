@@ -5,20 +5,17 @@ class AppLink {
   static const String kLoginPath = '/login';
   static const String kProfilePath = '/profile';
   static const String kItemPath = '/item';
-	// 2
+  // 2
   static const String kTabParam = 'tab';
   static const String kIdParam = 'id';
-	// 3
+  // 3
   String? location;
   // 4
   int? currentTab;
   // 5
   String? itemId;
   // 6
-  AppLink({
-    this.location, 
-    this.currentTab, 
-    this.itemId});
+  AppLink({this.location, this.currentTab, this.itemId});
 
   static AppLink fromLocation(String? location) {
     // 1
@@ -27,14 +24,12 @@ class AppLink {
     final uri = Uri.parse(location);
     final params = uri.queryParameters;
     // 3
-    void trySet(String key, void Function(String) setter) {
-      if (params.containsKey(key)) setter.call(params[key] as String);
-    }
+    final currentTab = int.tryParse(params[AppLink.kTabParam] ?? '');
     // 4
-    final link = AppLink()..location = uri.path;
+    final itemId = params[AppLink.kIdParam];
     // 5
-    trySet(AppLink.kTabParam, (s) => link.currentTab = int.tryParse(s));
-    trySet(AppLink.kIdParam, (s) => link.itemId = s);
+    final link =
+        AppLink(location: uri.path, currentTab: currentTab, itemId: itemId);
     // 6
     return link;
   }
