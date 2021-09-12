@@ -29,8 +29,11 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title:
-              Text('Fooderlich', style: Theme.of(context).textTheme.headline6)),
+        title: Text(
+          'Fooderlich',
+          style: Theme.of(context).textTheme.headline6,
+        ),
+      ),
       body: pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
@@ -38,11 +41,17 @@ class _HomeState extends State<Home> {
         onTap: _onItemTapped,
         items: <BottomNavigationBarItem>[
           const BottomNavigationBarItem(
-              icon: Icon(Icons.explore), label: 'Explore'),
+            icon: Icon(Icons.explore),
+            label: 'Explore',
+          ),
           const BottomNavigationBarItem(
-              icon: Icon(Icons.book), label: 'Recipes'),
+            icon: Icon(Icons.book),
+            label: 'Recipes',
+          ),
           const BottomNavigationBarItem(
-              icon: Icon(Icons.list), label: 'To Buy'),
+            icon: Icon(Icons.list),
+            label: 'To Buy',
+          ),
         ],
       ),
     );
