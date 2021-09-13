@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'app_link.dart';
 
 // 1
@@ -11,7 +12,7 @@ class AppRouteParser extends RouteInformationParser<AppLink> {
     final link = AppLink.fromLocation(routeInformation.location);
     return link;
   }
-	
+
   // 4
   @override
   RouteInformation restoreRouteInformation(AppLink appLink) {

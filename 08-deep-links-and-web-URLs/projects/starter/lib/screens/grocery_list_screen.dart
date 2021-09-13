@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../components/grocery_tile.dart';
 import '../models/models.dart';
 
@@ -45,7 +46,7 @@ class GroceryListScreen extends StatelessWidget {
                 item: item,
                 onComplete: (change) {
                   if (change != null) {
-                      manager.completeItem(index, change);
+                    manager.completeItem(index, change);
                   }
                 },
               ),

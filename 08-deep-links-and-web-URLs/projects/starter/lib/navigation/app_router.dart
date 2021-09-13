@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../screens/screens.dart';
+
 import '../models/models.dart';
+import '../screens/screens.dart';
 
 class AppRouter extends RouterDelegate //TODO: Add <AppLink>
     with
@@ -46,13 +47,11 @@ class AppRouter extends RouterDelegate //TODO: Add <AppLink>
         ] else ...[
           Home.page(appStateManager.getSelectedTab),
           if (groceryManager.isCreatingNewItem)
-            GroceryItemScreen.page(
-                onCreate: (item) {
-                  groceryManager.addItem(item);
-                },
-                onUpdate: (item, index) {
-                  // No update
-                }),
+            GroceryItemScreen.page(onCreate: (item) {
+              groceryManager.addItem(item);
+            }, onUpdate: (item, index) {
+              // No update
+            }),
           if (groceryManager.selectedIndex != -1)
             GroceryItemScreen.page(
                 item: groceryManager.selectedGroceryItem,

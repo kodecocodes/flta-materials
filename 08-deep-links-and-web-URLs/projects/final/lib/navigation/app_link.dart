@@ -15,7 +15,11 @@ class AppLink {
   // 5
   String? itemId;
   // 6
-  AppLink({this.location, this.currentTab, this.itemId});
+  AppLink({
+    this.location,
+    this.currentTab,
+    this.itemId,
+  });
 
   static AppLink fromLocation(String? location) {
     // 1
@@ -28,15 +32,21 @@ class AppLink {
     // 4
     final itemId = params[AppLink.kIdParam];
     // 5
-    final link =
-        AppLink(location: uri.path, currentTab: currentTab, itemId: itemId);
+    final link = AppLink(
+      location: uri.path,
+      currentTab: currentTab,
+      itemId: itemId,
+    );
     // 6
     return link;
   }
 
   String toLocation() {
     // 1
-    String addKeyValPair({required String key, String? value}) =>
+    String addKeyValPair({
+      required String key,
+      String? value,
+    }) =>
         value == null ? '' : '${key}=$value&';
     // 2
     switch (location) {
@@ -52,12 +62,18 @@ class AppLink {
       // 6
       case kItemPath:
         var loc = '$kItemPath?';
-        loc += addKeyValPair(key: kIdParam, value: itemId);
+        loc += addKeyValPair(
+          key: kIdParam,
+          value: itemId,
+        );
         return Uri.encodeFull(loc);
       // 7
       default:
         var loc = '$kHomePath?';
-        loc += addKeyValPair(key: kTabParam, value: currentTab.toString());
+        loc += addKeyValPair(
+          key: kTabParam,
+          value: currentTab.toString(),
+        );
         return Uri.encodeFull(loc);
     }
   }

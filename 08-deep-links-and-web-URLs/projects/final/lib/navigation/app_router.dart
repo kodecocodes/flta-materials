@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../screens/screens.dart';
+
 import '../models/models.dart';
+import '../screens/screens.dart';
 import 'app_link.dart';
 
 class AppRouter extends RouterDelegate<AppLink>
@@ -12,11 +13,11 @@ class AppRouter extends RouterDelegate<AppLink>
   final GroceryManager groceryManager;
   final ProfileManager profileManager;
 
-  AppRouter(
-      {required this.appStateManager,
-      required this.groceryManager,
-      required this.profileManager})
-      : navigatorKey = GlobalKey<NavigatorState>() {
+  AppRouter({
+    required this.appStateManager,
+    required this.groceryManager,
+    required this.profileManager,
+  }) : navigatorKey = GlobalKey<NavigatorState>() {
     appStateManager.addListener(notifyListeners);
     groceryManager.addListener(notifyListeners);
     profileManager.addListener(notifyListeners);
@@ -45,13 +46,11 @@ class AppRouter extends RouterDelegate<AppLink>
         ] else ...[
           Home.page(appStateManager.getSelectedTab),
           if (groceryManager.isCreatingNewItem)
-            GroceryItemScreen.page(
-                onCreate: (item) {
-                  groceryManager.addItem(item);
-                },
-                onUpdate: (item, index) {
-                  // No update
-                }),
+            GroceryItemScreen.page(onCreate: (item) {
+              groceryManager.addItem(item);
+            }, onUpdate: (item, index) {
+              // No update
+            }),
           if (groceryManager.selectedIndex != -1)
             GroceryItemScreen.page(
                 item: groceryManager.selectedGroceryItem,
@@ -107,7 +106,10 @@ class AppRouter extends RouterDelegate<AppLink>
       return AppLink(location: AppLink.kItemPath);
     } else if (groceryManager.selectedGroceryItem != null) {
       final id = groceryManager.selectedGroceryItem?.id;
-      return AppLink(location: AppLink.kItemPath, itemId: id);
+      return AppLink(
+        location: AppLink.kItemPath,
+        itemId: id,
+      );
     } else {
       return AppLink(
           location: AppLink.kHomePath,
