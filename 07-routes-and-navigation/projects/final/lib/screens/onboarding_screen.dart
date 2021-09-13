@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
 import '../models/models.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -52,15 +53,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget buildActionButtons() {
-    return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-      MaterialButton(
-        child: const Text('Skip'),
-        onPressed: () {
-          Provider.of<AppStateManager>(context, listen: false)
-              .completeOnboarding();
-        },
-      )
-    ]);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        MaterialButton(
+          child: const Text('Skip'),
+          onPressed: () {
+            Provider.of<AppStateManager>(context, listen: false)
+                .completeOnboarding();
+          },
+        ),
+      ],
+    );
   }
 
   Widget buildPages() {

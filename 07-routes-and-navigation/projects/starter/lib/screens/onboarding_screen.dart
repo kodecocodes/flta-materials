@@ -62,12 +62,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       controller: controller,
       children: [
         onboardPageView(
-            const AssetImage('assets/fooderlich_assets/recommend.png'),
-            '''Check out weekly recommended recipes and what your friends are cooking!'''),
-        onboardPageView(const AssetImage('assets/fooderlich_assets/sheet.png'),
-            'Cook with step by step instructions!'),
-        onboardPageView(const AssetImage('assets/fooderlich_assets/list.png'),
-            'Keep track of what you need to buy'),
+          const AssetImage('assets/fooderlich_assets/recommend.png'),
+          '''Check out weekly recommended recipes and what your friends are cooking!''',
+        ),
+        onboardPageView(
+          const AssetImage('assets/fooderlich_assets/sheet.png'),
+          'Cook with step by step instructions!',
+        ),
+        onboardPageView(
+          const AssetImage('assets/fooderlich_assets/list.png'),
+          'Keep track of what you need to buy',
+        ),
       ],
     );
   }
@@ -76,23 +81,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Padding(
       padding: const EdgeInsets.all(40),
       child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Image(
-                fit: BoxFit.fitWidth,
-                image: imageProvider,
-              ),
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Image(
+              fit: BoxFit.fitWidth,
+              image: imageProvider,
             ),
-            const SizedBox(height: 16),
-            Text(
-              text,
-              style: const TextStyle(fontSize: 20),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 16),
-          ]),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            text,
+            style: const TextStyle(fontSize: 20),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
     );
   }
 

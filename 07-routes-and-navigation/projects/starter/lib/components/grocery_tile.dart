@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+
 import '../models/grocery_item.dart';
 
 class GroceryTile extends StatelessWidget {
@@ -69,11 +70,16 @@ class GroceryTile extends StatelessWidget {
 
   Widget buildImportance() {
     if (item.importance == Importance.low) {
-      return Text('Low', style: GoogleFonts.lato(decoration: textDecoration));
+      return Text(
+        'Low',
+        style: GoogleFonts.lato(decoration: textDecoration),
+      );
     } else if (item.importance == Importance.medium) {
-      return Text('Medium',
-          style: GoogleFonts.lato(
-              fontWeight: FontWeight.w800, decoration: textDecoration));
+      return Text(
+        'Medium',
+        style: GoogleFonts.lato(
+            fontWeight: FontWeight.w800, decoration: textDecoration),
+      );
     } else if (item.importance == Importance.high) {
       return Text(
         'High',

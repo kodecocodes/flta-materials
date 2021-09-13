@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/models.dart';
 
 import '../fooderlich_theme.dart';
+import '../models/models.dart';
 import 'author_card.dart';
 
 class Card2 extends StatelessWidget {

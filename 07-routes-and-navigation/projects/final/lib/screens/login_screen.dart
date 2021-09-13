@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../models/models.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -74,7 +75,10 @@ class LoginScreen extends StatelessWidget {
       cursorColor: rwColor,
       decoration: InputDecoration(
         border: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.green, width: 1.0),
+          borderSide: BorderSide(
+            color: Colors.green,
+            width: 1.0,
+          ),
         ),
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.green),

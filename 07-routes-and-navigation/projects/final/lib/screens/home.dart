@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'explore_screen.dart';
-import 'recipes_screen.dart';
-import 'grocery_screen.dart';
 import 'package:provider/provider.dart';
+
 import '../models/models.dart';
+import 'explore_screen.dart';
+import 'grocery_screen.dart';
+import 'recipes_screen.dart';
 
 class Home extends StatefulWidget {
   static MaterialPage page(int currentTab) {
@@ -90,7 +91,9 @@ class _HomeState extends State<Home> {
       child: GestureDetector(
         child: const CircleAvatar(
           backgroundColor: Colors.transparent,
-          backgroundImage: AssetImage('assets/profile_pics/person_stef.jpeg'),
+          backgroundImage: AssetImage(
+            'assets/profile_pics/person_stef.jpeg',
+          ),
         ),
         onTap: () {
           Provider.of<ProfileManager>(context, listen: false)
