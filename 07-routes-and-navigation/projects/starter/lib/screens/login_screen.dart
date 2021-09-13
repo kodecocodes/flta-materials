@@ -5,7 +5,10 @@ class LoginScreen extends StatelessWidget {
 
   final String? username;
 
-  const LoginScreen({Key? key, this.username}) : super(key: key);
+  const LoginScreen({
+    Key? key,
+    this.username,
+  }) : super(key: key);
 
   final Color rwColor = const Color.fromRGBO(64, 143, 77, 1);
   final TextStyle focusedStyle = const TextStyle(color: Colors.green);

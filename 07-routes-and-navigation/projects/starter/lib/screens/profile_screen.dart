@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../components/circle_image.dart';
 import '../models/models.dart';
 
@@ -8,8 +9,9 @@ class ProfileScreen extends StatefulWidget {
 
   final User user;
   const ProfileScreen({
-    Key? key, 
-    required this.user}) : super(key: key);
+    Key? key,
+    required this.user,
+  }) : super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();

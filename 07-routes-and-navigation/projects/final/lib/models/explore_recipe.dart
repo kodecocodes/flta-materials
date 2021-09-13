@@ -27,25 +27,26 @@ class ExploreRecipe {
   List<Ingredients> ingredients;
   List<Instruction> instructions;
 
-  ExploreRecipe(
-      {required this.id,
-      required this.cardType,
-      required this.title,
-      this.subtitle = '',
-      this.backgroundImage = '',
-      this.backgroundImageSource = '',
-      this.message = '',
-      this.authorName = '',
-      this.role = '',
-      this.profileImage = '',
-      this.durationInMinutes = 0,
-      this.dietType = '',
-      this.calories = 0,
-      this.tags = const [],
-      this.description = '',
-      this.source = '',
-      this.ingredients = const [],
-      this.instructions = const []});
+  ExploreRecipe({
+    required this.id,
+    required this.cardType,
+    required this.title,
+    this.subtitle = '',
+    this.backgroundImage = '',
+    this.backgroundImageSource = '',
+    this.message = '',
+    this.authorName = '',
+    this.role = '',
+    this.profileImage = '',
+    this.durationInMinutes = 0,
+    this.dietType = '',
+    this.calories = 0,
+    this.tags = const [],
+    this.description = '',
+    this.source = '',
+    this.ingredients = const [],
+    this.instructions = const [],
+  });
 
   factory ExploreRecipe.fromJson(Map<String, dynamic> json) {
     final ingredients = <Ingredients>[];
@@ -56,7 +57,6 @@ class ExploreRecipe {
         ingredients.add(Ingredients.fromJson(v));
       });
     }
-
 
     if (json['instructions'] != null) {
       json['instructions'].forEach((v) {

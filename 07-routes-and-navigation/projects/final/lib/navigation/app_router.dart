@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../screens/screens.dart';
+
 import '../models/models.dart';
+import '../screens/screens.dart';
 
 // 1
 class AppRouter extends RouterDelegate
@@ -60,16 +61,15 @@ class AppRouter extends RouterDelegate
         if (groceryManager.selectedIndex != -1)
           // 2
           GroceryItemScreen.page(
-            item: groceryManager.selectedGroceryItem,
-            index: groceryManager.selectedIndex,
-            onUpdate: (item, index) {
-              // 3
-              groceryManager.updateItem(item, index);
-            },
-            onCreate: (_) {
-              // No create
-            }
-          ),
+              item: groceryManager.selectedGroceryItem,
+              index: groceryManager.selectedIndex,
+              onUpdate: (item, index) {
+                // 3
+                groceryManager.updateItem(item, index);
+              },
+              onCreate: (_) {
+                // No create
+              }),
         if (profileManager.didSelectUser)
           ProfileScreen.page(profileManager.getUser),
         if (profileManager.didTapOnRaywenderlich) WebViewScreen.page()
