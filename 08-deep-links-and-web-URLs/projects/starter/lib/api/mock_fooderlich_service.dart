@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:flutter/services.dart';
+
 import '../models/models.dart';
 
 // Mock recipe service that grabs sample json data to mock recipe request/response
@@ -26,9 +28,11 @@ class MockFooderlichService {
     // Go through each recipe and convert json to ExploreRecipe object.
     if (json['recipes'] != null) {
       final recipes = <ExploreRecipe>[];
-      json['recipes'].forEach((v) {
-        recipes.add(ExploreRecipe.fromJson(v));
-      });
+      json['recipes'].forEach(
+        (v) {
+          recipes.add(ExploreRecipe.fromJson(v));
+        },
+      );
       return recipes;
     } else {
       return [];

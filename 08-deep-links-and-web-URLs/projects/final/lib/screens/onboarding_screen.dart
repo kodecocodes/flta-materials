@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
 import '../models/models.dart';
 
 class OnboardingScreen extends StatefulWidget {
   static MaterialPage page() {
-  return MaterialPage(
-      name: FooderlichPages.onboardingPath,
-      key: ValueKey(FooderlichPages.onboardingPath),
-      child: const OnboardingScreen());
-}
-  
+    return MaterialPage(
+        name: FooderlichPages.onboardingPath,
+        key: ValueKey(FooderlichPages.onboardingPath),
+        child: const OnboardingScreen());
+  }
+
   const OnboardingScreen({Key? key}) : super(key: key);
 
   @override
@@ -29,7 +30,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           elevation: 0.0,
           title: const Text('Getting Started'),
           leading: GestureDetector(
-            child: const Icon(Icons.chevron_left, size: 35),
+            child: const Icon(
+              Icons.chevron_left,
+              size: 35,
+            ),
             onTap: () {
               Navigator.pop(context, true);
             },
@@ -47,15 +51,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget buildActionButtons() {
-    return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-      MaterialButton(
-        child: const Text('Skip'),
-        onPressed: () {
-          Provider.of<AppStateManager>(context, listen: false)
-            .onboarded();
-        },
-      )
-    ]);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        MaterialButton(
+          child: const Text('Skip'),
+          onPressed: () {
+            Provider.of<AppStateManager>(context, listen: false).onboarded();
+          },
+        )
+      ],
+    );
   }
 
   Widget buildPages() {
@@ -65,10 +71,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         onboardPageView(
             const AssetImage('assets/fooderlich_assets/recommend.png'),
             '''Checkout weekly recommended recipes and what your friends are cooking!'''),
-        onboardPageView(const AssetImage('assets/fooderlich_assets/sheet.png'),
-            'Cook with step by step instructions!'),
-        onboardPageView(const AssetImage('assets/fooderlich_assets/list.png'),
-            'Keep track of what you need to buy'),
+        onboardPageView(
+          const AssetImage('assets/fooderlich_assets/sheet.png'),
+          'Cook with step by step instructions!',
+        ),
+        onboardPageView(
+          const AssetImage('assets/fooderlich_assets/list.png'),
+          'Keep track of what you need to buy',
+        ),
       ],
     );
   }
@@ -77,19 +87,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Padding(
       padding: const EdgeInsets.all(40),
       child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(child: Image(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Image(
               fit: BoxFit.fitWidth,
               image: imageProvider,
-            )),
-            const SizedBox(height: 16),
-            Text(text,
-                style: const TextStyle(fontSize: 20),
-                textAlign: TextAlign.center),
-            const SizedBox(height: 16),
-          ]),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(text,
+              style: const TextStyle(fontSize: 20),
+              textAlign: TextAlign.center),
+          const SizedBox(height: 16),
+        ],
+      ),
     );
   }
 

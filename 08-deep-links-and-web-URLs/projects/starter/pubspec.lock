@@ -279,7 +279,7 @@ packages:
       name: smooth_page_indicator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0-nullsafety.0"
+    version: "1.0.0+2"
   source_span:
     dependency: transitive
     description:
@@ -335,7 +335,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.9"
+    version: "6.0.10"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -391,7 +391,7 @@ packages:
       name: webview_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.12"
+    version: "2.0.13"
   win32:
     dependency: transitive
     description:

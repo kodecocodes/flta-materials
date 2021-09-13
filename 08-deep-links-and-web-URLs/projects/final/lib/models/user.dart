@@ -12,5 +12,6 @@ class User {
     required this.role,
     required this.profileImageUrl,
     required this.points,
-    required this.darkMode});
+    required this.darkMode,
+  });
 }

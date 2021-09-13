@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import '../models/models.dart';
+
 import '../components/components.dart';
+import '../models/models.dart';
 
 class FriendPostTile extends StatelessWidget {
   final Post post;
 
-  const FriendPostTile({Key? key, required this.post}) : super(key: key);
+  const FriendPostTile({
+    Key? key,
+    required this.post,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

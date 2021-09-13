@@ -1,9 +1,10 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import '../components/circle_image.dart';
 import '../models/models.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ProfileScreen extends StatefulWidget {
   static MaterialPage page(User user) {
@@ -14,10 +15,7 @@ class ProfileScreen extends StatefulWidget {
   }
 
   final User user;
-  const ProfileScreen({
-    Key? key, 
-    required this.user
-  }) : super(key: key);
+  const ProfileScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -27,21 +25,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            leading: IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () {
-                  Provider.of<ProfileManager>(context, listen: false)
-                      .tapOnProfile(false);
-                })),
-        body: Center(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-              const SizedBox(height: 16.0),
-              buildProfile(),
-              Expanded(child: buildMenu())
-            ])));
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            Provider.of<ProfileManager>(context, listen: false)
+                .tapOnProfile(false);
+          },
+        ),
+      ),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 16.0),
+            buildProfile(),
+            Expanded(child: buildMenu())
+          ],
+        ),
+      ),
+    );
   }
 
   Widget buildMenu() {
@@ -99,11 +102,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           imageRadius: 60.0,
         ),
         const SizedBox(height: 16.0),
-        Text(widget.user.firstName, style: const TextStyle(fontSize: 21)),
+        Text(
+          widget.user.firstName,
+          style: const TextStyle(fontSize: 21),
+        ),
         Text(widget.user.role),
         Text(
           '${widget.user.points} points',
-          style: const TextStyle(fontSize: 30, color: Colors.green),
+          style: const TextStyle(
+            fontSize: 30,
+            color: Colors.green,
+          ),
         ),
       ],
     );
