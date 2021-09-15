@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+
 import '../data/user_dao.dart';
 
 class Login extends StatefulWidget {
@@ -40,44 +41,48 @@ class _LoginState extends State<Login> {
                 children: [
                   const SizedBox(height: 80),
                   Expanded(
-                      child: TextFormField(
-                    decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        hintText: 'Email Address'),
-                    autofocus: false,
-                    keyboardType: TextInputType.emailAddress,
-                    textCapitalization: TextCapitalization.none,
-                    autocorrect: false,
-                    controller: _emailController,
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Email Required';
-                      }
-                      return null;
-                    },
-                  )),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                          border: UnderlineInputBorder(),
+                          hintText: 'Email Address'),
+                      autofocus: false,
+                      keyboardType: TextInputType.emailAddress,
+                      textCapitalization: TextCapitalization.none,
+                      autocorrect: false,
+                      controller: _emailController,
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Email Required';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
                 ],
               ),
               Row(
                 children: [
                   const SizedBox(height: 20),
                   Expanded(
-                      child: TextFormField(
-                    decoration: const InputDecoration(
-                        border: UnderlineInputBorder(), hintText: 'Password'),
-                    autofocus: false,
-                    obscureText: true,
-                    keyboardType: TextInputType.visiblePassword,
-                    textCapitalization: TextCapitalization.none,
-                    autocorrect: false,
-                    controller: _passwordController,
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Password Required';
-                      }
-                      return null;
-                    },
-                  )),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        border: UnderlineInputBorder(),
+                        hintText: 'Password',
+                      ),
+                      autofocus: false,
+                      obscureText: true,
+                      keyboardType: TextInputType.visiblePassword,
+                      textCapitalization: TextCapitalization.none,
+                      autocorrect: false,
+                      controller: _passwordController,
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Password Required';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
                 ],
               ),
               const Spacer(),
@@ -88,7 +93,9 @@ class _LoginState extends State<Login> {
                     child: ElevatedButton(
                       onPressed: () {
                         userDao.login(
-                            _emailController.text, _passwordController.text);
+                          _emailController.text,
+                          _passwordController.text,
+                        );
                       },
                       child: const Text('Login'),
                     ),
@@ -102,7 +109,9 @@ class _LoginState extends State<Login> {
                     child: ElevatedButton(
                       onPressed: () {
                         userDao.signup(
-                            _emailController.text, _passwordController.text);
+                          _emailController.text,
+                          _passwordController.text,
+                        );
                       },
                       child: const Text('Sign Up'),
                     ),

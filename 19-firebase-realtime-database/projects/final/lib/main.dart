@@ -1,10 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'ui/login.dart';
-import 'data/user_dao.dart';
-import 'ui/message_list.dart';
-import '../data/message_dao.dart';
 import 'package:provider/provider.dart';
+
+import '../data/message_dao.dart';
+import 'data/user_dao.dart';
+import 'ui/login.dart';
+import 'ui/message_list.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +32,9 @@ class App extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'RayChat',
-        theme: ThemeData(primaryColor: const Color(0xFF3D814A)),
+        theme: ThemeData(
+          primaryColor: const Color(0xFF3D814A),
+        ),
         home: Consumer<UserDao>(
           builder: (context, userDao, child) {
             if (userDao.isLoggedIn()) {

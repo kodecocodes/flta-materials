@@ -2,10 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../data/message.dart';
 import '../data/message_dao.dart';
-import 'message_widget.dart';
 import '../data/user_dao.dart';
+import 'message_widget.dart';
 
 class MessageList extends StatefulWidget {
   const MessageList({Key? key}) : super(key: key);
@@ -30,9 +31,11 @@ class MessageListState extends State<MessageList> {
       appBar: AppBar(
         title: const Text('RayChat'),
         actions: [
-          IconButton(onPressed: () {
-            userDao.logout();
-          }, icon: const Icon(Icons.logout))
+          IconButton(
+              onPressed: () {
+                userDao.logout();
+              },
+              icon: const Icon(Icons.logout))
         ],
       ),
       body: Padding(
@@ -58,12 +61,13 @@ class MessageListState extends State<MessageList> {
                   ),
                 ),
                 IconButton(
-                    icon: Icon(_canSendMessage()
-                        ? CupertinoIcons.arrow_right_circle_fill
-                        : CupertinoIcons.arrow_right_circle),
-                    onPressed: () {
-                      _sendMessage(messageDao);
-                    })
+                  icon: Icon(_canSendMessage()
+                      ? CupertinoIcons.arrow_right_circle_fill
+                      : CupertinoIcons.arrow_right_circle),
+                  onPressed: () {
+                    _sendMessage(messageDao);
+                  },
+                )
               ],
             ),
           ],
@@ -75,7 +79,10 @@ class MessageListState extends State<MessageList> {
   void _sendMessage(MessageDao messageDao) {
     if (_canSendMessage()) {
       final message = Message(
-          text: _messageController.text, date: DateTime.now(), email: email);
+        text: _messageController.text,
+        date: DateTime.now(),
+        email: email,
+      );
       messageDao.saveMessage(message);
       _messageController.clear();
       setState(() {});
@@ -107,7 +114,11 @@ class MessageListState extends State<MessageList> {
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
     final message = Message.fromSnapshot(snapshot);
-    return MessageWidget(message.text, message.date, message.email);
+    return MessageWidget(
+      message.text,
+      message.date,
+      message.email,
+    );
   }
 
   bool _canSendMessage() => _messageController.text.length > 0;
