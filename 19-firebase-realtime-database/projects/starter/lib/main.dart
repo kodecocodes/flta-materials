@@ -18,6 +18,7 @@ class App extends StatelessWidget {
       title: 'RayChat',
       theme: ThemeData(primaryColor: const Color(0xFF3D814A)),
       home: const MessageList(),
+      // TODO: Add closing parenthesis
     );
   }
 }
