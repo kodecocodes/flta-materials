@@ -43,12 +43,11 @@ class MessageWidget extends StatelessWidget {
                     onPressed: null,
                     child: Wrap(
                       children: <Widget>[
-                        Container(
-                            child: Row(
+                        Row(
                           children: [
                             Text(message),
                           ],
-                        )),
+                        ),
                       ],
                     ))),
             Padding(
