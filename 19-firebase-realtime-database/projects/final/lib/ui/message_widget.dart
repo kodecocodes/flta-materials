@@ -55,12 +55,10 @@ class MessageWidget extends StatelessWidget {
               onPressed: null,
               child: Wrap(
                 children: <Widget>[
-                  Container(
-                    child: Row(
-                      children: [
-                        Text(message),
-                      ],
-                    ),
+                  Row(
+                    children: [
+                      Text(message),
+                    ],
                   ),
                 ],
               ),
