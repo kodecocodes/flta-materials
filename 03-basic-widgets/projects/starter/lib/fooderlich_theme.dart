@@ -62,14 +62,17 @@ class FooderlichTheme {
     return ThemeData(
       brightness: Brightness.light,
       checkboxTheme:
-          CheckboxThemeData(
-            fillColor: MaterialStateColor.resolveWith((states) {
+          CheckboxThemeData(fillColor: MaterialStateColor.resolveWith((states) {
         return Colors.black;
       })),
       appBarTheme: const AppBarTheme(
-          foregroundColor: Colors.black, backgroundColor: Colors.white),
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+      ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          foregroundColor: Colors.white, backgroundColor: Colors.black),
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.black,
+      ),
       bottomNavigationBarTheme:
           const BottomNavigationBarThemeData(selectedItemColor: Colors.green),
       textTheme: lightTextTheme,
@@ -82,7 +85,9 @@ class FooderlichTheme {
       appBarTheme: AppBarTheme(
           foregroundColor: Colors.white, backgroundColor: Colors.grey[900]),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          foregroundColor: Colors.white, backgroundColor: Colors.green),
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.green,
+      ),
       bottomNavigationBarTheme:
           const BottomNavigationBarThemeData(selectedItemColor: Colors.green),
       textTheme: darkTextTheme,
