@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'card1.dart';
 import 'card2.dart';
 import 'card3.dart';
@@ -33,9 +34,10 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Fooderlich',
-              // 2
-              style: Theme.of(context).textTheme.headline6)),
+        title: Text('Fooderlich',
+            // 2
+            style: Theme.of(context).textTheme.headline6),
+      ),
       body: pages[_selectedIndex],
       // 4
       bottomNavigationBar: BottomNavigationBar(

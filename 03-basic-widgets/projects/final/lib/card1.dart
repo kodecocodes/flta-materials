@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'fooderlich_theme.dart';
 
 class Card1 extends StatelessWidget {
@@ -53,7 +54,10 @@ class Card1 extends StatelessWidget {
         // 1
         padding: const EdgeInsets.all(16),
         // 2
-        constraints: const BoxConstraints.expand(width: 350, height: 450),
+        constraints: const BoxConstraints.expand(
+          width: 350,
+          height: 450,
+        ),
         // 3
         decoration: const BoxDecoration(
           // 4
