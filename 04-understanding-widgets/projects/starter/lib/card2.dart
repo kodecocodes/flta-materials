@@ -14,11 +14,12 @@ class Card2 extends StatelessWidget {
           height: 450,
         ),
         decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/mag5.png'),
-              fit: BoxFit.cover,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          image: DecorationImage(
+            image: AssetImage('assets/mag5.png'),
+            fit: BoxFit.cover,
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        ),
         child: Column(
           children: [
             const AuthorCard(

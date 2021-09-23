@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'fooderlich_theme.dart';
 
 class Card3 extends StatelessWidget {
@@ -37,8 +38,10 @@ class Card3 extends StatelessWidget {
                     size: 40,
                   ),
                   const SizedBox(height: 8),
-                  Text('Recipe Trends',
-                      style: FooderlichTheme.darkTextTheme.headline2),
+                  Text(
+                    'Recipe Trends',
+                    style: FooderlichTheme.darkTextTheme.headline2,
+                  ),
                   const SizedBox(height: 30),
                 ],
               ),
@@ -49,24 +52,30 @@ class Card3 extends StatelessWidget {
                 spacing: 12,
                 children: [
                   Chip(
-                    label: Text('Healthy',
-                        style: FooderlichTheme.darkTextTheme.bodyText1),
+                    label: Text(
+                      'Healthy',
+                      style: FooderlichTheme.darkTextTheme.bodyText1,
+                    ),
                     backgroundColor: Colors.black.withOpacity(0.7),
                     onDeleted: () {
                       print('delete');
                     },
                   ),
                   Chip(
-                    label: Text('Vegan',
-                        style: FooderlichTheme.darkTextTheme.bodyText1),
+                    label: Text(
+                      'Vegan',
+                      style: FooderlichTheme.darkTextTheme.bodyText1,
+                    ),
                     backgroundColor: Colors.black.withOpacity(0.7),
                     onDeleted: () {
                       print('delete');
                     },
                   ),
                   Chip(
-                    label: Text('Carrots',
-                        style: FooderlichTheme.darkTextTheme.bodyText1),
+                    label: Text(
+                      'Carrots',
+                      style: FooderlichTheme.darkTextTheme.bodyText1,
+                    ),
                     backgroundColor: Colors.black.withOpacity(0.7),
                   ),
                 ],
