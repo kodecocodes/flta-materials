@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'models/models.dart';
 import 'screens/explore_screen.dart';
-import 'screens/recipes_screen.dart';
 import 'screens/grocery_screen.dart';
+import 'screens/recipes_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _HomeState extends State<Home> {
   static List<Widget> pages = <Widget>[
     ExploreScreen(),
     RecipesScreen(),
-    const GroceryScreen()
+    const GroceryScreen(),
   ];
 
   @override
@@ -32,7 +33,10 @@ class _HomeState extends State<Home> {
             ),
           ),
           // 2
-          body: IndexedStack(index: tabManager.selectedTab, children: pages),
+          body: IndexedStack(
+            index: tabManager.selectedTab,
+            children: pages,
+          ),
           bottomNavigationBar: BottomNavigationBar(
             selectedItemColor:
                 Theme.of(context).textSelectionTheme.selectionColor,

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
-import '../models/models.dart';
+
 import '../components/grocery_tile.dart';
+import '../models/models.dart';
 
 class GroceryItemScreen extends StatefulWidget {
   // 1
@@ -80,18 +81,19 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
             onPressed: () {
               // 1
               final groceryItem = GroceryItem(
-                  id: widget.originalItem?.id ?? const Uuid().v1(),
-                  name: _nameController.text,
-                  importance: _importance,
-                  color: _currentColor,
-                  quantity: _currentSliderValue,
-                  date: DateTime(
-                    _dueDate.year,
-                    _dueDate.month,
-                    _dueDate.day,
-                    _timeOfDay.hour,
-                    _timeOfDay.minute,
-                  ));
+                id: widget.originalItem?.id ?? const Uuid().v1(),
+                name: _nameController.text,
+                importance: _importance,
+                color: _currentColor,
+                quantity: _currentSliderValue,
+                date: DateTime(
+                  _dueDate.year,
+                  _dueDate.month,
+                  _dueDate.day,
+                  _timeOfDay.hour,
+                  _timeOfDay.minute,
+                ),
+              );
 
               if (widget.isUpdating) {
                 // 2
@@ -332,7 +334,11 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
         // 2
         Row(
           children: [
-            Container(height: 50, width: 10, color: _currentColor),
+            Container(
+              height: 50,
+              width: 10,
+              color: _currentColor,
+            ),
             const SizedBox(width: 8),
             Text('Color', style: GoogleFonts.lato(fontSize: 28)),
           ],

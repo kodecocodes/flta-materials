@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'screens/explore_screen.dart';
 import 'screens/recipes_screen.dart';
 
@@ -16,7 +17,7 @@ class _HomeState extends State<Home> {
     ExploreScreen(),
     RecipesScreen(),
     // TODO 1: Replace with grocery screen
-    Container(color: Colors.blue)
+    Container(color: Colors.blue),
   ];
 
   void _onItemTapped(int index) {
