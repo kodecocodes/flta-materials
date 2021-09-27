@@ -51,8 +51,7 @@ class RecipeDetails extends StatelessWidget {
                   child: Text(
                     // TODO 2
                     'Chicken Vesuvio',
-                    style: TextStyle(
-                        fontSize: 22, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                 ),
                 const SizedBox(
