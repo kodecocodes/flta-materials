@@ -64,7 +64,9 @@ class Card3 extends StatelessWidget {
                 alignment: WrapAlignment.start,
                 // 13
                 spacing: 12,
-                // 14
+                //14
+                runSpacing: 12,
+                // 15
                 children: [
                   Chip(
                     label: Text('Healthy',
