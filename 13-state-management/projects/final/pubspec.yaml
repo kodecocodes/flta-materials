@@ -15,21 +15,21 @@ dependencies:
   cupertino_icons: ^1.0.3
   cached_network_image: ^3.1.0
   flutter_slidable: ^0.6.0
-  flutter_svg: ^0.22.0
-  shared_preferences: ^2.0.7
-  json_annotation: ^4.1.0
+  flutter_svg: ^0.23.0+1
+  shared_preferences: ^2.0.8
+  json_annotation: ^4.3.0
   chopper: ^4.0.1
-  logging: ^1.0.1
-  provider: ^6.0.0
+  logging: ^1.0.2
+  provider: ^6.0.1
   equatable: ^2.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  build_runner: ^2.1.1
-  json_serializable: ^4.1.4
-  chopper_generator: ^4.0.1
+  build_runner: ^2.1.4
+  json_serializable: ^6.0.1
+  chopper_generator: ^4.0.2
 
 flutter:
 
