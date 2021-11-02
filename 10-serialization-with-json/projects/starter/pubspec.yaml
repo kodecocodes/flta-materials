@@ -15,8 +15,8 @@ dependencies:
   cupertino_icons: ^1.0.3
   cached_network_image: ^3.1.0
   flutter_slidable: ^0.6.0
-  flutter_svg: ^0.22.0
-  shared_preferences: ^2.0.7
+  flutter_svg: ^0.23.0+1
+  shared_preferences: ^2.0.8
 
 dev_dependencies:
   flutter_test:
