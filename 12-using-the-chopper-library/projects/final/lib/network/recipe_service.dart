@@ -7,13 +7,16 @@ part 'recipe_service.chopper.dart';
 
 const String apiKey = '<Your Key Here>';
 const String apiId = '<Your Id here>';
-const String apiUrl = 'https://api.edamam.com';
+const String apiUrl = 'https://api.edamam.com/api';
 
 @ChopperApi()
 abstract class RecipeService extends ChopperService {
-  @Get(path: 'search')
+  @Get(path: 'recipes/v2')
   Future<Response<Result<APIRecipeQuery>>> queryRecipes(
-      @Query('q') String query, @Query('from') int from, @Query('to') int to);
+      @Query('q') String query,
+      @Query('from') int from,
+      @Query('to') int to,
+      @Query('type') String type);
 
   static RecipeService create() {
     final client = ChopperClient(

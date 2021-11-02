@@ -29,7 +29,6 @@ class _RecipeListState extends State<RecipeList> {
   int currentStartPosition = 0;
   int currentEndPosition = 20;
   int pageCount = 20;
-  bool hasMore = false;
   bool loading = false;
   bool inErrorState = false;
   List<String> previousSearches = <String>[];
@@ -46,8 +45,7 @@ class _RecipeListState extends State<RecipeList> {
             0.7 * _scrollController.position.maxScrollExtent;
 
         if (_scrollController.position.pixels > triggerFetchMoreSize) {
-          if (hasMore &&
-              currentEndPosition < currentCount &&
+          if (currentEndPosition < currentCount &&
               !loading &&
               !inErrorState) {
             setState(() {
@@ -179,7 +177,6 @@ class _RecipeListState extends State<RecipeList> {
       currentCount = 0;
       currentEndPosition = pageCount;
       currentStartPosition = 0;
-      hasMore = true;
       value = value.trim();
       if (!previousSearches.contains(value)) {
         previousSearches.add(value);
@@ -196,7 +193,8 @@ class _RecipeListState extends State<RecipeList> {
       future: RecipeService.create().queryRecipes(
           searchTextController.text.trim(),
           currentStartPosition,
-          currentEndPosition),
+          currentEndPosition,
+          'public'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
@@ -219,7 +217,6 @@ class _RecipeListState extends State<RecipeList> {
           final query = (result as Success).value;
           inErrorState = false;
           currentCount = query.count;
-          hasMore = query.more;
           currentSearchList.addAll(query.hits);
           if (query.to < currentEndPosition) {
             currentEndPosition = query.to;
