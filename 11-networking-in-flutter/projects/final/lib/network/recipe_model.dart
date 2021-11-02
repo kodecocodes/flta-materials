@@ -14,7 +14,6 @@ class APIRecipeQuery {
   List<APIHits> hits;
 
   APIRecipeQuery({
-    // required this.query,
     required this.from,
     required this.to,
     required this.count,
