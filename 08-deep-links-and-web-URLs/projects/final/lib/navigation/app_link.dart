@@ -1,10 +1,10 @@
 class AppLink {
   // 1
-  static const String kHomePath = '/home';
-  static const String kOnboardingPath = '/onboarding';
-  static const String kLoginPath = '/login';
-  static const String kProfilePath = '/profile';
-  static const String kItemPath = '/item';
+  static const String homePath = '/home';
+  static const String onboardingPath = '/onboarding';
+  static const String loginPath = '/login';
+  static const String profilePath = '/profile';
+  static const String itemPath = '/item';
   // 2
   static const String kTabParam = 'tab';
   static const String kIdParam = 'id';
@@ -51,17 +51,17 @@ class AppLink {
     // 2
     switch (location) {
       // 3
-      case kLoginPath:
-        return kLoginPath;
+      case loginPath:
+        return loginPath;
       // 4
-      case kOnboardingPath:
-        return kOnboardingPath;
+      case onboardingPath:
+        return onboardingPath;
       // 5
-      case kProfilePath:
-        return kProfilePath;
+      case profilePath:
+        return profilePath;
       // 6
-      case kItemPath:
-        var loc = '$kItemPath?';
+      case itemPath:
+        var loc = '$itemPath?';
         loc += addKeyValPair(
           key: kIdParam,
           value: itemId,
@@ -69,7 +69,7 @@ class AppLink {
         return Uri.encodeFull(loc);
       // 7
       default:
-        var loc = '$kHomePath?';
+        var loc = '$homePath?';
         loc += addKeyValPair(
           key: kTabParam,
           value: currentTab.toString(),

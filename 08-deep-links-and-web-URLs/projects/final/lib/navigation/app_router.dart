@@ -97,22 +97,22 @@ class AppRouter extends RouterDelegate<AppLink>
 
   AppLink getCurrentPath() {
     if (!appStateManager.isLoggedIn) {
-      return AppLink(location: AppLink.kLoginPath);
+      return AppLink(location: AppLink.loginPath);
     } else if (!appStateManager.isOnboardingComplete) {
-      return AppLink(location: AppLink.kOnboardingPath);
+      return AppLink(location: AppLink.onboardingPath);
     } else if (profileManager.didSelectUser) {
-      return AppLink(location: AppLink.kProfilePath);
+      return AppLink(location: AppLink.profilePath);
     } else if (groceryManager.isCreatingNewItem) {
-      return AppLink(location: AppLink.kItemPath);
+      return AppLink(location: AppLink.itemPath);
     } else if (groceryManager.selectedGroceryItem != null) {
       final id = groceryManager.selectedGroceryItem?.id;
       return AppLink(
-        location: AppLink.kItemPath,
+        location: AppLink.itemPath,
         itemId: id,
       );
     } else {
       return AppLink(
-          location: AppLink.kHomePath,
+          location: AppLink.homePath,
           currentTab: appStateManager.getSelectedTab);
     }
   }
@@ -123,11 +123,11 @@ class AppRouter extends RouterDelegate<AppLink>
     // 2
     switch (newLink.location) {
       // 3
-      case AppLink.kProfilePath:
+      case AppLink.profilePath:
         profileManager.tapOnProfile(true);
         break;
       // 4
-      case AppLink.kItemPath:
+      case AppLink.itemPath:
         final itemId = newLink.itemId;
         // 5
         if (itemId != null) {
@@ -140,7 +140,7 @@ class AppRouter extends RouterDelegate<AppLink>
         profileManager.tapOnProfile(false);
         break;
       // 8
-      case AppLink.kHomePath:
+      case AppLink.homePath:
         // 9
         appStateManager.goToTab(newLink.currentTab ?? 0);
         // 10
