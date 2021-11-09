@@ -62,7 +62,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
               // 10
               min: 1,
               max: 10,
-              divisions: 10,
+              divisions: 9,
               // 11
               label: '${_sliderVal * widget.recipe.servings} servings',
               // 12
