@@ -6,8 +6,8 @@ class AppLink {
   static const String profilePath = '/profile';
   static const String itemPath = '/item';
   // 2
-  static const String kTabParam = 'tab';
-  static const String kIdParam = 'id';
+  static const String tabParam = 'tab';
+  static const String idParam = 'id';
   // 3
   String? location;
   // 4
@@ -28,9 +28,9 @@ class AppLink {
     final uri = Uri.parse(location);
     final params = uri.queryParameters;
     // 3
-    final currentTab = int.tryParse(params[AppLink.kTabParam] ?? '');
+    final currentTab = int.tryParse(params[AppLink.tabParam] ?? '');
     // 4
-    final itemId = params[AppLink.kIdParam];
+    final itemId = params[AppLink.idParam];
     // 5
     final link = AppLink(
       location: uri.path,
@@ -63,7 +63,7 @@ class AppLink {
       case itemPath:
         var loc = '$itemPath?';
         loc += addKeyValPair(
-          key: kIdParam,
+          key: idParam,
           value: itemId,
         );
         return Uri.encodeFull(loc);
@@ -71,7 +71,7 @@ class AppLink {
       default:
         var loc = '$homePath?';
         loc += addKeyValPair(
-          key: kTabParam,
+          key: tabParam,
           value: currentTab.toString(),
         );
         return Uri.encodeFull(loc);
