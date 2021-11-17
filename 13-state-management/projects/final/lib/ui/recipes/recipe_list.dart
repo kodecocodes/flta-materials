@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:math';
 
 import 'package:chopper/chopper.dart';
@@ -213,9 +214,24 @@ class _RecipeListState extends State<RecipeList> {
           }
 
           loading = false;
-          final result = snapshot.data?.body;
           // Hit an error
-          if (result is Error) {
+          if (false == snapshot.data?.isSuccessful) {
+            var errorMessage = 'Problems getting data';
+            if (snapshot.data?.error != null &&
+                snapshot.data?.error is LinkedHashMap) {
+              final map = snapshot.data?.error as LinkedHashMap;
+              errorMessage = map['message'];
+            }
+            return Center(
+              child: Text(
+                errorMessage,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 18.0),
+              ),
+            );
+          }
+          final result = snapshot.data?.body;
+          if (result == null || result is Error) {
             inErrorState = true;
             return _buildRecipeList(context, currentSearchList);
           }
