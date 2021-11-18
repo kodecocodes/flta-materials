@@ -28,6 +28,9 @@ dependencies:
   sqlbrite: ^2.1.0
   moor_flutter: ^4.0.0
 
+dependency_overrides:
+  moor: '4.4.0'
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
