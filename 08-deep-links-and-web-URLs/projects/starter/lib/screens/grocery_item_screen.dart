@@ -360,6 +360,7 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
 
   @override
   void initState() {
+    super.initState();
     final originalItem = widget.originalItem;
     if (originalItem != null) {
       _name = originalItem.name;
@@ -377,8 +378,6 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
         _name = _nameController.text;
       });
     });
-
-    super.initState();
   }
 
   @override
