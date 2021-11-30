@@ -17,9 +17,9 @@ class EmptyGroceryScreen extends StatelessWidget {
                 child: Image.asset('assets/fooderlich_assets/empty_list.png'),
               ),
             ),
-            const Text(
+            Text(
               'No Groceries',
-              style: TextStyle(fontSize: 21.0),
+              style: Theme.of(context).textTheme.headline6,
             ),
             const SizedBox(height: 16.0),
             const Text(

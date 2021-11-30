@@ -79,6 +79,7 @@ class Card3 extends StatelessWidget {
               child: Wrap(
                 alignment: WrapAlignment.start,
                 spacing: 12,
+                runSpacing: 12,
                 children: createTagChips(),
               ),
             ),

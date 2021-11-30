@@ -17,9 +17,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   @override
   void initState() {
+    super.initState();
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
-    super.initState();
   }
 
   void _scrollListener() {
