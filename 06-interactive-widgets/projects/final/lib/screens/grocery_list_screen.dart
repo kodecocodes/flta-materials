@@ -41,6 +41,28 @@ class GroceryListScreen extends StatelessWidget {
                 size: 50.0,
               ),
             ),
+            // TODO 29: Add confimation after swipe item
+            confirmDismiss: (DismissDirection direction) async {
+              return showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Confirm'),
+                    content: const Text(
+                        'Are you sure you wish to delete this item?'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: const Text('CANCEL'),
+                      ),
+                      TextButton(
+                          onPressed: () => Navigator.of(context).pop(true),
+                          child: const Text('DELETE')),
+                    ],
+                  );
+                },
+              );
+            },
             // 9
             onDismissed: (direction) {
               // 10
