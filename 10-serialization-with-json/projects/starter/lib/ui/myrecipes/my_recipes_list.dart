@@ -37,8 +37,32 @@ class _MyRecipesListState extends State<MyRecipesList> {
           return SizedBox(
             height: 100,
             child: Slidable(
-              actionPane: const SlidableDrawerActionPane(),
-              actionExtentRatio: 0.25,
+                      startActionPane: ActionPane(
+                        motion: const DrawerMotion(),
+                        extentRatio: 0.25,
+                        children: [
+                          SlidableAction(
+                              label: 'Delete',
+                              backgroundColor: Colors.transparent,
+                              foregroundColor: Colors.black,
+                              icon: Icons.delete,
+                              onPressed: (_) {}
+                          )
+                        ],
+                      ),
+                      endActionPane: ActionPane(
+                        motion: const DrawerMotion(),
+                        extentRatio: 0.25,
+                        children: [
+                          SlidableAction(
+                              label: 'Delete',
+                              backgroundColor: Colors.transparent,
+                              foregroundColor: Colors.black,
+                              icon: Icons.delete,
+                              onPressed: (_) {}
+                          )
+                        ],
+                      ),
               child: Card(
                 elevation: 1.0,
                 shape: RoundedRectangleBorder(
@@ -63,24 +87,6 @@ class _MyRecipesListState extends State<MyRecipesList> {
                   ),
                 ),
               ),
-              actions: <Widget>[
-                IconSlideAction(
-                    caption: 'Delete',
-                    color: Colors.transparent,
-                    foregroundColor: Colors.black,
-                    iconWidget: const Icon(Icons.delete, color: Colors.red),
-                    // TODO 7
-                    onTap: () {})
-              ],
-              secondaryActions: <Widget>[
-                IconSlideAction(
-                    caption: 'Delete',
-                    color: Colors.transparent,
-                    foregroundColor: Colors.black,
-                    iconWidget: const Icon(Icons.delete, color: Colors.red),
-                    // TODO 8
-                    onTap: () {})
-              ],
             ),
           );
         });
