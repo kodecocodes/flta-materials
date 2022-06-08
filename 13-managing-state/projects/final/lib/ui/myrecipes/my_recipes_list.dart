@@ -33,8 +33,32 @@ class _MyRecipesListState extends State<MyRecipesList> {
             return SizedBox(
               height: 100,
               child: Slidable(
-                actionPane: const SlidableDrawerActionPane(),
-                actionExtentRatio: 0.25,
+              startActionPane: ActionPane(
+                motion: const DrawerMotion(),
+                extentRatio: 0.25,
+                children: [
+                  SlidableAction(
+                      label: 'Delete',
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: Colors.black,
+                      icon: Icons.delete,
+                      // TODO 7
+                      onPressed: (_) {})
+                ],
+              ),
+              endActionPane: ActionPane(
+                motion: const DrawerMotion(),
+                extentRatio: 0.25,
+                children: [
+                  SlidableAction(
+                      label: 'Delete',
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: Colors.black,
+                      icon: Icons.delete,
+                      // TODO 8
+                      onPressed: (_) {})
+                ],
+              ),              
                 child: Card(
                   elevation: 1.0,
                   shape: RoundedRectangleBorder(
@@ -56,22 +80,6 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     ),
                   ),
                 ),
-                actions: <Widget>[
-                  IconSlideAction(
-                      caption: 'Delete',
-                      color: Colors.transparent,
-                      foregroundColor: Colors.black,
-                      iconWidget: const Icon(Icons.delete, color: Colors.red),
-                      onTap: () => deleteRecipe(repository, recipe)),
-                ],
-                secondaryActions: <Widget>[
-                  IconSlideAction(
-                      caption: 'Delete',
-                      color: Colors.transparent,
-                      foregroundColor: Colors.black,
-                      iconWidget: const Icon(Icons.delete, color: Colors.red),
-                      onTap: () => deleteRecipe(repository, recipe)),
-                ],
               ),
             );
           });
