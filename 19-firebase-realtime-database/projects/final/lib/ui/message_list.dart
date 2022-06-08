@@ -22,7 +22,7 @@ class MessageListState extends State<MessageList> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) => _scrollToBottom());
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
     final messageDao = Provider.of<MessageDao>(context, listen: false);
     final userDao = Provider.of<UserDao>(context, listen: false);
     email = userDao.email();

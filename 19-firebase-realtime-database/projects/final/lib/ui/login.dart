@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../data/user_dao.dart';
@@ -91,11 +89,17 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 20),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {
-                        userDao.login(
+                      onPressed: () async {
+                        final errorMessage = await userDao.login(
                           _emailController.text,
                           _passwordController.text,
                         );
+                        if (errorMessage != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('$errorMessage'),
+                            duration: const Duration(milliseconds: 700),
+                          ));
+                        }
                       },
                       child: const Text('Login'),
                     ),
@@ -107,11 +111,17 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 20),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {
-                        userDao.signup(
+                      onPressed: () async {
+                        final errorMessage = await userDao.signup(
                           _emailController.text,
                           _passwordController.text,
                         );
+                        if (errorMessage != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('$errorMessage'),
+                            duration: const Duration(milliseconds: 700),
+                          ));
+                        }
                       },
                       child: const Text('Sign Up'),
                     ),

@@ -16,7 +16,7 @@ class MessageListState extends State<MessageList> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) => _scrollToBottom());
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
     // TODO: Add MessageDao
 
     // TODO: Add UserDao
