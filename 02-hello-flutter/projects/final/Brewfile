@@ -1,8 +1,0 @@
-tap "homebrew/bundle"
-tap "homebrew/core"
-brew "ffmpeg"
-brew "libressl"
-brew "node"
-brew "swiftlint"
-brew "vapor"
-brew "youtube-dl"
