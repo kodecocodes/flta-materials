@@ -6,7 +6,7 @@ class MyRecipesList extends StatefulWidget {
   const MyRecipesList({Key? key}) : super(key: key);
 
   @override
-  _MyRecipesListState createState() => _MyRecipesListState();
+  State createState() => _MyRecipesListState();
 }
 
 class _MyRecipesListState extends State<MyRecipesList> {
@@ -42,12 +42,13 @@ class _MyRecipesListState extends State<MyRecipesList> {
                 extentRatio: 0.25,
                 children: [
                   SlidableAction(
-                      label: 'Delete',
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: Colors.black,
-                      icon: Icons.delete,
-                      // TODO 7
-                      onPressed: (_) {})
+                    label: 'Delete',
+                    backgroundColor: Colors.transparent,
+                    foregroundColor: Colors.black,
+                    icon: Icons.delete,
+                    // TODO 7
+                    onPressed: (context) {},
+                  ),
                 ],
               ),
               endActionPane: ActionPane(
@@ -55,15 +56,16 @@ class _MyRecipesListState extends State<MyRecipesList> {
                 extentRatio: 0.25,
                 children: [
                   SlidableAction(
-                      label: 'Delete',
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: Colors.black,
-                      icon: Icons.delete,
-                      // TODO 8
-                      onPressed: (_) {})
+                    label: 'Delete',
+                    backgroundColor: Colors.transparent,
+                    foregroundColor: Colors.black,
+                    icon: Icons.delete,
+                    // TODO 8
+                    onPressed: (context) {},
+                  ),
                 ],
-              ),              
-	      child: Card(
+              ),
+              child: Card(
                 elevation: 1.0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
