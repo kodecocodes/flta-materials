@@ -6,7 +6,7 @@ class MyRecipesList extends StatefulWidget {
   const MyRecipesList({Key? key}) : super(key: key);
 
   @override
-  _MyRecipesListState createState() => _MyRecipesListState();
+  State createState() => _MyRecipesListState();
 }
 
 class _MyRecipesListState extends State<MyRecipesList> {
@@ -37,32 +37,34 @@ class _MyRecipesListState extends State<MyRecipesList> {
           return SizedBox(
             height: 100,
             child: Slidable(
-                      startActionPane: ActionPane(
-                        motion: const DrawerMotion(),
-                        extentRatio: 0.25,
-                        children: [
-                          SlidableAction(
-                              label: 'Delete',
-                              backgroundColor: Colors.transparent,
-                              foregroundColor: Colors.black,
-                              icon: Icons.delete,
-                              onPressed: (_) {}
-                          )
-                        ],
-                      ),
-                      endActionPane: ActionPane(
-                        motion: const DrawerMotion(),
-                        extentRatio: 0.25,
-                        children: [
-                          SlidableAction(
-                              label: 'Delete',
-                              backgroundColor: Colors.transparent,
-                              foregroundColor: Colors.black,
-                              icon: Icons.delete,
-                              onPressed: (_) {}
-                          )
-                        ],
-                      ),
+              startActionPane: ActionPane(
+                motion: const DrawerMotion(),
+                extentRatio: 0.25,
+                children: [
+                  SlidableAction(
+                    label: 'Delete',
+                    backgroundColor: Colors.transparent,
+                    foregroundColor: Colors.black,
+                    icon: Icons.delete,
+                    // TODO 7
+                    onPressed: (context) {},
+                  ),
+                ],
+              ),
+              endActionPane: ActionPane(
+                motion: const DrawerMotion(),
+                extentRatio: 0.25,
+                children: [
+                  SlidableAction(
+                    label: 'Delete',
+                    backgroundColor: Colors.transparent,
+                    foregroundColor: Colors.black,
+                    icon: Icons.delete,
+                    // TODO 8
+                    onPressed: (context) {},
+                  ),
+                ],
+              ),
               child: Card(
                 elevation: 1.0,
                 shape: RoundedRectangleBorder(
