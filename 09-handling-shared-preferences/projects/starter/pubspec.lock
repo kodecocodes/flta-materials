@@ -278,7 +278,7 @@ packages:
     source: hosted
     version: "5.0.0"
   platform:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: platform
       url: "https://pub.dartlang.org"
