@@ -139,10 +139,7 @@ class _RecipeListState extends State<RecipeList> {
                     autofocus: false,
                     textInputAction: TextInputAction.done,
                     onSubmitted: (value) {
-                      if (!previousSearches.contains(value)) {
-                        previousSearches.add(value);
-                        savePreviousSearches();
-                      }
+                      startSearch(searchTextController.text);
                     },
                     controller: searchTextController,
                   )),
