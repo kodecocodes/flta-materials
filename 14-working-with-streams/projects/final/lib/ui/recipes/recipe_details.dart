@@ -66,7 +66,8 @@ class RecipeDetails extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 16.0),
                     child: Chip(
                       label: Text(getCalories(recipe.calories)),
-                    )),
+                    ),
+                ),
                 const SizedBox(
                   height: 16,
                 ),

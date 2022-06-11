@@ -9,7 +9,7 @@ class MyRecipesList extends StatefulWidget {
   const MyRecipesList({Key? key}) : super(key: key);
 
   @override
-  _MyRecipesListState createState() => _MyRecipesListState();
+  State createState() => _MyRecipesListState();
 }
 
 class _MyRecipesListState extends State<MyRecipesList> {
@@ -47,20 +47,22 @@ class _MyRecipesListState extends State<MyRecipesList> {
                       foregroundColor: Colors.black,
                       icon: Icons.delete,
                       // TODO 7
-                      onPressed: (_) {})
-                ],
-              ),
-              endActionPane: ActionPane(
-                motion: const DrawerMotion(),
-                extentRatio: 0.25,
-                children: [
-                  SlidableAction(
+                      onPressed: (context) {},
+                    ),
+                  ],
+                ),
+                endActionPane: ActionPane(
+                  motion: const DrawerMotion(),
+                  extentRatio: 0.25,
+                  children: [
+                    SlidableAction(
                       label: 'Delete',
                       backgroundColor: Colors.transparent,
                       foregroundColor: Colors.black,
                       icon: Icons.delete,
                       // TODO 8
-                      onPressed: (_) {})
+                      onPressed: (context) {},
+                    ),
                 ],
               ),              
                       child: Card(

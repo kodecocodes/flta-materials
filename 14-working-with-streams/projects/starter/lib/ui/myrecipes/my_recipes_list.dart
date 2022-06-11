@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +8,7 @@ class MyRecipesList extends StatefulWidget {
   const MyRecipesList({Key? key}) : super(key: key);
 
   @override
-  _MyRecipesListState createState() => _MyRecipesListState();
+  State createState() => _MyRecipesListState();
 }
 
 class _MyRecipesListState extends State<MyRecipesList> {
@@ -33,32 +32,34 @@ class _MyRecipesListState extends State<MyRecipesList> {
             return SizedBox(
               height: 100,
               child: Slidable(
-              startActionPane: ActionPane(
-                motion: const DrawerMotion(),
-                extentRatio: 0.25,
-                children: [
-                  SlidableAction(
+                startActionPane: ActionPane(
+                  motion: const DrawerMotion(),
+                  extentRatio: 0.25,
+                  children: [
+                    SlidableAction(
                       label: 'Delete',
                       backgroundColor: Colors.transparent,
                       foregroundColor: Colors.black,
                       icon: Icons.delete,
                       // TODO 7
-                      onPressed: (_) {})
-                ],
-              ),
-              endActionPane: ActionPane(
-                motion: const DrawerMotion(),
-                extentRatio: 0.25,
-                children: [
-                  SlidableAction(
+                      onPressed: (context) {},
+                    ),
+                  ],
+                ),
+                endActionPane: ActionPane(
+                  motion: const DrawerMotion(),
+                  extentRatio: 0.25,
+                  children: [
+                    SlidableAction(
                       label: 'Delete',
                       backgroundColor: Colors.transparent,
                       foregroundColor: Colors.black,
                       icon: Icons.delete,
                       // TODO 8
-                      onPressed: (_) {})
-                ],
-              ),              
+                      onPressed: (context) {},
+                    ),
+                  ],
+                ),
                 child: Card(
                   elevation: 1.0,
                   shape: RoundedRectangleBorder(
@@ -70,12 +71,14 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ListTile(
-                        leading: CachedNetworkImage(
-                                  imageUrl: recipe.image ?? '',
-                            height: 120,
-                            width: 60,
-                            fit: BoxFit.cover),
-                              title: Text(recipe.label ?? ''),
+                        // TODO: Replace with image from recipe
+                        leading:
+                            Image.asset(
+                          'assets/images/pizza_w700.png',
+                          height: 200,
+                          width: 200,
+                        ),
+                        title: Text(recipe.label ?? ''),
                       ),
                     ),
                   ),
