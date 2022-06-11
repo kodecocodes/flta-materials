@@ -6,7 +6,7 @@ class MyRecipesList extends StatefulWidget {
   const MyRecipesList({Key? key}) : super(key: key);
 
   @override
-  _MyRecipesListState createState() => _MyRecipesListState();
+  State createState() => _MyRecipesListState();
 }
 
 class _MyRecipesListState extends State<MyRecipesList> {
@@ -42,12 +42,13 @@ class _MyRecipesListState extends State<MyRecipesList> {
                 extentRatio: 0.25,
                 children: [
                   SlidableAction(
-                      label: 'Delete',
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: Colors.black,
-                      icon: Icons.delete,
-                      // TODO 7
-                      onPressed: (_) {})
+                    label: 'Delete',
+                    backgroundColor: Colors.transparent,
+                    foregroundColor: Colors.black,
+                    icon: Icons.delete,
+                    // TODO 7
+                    onPressed: (context) {},
+                  ),
                 ],
               ),
               endActionPane: ActionPane(
@@ -55,12 +56,13 @@ class _MyRecipesListState extends State<MyRecipesList> {
                 extentRatio: 0.25,
                 children: [
                   SlidableAction(
-                      label: 'Delete',
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: Colors.black,
-                      icon: Icons.delete,
-                      // TODO 8
-                      onPressed: (_) {})
+                    label: 'Delete',
+                    backgroundColor: Colors.transparent,
+                    foregroundColor: Colors.black,
+                    icon: Icons.delete,
+                    // TODO 8
+                    onPressed: (context) {},
+                  ),
                 ],
               ),              
 	      child: Card(
@@ -76,8 +78,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     child: ListTile(
                       leading: CachedNetworkImage(
                           // TODO: Replace imageUrl hardcoding 
-                          imageUrl:
-                              'http://www.seriouseats.com/recipes/2011/12/chicken-vesuvio-recipe.html',
+                          imageUrl: '',
                           height: 120,
                           width: 60,
                           fit: BoxFit.cover),

@@ -70,14 +70,14 @@ String getCalories(double? calories) {
   if (calories == null) {
     return '0 KCAL';
   }
-  return calories.floor().toString() + ' KCAL';
+  return '${calories.floor()} KCAL';
 }
 
 String getWeight(double? weight) {
   if (weight == null) {
     return '0g';
   }
-  return weight.floor().toString() + 'g';
+  return '${weight.floor()}g';
 }
 
 @JsonSerializable()

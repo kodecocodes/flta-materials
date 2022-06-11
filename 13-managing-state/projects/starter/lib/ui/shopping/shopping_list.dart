@@ -8,8 +8,7 @@ class ShoppingList extends StatefulWidget {
 }
 
 class _ShoppingListState extends State<ShoppingList> {
-  final checkBoxValues = Map<int, bool>();
-  // TODO: Remove ingredients declaration
+  final checkBoxValues = <int, bool>{};
   static const ingredients = <String>[];
 
   @override

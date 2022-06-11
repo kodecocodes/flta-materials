@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
       title: 'Recipes',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          brightness: Brightness.light,
-          primaryColor: Colors.white,
+        brightness: Brightness.light,
+        primaryColor: Colors.white,
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
