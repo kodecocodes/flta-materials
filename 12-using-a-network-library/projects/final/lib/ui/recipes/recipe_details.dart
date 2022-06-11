@@ -23,13 +23,11 @@ class RecipeDetails extends StatelessWidget {
                   children: [
                     Align(
                       alignment: Alignment.topLeft,
-                      child: CachedNetworkImage(
-                        // TODO 1
-                        imageUrl:
-                            'https://www.edamam.com/web-img/e42/e42f9119813e890af34c259785ae1cfb.jpg',
-                        alignment: Alignment.topLeft,
-                        fit: BoxFit.fill,
-                        width: size.width,
+                      // TODO 1
+                      child: Image.asset(
+                        'assets/images/pizza_w700.png',
+                        height: 200,
+                        width: 200,
                       ),
                     ),
                     Align(
