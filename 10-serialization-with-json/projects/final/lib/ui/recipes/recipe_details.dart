@@ -22,13 +22,11 @@ class RecipeDetails extends StatelessWidget {
                   children: [
                     Align(
                       alignment: Alignment.topLeft,
-                      child: CachedNetworkImage(
-                        // TODO 1
-                        imageUrl:
-                            '',
-                        alignment: Alignment.topLeft,
-                        fit: BoxFit.fill,
-                        width: size.width,
+                      // TODO 1
+                      child: Image.asset(
+                        'assets/images/pizza_w700.png',
+                        height: 200,
+                        width: 200,
                       ),
                     ),
                     Align(
@@ -51,8 +49,7 @@ class RecipeDetails extends StatelessWidget {
                   child: Text(
                     // TODO 2
                     'Chicken Vesuvio',
-                    style: TextStyle(
-                        fontSize: 22, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                 ),
                 const SizedBox(
