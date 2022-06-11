@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -76,12 +75,12 @@ class _MyRecipesListState extends State<MyRecipesList> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
-                      leading: CachedNetworkImage(
-                          // TODO 5
-                          imageUrl: '',
-                          height: 120,
-                          width: 60,
-                          fit: BoxFit.cover),
+                      // TODO 5
+                      leading: Image.asset(
+                        'assets/images/pizza_w700.png',
+                        height: 200,
+                        width: 200,
+                      ),
                       // TODO 6
                       title: const Text('Chicken Vesuvio'),
                     ),
