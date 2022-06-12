@@ -94,8 +94,9 @@ class MessageListState extends State<MessageList> {
       child: StreamBuilder<QuerySnapshot>(
         stream: messageDao.getMessageStream(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData)
+          if (!snapshot.hasData) {
             return const Center(child: LinearProgressIndicator());
+          }
           return _buildList(context, snapshot.data!.docs);
         },
       ),
@@ -121,7 +122,7 @@ class MessageListState extends State<MessageList> {
     );
   }
 
-  bool _canSendMessage() => _messageController.text.length > 0;
+  bool _canSendMessage() => _messageController.text.isNotEmpty;
 
   void _scrollToBottom() {
     if (_scrollController.hasClients) {

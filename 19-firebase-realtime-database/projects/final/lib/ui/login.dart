@@ -7,7 +7,7 @@ class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  State createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
@@ -95,8 +95,9 @@ class _LoginState extends State<Login> {
                           _passwordController.text,
                         );
                         if (errorMessage != null) {
+                          if (!mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('$errorMessage'),
+                            content: Text(errorMessage),
                             duration: const Duration(milliseconds: 700),
                           ));
                         }
@@ -117,8 +118,9 @@ class _LoginState extends State<Login> {
                           _passwordController.text,
                         );
                         if (errorMessage != null) {
+                          if (!mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('$errorMessage'),
+                            content: Text(errorMessage),
                             duration: const Duration(milliseconds: 700),
                           ));
                         }

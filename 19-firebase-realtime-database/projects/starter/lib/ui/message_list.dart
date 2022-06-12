@@ -79,7 +79,7 @@ class MessageListState extends State<MessageList> {
 
   // TODO: Add _buildListItem
 
-  bool _canSendMessage() => _messageController.text.length > 0;
+  bool _canSendMessage() => _messageController.text.isNotEmpty;
 
   void _scrollToBottom() {
     if (_scrollController.hasClients) {
