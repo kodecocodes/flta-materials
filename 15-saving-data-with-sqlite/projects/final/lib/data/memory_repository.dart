@@ -18,18 +18,14 @@ class MemoryRepository extends Repository {
 
   @override
   Stream<List<Recipe>> watchAllRecipes() {
-    if (_recipeStream == null) {
-      _recipeStream = _recipeStreamController.stream as Stream<List<Recipe>>;
-    }
+    _recipeStream ??= _recipeStreamController.stream as Stream<List<Recipe>>;
     return _recipeStream!;
   }
 
   @override
   Stream<List<Ingredient>> watchAllIngredients() {
-    if (_ingredientStream == null) {
-      _ingredientStream =
-          _ingredientStreamController.stream as Stream<List<Ingredient>>;
-    }
+    _ingredientStream ??=
+        _ingredientStreamController.stream as Stream<List<Ingredient>>;
     return _ingredientStream!;
   }
 
@@ -65,9 +61,9 @@ class MemoryRepository extends Repository {
     _currentRecipes.add(recipe);
     _recipeStreamController.sink.add(_currentRecipes);
     if (recipe.ingredients != null) {
-      recipe.ingredients!.forEach((ingredient) {
+      for (final ingredient in recipe.ingredients!) {
         ingredient.recipeId = recipe.id!;
-      });
+      }
       insertIngredients(recipe.ingredients!);
     }
     return Future.value(0);
@@ -75,7 +71,7 @@ class MemoryRepository extends Repository {
 
   @override
   Future<List<int>> insertIngredients(List<Ingredient> ingredients) {
-    if (ingredients.length != 0) {
+    if (ingredients.isNotEmpty) {
       _currentIngredients.addAll(ingredients);
       _ingredientStreamController.sink.add(_currentIngredients);
     }

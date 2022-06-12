@@ -9,7 +9,7 @@ class MyRecipesList extends StatefulWidget {
   const MyRecipesList({Key? key}) : super(key: key);
 
   @override
-  _MyRecipesListState createState() => _MyRecipesListState();
+  State createState() => _MyRecipesListState();
 }
 
 class _MyRecipesListState extends State<MyRecipesList> {
@@ -47,7 +47,8 @@ class _MyRecipesListState extends State<MyRecipesList> {
                             foregroundColor: Colors.black,
                             icon: Icons.delete,
                             // TODO 7
-                            onPressed: (_) {})
+                      onPressed: (context) {},
+                    ),
                       ],
                     ),
                     endActionPane: ActionPane(
@@ -60,7 +61,8 @@ class _MyRecipesListState extends State<MyRecipesList> {
                             foregroundColor: Colors.black,
                             icon: Icons.delete,
                             // TODO 8
-                            onPressed: (_) {})
+                      onPressed: (context) {},
+                    ),
                       ],
                     ),
                     child: Card(

@@ -78,23 +78,19 @@ class DatabaseHelper {
 
   List<Recipe> parseRecipes(List<Map<String, dynamic>> recipeList) {
     final recipes = <Recipe>[];
-    recipeList.forEach(
-      (recipeMap) {
+    for (final recipeMap in recipeList) {
         final recipe = Recipe.fromJson(recipeMap);
         recipes.add(recipe);
-      },
-    );
+      }
     return recipes;
   }
 
   List<Ingredient> parseIngredients(List<Map<String, dynamic>> ingredientList) {
     final ingredients = <Ingredient>[];
-    ingredientList.forEach(
-      (ingredientMap) {
+    for (final ingredientMap in ingredientList) {
         final ingredient = Ingredient.fromJson(ingredientMap);
         ingredients.add(ingredient);
-      },
-    );
+      }
     return ingredients;
   }
 
@@ -174,11 +170,11 @@ class DatabaseHelper {
   }
 
   Future<void> deleteIngredients(List<Ingredient> ingredients) {
-    ingredients.forEach((ingredient) {
+    for (final ingredient in ingredients) {
       if (ingredient.id != null) {
         _delete(ingredientTable, ingredientId, ingredient.id!);
       }
-    });
+    }
     return Future.value();
   }
 
