@@ -191,6 +191,6 @@ class _RecipeListState extends State<RecipeList> {
       child: CircularProgressIndicator(),
     );
   }
-}
 
-// TODO: Add _buildRecipeCard
+  // TODO: Add _buildRecipeCard
+}
