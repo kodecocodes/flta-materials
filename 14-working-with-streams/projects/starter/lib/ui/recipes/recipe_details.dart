@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -28,11 +29,11 @@ class RecipeDetails extends StatelessWidget {
                   children: [
                     Align(
                       alignment: Alignment.topLeft,
-                      // TODO 1
-                      child: Image.asset(
-                        'assets/images/pizza_w700.png',
-                        height: 200,
-                        width: 200,
+                      child: CachedNetworkImage(
+                        imageUrl: recipe.image ?? '',
+                        alignment: Alignment.topLeft,
+                        fit: BoxFit.fill,
+                        width: size.width,
                       ),
                     ),
                     Align(
