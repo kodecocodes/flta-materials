@@ -63,8 +63,8 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     onPressed: (context) {},
                   ),
                 ],
-              ),              
-	      child: Card(
+              ),
+              child: Card(
                 elevation: 1.0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
@@ -76,8 +76,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
                       // TODO: Replace with image from recipe
-                      leading:
-                      Image.asset(
+                      leading: Image.asset(
                         'assets/images/pizza_w700.png',
                         height: 200,
                         width: 200,
@@ -94,5 +93,5 @@ class _MyRecipesListState extends State<MyRecipesList> {
     // TODO: Add final brace and parenthesis
   }
 
-  // TODO: Add deleteRecipe() here
+// TODO: Add deleteRecipe() here
 }

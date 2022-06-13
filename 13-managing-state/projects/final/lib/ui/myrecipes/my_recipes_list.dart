@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
@@ -41,8 +42,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
                       backgroundColor: Colors.transparent,
                       foregroundColor: Colors.black,
                       icon: Icons.delete,
-                      // TODO 7
-                      onPressed: (context) {},
+                      onPressed: (context) => deleteRecipe(repository, recipe),
                     ),
                   ],
                 ),
@@ -55,8 +55,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
                       backgroundColor: Colors.transparent,
                       foregroundColor: Colors.black,
                       icon: Icons.delete,
-                      // TODO 8
-                      onPressed: (context) {},
+                      onPressed: (context) => deleteRecipe(repository, recipe),
                     ),
                   ],
                 ),
@@ -71,13 +70,11 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ListTile(
-                        // TODO: Replace with image from recipe
-                        leading:
-                            Image.asset(
-                          'assets/images/pizza_w700.png',
-                          height: 200,
-                          width: 200,
-                        ),
+                        leading: CachedNetworkImage(
+                            imageUrl: recipe.image ?? '',
+                            height: 120,
+                            width: 60,
+                            fit: BoxFit.cover),
                         title: Text(recipe.label ?? ''),
                       ),
                     ),
@@ -90,12 +87,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
   }
 
   void deleteRecipe(MemoryRepository repository, Recipe recipe) async {
-    if (recipe.id != null) {
-      repository.deleteRecipeIngredients(recipe.id!);
-      repository.deleteRecipe(recipe);
-      setState(() {});
-    } else {
-      print('Recipe id is null');
-    }
+    repository.deleteRecipe(recipe);
+    setState(() {});
   }
 }
