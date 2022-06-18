@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +15,6 @@ class RecipeDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: change to new repository
     final repository = Provider.of<MemoryRepository>(context);
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -29,11 +27,11 @@ class RecipeDetails extends StatelessWidget {
                   children: [
                     Align(
                       alignment: Alignment.topLeft,
-                      child: CachedNetworkImage(
-                        imageUrl: recipe.image ?? '',
-                        alignment: Alignment.topLeft,
-                        fit: BoxFit.fill,
-                        width: size.width,
+                      // TODO 1
+                      child: Image.asset(
+                        'assets/images/pizza_w700.png',
+                        height: 200,
+                        width: 200,
                       ),
                     ),
                     Align(
