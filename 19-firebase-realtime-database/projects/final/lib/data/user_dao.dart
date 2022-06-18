@@ -1,6 +1,7 @@
 
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class UserDao extends ChangeNotifier {
@@ -26,15 +27,15 @@ class UserDao extends ChangeNotifier {
       return null;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        log('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        log('The account already exists for that email.');
       } else {
-        print(e);
+        log(e.message!);
       }
       return e.message;
     } catch (e) {
-      print(e);
+      log(e.toString());
       return e.toString();
     }
   }
@@ -47,15 +48,15 @@ class UserDao extends ChangeNotifier {
       return null;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        log('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        log('The account already exists for that email.');
       } else {
-        print(e);
+        log(e.toString());
       }
       return e.message;
     } catch (e) {
-      print(e);
+      log(e.toString());
       return e.toString();
     }
   }
