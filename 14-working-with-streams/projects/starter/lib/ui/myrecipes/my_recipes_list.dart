@@ -42,7 +42,9 @@ class _MyRecipesListState extends State<MyRecipesList> {
                       backgroundColor: Colors.transparent,
                       foregroundColor: Colors.black,
                       icon: Icons.delete,
-                      onPressed: (context) => deleteRecipe(repository, recipe),
+                          onPressed: (context) {
+                            deleteRecipe(repository, recipe);
+                          },
                     ),
                   ],
                 ),
@@ -55,7 +57,9 @@ class _MyRecipesListState extends State<MyRecipesList> {
                       backgroundColor: Colors.transparent,
                       foregroundColor: Colors.black,
                       icon: Icons.delete,
-                      onPressed: (context) => deleteRecipe(repository, recipe),
+                          onPressed: (context) {
+                            deleteRecipe(repository, recipe);
+                          },
                     ),
                   ],
                 ),

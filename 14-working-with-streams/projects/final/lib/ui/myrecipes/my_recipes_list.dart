@@ -46,8 +46,9 @@ class _MyRecipesListState extends State<MyRecipesList> {
                         backgroundColor: Colors.transparent,
                         foregroundColor: Colors.black,
                         icon: Icons.delete,
-                        onPressed: (context) =>
-                            deleteRecipe(repository, recipe),
+                          onPressed: (context) {
+                            deleteRecipe(repository, recipe);
+                          },
                       ),
                     ],
                   ),
@@ -60,8 +61,9 @@ class _MyRecipesListState extends State<MyRecipesList> {
                         backgroundColor: Colors.transparent,
                         foregroundColor: Colors.black,
                         icon: Icons.delete,
-                        onPressed: (context) =>
-                            deleteRecipe(repository, recipe),
+                          onPressed: (context) {
+                            deleteRecipe(repository, recipe);
+                          },
                       ),
                     ],
                   ),
@@ -98,12 +100,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
   }
 
   void deleteRecipe(Repository repository, Recipe recipe) async {
-    if (recipe.id != null) {
-      await repository.deleteRecipeIngredients(recipe.id!);
-      await repository.deleteRecipe(recipe);
-      setState(() {});
-    } else {
-      print('Recipe id is null');
-    }
+    repository.deleteRecipe(recipe);
+    setState(() {});
   }
 }
