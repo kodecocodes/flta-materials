@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:http/http.dart';
 
 const String apiKey = '<Your Key>';
@@ -10,7 +12,7 @@ class RecipeService {
     if (response.statusCode == 200) {
       return response.body;
     } else {
-      print(response.statusCode);
+      log(response.body);
     }
   }
 
