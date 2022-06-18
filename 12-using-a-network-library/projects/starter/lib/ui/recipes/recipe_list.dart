@@ -160,6 +160,7 @@ class _RecipeListState extends State<RecipeList> {
                           callback: () {
                             setState(() {
                               previousSearches.remove(value);
+                              savePreviousSearches();
                               Navigator.pop(context);
                             });
                           },

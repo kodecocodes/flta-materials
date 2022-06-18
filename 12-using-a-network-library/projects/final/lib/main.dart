@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
@@ -11,9 +13,11 @@ Future<void> main() async {
 
 void _setupLogging() {
   Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((rec) {
-    print('${rec.level.name}: ${rec.time}: ${rec.message}');
-  });
+  Logger.root.onRecord.listen(
+    (rec) {
+      log('${rec.level.name}: ${rec.time}: ${rec.message}');
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
