@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -48,8 +47,9 @@ class _MyRecipesListState extends State<MyRecipesList> {
                         backgroundColor: Colors.transparent,
                         foregroundColor: Colors.black,
                         icon: Icons.delete,
-                        // TODO 7
-                        onPressed: (context) {},
+                        onPressed: (context) {
+                          deleteRecipe(repository, recipe);
+                        },
                       ),
                     ],
                   ),
@@ -62,8 +62,9 @@ class _MyRecipesListState extends State<MyRecipesList> {
                         backgroundColor: Colors.transparent,
                         foregroundColor: Colors.black,
                         icon: Icons.delete,
-                        // TODO 8
-                        onPressed: (context) {},
+                        onPressed: (context) {
+                          deleteRecipe(repository, recipe);
+                        },
                       ),
                     ],
                   ),
@@ -100,12 +101,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
   }
 
   void deleteRecipe(Repository repository, Recipe recipe) async {
-    if (recipe.id != null) {
-      await repository.deleteRecipeIngredients(recipe.id!);
-      await repository.deleteRecipe(recipe);
-      setState(() {});
-    } else {
-      log('Recipe id is null');
-    }
+    repository.deleteRecipe(recipe);
+    setState(() {});
   }
 }

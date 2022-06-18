@@ -42,13 +42,14 @@ class _MyRecipesListState extends State<MyRecipesList> {
                       extentRatio: 0.25,
                       children: [
                         SlidableAction(
-                            label: 'Delete',
-                            backgroundColor: Colors.transparent,
-                            foregroundColor: Colors.black,
-                            icon: Icons.delete,
-                            // TODO 7
-                      onPressed: (context) {},
-                    ),
+                          label: 'Delete',
+                          backgroundColor: Colors.transparent,
+                          foregroundColor: Colors.black,
+                          icon: Icons.delete,
+                          onPressed: (context) {
+                            deleteRecipe(repository, recipe);
+                          },
+                        ),
                       ],
                     ),
                     endActionPane: ActionPane(
@@ -56,13 +57,14 @@ class _MyRecipesListState extends State<MyRecipesList> {
                       extentRatio: 0.25,
                       children: [
                         SlidableAction(
-                            label: 'Delete',
-                            backgroundColor: Colors.transparent,
-                            foregroundColor: Colors.black,
-                            icon: Icons.delete,
-                            // TODO 8
-                      onPressed: (context) {},
-                    ),
+                          label: 'Delete',
+                          backgroundColor: Colors.transparent,
+                          foregroundColor: Colors.black,
+                          icon: Icons.delete,
+                          onPressed: (context) {
+                            deleteRecipe(repository, recipe);
+                          },
+                        ),
                       ],
                     ),
                     child: Card(
@@ -97,12 +99,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
   }
 
   void deleteRecipe(Repository repository, Recipe recipe) async {
-    if (recipe.id != null) {
-      await repository.deleteRecipeIngredients(recipe.id!);
-      await repository.deleteRecipe(recipe);
-      setState(() {});
-    } else {
-      print('Recipe id is null');
-    }
+    repository.deleteRecipe(recipe);
+    setState(() {});
   }
 }
