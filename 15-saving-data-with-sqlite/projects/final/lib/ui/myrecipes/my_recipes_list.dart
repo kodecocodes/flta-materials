@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -103,7 +105,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
       await repository.deleteRecipe(recipe);
       setState(() {});
     } else {
-      print('Recipe id is null');
+      log('Recipe id is null');
     }
   }
 }
