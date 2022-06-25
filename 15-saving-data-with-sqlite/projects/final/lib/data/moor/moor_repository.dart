@@ -125,6 +125,7 @@ class MoorRepository extends Repository {
   Future<void> deleteRecipe(Recipe recipe) {
     if (recipe.id != null) {
       _recipeDao.deleteRecipe(recipe.id!);
+      deleteRecipeIngredients(recipe.id!);
     }
     return Future.value();
   }
