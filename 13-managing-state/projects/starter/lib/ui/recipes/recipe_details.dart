@@ -19,9 +19,9 @@ class RecipeDetails extends StatelessWidget {
               children: <Widget>[
                 Stack(
                   children: [
+                    // TODO 1
                     Align(
-                      alignment: Alignment.topLeft,
-                      // TODO 1
+                      alignment: Alignment.topCenter,
                       child: Image.asset(
                         'assets/images/pizza_w700.png',
                         height: 200,
