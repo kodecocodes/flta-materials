@@ -6,13 +6,13 @@ import 'card3.dart';
 
 // 1
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({super.key});
 
   @override
-  _HomeState createState() => _HomeState();
+  HomeState createState() => HomeState();
 }
 
-class _HomeState extends State<Home> {
+class HomeState extends State<Home> {
   // 7
   int _selectedIndex = 0;
 
@@ -48,16 +48,16 @@ class _HomeState extends State<Home> {
         // 11
         onTap: _onItemTapped,
         // 6
-        items: <BottomNavigationBarItem>[
-          const BottomNavigationBarItem(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
             icon: Icon(Icons.card_giftcard),
             label: 'Card',
           ),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Icon(Icons.card_giftcard),
             label: 'Card2',
           ),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Icon(Icons.card_giftcard),
             label: 'Card3',
           ),
