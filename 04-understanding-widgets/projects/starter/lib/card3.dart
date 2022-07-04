@@ -1,5 +1,5 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
-
 import 'fooderlich_theme.dart';
 
 class Card3 extends StatelessWidget {
@@ -59,7 +59,7 @@ class Card3 extends StatelessWidget {
                     ),
                     backgroundColor: Colors.black.withOpacity(0.7),
                     onDeleted: () {
-                      print('delete');
+                      log('delete');
                     },
                   ),
                   Chip(
@@ -69,7 +69,7 @@ class Card3 extends StatelessWidget {
                     ),
                     backgroundColor: Colors.black.withOpacity(0.7),
                     onDeleted: () {
-                      print('delete');
+                      log('delete');
                     },
                   ),
                   Chip(
