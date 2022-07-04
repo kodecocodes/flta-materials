@@ -1,36 +1,37 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
-
-import '../api/mock_fooderlich_service.dart';
 import '../components/components.dart';
 import '../models/models.dart';
+import '../api/mock_fooderlich_service.dart';
 
 class ExploreScreen extends StatefulWidget {
-  const ExploreScreen({Key? key}) : super(key: key);
+  const ExploreScreen({super.key});
+
   @override
-  _ExploreScreenState createState() => _ExploreScreenState();
+  State<ExploreScreen> createState() => _ExploreScreenState();
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
   final mockService = MockFooderlichService();
-
   late ScrollController _controller;
+
+  void _scrollListener() {
+    if (_controller.offset >= _controller.position.maxScrollExtent &&
+        !_controller.position.outOfRange) {
+      log('i am at the bottom!');
+    }
+
+    if (_controller.offset <= _controller.position.minScrollExtent &&
+        !_controller.position.outOfRange) {
+      log('i am at the top!');
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
-  }
-
-  void _scrollListener() {
-    if (_controller.offset >= _controller.position.maxScrollExtent &&
-        !_controller.position.outOfRange) {
-      print('reached the bottom');
-    }
-    if (_controller.offset <= _controller.position.minScrollExtent &&
-        !_controller.position.outOfRange) {
-      print('reached the top!');
-    }
   }
 
   @override
