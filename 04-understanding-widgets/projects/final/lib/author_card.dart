@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
-
-import 'circle_image.dart';
 import 'fooderlich_theme.dart';
 
+import 'circle_image.dart';
+
 class AuthorCard extends StatefulWidget {
+  // 1
   final String authorName;
   final String title;
   final ImageProvider? imageProvider;
 
   const AuthorCard({
-    Key? key,
+    super.key,
     required this.authorName,
     required this.title,
     this.imageProvider,
-  }) : super(key: key);
+  });
 
   @override
-  _AuthorCardState createState() => _AuthorCardState();
+  State<AuthorCard> createState() => _AuthorCardState();
 }
 
 class _AuthorCardState extends State<AuthorCard> {
   bool _isFavorited = false;
-
+  // 2
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,14 +56,15 @@ class _AuthorCardState extends State<AuthorCard> {
             // 1
             icon: Icon(_isFavorited ? Icons.favorite : Icons.favorite_border),
             iconSize: 30,
+            // 2
             color: Colors.red[400],
             onPressed: () {
-              //2
+              // 3
               setState(() {
                 _isFavorited = !_isFavorited;
               });
             },
-          ),
+          )
         ],
       ),
     );
