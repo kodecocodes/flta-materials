@@ -63,6 +63,8 @@ class _RecipeListState extends State<RecipeList> {
 
   // TODO: Add savePreviousSearches
 
+  // TODO: Add getPreviousSearches
+
   @override
   Widget build(BuildContext context) {
     return Container(

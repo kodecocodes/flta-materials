@@ -28,6 +28,10 @@ class _MainScreenState extends State<MainScreen> {
     // TODO: Call getCurrentIndex
   }
 
+  // TODO: Add saveCurrentIndex
+
+  // TODO: Add getCurrentIndex
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
