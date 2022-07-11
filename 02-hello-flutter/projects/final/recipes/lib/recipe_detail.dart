@@ -4,10 +4,13 @@ import 'recipe.dart';
 class RecipeDetail extends StatefulWidget {
   final Recipe recipe;
 
-  const RecipeDetail({Key? key, required this.recipe}) : super(key: key);
+  const RecipeDetail({
+    Key? key,
+    required this.recipe,
+  }) : super(key: key);
 
   @override
-  _RecipeDetailState createState() {
+  State<RecipeDetail> createState() {
     return _RecipeDetailState();
   }
 }
@@ -31,8 +34,9 @@ class _RecipeDetailState extends State<RecipeDetail> {
             SizedBox(
               height: 300,
               width: double.infinity,
-              child: Image(image:
-              AssetImage(widget.recipe.imageUrl)),
+              child: Image(
+                image: AssetImage(widget.recipe.imageUrl),
+              ),
             ),
             // 5
             const SizedBox(
