@@ -10,7 +10,7 @@ class RecipeDetail extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _RecipeDetailState createState() {
+  State<RecipeDetail> createState() {
     return _RecipeDetailState();
   }
 }
