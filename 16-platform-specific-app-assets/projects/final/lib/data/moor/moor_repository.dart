@@ -110,12 +110,12 @@ class MoorRepository extends Repository {
         }
         final resultIds = <int>[];
         for (final ingredient in ingredients) {
-            final moorIngredient =
-                ingredientToInsertableMoorIngredient(ingredient);
-            _ingredientDao
-                .insertIngredient(moorIngredient)
-                .then((int id) => resultIds.add(id));
-          }
+          final moorIngredient =
+              ingredientToInsertableMoorIngredient(ingredient);
+          _ingredientDao
+              .insertIngredient(moorIngredient)
+              .then((int id) => resultIds.add(id));
+        }
         return resultIds;
       },
     );
@@ -141,10 +141,10 @@ class MoorRepository extends Repository {
   @override
   Future<void> deleteIngredients(List<Ingredient> ingredients) {
     for (final ingredient in ingredients) {
-        if (ingredient.id != null) {
-          _ingredientDao.deleteIngredient(ingredient.id!);
-        }
+      if (ingredient.id != null) {
+        _ingredientDao.deleteIngredient(ingredient.id!);
       }
+    }
     return Future.value();
   }
 

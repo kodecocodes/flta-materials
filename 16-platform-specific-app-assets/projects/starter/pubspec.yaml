@@ -29,6 +29,7 @@ dependencies:
   synchronized: ^3.0.0+2
   sqlbrite: ^2.2.0
   moor_flutter: ^4.1.0
+  path: ^1.8.1
 
 dev_dependencies:
   flutter_test:

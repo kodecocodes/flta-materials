@@ -103,6 +103,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
       await repository.deleteRecipe(recipe);
       setState(() {});
     } else {
+      // ignore: avoid_print
       print('Recipe id is null');
     }
   }
