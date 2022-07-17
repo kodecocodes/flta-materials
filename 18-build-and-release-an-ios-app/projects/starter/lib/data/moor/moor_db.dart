@@ -51,15 +51,13 @@ class RecipeDao extends DatabaseAccessor<RecipeDatabase> with _$RecipeDaoMixin {
     return select(moorRecipe).watch().map(
       (rows) {
         final recipes = <Recipe>[];
-        rows.forEach(
-          (row) {
+        for (final row in rows) {
             final recipe = moorRecipeToRecipe(row);
             if (!recipes.contains(recipe)) {
               recipe.ingredients = <Ingredient>[];
               recipes.add(recipe);
             }
-          },
-        );
+          }
         return recipes;
       },
     );
