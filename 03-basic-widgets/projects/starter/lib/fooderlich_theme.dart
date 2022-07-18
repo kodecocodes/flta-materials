@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FooderlichTheme {
+  // 1
   static TextTheme lightTextTheme = TextTheme(
     bodyText1: GoogleFonts.openSans(
       fontSize: 14.0,
@@ -30,6 +31,7 @@ class FooderlichTheme {
     ),
   );
 
+  // 2
   static TextTheme darkTextTheme = TextTheme(
     bodyText1: GoogleFonts.openSans(
       fontSize: 14.0,
@@ -58,6 +60,7 @@ class FooderlichTheme {
     ),
   );
 
+  // 3
   static ThemeData light() {
     return ThemeData(
       brightness: Brightness.light,
@@ -83,6 +86,7 @@ class FooderlichTheme {
     );
   }
 
+  // 4
   static ThemeData dark() {
     return ThemeData(
       brightness: Brightness.dark,
