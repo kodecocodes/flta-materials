@@ -1,4 +1,4 @@
-import '../models/models.dart';
+import 'models.dart';
 
 class ExploreData {
   final List<ExploreRecipe> todayRecipes;

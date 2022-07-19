@@ -8,15 +8,18 @@ class Card2 extends StatelessWidget {
   final ExploreRecipe recipe;
 
   const Card2({
-    Key? key,
+    super.key,
     required this.recipe,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        constraints: const BoxConstraints.expand(width: 350, height: 450),
+        constraints: const BoxConstraints.expand(
+          width: 350,
+          height: 450,
+        ),
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(recipe.backgroundImage),

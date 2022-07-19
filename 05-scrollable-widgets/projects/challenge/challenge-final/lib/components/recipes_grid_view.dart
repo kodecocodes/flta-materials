@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../components/components.dart';
 import '../models/models.dart';
-import 'components.dart';
 
 class RecipesGridView extends StatelessWidget {
   final List<SimpleRecipe> recipes;
 
   const RecipesGridView({
-    Key? key,
+    super.key,
     required this.recipes,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,9 @@ class RecipesGridView extends StatelessWidget {
       ),
       child: GridView.builder(
         itemCount: recipes.length,
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 500.0),
+        gridDelegate:
+            const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 500.0),
         itemBuilder: (context, index) {
           final simpleRecipe = recipes[index];
           return RecipeThumbnail(recipe: simpleRecipe);

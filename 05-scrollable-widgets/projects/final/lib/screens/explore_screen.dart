@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../api/mock_fooderlich_service.dart';
 import '../components/components.dart';
 import '../models/models.dart';
+import '../api/mock_fooderlich_service.dart';
 
 class ExploreScreen extends StatelessWidget {
   final mockService = MockFooderlichService();
 
-  ExploreScreen({Key? key}) : super(key: key);
+  ExploreScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +20,7 @@ class ExploreScreen extends StatelessWidget {
             children: [
               TodayRecipeListView(recipes: snapshot.data?.todayRecipes ?? []),
               const SizedBox(height: 16),
-              FriendPostListView(
-                friendPosts: snapshot.data?.friendPosts ?? [],
-              )
+              FriendPostListView(friendPosts: snapshot.data?.friendPosts ?? []),
             ],
           );
         } else {

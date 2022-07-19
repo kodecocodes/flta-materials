@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../models/models.dart';
 import '../api/mock_fooderlich_service.dart';
 import '../components/components.dart';
@@ -6,7 +7,7 @@ import '../components/components.dart';
 class RecipesScreen extends StatelessWidget {
   final exploreService = MockFooderlichService();
 
-  RecipesScreen({Key? key}) : super(key: key);
+  RecipesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +19,7 @@ class RecipesScreen extends StatelessWidget {
           } else {
             return const Center(child: CircularProgressIndicator());
           }
-        });
+        },
+    );
   }
 }
