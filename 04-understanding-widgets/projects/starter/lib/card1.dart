@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'fooderlich_theme.dart';
 
 class Card1 extends StatelessWidget {
-  const Card1({Key? key}) : super(key: key);
+  const Card1({super.key});
   // 1
   final String category = 'Editor\'s Choice';
   final String title = 'The Art of Dough';
@@ -13,37 +13,6 @@ class Card1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        child: Stack(
-          children: [
-            Text(
-              category,
-              style: FooderlichTheme.darkTextTheme.bodyText1,
-            ),
-            Positioned(
-              child: Text(
-                title,
-                style: FooderlichTheme.darkTextTheme.headline2,
-              ),
-              top: 20,
-            ),
-            Positioned(
-              child: Text(
-                description,
-                style: FooderlichTheme.darkTextTheme.bodyText1,
-              ),
-              bottom: 30,
-              right: 0,
-            ),
-            Positioned(
-              child: Text(
-                chef,
-                style: FooderlichTheme.darkTextTheme.bodyText1,
-              ),
-              bottom: 10,
-              right: 0,
-            )
-          ],
-        ),
         padding: const EdgeInsets.all(16),
         constraints: const BoxConstraints.expand(
           width: 350,
@@ -55,6 +24,37 @@ class Card1 extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        ),
+        child: Stack(
+          children: [
+            Text(
+              category,
+              style: FooderlichTheme.darkTextTheme.bodyText1,
+            ),
+            Positioned(
+              top: 20,
+              child: Text(
+                title,
+                style: FooderlichTheme.darkTextTheme.headline2,
+              ),
+            ),
+            Positioned(
+              bottom: 30,
+              right: 0,
+              child: Text(
+                description,
+                style: FooderlichTheme.darkTextTheme.bodyText1,
+              ),
+            ),
+            Positioned(
+              bottom: 10,
+              right: 0,
+              child: Text(
+                chef,
+                style: FooderlichTheme.darkTextTheme.bodyText1,
+              ),
+            )
+          ],
         ),
       ),
     );

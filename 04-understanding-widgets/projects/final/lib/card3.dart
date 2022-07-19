@@ -1,9 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'fooderlich_theme.dart';
 
 class Card3 extends StatelessWidget {
-  const Card3({Key? key}) : super(key: key);
+  const Card3({super.key});
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -59,7 +61,7 @@ class Card3 extends StatelessWidget {
                     ),
                     backgroundColor: Colors.black.withOpacity(0.7),
                     onDeleted: () {
-                      print('delete');
+                      log('delete');
                     },
                   ),
                   Chip(
@@ -69,7 +71,7 @@ class Card3 extends StatelessWidget {
                     ),
                     backgroundColor: Colors.black.withOpacity(0.7),
                     onDeleted: () {
-                      print('delete');
+                      log('delete');
                     },
                   ),
                   Chip(

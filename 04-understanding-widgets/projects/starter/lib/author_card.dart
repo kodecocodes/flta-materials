@@ -10,11 +10,11 @@ class AuthorCard extends StatelessWidget {
   final ImageProvider? imageProvider;
 
   const AuthorCard({
-    Key? key,
+    super.key,
     required this.authorName,
     required this.title,
     this.imageProvider,
-  }) : super(key: key);
+  });
 
   // 2
   @override
