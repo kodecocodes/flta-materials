@@ -7,7 +7,7 @@ class RecipeList extends StatefulWidget {
   const RecipeList({Key? key}) : super(key: key);
 
   @override
-  _RecipeListState createState() => _RecipeListState();
+  State createState() => _RecipeListState();
 }
 
 class _RecipeListState extends State<RecipeList> {
@@ -23,14 +23,17 @@ class _RecipeListState extends State<RecipeList> {
   bool loading = false;
   bool inErrorState = false;
   // TODO: Add searches array
+  // TODO: Add _currentRecipes1
 
   @override
   void initState() {
     super.initState();
+    // TODO: Call loadRecipes()
+
     // TODO: Call getPreviousSearches
     searchTextController = TextEditingController(text: '');
     _scrollController
-      ..addListener(() {
+      .addListener(() {
         final triggerFetchMoreSize =
             0.7 * _scrollController.position.maxScrollExtent;
 
@@ -50,6 +53,8 @@ class _RecipeListState extends State<RecipeList> {
       });
   }
 
+  // TODO: Add loadRecipes
+
   @override
   void dispose() {
     searchTextController.dispose();
@@ -57,6 +62,8 @@ class _RecipeListState extends State<RecipeList> {
   }
 
   // TODO: Add savePreviousSearches
+
+  // TODO: Add getPreviousSearches
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +131,7 @@ class _RecipeListState extends State<RecipeList> {
 
   // TODO: Add startSearch
 
+  // TODO: Replace method
   Widget _buildRecipeLoader(BuildContext context) {
     if (searchTextController.text.length < 3) {
       return Container();
@@ -133,4 +141,6 @@ class _RecipeListState extends State<RecipeList> {
       child: CircularProgressIndicator(),
     );
   }
+
+  // TODO: Add _buildRecipeCard
 }

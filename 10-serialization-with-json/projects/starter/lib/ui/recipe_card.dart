@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 // TODO: Replace with new class
@@ -12,13 +11,15 @@ Widget recipeStringCard(String image, String label) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         ClipRRect(
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(6.0), topRight: Radius.circular(6.0)),
-            child: CachedNetworkImage(
-                // TODO: Replace with image from recipe
-                imageUrl: image,
-                height: 210,
-                fit: BoxFit.fill)),
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(6.0), topRight: Radius.circular(6.0)),
+          // TODO: Replace with image from recipe
+          child: Image.asset(
+            'assets/images/pizza_w700.png',
+            height: 200,
+            width: 200,
+          ),
+        ),
         const SizedBox(
           height: 12.0,
         ),

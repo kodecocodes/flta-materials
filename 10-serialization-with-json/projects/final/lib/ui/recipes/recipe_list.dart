@@ -15,7 +15,7 @@ class RecipeList extends StatefulWidget {
   const RecipeList({Key? key}) : super(key: key);
 
   @override
-  _RecipeListState createState() => _RecipeListState();
+  State createState() => _RecipeListState();
 }
 
 class _RecipeListState extends State<RecipeList> {
@@ -32,7 +32,7 @@ class _RecipeListState extends State<RecipeList> {
   bool loading = false;
   bool inErrorState = false;
   List<String> previousSearches = <String>[];
-  APIRecipeQuery? _currentRecipes1 = null;
+  APIRecipeQuery? _currentRecipes1;
 
   @override
   void initState() {
@@ -40,25 +40,24 @@ class _RecipeListState extends State<RecipeList> {
     loadRecipes();
     getPreviousSearches();
     searchTextController = TextEditingController(text: '');
-    _scrollController
-      ..addListener(() {
-        final triggerFetchMoreSize =
-            0.7 * _scrollController.position.maxScrollExtent;
+    _scrollController.addListener(() {
+      final triggerFetchMoreSize =
+          0.7 * _scrollController.position.maxScrollExtent;
 
-        if (_scrollController.position.pixels > triggerFetchMoreSize) {
-          if (hasMore &&
-              currentEndPosition < currentCount &&
-              !loading &&
-              !inErrorState) {
-            setState(() {
-              loading = true;
-              currentStartPosition = currentEndPosition;
-              currentEndPosition =
-                  min(currentStartPosition + pageCount, currentCount);
-            });
-          }
+      if (_scrollController.position.pixels > triggerFetchMoreSize) {
+        if (hasMore &&
+            currentEndPosition < currentCount &&
+            !loading &&
+            !inErrorState) {
+          setState(() {
+            loading = true;
+            currentStartPosition = currentEndPosition;
+            currentEndPosition =
+                min(currentStartPosition + pageCount, currentCount);
+          });
         }
-      });
+      }
+    });
   }
 
   Future loadRecipes() async {
@@ -139,10 +138,7 @@ class _RecipeListState extends State<RecipeList> {
                     autofocus: false,
                     textInputAction: TextInputAction.done,
                     onSubmitted: (value) {
-                      if (!previousSearches.contains(value)) {
-                        previousSearches.add(value);
-                        savePreviousSearches();
-                      }
+                      startSearch(searchTextController.text);
                     },
                     controller: searchTextController,
                   )),
@@ -164,6 +160,7 @@ class _RecipeListState extends State<RecipeList> {
                           callback: () {
                             setState(() {
                               previousSearches.remove(value);
+                              savePreviousSearches();
                               Navigator.pop(context);
                             });
                           },
@@ -200,8 +197,14 @@ class _RecipeListState extends State<RecipeList> {
       return Container();
     }
     // Show a loading indicator while waiting for the recipes
-    return Center(
-      child: _buildRecipeCard(context, _currentRecipes1!.hits, 0),
+    return Flexible(
+      child: ListView.builder(
+        itemCount: 1,
+        itemBuilder: (BuildContext context, int index) {
+          return Center(
+              child: _buildRecipeCard(context, _currentRecipes1!.hits, 0));
+        },
+      ),
     );
   }
 

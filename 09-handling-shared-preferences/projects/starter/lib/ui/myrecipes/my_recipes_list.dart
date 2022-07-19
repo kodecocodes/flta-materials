@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -6,7 +5,7 @@ class MyRecipesList extends StatefulWidget {
   const MyRecipesList({Key? key}) : super(key: key);
 
   @override
-  _MyRecipesListState createState() => _MyRecipesListState();
+  State createState() => _MyRecipesListState();
 }
 
 class _MyRecipesListState extends State<MyRecipesList> {
@@ -37,8 +36,34 @@ class _MyRecipesListState extends State<MyRecipesList> {
           return SizedBox(
             height: 100,
             child: Slidable(
-              actionPane: const SlidableDrawerActionPane(),
-              actionExtentRatio: 0.25,
+              startActionPane: ActionPane(
+                motion: const DrawerMotion(),
+                extentRatio: 0.25,
+                children: [
+                  SlidableAction(
+                    label: 'Delete',
+                    backgroundColor: Colors.transparent,
+                    foregroundColor: Colors.black,
+                    icon: Icons.delete,
+                    // TODO 7
+                    onPressed: (context) {},
+                  ),
+                ],
+              ),
+              endActionPane: ActionPane(
+                motion: const DrawerMotion(),
+                extentRatio: 0.25,
+                children: [
+                  SlidableAction(
+                    label: 'Delete',
+                    backgroundColor: Colors.transparent,
+                    foregroundColor: Colors.black,
+                    icon: Icons.delete,
+                    // TODO 8
+                    onPressed: (context) {},
+                  ),
+                ],
+              ),
               child: Card(
                 elevation: 1.0,
                 shape: RoundedRectangleBorder(
@@ -50,38 +75,19 @@ class _MyRecipesListState extends State<MyRecipesList> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
-                      leading: CachedNetworkImage(
-                          // TODO 5
-                          imageUrl:
-                              'http://www.seriouseats.com/recipes/2011/12/chicken-vesuvio-recipe.html',
-                          height: 120,
-                          width: 60,
-                          fit: BoxFit.cover),
+                      // TODO 5
+                      leading: Image.asset(
+                        'assets/images/pizza_w700.png',
+                        height: 200,
+                        width: 200,
+                      ),
                       // TODO 6
                       title: const Text('Chicken Vesuvio'),
                     ),
                   ),
                 ),
               ),
-              actions: <Widget>[
-                IconSlideAction(
-                    caption: 'Delete',
-                    color: Colors.transparent,
-                    foregroundColor: Colors.black,
-                    iconWidget: const Icon(Icons.delete, color: Colors.red),
-                    // TODO 7
-                    onTap: () {})
-              ],
-              secondaryActions: <Widget>[
-                IconSlideAction(
-                    caption: 'Delete',
-                    color: Colors.transparent,
-                    foregroundColor: Colors.black,
-                    iconWidget: const Icon(Icons.delete, color: Colors.red),
-                    // TODO 8
-                    onTap: () {})
-              ],
-            ),
+             ),
           );
         });
     // TODO 9
