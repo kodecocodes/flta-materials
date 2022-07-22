@@ -44,7 +44,7 @@ class GroceryItemScreenState extends State<GroceryItemScreen> {
       _importance = originalItem.importance;
       _currentColor = originalItem.color;
       final date = originalItem.date;
-      _timeOfDay = TimeOfDay(hour: date.hour, minute: date.minute);
+      _timeOfDay = TimeOfDay(hour: date.hour, minute: date.minute,);
       _dueDate = date;
     }
 
