@@ -106,7 +106,7 @@ packages:
       name: go_router
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.0"
+    version: "4.2.1"
   google_fonts:
     dependency: "direct main"
     description:
