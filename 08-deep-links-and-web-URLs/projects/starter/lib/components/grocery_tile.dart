@@ -10,12 +10,11 @@ class GroceryTile extends StatelessWidget {
   final TextDecoration textDecoration;
 
   GroceryTile({
-    Key? key,
+    super.key,
     required this.item,
     this.onComplete,
-  })  : textDecoration =
-            item.isComplete ? TextDecoration.lineThrough : TextDecoration.none,
-        super(key: key);
+  }) : textDecoration =
+            item.isComplete ? TextDecoration.lineThrough : TextDecoration.none;
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +37,10 @@ class GroceryTile extends StatelessWidget {
                   Text(
                     item.name,
                     style: GoogleFonts.lato(
-                        decoration: textDecoration,
-                        fontSize: 21.0,
-                        fontWeight: FontWeight.bold),
+                      decoration: textDecoration,
+                      fontSize: 21.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 4.0),
                   buildDate(),
@@ -61,7 +61,7 @@ class GroceryTile extends StatelessWidget {
               ),
               buildCheckbox()
             ],
-          )
+          ),
         ],
       ),
     );

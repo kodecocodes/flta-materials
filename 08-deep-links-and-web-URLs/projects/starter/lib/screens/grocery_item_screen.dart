@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
@@ -9,43 +10,24 @@ import '../models/models.dart';
 
 class GroceryItemScreen extends StatefulWidget {
   final Function(GroceryItem) onCreate;
-  final Function(GroceryItem, int) onUpdate;
+  final Function(GroceryItem) onUpdate;
   final GroceryItem? originalItem;
   final int index;
   final bool isUpdating;
 
-  static MaterialPage page({
-    GroceryItem? item,
-    int index = -1,
-    required Function(GroceryItem) onCreate,
-    required Function(GroceryItem, int) onUpdate,
-  }) {
-    return MaterialPage(
-      name: FooderlichPages.groceryItemDetails,
-      key: ValueKey(FooderlichPages.groceryItemDetails),
-      child: GroceryItemScreen(
-        originalItem: item,
-        index: index,
-        onCreate: onCreate,
-        onUpdate: onUpdate,
-      ),
-    );
-  }
-
   const GroceryItemScreen({
-    Key? key,
+    super.key,
     required this.onCreate,
     required this.onUpdate,
     this.originalItem,
     this.index = -1,
-  })  : isUpdating = (originalItem != null),
-        super(key: key);
+  }) : isUpdating = (originalItem != null);
 
   @override
-  _GroceryItemScreenState createState() => _GroceryItemScreenState();
+  GroceryItemScreenState createState() => GroceryItemScreenState();
 }
 
-class _GroceryItemScreenState extends State<GroceryItemScreen> {
+class GroceryItemScreenState extends State<GroceryItemScreen> {
   final _nameController = TextEditingController();
   String _name = '';
   Importance _importance = Importance.low;
@@ -78,17 +60,23 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
               );
 
               if (widget.isUpdating) {
-                widget.onUpdate(groceryItem, widget.index);
+                widget.onUpdate(groceryItem);
               } else {
                 widget.onCreate(groceryItem);
               }
+
+              context.goNamed('home', params: {
+                'tab': '${FooderlichTab.toBuy}',
+              });
             },
           )
         ],
         elevation: 0.0,
         title: Text(
           'Grocery Item',
-          style: GoogleFonts.lato(fontWeight: FontWeight.w600),
+          style: GoogleFonts.lato(
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       body: Container(
@@ -132,7 +120,9 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
       children: [
         Text(
           'Item Name',
-          style: GoogleFonts.lato(fontSize: 28.0),
+          style: GoogleFonts.lato(
+            fontSize: 28.0,
+          ),
         ),
         TextField(
           controller: _nameController,
@@ -140,13 +130,19 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
           decoration: InputDecoration(
             hintText: 'E.g. Apples, Banana, 1 Bag of salt',
             enabledBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
+              borderSide: BorderSide(
+                color: Colors.white,
+              ),
             ),
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: _currentColor),
+              borderSide: BorderSide(
+                color: _currentColor,
+              ),
             ),
             border: UnderlineInputBorder(
-              borderSide: BorderSide(color: _currentColor),
+              borderSide: BorderSide(
+                color: _currentColor,
+              ),
             ),
           ),
         ),
@@ -235,7 +231,7 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
             ),
           ],
         ),
-        Text('${DateFormat('yyyy-MM-dd').format(_dueDate)}'),
+        Text(DateFormat('yyyy-MM-dd').format(_dueDate)),
       ],
     );
   }
@@ -268,7 +264,7 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
             ),
           ],
         ),
-        Text('${_timeOfDay.format(context)}'),
+        Text(_timeOfDay.format(context)),
       ],
     );
   }

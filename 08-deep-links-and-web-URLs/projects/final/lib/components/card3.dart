@@ -7,22 +7,24 @@ class Card3 extends StatelessWidget {
   final ExploreRecipe recipe;
 
   const Card3({
-    Key? key,
+    super.key,
     required this.recipe,
-  }) : super(key: key);
+  });
 
   List<Widget> createTagChips() {
     final chips = <Widget>[];
-    recipe.tags.take(6).forEach((element) {
-      final chip = Chip(
-        label: Text(
-          element,
-          style: FooderlichTheme.darkTextTheme.bodyText1,
-        ),
-        backgroundColor: Colors.black.withOpacity(0.7),
-      );
-      chips.add(chip);
-    });
+    recipe.tags.take(6).forEach(
+      (element) {
+        final chip = Chip(
+          label: Text(
+            element,
+            style: FooderlichTheme.darkTextTheme.bodyText1,
+          ),
+          backgroundColor: Colors.black.withOpacity(0.7),
+        );
+        chips.add(chip);
+      },
+    );
 
     return chips;
   }
@@ -40,14 +42,18 @@ class Card3 extends StatelessWidget {
             image: AssetImage(recipe.backgroundImage),
             fit: BoxFit.cover,
           ),
-          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(10.0),
+          ),
         ),
         child: Stack(
           children: [
             Container(
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.6),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10.0),
+                ),
               ),
             ),
             Container(
