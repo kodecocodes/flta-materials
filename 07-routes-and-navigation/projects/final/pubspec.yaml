@@ -19,7 +19,7 @@ dependencies:
   webview_flutter: ^3.0.4
   url_launcher: ^6.0.10
   shared_preferences: ^2.0.7
-  go_router: ^4.1.0
+  go_router: ^4.2.1
 
 dev_dependencies:
   flutter_test:
