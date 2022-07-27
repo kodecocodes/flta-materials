@@ -36,9 +36,12 @@ class EmptyGroceryScreen extends StatelessWidget {
               ),
               color: Colors.green,
               onPressed: () {
-                context.goNamed('home', params: {
-                  'tab': '${FooderlichTab.recipes}',
-                });
+                context.goNamed(
+                  'home',
+                  params: {
+                    'tab': '${FooderlichTab.recipes}',
+                  },
+                );
               },
               child: const Text('Browse Recipes'),
             ),
