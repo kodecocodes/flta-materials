@@ -41,14 +41,16 @@ class HomeState extends State<Home> {
       ),
       body: IndexedStack(index: widget.currentTab, children: pages),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: 
-          Theme.of(context).textSelectionTheme.selectionColor,
+        selectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
         currentIndex: widget.currentTab,
         onTap: (index) {
           Provider.of<AppStateManager>(context, listen: false).goToTab(index);
-          context.goNamed('home', params: {
-            'tab': '$index',
-          });
+          context.goNamed(
+            'home',
+            params: {
+              'tab': '$index',
+            },
+          );
         },
         items: const [
           BottomNavigationBarItem(
@@ -79,9 +81,12 @@ class HomeState extends State<Home> {
           ),
         ),
         onTap: () {
-          context.goNamed('profile', params: {
-            'tab': '$currentTab',
-          });
+          context.goNamed(
+            'profile',
+            params: {
+              'tab': '$currentTab',
+            },
+          );
         },
       ),
     );

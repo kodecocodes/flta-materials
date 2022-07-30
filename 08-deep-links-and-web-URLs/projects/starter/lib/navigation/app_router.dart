@@ -11,29 +11,32 @@ class AppRouter {
   AppRouter(this.appStateManager, this.profileManager, this.groceryManager);
 
   late final router = GoRouter(
-      debugLogDiagnostics: true,
-      refreshListenable: appStateManager,
-      initialLocation: '/login',
-      routes: [
-        GoRoute(
-          name: 'login',
-          path: '/login',
-          builder: (context, state) => const LoginScreen(),
-        ),
-        GoRoute(
-          name: 'onboarding',
-          path: '/onboarding',
-          builder: (context, state) => const OnboardingScreen(),
-        ),
-        GoRoute(
-          name: 'home',
-          path: '/:tab',
-          builder: (context, state) {
-            final tab = int.tryParse(state.params['tab'] ?? '') ?? 0;
-            return Home(key: state.pageKey, currentTab: tab);
-          },
-          routes: [
-            GoRoute(
+    debugLogDiagnostics: true,
+    refreshListenable: appStateManager,
+    initialLocation: '/login',
+    routes: [
+      GoRoute(
+        name: 'login',
+        path: '/login',
+        builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        name: 'onboarding',
+        path: '/onboarding',
+        builder: (context, state) => const OnboardingScreen(),
+      ),
+      GoRoute(
+        name: 'home',
+        path: '/:tab',
+        builder: (context, state) {
+          final tab = int.tryParse(state.params['tab'] ?? '') ?? 0;
+          return Home(
+            key: state.pageKey,
+            currentTab: tab,
+          );
+        },
+        routes: [
+          GoRoute(
               name: 'item',
               path: 'item/:id',
               builder: (context, state) {
@@ -49,13 +52,15 @@ class AppRouter {
                   },
                 );
               }),
-            GoRoute(
+          GoRoute(
               name: 'profile',
               path: 'profile',
               builder: (context, state) {
                 final tab = int.tryParse(state.params['tab'] ?? '') ?? 0;
                 return ProfileScreen(
-                    user: profileManager.getUser, currentTab: tab);
+                  user: profileManager.getUser,
+                  currentTab: tab,
+                );
               },
               routes: [
                 GoRoute(
@@ -64,27 +69,34 @@ class AppRouter {
                   builder: (context, state) => const WebViewScreen(),
                 ),
               ]),
-          ],
+        ],
+      ),
+    ],
+    redirect: (state) {
+      final loggedIn = appStateManager.isLoggedIn;
+      final loggingIn = state.subloc == '/login';
+      if (!loggedIn) return loggingIn ? null : '/login';
+
+      final isOnboardingComplete = appStateManager.isOnboardingComplete;
+      final onboarding = state.subloc == '/onboarding';
+      if (!isOnboardingComplete) {
+        return onboarding ? null : '/onboarding';
+      }
+
+      if (loggingIn || onboarding) return '/${FooderlichTab.explore}';
+      return null;
+    },
+    errorPageBuilder: (context, state) {
+      return MaterialPage(
+        key: state.pageKey,
+        child: Scaffold(
+          body: Center(
+            child: Text(
+              state.error.toString(),
+            ),
+          ),
         ),
-      ],
-      redirect: (state) {
-        final loggedIn = appStateManager.isLoggedIn;
-        final loggingIn = state.subloc == '/login';
-        if (!loggedIn) return loggingIn ? null : '/login';
-
-        final isOnboardingComplete = appStateManager.isOnboardingComplete;
-        final onboarding = state.subloc == '/onboarding';
-        if (!isOnboardingComplete) {
-          return onboarding ? null : '/onboarding';
-        }
-
-        if (loggingIn || onboarding) return '/${FooderlichTab.explore}';
-        return null;
-      },
-      errorPageBuilder: (context, state) {
-        return MaterialPage(
-            key: state.pageKey,
-            child: Scaffold(body: Center(child: Text(state.error.toString()))));
-      },
+      );
+    },
   );
 }

@@ -65,9 +65,12 @@ class GroceryItemScreenState extends State<GroceryItemScreen> {
                 widget.onCreate(groceryItem);
               }
 
-              context.goNamed('home', params: {
-                'tab': '${FooderlichTab.toBuy}',
-              });
+              context.goNamed(
+                'home',
+                params: {
+                  'tab': '${FooderlichTab.toBuy}',
+                },
+              );
             },
           )
         ],
