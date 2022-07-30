@@ -10,10 +10,11 @@ import 'dart:io';
 class ProfileScreen extends StatefulWidget {
   final User user;
   final int currentTab;
+
   const ProfileScreen({
     super.key,
     required this.user,
-    required this.currentTab
+    required this.currentTab,
   });
 
   @override
@@ -50,7 +51,12 @@ class ProfileScreenState extends State<ProfileScreen> {
             if (kIsWeb || Platform.isMacOS) {
               await launchUrl(Uri.parse('https://www.raywenderlich.com/'));
             } else {
-              context.goNamed('rw', params: {'tab': '${widget.currentTab}'});
+              context.goNamed(
+                'rw',
+                params: {
+                  'tab': '${widget.currentTab}',
+                },
+              );
             }
           },
         ),

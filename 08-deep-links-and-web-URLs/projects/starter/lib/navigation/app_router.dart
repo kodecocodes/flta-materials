@@ -8,7 +8,11 @@ class AppRouter {
   final ProfileManager profileManager;
   final GroceryManager groceryManager;
 
-  AppRouter(this.appStateManager, this.profileManager, this.groceryManager);
+  AppRouter(
+    this.appStateManager,
+    this.profileManager,
+    this.groceryManager,
+  );
 
   late final router = GoRouter(
     debugLogDiagnostics: true,

@@ -52,10 +52,13 @@ class GroceryListScreen extends StatelessWidget {
               ),
               onTap: () {
                 final itemId = manager.getItemId(index);
-                context.goNamed('item', params: {
-                  'tab': '${FooderlichTab.toBuy}',
-                  'id': itemId
-                });
+                context.goNamed(
+                  'item',
+                  params: {
+                    'tab': '${FooderlichTab.toBuy}',
+                    'id': itemId,
+                  },
+                );
                 // context.go('/${FooderlichTab.toBuy}/item/$itemId');
               },
             ),

@@ -17,7 +17,8 @@ class Fooderlich extends StatefulWidget {
 
   const Fooderlich({
     super.key,
-    required this.appStateManager});
+    required this.appStateManager,
+  });
 
   @override
   FooderlichState createState() => FooderlichState();
@@ -29,7 +30,8 @@ class FooderlichState extends State<Fooderlich> {
   late final _appRouter = AppRouter(
     widget.appStateManager,
     _profileManager,
-    _groceryManager);
+    _groceryManager,
+  );
 
   @override
   Widget build(BuildContext context) {

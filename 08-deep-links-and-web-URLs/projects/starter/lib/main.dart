@@ -27,8 +27,11 @@ class Fooderlich extends StatefulWidget {
 class FooderlichState extends State<Fooderlich> {
   late final _groceryManager = GroceryManager();
   late final _profileManager = ProfileManager();
-  late final _appRouter =
-      AppRouter(widget.appStateManager, _profileManager, _groceryManager);
+  late final _appRouter = AppRouter(
+    widget.appStateManager,
+    _profileManager,
+    _groceryManager,
+  );
 
   @override
   Widget build(BuildContext context) {

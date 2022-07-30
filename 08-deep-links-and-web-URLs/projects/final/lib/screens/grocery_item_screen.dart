@@ -65,9 +65,12 @@ class GroceryItemScreenState extends State<GroceryItemScreen> {
                 widget.onCreate(groceryItem);
               }
 
-              context.goNamed('home', params: {
-                'tab': '${FooderlichTab.toBuy}',
-              });
+              context.goNamed(
+                'home',
+                params: {
+                  'tab': '${FooderlichTab.toBuy}',
+                },
+              );
             },
           )
         ],
@@ -222,11 +225,13 @@ class GroceryItemScreenState extends State<GroceryItemScreen> {
                   lastDate: DateTime(currentDate.year + 5),
                 );
 
-                setState(() {
-                  if (selectedDate != null) {
-                    _dueDate = selectedDate;
-                  }
-                });
+                setState(
+                  () {
+                    if (selectedDate != null) {
+                      _dueDate = selectedDate;
+                    }
+                  },
+                );
               },
             ),
           ],
