@@ -10,7 +10,10 @@ import '../colors.dart';
 class RecipeDetails extends StatelessWidget {
   final Recipe recipe;
 
-  const RecipeDetails({Key? key, required this.recipe}) : super(key: key);
+  const RecipeDetails({
+    Key? key,
+    required this.recipe,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,9 @@ class RecipeDetails extends StatelessWidget {
                       alignment: Alignment.topLeft,
                       child: Container(
                         decoration: const BoxDecoration(
-                            shape: BoxShape.circle, color: shim),
+                          shape: BoxShape.circle,
+                          color: shim,
+                        ),
                         child: const BackButton(
                           color: Colors.white,
                         ),
@@ -55,17 +60,19 @@ class RecipeDetails extends StatelessWidget {
                   child: Text(
                     recipe.label ?? '',
                     style: const TextStyle(
-                        fontSize: 22, fontWeight: FontWeight.bold),
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 const SizedBox(
                   height: 16,
                 ),
                 Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: Chip(
-                      label: Text(getCalories(recipe.calories)),
-                    ),
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Chip(
+                    label: Text(getCalories(recipe.calories)),
+                  ),
                 ),
                 const SizedBox(
                   height: 16,
@@ -75,7 +82,8 @@ class RecipeDetails extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: green,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0)),
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
                     ),
                     onPressed: () {
                       repository.insertRecipe(recipe);
