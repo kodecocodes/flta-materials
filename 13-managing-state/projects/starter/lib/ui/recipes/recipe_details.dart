@@ -19,7 +19,7 @@ class RecipeDetails extends StatelessWidget {
               children: <Widget>[
                 Stack(
                   children: [
-                    // TODO 1
+                    // Comment out Align()
                     Align(
                       alignment: Alignment.topCenter,
                       child: Image.asset(
