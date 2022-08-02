@@ -67,7 +67,7 @@ class RecipeDetails extends StatelessWidget {
                 Center(
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      primary: green,
+                      backgroundColor: green,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16.0)),
                     ),
