@@ -45,7 +45,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     backgroundColor: Colors.transparent,
                     foregroundColor: Colors.black,
                     icon: Icons.delete,
-                    // TODO 7
+                    // TODO: Update first onPressed
                     onPressed: (context) {},
                   ),
                 ],
@@ -59,7 +59,7 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     backgroundColor: Colors.transparent,
                     foregroundColor: Colors.black,
                     icon: Icons.delete,
-                    // TODO 8
+                    // TODO: Update second onPressed
                     onPressed: (context) {},
                   ),
                 ],
