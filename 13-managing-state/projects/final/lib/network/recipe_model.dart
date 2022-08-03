@@ -35,7 +35,9 @@ class APIHits {
     required this.recipe,
   });
 
-  factory APIHits.fromJson(Map<String, dynamic> json) =>
+  factory APIHits.fromJson(
+    Map<String, dynamic> json,
+  ) =>
       _$APIHitsFromJson(json);
 
   Map<String, dynamic> toJson() => _$APIHitsToJson(this);
@@ -101,8 +103,12 @@ class APIIngredients {
 List<Ingredient> convertIngredients(List<APIIngredients> apiIngredients) {
   final ingredients = <Ingredient>[];
   for (final ingredient in apiIngredients) {
-    ingredients
-        .add(Ingredient(name: ingredient.name, weight: ingredient.weight));
+    ingredients.add(
+      Ingredient(
+        name: ingredient.name,
+        weight: ingredient.weight,
+      ),
+    );
   }
   return ingredients;
 }

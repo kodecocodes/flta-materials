@@ -7,8 +7,17 @@ class Ingredient extends Equatable {
   final String? name;
   final double? weight;
 
-  Ingredient({this.id, this.recipeId, this.name, this.weight});
+  Ingredient({
+    this.id,
+    this.recipeId,
+    this.name,
+    this.weight,
+  });
 
   @override
-  List<Object?> get props => [recipeId, name, weight];
+  List<Object?> get props => [
+        recipeId,
+        name,
+        weight,
+      ];
 }

@@ -74,19 +74,25 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/images/icon_recipe.svg',
-                  color: _selectedIndex == 0 ? green : Colors.grey,
-                  semanticsLabel: 'Recipes'),
+              icon: SvgPicture.asset(
+                'assets/images/icon_recipe.svg',
+                color: _selectedIndex == 0 ? green : Colors.grey,
+                semanticsLabel: 'Recipes',
+              ),
               label: 'Recipes'),
           BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/images/icon_bookmarks.svg',
-                  color: _selectedIndex == 1 ? green : Colors.grey,
-                  semanticsLabel: 'Bookmarks'),
+              icon: SvgPicture.asset(
+                'assets/images/icon_bookmarks.svg',
+                color: _selectedIndex == 1 ? green : Colors.grey,
+                semanticsLabel: 'Bookmarks',
+              ),
               label: 'Bookmarks'),
           BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/images/icon_shopping_list.svg',
-                  color: _selectedIndex == 2 ? green : Colors.grey,
-                  semanticsLabel: 'Groceries'),
+              icon: SvgPicture.asset(
+                'assets/images/icon_shopping_list.svg',
+                color: _selectedIndex == 2 ? green : Colors.grey,
+                semanticsLabel: 'Groceries',
+              ),
               label: 'Groceries'),
         ],
         currentIndex: _selectedIndex,
@@ -109,7 +115,10 @@ class _MainScreenState extends State<MainScreen> {
         title: Text(
           title,
           style: const TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black),
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
+          ),
         ),
       ),
       body: IndexedStack(

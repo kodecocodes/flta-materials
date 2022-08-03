@@ -12,7 +12,9 @@ Widget recipeCard(APIRecipe recipe) {
       children: <Widget>[
         ClipRRect(
           borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(6.0), topRight: Radius.circular(6.0)),
+            topLeft: Radius.circular(6.0),
+            topRight: Radius.circular(6.0),
+          ),
           // TODO: Replace with image from recipe
           child: Image.asset(
             'assets/images/pizza_w700.png',
@@ -29,7 +31,10 @@ Widget recipeCard(APIRecipe recipe) {
             recipe.label,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
           ),
         ),
         const SizedBox(

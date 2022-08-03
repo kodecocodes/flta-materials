@@ -24,9 +24,10 @@ class _MyRecipesListState extends State<MyRecipesList> {
   }
 
   Widget _buildRecipeList(BuildContext context) {
-    return Consumer<MemoryRepository>(builder: (context, repository, child) {
-      recipes = repository.findAllRecipes();
-      return ListView.builder(
+    return Consumer<MemoryRepository>(
+      builder: (context, repository, child) {
+        recipes = repository.findAllRecipes();
+        return ListView.builder(
           itemCount: recipes.length,
           itemBuilder: (BuildContext context, int index) {
             final recipe = recipes[index];
@@ -42,9 +43,12 @@ class _MyRecipesListState extends State<MyRecipesList> {
                       backgroundColor: Colors.transparent,
                       foregroundColor: Colors.black,
                       icon: Icons.delete,
-                          onPressed: (context) {
-                            deleteRecipe(repository, recipe);
-                          },
+                      onPressed: (context) {
+                        deleteRecipe(
+                          repository,
+                          recipe,
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -57,9 +61,12 @@ class _MyRecipesListState extends State<MyRecipesList> {
                       backgroundColor: Colors.transparent,
                       foregroundColor: Colors.black,
                       icon: Icons.delete,
-                          onPressed: (context) {
-                            deleteRecipe(repository, recipe);
-                          },
+                      onPressed: (context) {
+                        deleteRecipe(
+                          repository,
+                          recipe,
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -86,8 +93,10 @@ class _MyRecipesListState extends State<MyRecipesList> {
                 ),
               ),
             );
-          });
-    });
+          },
+        );
+      },
+    );
   }
 
   void deleteRecipe(MemoryRepository repository, Recipe recipe) async {

@@ -14,24 +14,34 @@ class _ShoppingListState extends State<ShoppingList> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MemoryRepository>(builder: (context, repository, child) {
-      final ingredients = repository.findAllIngredients();
-      return ListView.builder(
+    return Consumer<MemoryRepository>(
+      builder: (
+        context,
+        repository,
+        child,
+      ) {
+        final ingredients = repository.findAllIngredients();
+        return ListView.builder(
           itemCount: ingredients.length,
-          itemBuilder: (BuildContext context, int index) {
+          itemBuilder: (
+            BuildContext context,
+            int index,
+          ) {
             return CheckboxListTile(
-                value:
-                    checkBoxValues.containsKey(index) && checkBoxValues[index]!,
-                title: Text(ingredients[index].name ?? ''),
-                onChanged: (newValue) {
-                  if (newValue != null) {
-                    setState(() {
-                      checkBoxValues[index] = newValue;
-                    });
-                  }
-                },
+              value:
+                  checkBoxValues.containsKey(index) && checkBoxValues[index]!,
+              title: Text(ingredients[index].name ?? ''),
+              onChanged: (newValue) {
+                if (newValue != null) {
+                  setState(() {
+                    checkBoxValues[index] = newValue;
+                  });
+                }
+              },
             );
-          });
-    });
+          },
+        );
+      },
+    );
   }
 }
