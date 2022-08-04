@@ -1,7 +1,7 @@
 name: recipes
 description: Recipe Finder
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
@@ -17,10 +17,10 @@ dependencies:
   cached_network_image: ^3.2.1
   flutter_slidable: ^2.0.0
   platform: ^3.1.0
-  flutter_svg: ^1.1.1+1
+  flutter_svg: ^1.1.2
   shared_preferences: ^2.0.15
   json_annotation: ^4.6.0
-  http: ^0.13.4
+  http: ^0.13.5
   chopper: ^4.0.6
   logging: ^1.0.2
 
@@ -35,7 +35,6 @@ dev_dependencies:
   flutter_lints: ^2.0.1
 
 flutter:
-
   uses-material-design: true
 
   assets:
