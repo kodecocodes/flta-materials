@@ -24,13 +24,10 @@ class _MyRecipesListState extends State<MyRecipesList> {
   }
 
   Widget _buildRecipeList(BuildContext context) {
-    return Consumer<MemoryRepository>(builder: (
-      context,
-      repository,
-      child,
-    ) {
-      recipes = repository.findAllRecipes();
-      return ListView.builder(
+    return Consumer<MemoryRepository>(
+      builder: (context, repository, child) {
+        recipes = repository.findAllRecipes();
+        return ListView.builder(
           itemCount: recipes.length,
           itemBuilder: (BuildContext context, int index) {
             final recipe = recipes[index];
@@ -47,7 +44,10 @@ class _MyRecipesListState extends State<MyRecipesList> {
                       foregroundColor: Colors.black,
                       icon: Icons.delete,
                       onPressed: (context) {
-                        deleteRecipe(repository, recipe);
+                        deleteRecipe(
+                          repository,
+                          recipe,
+                        );
                       },
                     ),
                   ],
@@ -62,7 +62,10 @@ class _MyRecipesListState extends State<MyRecipesList> {
                       foregroundColor: Colors.black,
                       icon: Icons.delete,
                       onPressed: (context) {
-                        deleteRecipe(repository, recipe);
+                        deleteRecipe(
+                          repository,
+                          recipe,
+                        );
                       },
                     ),
                   ],
@@ -78,11 +81,18 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ListTile(
-                        leading: CachedNetworkImage(
-                            imageUrl: recipe.image ?? '',
-                            height: 120,
-                            width: 60,
-                            fit: BoxFit.cover),
+                        // TODO: Replace with image from recipe
+                        leading: Image.asset(
+                          'assets/images/pizza_w700.png',
+                          height: 200,
+                          width: 200,
+                        ),
+                        // leading: CachedNetworkImage(
+                        //   imageUrl: recipe.image ?? '',
+                        //   height: 120,
+                        //   width: 60,
+                        //   fit: BoxFit.cover,
+                        // ),
                         title: Text(recipe.label ?? ''),
                       ),
                     ),
@@ -90,8 +100,10 @@ class _MyRecipesListState extends State<MyRecipesList> {
                 ),
               ),
             );
-          });
-    });
+          },
+        );
+      },
+    );
   }
 
   void deleteRecipe(MemoryRepository repository, Recipe recipe) async {

@@ -35,7 +35,9 @@ class APIHits {
     required this.recipe,
   });
 
-  factory APIHits.fromJson(Map<String, dynamic> json) =>
+  factory APIHits.fromJson(
+    Map<String, dynamic> json,
+  ) =>
       _$APIHitsFromJson(json);
 
   Map<String, dynamic> toJson() => _$APIHitsToJson(this);
