@@ -74,14 +74,19 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/images/icon_recipe.svg',
-                  color: _selectedIndex == 0 ? green : Colors.grey,
-                  semanticsLabel: 'Recipes'),
-              label: 'Recipes'),
+            icon: SvgPicture.asset(
+              'assets/images/icon_recipe.svg',
+              color: _selectedIndex == 0 ? green : Colors.grey,
+              semanticsLabel: 'Recipes',
+            ),
+            label: 'Recipes',
+          ),
           BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/images/icon_bookmarks.svg',
-                  color: _selectedIndex == 1 ? green : Colors.grey,
-                  semanticsLabel: 'Bookmarks'),
+              icon: SvgPicture.asset(
+                'assets/images/icon_bookmarks.svg',
+                color: _selectedIndex == 1 ? green : Colors.grey,
+                semanticsLabel: 'Bookmarks',
+              ),
               label: 'Bookmarks'),
           BottomNavigationBarItem(
               icon: SvgPicture.asset('assets/images/icon_shopping_list.svg',

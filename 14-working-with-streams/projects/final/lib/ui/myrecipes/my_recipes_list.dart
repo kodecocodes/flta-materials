@@ -46,9 +46,9 @@ class _MyRecipesListState extends State<MyRecipesList> {
                         backgroundColor: Colors.transparent,
                         foregroundColor: Colors.black,
                         icon: Icons.delete,
-                          onPressed: (context) {
-                            deleteRecipe(repository, recipe);
-                          },
+                        onPressed: (context) {
+                          deleteRecipe(repository, recipe);
+                        },
                       ),
                     ],
                   ),
@@ -61,9 +61,9 @@ class _MyRecipesListState extends State<MyRecipesList> {
                         backgroundColor: Colors.transparent,
                         foregroundColor: Colors.black,
                         icon: Icons.delete,
-                          onPressed: (context) {
-                            deleteRecipe(repository, recipe);
-                          },
+                        onPressed: (context) {
+                          deleteRecipe(repository, recipe);
+                        },
                       ),
                     ],
                   ),
@@ -79,10 +79,11 @@ class _MyRecipesListState extends State<MyRecipesList> {
                         padding: const EdgeInsets.all(8.0),
                         child: ListTile(
                           leading: CachedNetworkImage(
-                              imageUrl: recipe.image ?? '',
-                              height: 120,
-                              width: 60,
-                              fit: BoxFit.cover),
+                            imageUrl: recipe.image ?? '',
+                            height: 120,
+                            width: 60,
+                            fit: BoxFit.cover,
+                          ),
                           title: Text(recipe.label ?? ''),
                         ),
                       ),
