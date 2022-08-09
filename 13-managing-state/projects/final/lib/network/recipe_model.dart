@@ -35,7 +35,9 @@ class APIHits {
     required this.recipe,
   });
 
-  factory APIHits.fromJson(Map<String, dynamic> json) =>
+  factory APIHits.fromJson(
+    Map<String, dynamic> json,
+  ) =>
       _$APIHitsFromJson(json);
 
   Map<String, dynamic> toJson() => _$APIHitsToJson(this);
@@ -71,14 +73,14 @@ String getCalories(double? calories) {
   if (calories == null) {
     return '0 KCAL';
   }
-  return calories.floor().toString() + ' KCAL';
+  return '${calories.floor()} KCAL';
 }
 
 String getWeight(double? weight) {
   if (weight == null) {
     return '0g';
   }
-  return weight.floor().toString() + 'g';
+  return '${weight.floor()}g';
 }
 
 @JsonSerializable()
@@ -100,9 +102,13 @@ class APIIngredients {
 
 List<Ingredient> convertIngredients(List<APIIngredients> apiIngredients) {
   final ingredients = <Ingredient>[];
-  apiIngredients.forEach((ingredient) {
-    ingredients
-        .add(Ingredient(name: ingredient.name, weight: ingredient.weight));
-  });
+  for (final ingredient in apiIngredients) {
+    ingredients.add(
+      Ingredient(
+        name: ingredient.name,
+        weight: ingredient.weight,
+      ),
+    );
+  }
   return ingredients;
 }

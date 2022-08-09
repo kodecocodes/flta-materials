@@ -44,7 +44,7 @@ class MemoryRepository extends Repository with ChangeNotifier {
 
   @override
   List<int> insertIngredients(List<Ingredient> ingredients) {
-    if (ingredients.length != 0) {
+    if (ingredients.isNotEmpty) {
       _currentIngredients.addAll(ingredients);
       notifyListeners();
     }
