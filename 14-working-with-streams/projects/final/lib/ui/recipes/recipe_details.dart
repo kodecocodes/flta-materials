@@ -11,7 +11,10 @@ import '../colors.dart';
 class RecipeDetails extends StatelessWidget {
   final Recipe recipe;
 
-  const RecipeDetails({Key? key, required this.recipe}) : super(key: key);
+  const RecipeDetails({
+    Key? key,
+    required this.recipe,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +72,9 @@ class RecipeDetails extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0),
                   child: Chip(
-                    label: Text(getCalories(recipe.calories)),
+                    label: Text(
+                      getCalories(recipe.calories),
+                    ),
                   ),
                 ),
                 const SizedBox(
