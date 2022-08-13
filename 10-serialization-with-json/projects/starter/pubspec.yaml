@@ -12,12 +12,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-  path: ^1.8.1
   cupertino_icons: ^1.0.5
   cached_network_image: ^3.2.1
   flutter_slidable: ^2.0.0
   platform: ^3.1.0
-  flutter_svg: ^1.1.1+1
+  flutter_svg: ^1.1.3
   shared_preferences: ^2.0.15
 
 dev_dependencies:
