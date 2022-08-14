@@ -23,8 +23,8 @@ class SqliteRepository extends Repository {
   }
 
   @override
-  Future<Recipe> findRecipeById(int id) {
-    return dbHelper.findRecipeById(id);
+  Future<Recipe> findRecipeById(int recipeId) {
+    return dbHelper.findRecipeById(recipeId);
   }
 
   @override
