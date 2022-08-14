@@ -29,7 +29,10 @@ class MoorIngredient extends Table {
   RealColumn get weight => real()();
 }
 
-@UseMoor(tables: [MoorRecipe, MoorIngredient], daos: [RecipeDao, IngredientDao])
+@UseMoor(
+  tables: [MoorRecipe, MoorIngredient],
+  daos: [RecipeDao, IngredientDao],
+)
 class RecipeDatabase extends _$RecipeDatabase {
   RecipeDatabase()
       : super(

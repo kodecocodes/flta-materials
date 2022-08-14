@@ -51,23 +51,28 @@ class DatabaseHelper {
   // this opens the database (and creates it if it doesn't exist)
   Future<Database> _initDatabase() async {
     final documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, _databaseName);
+    final path = join(
+      documentsDirectory.path,
+      _databaseName,
+    );
     Sqflite.setDebugModeOn(true);
-    return openDatabase(path, version: _databaseVersion, onCreate: _onCreate);
+    return openDatabase(
+      path,
+      version: _databaseVersion,
+      onCreate: _onCreate,
+    );
   }
 
   Future<Database> get database async {
     if (_database != null) return _database!;
     // Use this object to prevent concurrent access to data
-    await lock.synchronized(
-      () async {
-        // lazily instantiate the db the first time it is accessed
-        if (_database == null) {
-          _database = await _initDatabase();
-          _streamDatabase = BriteDatabase(_database!);
-        }
-      },
-    );
+    await lock.synchronized(() async {
+      // lazily instantiate the db the first time it is accessed
+      if (_database == null) {
+        _database = await _initDatabase();
+        _streamDatabase = BriteDatabase(_database!);
+      }
+    });
     return _database!;
   }
 
@@ -76,21 +81,23 @@ class DatabaseHelper {
     return _streamDatabase;
   }
 
-  List<Recipe> parseRecipes(List<Map<String, dynamic>> recipeList) {
+  List<Recipe> parseRecipes(
+    List<Map<String, dynamic>> recipeList,
+  ) {
     final recipes = <Recipe>[];
     for (final recipeMap in recipeList) {
-        final recipe = Recipe.fromJson(recipeMap);
-        recipes.add(recipe);
-      }
+      final recipe = Recipe.fromJson(recipeMap);
+      recipes.add(recipe);
+    }
     return recipes;
   }
 
   List<Ingredient> parseIngredients(List<Map<String, dynamic>> ingredientList) {
     final ingredients = <Ingredient>[];
     for (final ingredientMap in ingredientList) {
-        final ingredient = Ingredient.fromJson(ingredientMap);
-        ingredients.add(ingredient);
-      }
+      final ingredient = Ingredient.fromJson(ingredientMap);
+      ingredients.add(ingredient);
+    }
     return ingredients;
   }
 
@@ -115,7 +122,10 @@ class DatabaseHelper {
 
   Future<Recipe> findRecipeById(int id) async {
     final db = await instance.streamDatabase;
-    final recipeList = await db.query(recipeTable, where: 'id = $id');
+    final recipeList = await db.query(
+      recipeTable,
+      where: 'id = $id',
+    );
     final recipes = parseRecipes(recipeList);
     return recipes.first;
   }
@@ -129,33 +139,52 @@ class DatabaseHelper {
 
   Future<List<Ingredient>> findRecipeIngredients(int recipeId) async {
     final db = await instance.streamDatabase;
-    final ingredientList =
-        await db.query(ingredientTable, where: 'recipeId = $recipeId');
+    final ingredientList = await db.query(
+      ingredientTable,
+      where: 'recipeId = $recipeId',
+    );
     final ingredients = parseIngredients(ingredientList);
     return ingredients;
   }
 
   Future<int> insert(String table, Map<String, dynamic> row) async {
     final db = await instance.streamDatabase;
-    return db.insert(table, row);
+    return db.insert(
+      table,
+      row,
+    );
   }
 
   Future<int> insertRecipe(Recipe recipe) {
-    return insert(recipeTable, recipe.toJson());
+    return insert(
+      recipeTable,
+      recipe.toJson(),
+    );
   }
 
   Future<int> insertIngredient(Ingredient ingredient) {
-    return insert(ingredientTable, ingredient.toJson());
+    return insert(
+      ingredientTable,
+      ingredient.toJson(),
+    );
   }
 
   Future<int> _delete(String table, String columnId, int id) async {
     final db = await instance.streamDatabase;
-    return db.delete(table, where: '$columnId = ?', whereArgs: [id]);
+    return db.delete(
+      table,
+      where: '$columnId = ?',
+      whereArgs: [id],
+    );
   }
 
   Future<int> deleteRecipe(Recipe recipe) async {
     if (recipe.id != null) {
-      return _delete(recipeTable, recipeId, recipe.id!);
+      return _delete(
+        recipeTable,
+        recipeId,
+        recipe.id!,
+      );
     } else {
       return Future.value(-1);
     }
@@ -163,7 +192,11 @@ class DatabaseHelper {
 
   Future<int> deleteIngredient(Ingredient ingredient) async {
     if (ingredient.id != null) {
-      return _delete(ingredientTable, ingredientId, ingredient.id!);
+      return _delete(
+        ingredientTable,
+        ingredientId,
+        ingredient.id!,
+      );
     } else {
       return Future.value(-1);
     }
@@ -172,7 +205,11 @@ class DatabaseHelper {
   Future<void> deleteIngredients(List<Ingredient> ingredients) {
     for (final ingredient in ingredients) {
       if (ingredient.id != null) {
-        _delete(ingredientTable, ingredientId, ingredient.id!);
+        _delete(
+          ingredientTable,
+          ingredientId,
+          ingredient.id!,
+        );
       }
     }
     return Future.value();
@@ -180,7 +217,11 @@ class DatabaseHelper {
 
   Future<int> deleteRecipeIngredients(int id) async {
     final db = await instance.streamDatabase;
-    return db.delete(ingredientTable, where: '$recipeId = ?', whereArgs: [id]);
+    return db.delete(
+      ingredientTable,
+      where: '$recipeId = ?',
+      whereArgs: [id],
+    );
   }
 
   void close() {
