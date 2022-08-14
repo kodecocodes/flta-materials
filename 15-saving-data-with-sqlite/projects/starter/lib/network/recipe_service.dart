@@ -16,7 +16,10 @@ abstract class RecipeService extends ChopperService
   @override
   @Get(path: 'search')
   Future<Response<Result<APIRecipeQuery>>> queryRecipes(
-      @Query('q') String query, @Query('from') int from, @Query('to') int to);
+    @Query('q') String query,
+    @Query('from') int from,
+    @Query('to') int to,
+  );
 
   static RecipeService create() {
     final client = ChopperClient(

@@ -26,17 +26,44 @@ class MockService implements ServiceInterface {
 
   @override
   Future<Response<Result<APIRecipeQuery>>> queryRecipes(
-      String query, int from, int to) {
+    String query,
+    int from,
+    int to,
+  ) {
     switch (nextRecipe.nextInt(2)) {
       case 0:
-        return Future.value(Response(http.Response('Dummy', 200, request: null),
-            Success<APIRecipeQuery>(_currentRecipes1)));
+        return Future.value(
+          Response(
+            http.Response(
+              'Dummy',
+              200,
+              request: null,
+            ),
+            Success<APIRecipeQuery>(_currentRecipes1),
+          ),
+        );
       case 1:
-        return Future.value(Response(http.Response('Dummy', 200, request: null),
-            Success<APIRecipeQuery>(_currentRecipes2)));
+        return Future.value(
+          Response(
+            http.Response(
+              'Dummy',
+              200,
+              request: null,
+            ),
+            Success<APIRecipeQuery>(_currentRecipes2),
+          ),
+        );
       default:
-        return Future.value(Response(http.Response('Dummy', 200, request: null),
-            Success<APIRecipeQuery>(_currentRecipes1)));
+        return Future.value(
+          Response(
+            http.Response(
+              'Dummy',
+              200,
+              request: null,
+            ),
+            Success<APIRecipeQuery>(_currentRecipes1),
+          ),
+        );
     }
   }
 }

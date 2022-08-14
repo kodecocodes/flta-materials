@@ -56,11 +56,14 @@ class SqliteRepository extends Repository {
       () async {
         if (ingredients.isNotEmpty) {
           final ingredientIds = <int>[];
-          await Future.forEach(ingredients, (Ingredient ingredient) async {
-            final futureId = await dbHelper.insertIngredient(ingredient);
-            ingredient.id = futureId;
-            ingredientIds.add(futureId);
-          });
+          await Future.forEach(
+            ingredients,
+            (Ingredient ingredient) async {
+              final futureId = await dbHelper.insertIngredient(ingredient);
+              ingredient.id = futureId;
+              ingredientIds.add(futureId);
+            },
+          );
           return Future.value(ingredientIds);
         } else {
           return Future.value(<int>[]);

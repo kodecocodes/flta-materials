@@ -77,7 +77,9 @@ class MoorRepository extends Repository {
       (listOfIngredients) {
         final ingredients = <Ingredient>[];
         for (final ingredient in listOfIngredients) {
-          ingredients.add(moorIngredientToIngredient(ingredient));
+          ingredients.add(
+            moorIngredientToIngredient(ingredient),
+          );
         }
         return ingredients;
       },
@@ -88,8 +90,9 @@ class MoorRepository extends Repository {
   Future<int> insertRecipe(Recipe recipe) {
     return Future(
       () async {
-        final id =
-            await _recipeDao.insertRecipe(recipeToInsertableMoorRecipe(recipe));
+        final id = await _recipeDao.insertRecipe(
+          recipeToInsertableMoorRecipe(recipe),
+        );
         if (recipe.ingredients != null) {
           for (final ingredient in recipe.ingredients!) {
             ingredient.recipeId = id;

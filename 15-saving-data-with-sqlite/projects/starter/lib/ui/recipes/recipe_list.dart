@@ -43,25 +43,24 @@ class _RecipeListState extends State<RecipeList> {
     getPreviousSearches();
 
     searchTextController = TextEditingController(text: '');
-    _scrollController
-      .addListener(() {
-        final triggerFetchMoreSize =
-            0.7 * _scrollController.position.maxScrollExtent;
+    _scrollController.addListener(() {
+      final triggerFetchMoreSize =
+          0.7 * _scrollController.position.maxScrollExtent;
 
-        if (_scrollController.position.pixels > triggerFetchMoreSize) {
-          if (hasMore &&
-              currentEndPosition < currentCount &&
-              !loading &&
-              !inErrorState) {
-            setState(() {
-              loading = true;
-              currentStartPosition = currentEndPosition;
-              currentEndPosition =
-                  min(currentStartPosition + pageCount, currentCount);
-            });
-          }
+      if (_scrollController.position.pixels > triggerFetchMoreSize) {
+        if (hasMore &&
+            currentEndPosition < currentCount &&
+            !loading &&
+            !inErrorState) {
+          setState(() {
+            loading = true;
+            currentStartPosition = currentEndPosition;
+            currentEndPosition =
+                min(currentStartPosition + pageCount, currentCount);
+          });
         }
-      });
+      }
+    });
   }
 
   @override
@@ -150,19 +149,21 @@ class _RecipeListState extends State<RecipeList> {
                     },
                     itemBuilder: (BuildContext context) {
                       return previousSearches
-                          .map<CustomDropdownMenuItem<String>>((String value) {
-                        return CustomDropdownMenuItem<String>(
-                          text: value,
-                          value: value,
-                          callback: () {
-                            setState(() {
-                              previousSearches.remove(value);
-                              savePreviousSearches();
-                              Navigator.pop(context);
-                            });
-                          },
-                        );
-                      }).toList();
+                          .map<CustomDropdownMenuItem<String>>(
+                        (String value) {
+                          return CustomDropdownMenuItem<String>(
+                            text: value,
+                            value: value,
+                            callback: () {
+                              setState(() {
+                                previousSearches.remove(value);
+                                savePreviousSearches();
+                                Navigator.pop(context);
+                              });
+                            },
+                          );
+                        },
+                      ).toList();
                     },
                   ),
                 ],
@@ -257,7 +258,10 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
-  Widget _buildRecipeList(BuildContext recipeListContext, List<APIHits> hits) {
+  Widget _buildRecipeList(
+    BuildContext recipeListContext,
+    List<APIHits> hits,
+  ) {
     final size = MediaQuery.of(context).size;
     const itemHeight = 310;
     final itemWidth = size.width / 2;
@@ -269,15 +273,25 @@ class _RecipeListState extends State<RecipeList> {
           childAspectRatio: (itemWidth / itemHeight),
         ),
         itemCount: hits.length,
-        itemBuilder: (BuildContext context, int index) {
-          return _buildRecipeCard(recipeListContext, hits, index);
+        itemBuilder: (
+          BuildContext context,
+          int index,
+        ) {
+          return _buildRecipeCard(
+            recipeListContext,
+            hits,
+            index,
+          );
         },
       ),
     );
   }
 
   Widget _buildRecipeCard(
-      BuildContext topLevelContext, List<APIHits> hits, int index) {
+    BuildContext topLevelContext,
+    List<APIHits> hits,
+    int index,
+  ) {
     final recipe = hits[index].recipe;
     return GestureDetector(
       onTap: () {

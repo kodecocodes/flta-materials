@@ -32,7 +32,10 @@ class _MyRecipesListState extends State<MyRecipesList> {
           final recipes = snapshot.data ?? [];
           return ListView.builder(
               itemCount: recipes.length,
-              itemBuilder: (BuildContext context, int index) {
+              itemBuilder: (
+                BuildContext context,
+                int index,
+              ) {
                 final recipe = recipes[index];
                 return SizedBox(
                   height: 100,
@@ -98,7 +101,10 @@ class _MyRecipesListState extends State<MyRecipesList> {
     );
   }
 
-  void deleteRecipe(Repository repository, Recipe recipe) async {
+  void deleteRecipe(
+    Repository repository,
+    Recipe recipe,
+  ) async {
     repository.deleteRecipe(recipe);
     setState(() {});
   }
