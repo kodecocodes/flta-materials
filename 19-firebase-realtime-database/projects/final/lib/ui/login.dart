@@ -41,8 +41,9 @@ class _LoginState extends State<Login> {
                   Expanded(
                     child: TextFormField(
                       decoration: const InputDecoration(
-                          border: UnderlineInputBorder(),
-                          hintText: 'Email Address'),
+                        border: UnderlineInputBorder(),
+                        hintText: 'Email Address',
+                      ),
                       autofocus: false,
                       keyboardType: TextInputType.emailAddress,
                       textCapitalization: TextCapitalization.none,
@@ -96,10 +97,12 @@ class _LoginState extends State<Login> {
                         );
                         if (errorMessage != null) {
                           if (!mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(errorMessage),
-                            duration: const Duration(milliseconds: 700),
-                          ));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(errorMessage),
+                              duration: const Duration(milliseconds: 700),
+                            ),
+                          );
                         }
                       },
                       child: const Text('Login'),
@@ -119,10 +122,12 @@ class _LoginState extends State<Login> {
                         );
                         if (errorMessage != null) {
                           if (!mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(errorMessage),
-                            duration: const Duration(milliseconds: 700),
-                          ));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(errorMessage),
+                              duration: const Duration(milliseconds: 700),
+                            ),
+                          );
                         }
                       },
                       child: const Text('Sign Up'),

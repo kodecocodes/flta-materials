@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 class MessageList extends StatefulWidget {
   const MessageList({Key? key}) : super(key: key);
 
@@ -51,13 +50,16 @@ class MessageListState extends State<MessageList> {
                   ),
                 ),
                 IconButton(
-                    icon: Icon(_canSendMessage()
+                  icon: Icon(
+                    _canSendMessage()
                         ? CupertinoIcons.arrow_right_circle_fill
-                        : CupertinoIcons.arrow_right_circle),
-                    onPressed: () {
-                      // TODO: Add Message DAO 2
-                      _sendMessage();
-                    })
+                        : CupertinoIcons.arrow_right_circle,
+                  ),
+                  onPressed: () {
+                    // TODO: Add Message DAO 2
+                    _sendMessage();
+                  },
+                )
               ],
             ),
           ],
@@ -67,8 +69,7 @@ class MessageListState extends State<MessageList> {
   }
 
   // TODO: Replace _sendMessage
-  void _sendMessage() {
-  }
+  void _sendMessage() {}
 
   // TODO: Replace _getMessageList
   Widget _getMessageList() {
