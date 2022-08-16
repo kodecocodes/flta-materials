@@ -1,12 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../data/message.dart';
 import '../data/message_dao.dart';
-import '../data/user_dao.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'message_widget.dart';
+import '../data/user_dao.dart';
 
 class MessageList extends StatefulWidget {
   const MessageList({Key? key}) : super(key: key);
@@ -24,6 +23,7 @@ class MessageListState extends State<MessageList> {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
     final messageDao = Provider.of<MessageDao>(context, listen: false);
+
     final userDao = Provider.of<UserDao>(context, listen: false);
     email = userDao.email();
 
@@ -32,10 +32,11 @@ class MessageListState extends State<MessageList> {
         title: const Text('RayChat'),
         actions: [
           IconButton(
-              onPressed: () {
-                userDao.logout();
-              },
-              icon: const Icon(Icons.logout))
+            onPressed: () {
+              userDao.logout();
+            },
+            icon: const Icon(Icons.logout),
+          ),
         ],
       ),
       body: Padding(
@@ -61,9 +62,11 @@ class MessageListState extends State<MessageList> {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(_canSendMessage()
-                      ? CupertinoIcons.arrow_right_circle_fill
-                      : CupertinoIcons.arrow_right_circle),
+                  icon: Icon(
+                    _canSendMessage()
+                        ? CupertinoIcons.arrow_right_circle_fill
+                        : CupertinoIcons.arrow_right_circle,
+                  ),
                   onPressed: () {
                     _sendMessage(messageDao);
                   },
@@ -97,6 +100,7 @@ class MessageListState extends State<MessageList> {
           if (!snapshot.hasData) {
             return const Center(child: LinearProgressIndicator());
           }
+
           return _buildList(context, snapshot.data!.docs);
         },
       ),
@@ -108,13 +112,13 @@ class MessageListState extends State<MessageList> {
       controller: _scrollController,
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.only(top: 20.0),
-      // 2
       children: snapshot!.map((data) => _buildListItem(context, data)).toList(),
     );
   }
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
     final message = Message.fromSnapshot(snapshot);
+
     return MessageWidget(
       message.text,
       message.date,
