@@ -14,17 +14,15 @@ class MoorRepository extends Repository {
   @override
   Future<List<Recipe>> findAllRecipes() {
     return _recipeDao.findAllRecipes().then<List<Recipe>>(
-      (List<MoorRecipeData> moorRecipes) {
+      (List<MoorRecipeData> moorRecipes) async {
         final recipes = <Recipe>[];
-        moorRecipes.forEach(
-          (moorRecipe) async {
-            final recipe = moorRecipeToRecipe(moorRecipe);
-            if (recipe.id != null) {
-              recipe.ingredients = await findRecipeIngredients(recipe.id!);
-            }
-            recipes.add(recipe);
-          },
-        );
+        for (final moorRecipe in moorRecipes) {
+          final recipe = moorRecipeToRecipe(moorRecipe);
+          if (recipe.id != null) {
+            recipe.ingredients = await findRecipeIngredients(recipe.id!);
+          }
+          recipes.add(recipe);
+        }
         return recipes;
       },
     );
@@ -32,9 +30,7 @@ class MoorRepository extends Repository {
 
   @override
   Stream<List<Recipe>> watchAllRecipes() {
-    if (recipeStream == null) {
-      recipeStream = _recipeDao.watchAllRecipes();
-    }
+    recipeStream ??= _recipeDao.watchAllRecipes();
     return recipeStream!;
   }
 
@@ -45,11 +41,9 @@ class MoorRepository extends Repository {
       ingredientStream = stream.map(
         (moorIngredients) {
           final ingredients = <Ingredient>[];
-          moorIngredients.forEach(
-            (moorIngredient) {
-              ingredients.add(moorIngredientToIngredient(moorIngredient));
-            },
-          );
+          for (final moorIngredient in moorIngredients) {
+            ingredients.add(moorIngredientToIngredient(moorIngredient));
+          }
           return ingredients;
         },
       );
@@ -69,11 +63,9 @@ class MoorRepository extends Repository {
     return _ingredientDao.findAllIngredients().then<List<Ingredient>>(
       (List<MoorIngredientData> moorIngredients) {
         final ingredients = <Ingredient>[];
-        moorIngredients.forEach(
-          (ingredient) {
-            ingredients.add(moorIngredientToIngredient(ingredient));
-          },
-        );
+        for (final ingredient in moorIngredients) {
+          ingredients.add(moorIngredientToIngredient(ingredient));
+        }
         return ingredients;
       },
     );
@@ -84,11 +76,11 @@ class MoorRepository extends Repository {
     return _ingredientDao.findRecipeIngredients(recipeId).then(
       (listOfIngredients) {
         final ingredients = <Ingredient>[];
-        listOfIngredients.forEach(
-          (ingredient) {
-            ingredients.add(moorIngredientToIngredient(ingredient));
-          },
-        );
+        for (final ingredient in listOfIngredients) {
+          ingredients.add(
+            moorIngredientToIngredient(ingredient),
+          );
+        }
         return ingredients;
       },
     );
@@ -98,14 +90,13 @@ class MoorRepository extends Repository {
   Future<int> insertRecipe(Recipe recipe) {
     return Future(
       () async {
-        final id =
-            await _recipeDao.insertRecipe(recipeToInsertableMoorRecipe(recipe));
+        final id = await _recipeDao.insertRecipe(
+          recipeToInsertableMoorRecipe(recipe),
+        );
         if (recipe.ingredients != null) {
-          recipe.ingredients!.forEach(
-            (ingredient) {
-              ingredient.recipeId = id;
-            },
-          );
+          for (final ingredient in recipe.ingredients!) {
+            ingredient.recipeId = id;
+          }
           insertIngredients(recipe.ingredients!);
         }
         return id;
@@ -117,19 +108,17 @@ class MoorRepository extends Repository {
   Future<List<int>> insertIngredients(List<Ingredient> ingredients) {
     return Future(
       () {
-        if (ingredients.length == 0) {
+        if (ingredients.isEmpty) {
           return <int>[];
         }
         final resultIds = <int>[];
-        ingredients.forEach(
-          (ingredient) {
-            final moorIngredient =
-                ingredientToInsertableMoorIngredient(ingredient);
-            _ingredientDao
-                .insertIngredient(moorIngredient)
-                .then((int id) => resultIds.add(id));
-          },
-        );
+        for (final ingredient in ingredients) {
+          final moorIngredient =
+              ingredientToInsertableMoorIngredient(ingredient);
+          _ingredientDao
+              .insertIngredient(moorIngredient)
+              .then((int id) => resultIds.add(id));
+        }
         return resultIds;
       },
     );
@@ -139,6 +128,7 @@ class MoorRepository extends Repository {
   Future<void> deleteRecipe(Recipe recipe) {
     if (recipe.id != null) {
       _recipeDao.deleteRecipe(recipe.id!);
+      deleteRecipeIngredients(recipe.id!);
     }
     return Future.value();
   }
@@ -154,13 +144,11 @@ class MoorRepository extends Repository {
 
   @override
   Future<void> deleteIngredients(List<Ingredient> ingredients) {
-    ingredients.forEach(
-      (ingredient) {
-        if (ingredient.id != null) {
-          _ingredientDao.deleteIngredient(ingredient.id!);
-        }
-      },
-    );
+    for (final ingredient in ingredients) {
+      if (ingredient.id != null) {
+        _ingredientDao.deleteIngredient(ingredient.id!);
+      }
+    }
     return Future.value();
   }
 

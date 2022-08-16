@@ -1,5 +1,6 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,7 @@ void _setupLogging() {
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen(
     (rec) {
-      print('${rec.level.name}: ${rec.time}: ${rec.message}');
+      log('${rec.level.name}: ${rec.time}: ${rec.message}');
     },
   );
 }
@@ -32,7 +33,10 @@ void _setupLogging() {
 class MyApp extends StatelessWidget {
   final Repository repository;
 
-  const MyApp({Key? key, required this.repository}) : super(key: key);
+  const MyApp({
+    Key? key,
+    required this.repository,
+  }) : super(key: key);
 
   // This widget is the root of your application.
   @override

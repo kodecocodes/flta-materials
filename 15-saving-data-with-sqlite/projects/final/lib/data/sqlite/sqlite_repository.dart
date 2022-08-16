@@ -33,38 +33,37 @@ class SqliteRepository extends Repository {
   }
 
   @override
-  Future<List<Ingredient>> findRecipeIngredients(int id) {
-    return dbHelper.findRecipeIngredients(id);
+  Future<List<Ingredient>> findRecipeIngredients(int recipeId) {
+    return dbHelper.findRecipeIngredients(recipeId);
   }
 
   @override
-  Future<int> insertRecipe(Recipe recipe) {
-    return Future(
-      () async {
-        final id = await dbHelper.insertRecipe(recipe);
-        recipe.id = id;
-        if (recipe.ingredients != null) {
-          recipe.ingredients!.forEach((ingredient) {
-            ingredient.recipeId = id;
-          });
-          insertIngredients(recipe.ingredients!);
-        }
-        return id;
-      },
-    );
+  Future<int> insertRecipe(Recipe recipe) async {
+    final id = await dbHelper.insertRecipe(recipe);
+    recipe.id = id;
+    if (recipe.ingredients != null) {
+      for (final ingredient in recipe.ingredients!) {
+        ingredient.recipeId = id;
+      }
+      insertIngredients(recipe.ingredients!);
+    }
+    return id;
   }
 
   @override
   Future<List<int>> insertIngredients(List<Ingredient> ingredients) {
     return Future(
       () async {
-        if (ingredients.length != 0) {
+        if (ingredients.isNotEmpty) {
           final ingredientIds = <int>[];
-          await Future.forEach(ingredients, (Ingredient ingredient) async {
-            final futureId = await dbHelper.insertIngredient(ingredient);
-            ingredient.id = futureId;
-            ingredientIds.add(futureId);
-          });
+          await Future.forEach(
+            ingredients,
+            (Ingredient ingredient) async {
+              final futureId = await dbHelper.insertIngredient(ingredient);
+              ingredient.id = futureId;
+              ingredientIds.add(futureId);
+            },
+          );
           return Future.value(ingredientIds);
         } else {
           return Future.value(<int>[]);
