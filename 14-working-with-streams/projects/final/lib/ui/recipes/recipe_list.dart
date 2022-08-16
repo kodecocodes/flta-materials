@@ -19,7 +19,7 @@ class RecipeList extends StatefulWidget {
   const RecipeList({Key? key}) : super(key: key);
 
   @override
-  _RecipeListState createState() => _RecipeListState();
+  State createState() => _RecipeListState();
 }
 
 class _RecipeListState extends State<RecipeList> {
@@ -43,25 +43,24 @@ class _RecipeListState extends State<RecipeList> {
     getPreviousSearches();
 
     searchTextController = TextEditingController(text: '');
-    _scrollController
-      ..addListener(() {
-        final triggerFetchMoreSize =
-            0.7 * _scrollController.position.maxScrollExtent;
+    _scrollController.addListener(() {
+      final triggerFetchMoreSize =
+          0.7 * _scrollController.position.maxScrollExtent;
 
-        if (_scrollController.position.pixels > triggerFetchMoreSize) {
-          if (hasMore &&
-              currentEndPosition < currentCount &&
-              !loading &&
-              !inErrorState) {
-            setState(() {
-              loading = true;
-              currentStartPosition = currentEndPosition;
-              currentEndPosition =
-                  min(currentStartPosition + pageCount, currentCount);
-            });
-          }
+      if (_scrollController.position.pixels > triggerFetchMoreSize) {
+        if (hasMore &&
+            currentEndPosition < currentCount &&
+            !loading &&
+            !inErrorState) {
+          setState(() {
+            loading = true;
+            currentStartPosition = currentEndPosition;
+            currentEndPosition =
+                min(currentStartPosition + pageCount, currentCount);
+          });
         }
-      });
+      }
+    });
   }
 
   @override
@@ -107,7 +106,10 @@ class _RecipeListState extends State<RecipeList> {
     return Card(
       elevation: 4,
       shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8.0))),
+        borderRadius: BorderRadius.all(
+          Radius.circular(8.0),
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Row(
@@ -116,6 +118,10 @@ class _RecipeListState extends State<RecipeList> {
               icon: const Icon(Icons.search),
               onPressed: () {
                 startSearch(searchTextController.text);
+                final currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
               },
             ),
             const SizedBox(
@@ -127,14 +133,13 @@ class _RecipeListState extends State<RecipeList> {
                   Expanded(
                       child: TextField(
                     decoration: const InputDecoration(
-                        border: InputBorder.none, hintText: 'Search'),
+                      border: InputBorder.none,
+                      hintText: 'Search',
+                    ),
                     autofocus: false,
                     textInputAction: TextInputAction.done,
                     onSubmitted: (value) {
-                      if (!previousSearches.contains(value)) {
-                        previousSearches.add(value);
-                        savePreviousSearches();
-                      }
+                      startSearch(searchTextController.text);
                     },
                     controller: searchTextController,
                   )),
@@ -156,6 +161,7 @@ class _RecipeListState extends State<RecipeList> {
                           callback: () {
                             setState(() {
                               previousSearches.remove(value);
+                              savePreviousSearches();
                               Navigator.pop(context);
                             });
                           },
@@ -228,17 +234,25 @@ class _RecipeListState extends State<RecipeList> {
           final result = snapshot.data?.body;
           if (result == null || result is Error) {
             inErrorState = true;
-            return _buildRecipeList(context, currentSearchList);
+            return _buildRecipeList(
+              context,
+              currentSearchList,
+            );
           }
           final query = (result as Success).value;
           inErrorState = false;
-          currentCount = query.count;
-          hasMore = query.more;
-          currentSearchList.addAll(query.hits);
-          if (query.to < currentEndPosition) {
-            currentEndPosition = query.to;
+          if (query != null) {
+            currentCount = query.count;
+            hasMore = query.more;
+            currentSearchList.addAll(query.hits);
+            if (query.to < currentEndPosition) {
+              currentEndPosition = query.to;
+            }
           }
-          return _buildRecipeList(context, currentSearchList);
+          return _buildRecipeList(
+            context,
+            currentSearchList,
+          );
         } else {
           if (currentCount == 0) {
             // Show a loading indicator while waiting for the movies
@@ -253,7 +267,10 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
-  Widget _buildRecipeList(BuildContext recipeListContext, List<APIHits> hits) {
+  Widget _buildRecipeList(
+    BuildContext recipeListContext,
+    List<APIHits> hits,
+  ) {
     final size = MediaQuery.of(context).size;
     const itemHeight = 310;
     final itemWidth = size.width / 2;
@@ -265,31 +282,46 @@ class _RecipeListState extends State<RecipeList> {
           childAspectRatio: (itemWidth / itemHeight),
         ),
         itemCount: hits.length,
-        itemBuilder: (BuildContext context, int index) {
-          return _buildRecipeCard(recipeListContext, hits, index);
+        itemBuilder: (
+          BuildContext context,
+          int index,
+        ) {
+          return _buildRecipeCard(
+            recipeListContext,
+            hits,
+            index,
+          );
         },
       ),
     );
   }
 
   Widget _buildRecipeCard(
-      BuildContext topLevelContext, List<APIHits> hits, int index) {
+    BuildContext topLevelContext,
+    List<APIHits> hits,
+    int index,
+  ) {
     final recipe = hits[index].recipe;
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context) {
-            final detailRecipe = Recipe(
+        Navigator.push(
+          topLevelContext,
+          MaterialPageRoute(
+            builder: (context) {
+              final detailRecipe = Recipe(
                 label: recipe.label,
                 image: recipe.image,
                 url: recipe.url,
                 calories: recipe.calories,
                 totalTime: recipe.totalTime,
-                totalWeight: recipe.totalWeight);
-            detailRecipe.ingredients = convertIngredients(recipe.ingredients);
-            return RecipeDetails(recipe: detailRecipe);
-          },
-        ));
+                totalWeight: recipe.totalWeight,
+              );
+
+              detailRecipe.ingredients = convertIngredients(recipe.ingredients);
+              return RecipeDetails(recipe: detailRecipe);
+            },
+          ),
+        );
       },
       child: recipeCard(recipe),
     );

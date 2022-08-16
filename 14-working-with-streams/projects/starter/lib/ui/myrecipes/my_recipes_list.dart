@@ -9,7 +9,7 @@ class MyRecipesList extends StatefulWidget {
   const MyRecipesList({Key? key}) : super(key: key);
 
   @override
-  _MyRecipesListState createState() => _MyRecipesListState();
+  State createState() => _MyRecipesListState();
 }
 
 class _MyRecipesListState extends State<MyRecipesList> {
@@ -24,17 +24,52 @@ class _MyRecipesListState extends State<MyRecipesList> {
   }
 
   Widget _buildRecipeList(BuildContext context) {
-    return Consumer<MemoryRepository>(builder: (context, repository, child) {
-      recipes = repository.findAllRecipes();
-      return ListView.builder(
+    return Consumer<MemoryRepository>(
+      builder: (context, repository, child) {
+        recipes = repository.findAllRecipes();
+        return ListView.builder(
           itemCount: recipes.length,
           itemBuilder: (BuildContext context, int index) {
             final recipe = recipes[index];
             return SizedBox(
               height: 100,
               child: Slidable(
-                actionPane: const SlidableDrawerActionPane(),
-                actionExtentRatio: 0.25,
+                startActionPane: ActionPane(
+                  motion: const DrawerMotion(),
+                  extentRatio: 0.25,
+                  children: [
+                    SlidableAction(
+                      label: 'Delete',
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: Colors.black,
+                      icon: Icons.delete,
+                      onPressed: (context) {
+                        deleteRecipe(
+                          repository,
+                          recipe,
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                endActionPane: ActionPane(
+                  motion: const DrawerMotion(),
+                  extentRatio: 0.25,
+                  children: [
+                    SlidableAction(
+                      label: 'Delete',
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: Colors.black,
+                      icon: Icons.delete,
+                      onPressed: (context) {
+                        deleteRecipe(
+                          repository,
+                          recipe,
+                        );
+                      },
+                    ),
+                  ],
+                ),
                 child: Card(
                   elevation: 1.0,
                   shape: RoundedRectangleBorder(
@@ -46,46 +81,34 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ListTile(
-                        leading: CachedNetworkImage(
-                                  imageUrl: recipe.image ?? '',
-                            height: 120,
-                            width: 60,
-                            fit: BoxFit.cover),
-                              title: Text(recipe.label ?? ''),
+                        // TODO: Replace with image from recipe
+                        leading: Image.asset(
+                          'assets/images/pizza_w700.png',
+                          height: 200,
+                          width: 200,
+                        ),
+                        // leading: CachedNetworkImage(
+                        //   imageUrl: recipe.image ?? '',
+                        //   height: 120,
+                        //   width: 60,
+                        //   fit: BoxFit.cover,
+                        // ),
+                        title: Text(recipe.label ?? ''),
                       ),
                     ),
                   ),
                 ),
-                actions: <Widget>[
-                  IconSlideAction(
-                      caption: 'Delete',
-                      color: Colors.transparent,
-                      foregroundColor: Colors.black,
-                      iconWidget: const Icon(Icons.delete, color: Colors.red),
-                      onTap: () => deleteRecipe(repository, recipe)),
-                ],
-                secondaryActions: <Widget>[
-                  IconSlideAction(
-                      caption: 'Delete',
-                      color: Colors.transparent,
-                      foregroundColor: Colors.black,
-                      iconWidget: const Icon(Icons.delete, color: Colors.red),
-                      onTap: () => deleteRecipe(repository, recipe)),
-                ],
               ),
             );
-          },);
-    // TODO: Add else here
-    },);
+          },
+        );
+        // TODO: Add else here
+      },
+    );
   }
 
   void deleteRecipe(MemoryRepository repository, Recipe recipe) async {
-    if (recipe.id != null) {
-      repository.deleteRecipeIngredients(recipe.id!);
-      repository.deleteRecipe(recipe);
-      setState(() {});
-    } else {
-      print('Recipe id is null');
-    }
+    repository.deleteRecipe(recipe);
+    setState(() {});
   }
 }

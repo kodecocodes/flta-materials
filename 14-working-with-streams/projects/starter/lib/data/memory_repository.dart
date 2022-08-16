@@ -44,7 +44,7 @@ class MemoryRepository extends Repository with ChangeNotifier {
 
   @override
   List<int> insertIngredients(List<Ingredient> ingredients) {
-    if (ingredients.length != 0) {
+    if (ingredients.isNotEmpty) {
       _currentIngredients.addAll(ingredients);
       notifyListeners();
     }
@@ -80,7 +80,9 @@ class MemoryRepository extends Repository with ChangeNotifier {
   }
 
   @override
-  Future init() { return Future.value(null); }
+  Future init() {
+    return Future.value(null);
+  }
 
   @override
   void close() {}
