@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../data/user_dao.dart';
@@ -9,7 +7,7 @@ class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  State createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
@@ -43,8 +41,9 @@ class _LoginState extends State<Login> {
                   Expanded(
                     child: TextFormField(
                       decoration: const InputDecoration(
-                          border: UnderlineInputBorder(),
-                          hintText: 'Email Address'),
+                        border: UnderlineInputBorder(),
+                        hintText: 'Email Address',
+                      ),
                       autofocus: false,
                       keyboardType: TextInputType.emailAddress,
                       textCapitalization: TextCapitalization.none,
@@ -91,11 +90,20 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 20),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {
-                        userDao.login(
+                      onPressed: () async {
+                        final errorMessage = await userDao.login(
                           _emailController.text,
                           _passwordController.text,
                         );
+                        if (errorMessage != null) {
+                          if (!mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(errorMessage),
+                              duration: const Duration(milliseconds: 700),
+                            ),
+                          );
+                        }
                       },
                       child: const Text('Login'),
                     ),
@@ -107,11 +115,20 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 20),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {
-                        userDao.signup(
+                      onPressed: () async {
+                        final errorMessage = await userDao.signup(
                           _emailController.text,
                           _passwordController.text,
                         );
+                        if (errorMessage != null) {
+                          if (!mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(errorMessage),
+                              duration: const Duration(milliseconds: 700),
+                            ),
+                          );
+                        }
                       },
                       child: const Text('Sign Up'),
                     ),
