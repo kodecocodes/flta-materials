@@ -7,9 +7,9 @@ class FriendPostListView extends StatelessWidget {
   final List<Post> friendPosts;
 
   const FriendPostListView({
-    Key? key,
+    super.key,
     required this.friendPosts,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

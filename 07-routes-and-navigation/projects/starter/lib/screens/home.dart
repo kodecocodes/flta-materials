@@ -5,20 +5,18 @@ import 'grocery_screen.dart';
 import 'recipes_screen.dart';
 
 class Home extends StatefulWidget {
-  // TODO: Home MaterialPage Helper
-
   const Home({
-    Key? key,
+    super.key,
     required this.currentTab,
-  }) : super(key: key);
+  });
 
   final int currentTab;
 
   @override
-  _HomeState createState() => _HomeState();
+  HomeState createState() => HomeState();
 }
 
-class _HomeState extends State<Home> {
+class HomeState extends State<Home> {
   static List<Widget> pages = <Widget>[
     ExploreScreen(),
     RecipesScreen(),
@@ -27,7 +25,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Wrap Consumer for AppStateManager
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -35,7 +32,7 @@ class _HomeState extends State<Home> {
           style: Theme.of(context).textTheme.headline6,
         ),
         actions: [
-          profileButton(),
+          profileButton(widget.currentTab),
         ],
       ),
       body: IndexedStack(index: widget.currentTab, children: pages),
@@ -45,26 +42,25 @@ class _HomeState extends State<Home> {
         onTap: (index) {
           // TODO: Update user's selected tab
         },
-        items: <BottomNavigationBarItem>[
-          const BottomNavigationBarItem(
+        items: const [
+          BottomNavigationBarItem(
             icon: Icon(Icons.explore),
             label: 'Explore',
           ),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Icon(Icons.book),
             label: 'Recipes',
           ),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Icon(Icons.list),
             label: 'To Buy',
           ),
         ],
       ),
     );
-    // TODO: Add closing },);
   }
 
-  Widget profileButton() {
+  Widget profileButton(int currentTab) {
     return Padding(
       padding: const EdgeInsets.only(right: 16.0),
       child: GestureDetector(
@@ -75,7 +71,7 @@ class _HomeState extends State<Home> {
           ),
         ),
         onTap: () {
-          // TODO: home -> profile
+          // TODO: Navigate to profile screen
         },
       ),
     );

@@ -7,9 +7,9 @@ class FriendPostTile extends StatelessWidget {
   final Post post;
 
   const FriendPostTile({
-    Key? key,
+    super.key,
     required this.post,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class FriendPostTile extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CircleImage(
-          imageProvider: AssetImage('${post.profileImageUrl}'),
+          imageProvider: AssetImage(post.profileImageUrl),
           imageRadius: 20,
         ),
         const SizedBox(width: 16),

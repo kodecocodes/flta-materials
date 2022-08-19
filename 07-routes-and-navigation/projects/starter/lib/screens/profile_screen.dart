@@ -4,31 +4,25 @@ import 'package:provider/provider.dart';
 import '../components/circle_image.dart';
 import '../models/models.dart';
 
-class ProfileScreen extends StatefulWidget {
-  // TODO: ProfileScreen MaterialPage Helper
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:io';
 
+class ProfileScreen extends StatefulWidget {
   final User user;
-  const ProfileScreen({
-    Key? key,
-    required this.user,
-  }) : super(key: key);
+  final int currentTab;
+  const ProfileScreen(
+      {super.key, required this.user, required this.currentTab});
 
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  ProfileScreenState createState() => ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () {
-            // TODO: Close Profile Screen
-          },
-        ),
-      ),
+      appBar: AppBar(),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,8 +44,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         buildDarkModeRow(),
         ListTile(
           title: const Text('View raywenderlich.com'),
-          onTap: () {
-            // TODO: Open raywenderlich.com webview
+          onTap: () async {
+            if (kIsWeb || Platform.isMacOS) {
+              await launchUrl(Uri.parse('https://www.raywenderlich.com/'));
+            } else {
+              // TODO: Navigate to WebView
+            }
           },
         ),
         ListTile(

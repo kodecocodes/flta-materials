@@ -3,29 +3,31 @@ import 'package:provider/provider.dart';
 
 import 'fooderlich_theme.dart';
 import 'models/models.dart';
-import 'screens/splash_screen.dart';
+import 'screens/screens.dart';
 // TODO: Import app_router
 
-void main() {
-  runApp(
-    const Fooderlich(),
-  );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final appStateManager = AppStateManager();
+  await appStateManager.initializeApp();
+  runApp(Fooderlich(appStateManager: appStateManager));
 }
 
 class Fooderlich extends StatefulWidget {
-  const Fooderlich({Key? key}) : super(key: key);
+  final AppStateManager appStateManager;
+
+  const Fooderlich({
+    super.key,
+    required this.appStateManager});
 
   @override
-  _FooderlichState createState() => _FooderlichState();
+  FooderlichState createState() => FooderlichState();
 }
 
-class _FooderlichState extends State<Fooderlich> {
-  final _groceryManager = GroceryManager();
-  final _profileManager = ProfileManager();
-  // TODO: Create AppStateManager
-  // TODO: Define AppRouter
-
-  // TODO: Initialize app router
+class FooderlichState extends State<Fooderlich> {
+  late final _groceryManager = GroceryManager();
+  late final _profileManager = ProfileManager();
+  // TODO: Initialize AppRouter
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,9 @@ class _FooderlichState extends State<Fooderlich> {
         ChangeNotifierProvider(
           create: (context) => _profileManager,
         ),
-        // TODO: Add AppStateManager ChangeNotifierProvider
+        ChangeNotifierProvider(
+          create: (context) => widget.appStateManager,
+        ),
       ],
       child: Consumer<ProfileManager>(
         builder: (context, profileManager, child) {
@@ -48,11 +52,11 @@ class _FooderlichState extends State<Fooderlich> {
             theme = FooderlichTheme.light();
           }
 
+          // TODO: Replace with Router
           return MaterialApp(
             theme: theme,
             title: 'Fooderlich',
-            // TODO: Replace with Router widget
-            home: const SplashScreen(),
+            home: const LoginScreen(),
           );
         },
       ),

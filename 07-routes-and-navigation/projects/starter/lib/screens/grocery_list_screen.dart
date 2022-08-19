@@ -7,9 +7,9 @@ class GroceryListScreen extends StatelessWidget {
   final GroceryManager manager;
 
   const GroceryListScreen({
-    Key? key,
+    super.key,
     required this.manager,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class GroceryListScreen extends StatelessWidget {
                 },
               ),
               onTap: () {
-                // TODO: Tap on grocery item
+                // TODO: Navigate to grocery item
               },
             ),
           );

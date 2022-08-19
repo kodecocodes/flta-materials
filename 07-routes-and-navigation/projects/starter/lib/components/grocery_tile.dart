@@ -10,12 +10,11 @@ class GroceryTile extends StatelessWidget {
   final TextDecoration textDecoration;
 
   GroceryTile({
-    Key? key,
+    super.key,
     required this.item,
     this.onComplete,
-  })  : textDecoration =
-            item.isComplete ? TextDecoration.lineThrough : TextDecoration.none,
-        super(key: key);
+  }) : textDecoration =
+            item.isComplete ? TextDecoration.lineThrough : TextDecoration.none;
 
   @override
   Widget build(BuildContext context) {

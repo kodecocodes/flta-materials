@@ -9,27 +9,24 @@ import '../models/models.dart';
 
 class GroceryItemScreen extends StatefulWidget {
   final Function(GroceryItem) onCreate;
-  final Function(GroceryItem, int) onUpdate;
+  final Function(GroceryItem) onUpdate;
   final GroceryItem? originalItem;
   final int index;
   final bool isUpdating;
 
-  // TODO: GroceryItemScreen MaterialPage Helper
-
   const GroceryItemScreen({
-    Key? key,
+    super.key,
     required this.onCreate,
     required this.onUpdate,
     this.originalItem,
     this.index = -1,
-  })  : isUpdating = (originalItem != null),
-        super(key: key);
+  }) : isUpdating = (originalItem != null);
 
   @override
-  _GroceryItemScreenState createState() => _GroceryItemScreenState();
+  GroceryItemScreenState createState() => GroceryItemScreenState();
 }
 
-class _GroceryItemScreenState extends State<GroceryItemScreen> {
+class GroceryItemScreenState extends State<GroceryItemScreen> {
   final _nameController = TextEditingController();
   String _name = '';
   Importance _importance = Importance.low;
@@ -62,13 +59,12 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
               );
 
               if (widget.isUpdating) {
-                widget.onUpdate(
-                  groceryItem,
-                  widget.index,
-                );
+                widget.onUpdate(groceryItem);
               } else {
                 widget.onCreate(groceryItem);
               }
+
+              // TODO: Navigate to home:ToBuy
             },
           )
         ],
@@ -232,7 +228,7 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
             ),
           ],
         ),
-        Text('${DateFormat('yyyy-MM-dd').format(_dueDate)}'),
+        Text(DateFormat('yyyy-MM-dd').format(_dueDate)),
       ],
     );
   }
@@ -265,7 +261,7 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
             ),
           ],
         ),
-        Text('${_timeOfDay.format(context)}'),
+        Text(_timeOfDay.format(context)),
       ],
     );
   }

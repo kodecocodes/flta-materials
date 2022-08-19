@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
+import 'package:go_router/go_router.dart';
 import '../models/models.dart';
 
 class EmptyGroceryScreen extends StatelessWidget {
-  const EmptyGroceryScreen({Key? key}) : super(key: key);
+  const EmptyGroceryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +31,19 @@ class EmptyGroceryScreen extends StatelessWidget {
             ),
             MaterialButton(
               textColor: Colors.white,
-              child: const Text('Browse Recipes'),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),
               ),
               color: Colors.green,
               onPressed: () {
-                Provider.of<AppStateManager>(context, listen: false)
-                    .goToRecipes();
+                context.goNamed(
+                  'home',
+                  params: {
+                    'tab': '${FooderlichTab.recipes}',
+                  },
+                );
               },
+              child: const Text('Browse Recipes'),
             ),
           ],
         ),

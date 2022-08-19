@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  // TODO: Add OnboardingScreen MaterialPage Helper
-
-  const OnboardingScreen({Key? key}) : super(key: key);
+  const OnboardingScreen({super.key});
 
   @override
-  _OnboardingScreenState createState() => _OnboardingScreenState();
+  OnboardingScreenState createState() => OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class OnboardingScreenState extends State<OnboardingScreen> {
   final controller = PageController();
   final Color rwColor = const Color.fromRGBO(64, 143, 77, 1);
 
@@ -21,15 +19,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         title: const Text('Getting Started'),
-        leading: GestureDetector(
-          child: const Icon(
-            Icons.chevron_left,
-            size: 35,
-          ),
-          onTap: () {
-            Navigator.pop(context, true);
-          },
-        ),
       ),
       body: SafeArea(
         child: Column(
@@ -50,7 +39,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         MaterialButton(
           child: const Text('Skip'),
           onPressed: () {
-            // TODO: Onboarding -> Navigate to home
+            // TODO: Initiate onboarding
           },
         ),
       ],

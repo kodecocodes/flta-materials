@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class EmptyGroceryScreen extends StatelessWidget {
-  const EmptyGroceryScreen({Key? key}) : super(key: key);
+  const EmptyGroceryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +29,14 @@ class EmptyGroceryScreen extends StatelessWidget {
             ),
             MaterialButton(
               textColor: Colors.white,
-              child: const Text('Browse Recipes'),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),
               ),
               color: Colors.green,
               onPressed: () {
-                // TODO: Update user's selected tab
+                // TODO: Go to recipes
               },
+              child: const Text('Browse Recipes'),
             ),
           ],
         ),
