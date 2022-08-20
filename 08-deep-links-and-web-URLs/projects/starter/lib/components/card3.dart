@@ -7,9 +7,9 @@ class Card3 extends StatelessWidget {
   final ExploreRecipe recipe;
 
   const Card3({
-    Key? key,
+    super.key,
     required this.recipe,
-  }) : super(key: key);
+  });
 
   List<Widget> createTagChips() {
     final chips = <Widget>[];

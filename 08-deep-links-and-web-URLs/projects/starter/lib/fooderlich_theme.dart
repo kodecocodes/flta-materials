@@ -62,11 +62,9 @@ class FooderlichTheme {
     return ThemeData(
       brightness: Brightness.light,
       checkboxTheme: CheckboxThemeData(
-        fillColor: MaterialStateColor.resolveWith(
-          (states) {
-            return Colors.black;
-          },
-        ),
+        fillColor: MaterialStateColor.resolveWith((states) {
+          return Colors.black;
+        }),
       ),
       appBarTheme: const AppBarTheme(
         foregroundColor: Colors.black,

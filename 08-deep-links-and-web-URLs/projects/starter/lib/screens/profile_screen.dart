@@ -1,43 +1,31 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
-
+import 'package:go_router/go_router.dart';
 import '../components/circle_image.dart';
 import '../models/models.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:io';
 
 class ProfileScreen extends StatefulWidget {
-  static MaterialPage page(User user) {
-    return MaterialPage(
-      name: FooderlichPages.profilePath,
-      key: ValueKey(FooderlichPages.profilePath),
-      child: ProfileScreen(user: user),
-    );
-  }
-
   final User user;
+  final int currentTab;
+
   const ProfileScreen({
-    Key? key,
+    super.key,
     required this.user,
-  }) : super(key: key);
+    required this.currentTab,
+  });
 
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  ProfileScreenState createState() => ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () {
-            Provider.of<ProfileManager>(context, listen: false)
-                .tapOnProfile(false);
-          },
-        ),
-      ),
+      appBar: AppBar(),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,21 +48,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ListTile(
           title: const Text('View raywenderlich.com'),
           onTap: () async {
-            if (kIsWeb) {
-              await launch('https://www.raywenderlich.com/');
+            if (kIsWeb || Platform.isMacOS) {
+              await launchUrl(Uri.parse('https://www.raywenderlich.com/'));
             } else {
-              Provider.of<ProfileManager>(context, listen: false)
-                  .tapOnRaywenderlich(true);
+              context.goNamed(
+                'rw',
+                params: {'tab': '${widget.currentTab}'},
+              );
             }
           },
         ),
         ListTile(
           title: const Text('Log out'),
           onTap: () {
-            // 1
-            Provider.of<ProfileManager>(context, listen: false)
-                .tapOnProfile(false);
-            // 2
             Provider.of<AppStateManager>(context, listen: false).logout();
           },
         )
@@ -111,7 +97,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const SizedBox(height: 16.0),
         Text(
           widget.user.firstName,
-          style: const TextStyle(fontSize: 21),
+          style: const TextStyle(
+            fontSize: 21,
+          ),
         ),
         Text(widget.user.role),
         Text(

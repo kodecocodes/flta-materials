@@ -7,7 +7,7 @@ import '../models/models.dart';
 class ExploreScreen extends StatelessWidget {
   final mockService = MockFooderlichService();
 
-  ExploreScreen({Key? key}) : super(key: key);
+  ExploreScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,9 @@ class ExploreScreen extends StatelessWidget {
             ],
           );
         } else {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
     );

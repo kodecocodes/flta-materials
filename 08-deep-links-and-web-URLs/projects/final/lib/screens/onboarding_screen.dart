@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import 'package:provider/provider.dart';
 import '../models/models.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  static MaterialPage page() {
-    return MaterialPage(
-        name: FooderlichPages.onboardingPath,
-        key: ValueKey(FooderlichPages.onboardingPath),
-        child: const OnboardingScreen());
-  }
-
-  const OnboardingScreen({Key? key}) : super(key: key);
+  const OnboardingScreen({super.key});
 
   @override
-  _OnboardingScreenState createState() => _OnboardingScreenState();
+  OnboardingScreenState createState() => OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class OnboardingScreenState extends State<OnboardingScreen> {
   final controller = PageController();
   final Color rwColor = const Color.fromRGBO(64, 143, 77, 1);
 
@@ -26,18 +19,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          title: const Text('Getting Started'),
-          leading: GestureDetector(
-            child: const Icon(
-              Icons.chevron_left,
-              size: 35,
-            ),
-            onTap: () {
-              Navigator.pop(context, true);
-            },
-          )),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        title: const Text('Getting Started'),
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -59,7 +44,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           onPressed: () {
             Provider.of<AppStateManager>(context, listen: false).onboarded();
           },
-        )
+        ),
       ],
     );
   }
@@ -69,8 +54,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       controller: controller,
       children: [
         onboardPageView(
-            const AssetImage('assets/fooderlich_assets/recommend.png'),
-            '''Checkout weekly recommended recipes and what your friends are cooking!'''),
+          const AssetImage('assets/fooderlich_assets/recommend.png'),
+          '''Check out weekly recommended recipes and what your friends are cooking!''',
+        ),
         onboardPageView(
           const AssetImage('assets/fooderlich_assets/sheet.png'),
           'Cook with step by step instructions!',
@@ -97,9 +83,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          Text(text,
-              style: const TextStyle(fontSize: 20),
-              textAlign: TextAlign.center),
+          Text(
+            text,
+            style: const TextStyle(fontSize: 20),
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(height: 16),
         ],
       ),
@@ -110,7 +98,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return SmoothPageIndicator(
       controller: controller,
       count: 3,
-      effect: WormEffect(activeDotColor: rwColor),
+      effect: WormEffect(
+        activeDotColor: rwColor,
+      ),
     );
   }
 }
