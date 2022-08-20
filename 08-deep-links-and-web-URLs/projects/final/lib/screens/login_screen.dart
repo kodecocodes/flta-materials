@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
         child: Center(
           child: ListView(
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            padding: const EdgeInsets.only(top: 44),
+            padding: const EdgeInsets.only(top: 44.0),
             children: [
               const SizedBox(
                 height: 200,
