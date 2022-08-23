@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
+// import 'data/memory_repository.dart';
+// import 'data/sqlite/sqlite_repository.dart';
 import 'data/moor/moor_repository.dart';
 import 'data/repository.dart';
 import 'network/recipe_service.dart';
@@ -21,8 +25,7 @@ void _setupLogging() {
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen(
     (rec) {
-      // ignore: avoid_print
-      print('${rec.level.name}: ${rec.time}: ${rec.message}');
+      log('${rec.level.name}: ${rec.time}: ${rec.message}');
     },
   );
 }
@@ -30,7 +33,10 @@ void _setupLogging() {
 class MyApp extends StatelessWidget {
   final Repository repository;
 
-  const MyApp({Key? key, required this.repository}) : super(key: key);
+  const MyApp({
+    Key? key,
+    required this.repository,
+  }) : super(key: key);
 
   // This widget is the root of your application.
   @override
