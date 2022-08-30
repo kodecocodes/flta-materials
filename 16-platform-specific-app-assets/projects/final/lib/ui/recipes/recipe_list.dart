@@ -43,25 +43,26 @@ class _RecipeListState extends State<RecipeList> {
     getPreviousSearches();
 
     searchTextController = TextEditingController(text: '');
-    _scrollController
-      .addListener(() {
-        final triggerFetchMoreSize =
-            0.7 * _scrollController.position.maxScrollExtent;
+    _scrollController.addListener(() {
+      final triggerFetchMoreSize =
+          0.7 * _scrollController.position.maxScrollExtent;
 
-        if (_scrollController.position.pixels > triggerFetchMoreSize) {
-          if (hasMore &&
-              currentEndPosition < currentCount &&
-              !loading &&
-              !inErrorState) {
-            setState(() {
+      if (_scrollController.position.pixels > triggerFetchMoreSize) {
+        if (hasMore &&
+            currentEndPosition < currentCount &&
+            !loading &&
+            !inErrorState) {
+          setState(
+            () {
               loading = true;
               currentStartPosition = currentEndPosition;
               currentEndPosition =
                   min(currentStartPosition + pageCount, currentCount);
-            });
-          }
+            },
+          );
         }
-      });
+      }
+    });
   }
 
   @override
@@ -131,7 +132,9 @@ class _RecipeListState extends State<RecipeList> {
                   Expanded(
                       child: TextField(
                     decoration: const InputDecoration(
-                        border: InputBorder.none, hintText: 'Search'),
+                      border: InputBorder.none,
+                      hintText: 'Search',
+                    ),
                     autofocus: false,
                     textInputAction: TextInputAction.done,
                     onSubmitted: (value) {
@@ -157,6 +160,7 @@ class _RecipeListState extends State<RecipeList> {
                           callback: () {
                             setState(() {
                               previousSearches.remove(value);
+                              savePreviousSearches();
                               Navigator.pop(context);
                             });
                           },
@@ -268,15 +272,25 @@ class _RecipeListState extends State<RecipeList> {
           childAspectRatio: (itemWidth / itemHeight),
         ),
         itemCount: hits.length,
-        itemBuilder: (BuildContext context, int index) {
-          return _buildRecipeCard(recipeListContext, hits, index);
+        itemBuilder: (
+          BuildContext context,
+          int index,
+        ) {
+          return _buildRecipeCard(
+            recipeListContext,
+            hits,
+            index,
+          );
         },
       ),
     );
   }
 
   Widget _buildRecipeCard(
-      BuildContext topLevelContext, List<APIHits> hits, int index) {
+    BuildContext topLevelContext,
+    List<APIHits> hits,
+    int index,
+  ) {
     final recipe = hits[index].recipe;
     return GestureDetector(
       onTap: () {
