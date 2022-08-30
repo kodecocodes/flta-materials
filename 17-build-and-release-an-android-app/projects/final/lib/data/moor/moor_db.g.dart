@@ -6,7 +6,7 @@ part of 'moor_db.dart';
 // MoorGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
+// ignore_for_file: type=lint
 class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
   final int id;
   final String label;
@@ -257,9 +257,10 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
 
 class $MoorRecipeTable extends MoorRecipe
     with TableInfo<$MoorRecipeTable, MoorRecipeData> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $MoorRecipeTable(this._db, [this._alias]);
+  $MoorRecipeTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
@@ -358,13 +359,13 @@ class $MoorRecipeTable extends MoorRecipe
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   MoorRecipeData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return MoorRecipeData.fromData(data, _db,
+    return MoorRecipeData.fromData(data, attachedDatabase,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
   $MoorRecipeTable createAlias(String alias) {
-    return $MoorRecipeTable(_db, alias);
+    return $MoorRecipeTable(attachedDatabase, alias);
   }
 }
 
@@ -543,9 +544,10 @@ class MoorIngredientCompanion extends UpdateCompanion<MoorIngredientData> {
 
 class $MoorIngredientTable extends MoorIngredient
     with TableInfo<$MoorIngredientTable, MoorIngredientData> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $MoorIngredientTable(this._db, [this._alias]);
+  $MoorIngredientTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
@@ -607,13 +609,13 @@ class $MoorIngredientTable extends MoorIngredient
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   MoorIngredientData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return MoorIngredientData.fromData(data, _db,
+    return MoorIngredientData.fromData(data, attachedDatabase,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
   $MoorIngredientTable createAlias(String alias) {
-    return $MoorIngredientTable(_db, alias);
+    return $MoorIngredientTable(attachedDatabase, alias);
   }
 }
 
