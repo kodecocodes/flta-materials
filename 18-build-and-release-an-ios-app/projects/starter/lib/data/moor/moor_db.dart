@@ -29,11 +29,18 @@ class MoorIngredient extends Table {
   RealColumn get weight => real()();
 }
 
-@UseMoor(tables: [MoorRecipe, MoorIngredient], daos: [RecipeDao, IngredientDao])
+@UseMoor(
+  tables: [MoorRecipe, MoorIngredient],
+  daos: [RecipeDao, IngredientDao],
+)
 class RecipeDatabase extends _$RecipeDatabase {
   RecipeDatabase()
-      : super(FlutterQueryExecutor.inDatabaseFolder(
-            path: 'recipes.sqlite', logStatements: true));
+      : super(
+          FlutterQueryExecutor.inDatabaseFolder(
+            path: 'recipes.sqlite',
+            logStatements: true,
+          ),
+        );
 
   @override
   int get schemaVersion => 1;
@@ -52,12 +59,12 @@ class RecipeDao extends DatabaseAccessor<RecipeDatabase> with _$RecipeDaoMixin {
       (rows) {
         final recipes = <Recipe>[];
         for (final row in rows) {
-            final recipe = moorRecipeToRecipe(row);
-            if (!recipes.contains(recipe)) {
-              recipe.ingredients = <Ingredient>[];
-              recipes.add(recipe);
-            }
+          final recipe = moorRecipeToRecipe(row);
+          if (!recipes.contains(recipe)) {
+            recipe.ingredients = <Ingredient>[];
+            recipes.add(recipe);
           }
+        }
         return recipes;
       },
     );
@@ -99,37 +106,41 @@ class IngredientDao extends DatabaseAccessor<RecipeDatabase>
 // Conversion Methods
 Recipe moorRecipeToRecipe(MoorRecipeData recipe) {
   return Recipe(
-      id: recipe.id,
-      label: recipe.label,
-      image: recipe.image,
-      url: recipe.url,
-      calories: recipe.calories,
-      totalWeight: recipe.totalWeight,
-      totalTime: recipe.totalTime);
+    id: recipe.id,
+    label: recipe.label,
+    image: recipe.image,
+    url: recipe.url,
+    calories: recipe.calories,
+    totalWeight: recipe.totalWeight,
+    totalTime: recipe.totalTime,
+  );
 }
 
 Insertable<MoorRecipeData> recipeToInsertableMoorRecipe(Recipe recipe) {
   return MoorRecipeCompanion.insert(
-      label: recipe.label ?? '',
-      image: recipe.image ?? '',
-      url: recipe.url ?? '',
-      calories: recipe.calories ?? 0,
-      totalWeight: recipe.totalWeight ?? 0,
-      totalTime: recipe.totalTime ?? 0);
+    label: recipe.label ?? '',
+    image: recipe.image ?? '',
+    url: recipe.url ?? '',
+    calories: recipe.calories ?? 0,
+    totalWeight: recipe.totalWeight ?? 0,
+    totalTime: recipe.totalTime ?? 0,
+  );
 }
 
 Ingredient moorIngredientToIngredient(MoorIngredientData ingredient) {
   return Ingredient(
-      id: ingredient.id,
-      recipeId: ingredient.recipeId,
-      name: ingredient.name,
-      weight: ingredient.weight);
+    id: ingredient.id,
+    recipeId: ingredient.recipeId,
+    name: ingredient.name,
+    weight: ingredient.weight,
+  );
 }
 
 MoorIngredientCompanion ingredientToInsertableMoorIngredient(
     Ingredient ingredient) {
   return MoorIngredientCompanion.insert(
-      recipeId: ingredient.recipeId ?? 0,
-      name: ingredient.name ?? '',
-      weight: ingredient.weight ?? 0);
+    recipeId: ingredient.recipeId ?? 0,
+    name: ingredient.name ?? '',
+    weight: ingredient.weight ?? 0,
+  );
 }
