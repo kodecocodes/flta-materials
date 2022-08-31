@@ -6,7 +6,7 @@ part of 'moor_db.dart';
 // MoorGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
+// ignore_for_file: type=lint
 class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
   final int id;
   final String label;
@@ -128,16 +128,8 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          label.hashCode,
-          $mrjc(
-              image.hashCode,
-              $mrjc(
-                  url.hashCode,
-                  $mrjc(calories.hashCode,
-                      $mrjc(totalWeight.hashCode, totalTime.hashCode)))))));
+  int get hashCode =>
+      Object.hash(id, label, image, url, calories, totalWeight, totalTime);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -265,40 +257,48 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
 
 class $MoorRecipeTable extends MoorRecipe
     with TableInfo<$MoorRecipeTable, MoorRecipeData> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $MoorRecipeTable(this._db, [this._alias]);
+  $MoorRecipeTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _labelMeta = const VerificationMeta('label');
+  @override
   late final GeneratedColumn<String?> label = GeneratedColumn<String?>(
       'label', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _imageMeta = const VerificationMeta('image');
+  @override
   late final GeneratedColumn<String?> image = GeneratedColumn<String?>(
       'image', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _urlMeta = const VerificationMeta('url');
+  @override
   late final GeneratedColumn<String?> url = GeneratedColumn<String?>(
       'url', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _caloriesMeta = const VerificationMeta('calories');
+  @override
   late final GeneratedColumn<double?> calories = GeneratedColumn<double?>(
       'calories', aliasedName, false,
-      typeName: 'REAL', requiredDuringInsert: true);
+      type: const RealType(), requiredDuringInsert: true);
   final VerificationMeta _totalWeightMeta =
       const VerificationMeta('totalWeight');
+  @override
   late final GeneratedColumn<double?> totalWeight = GeneratedColumn<double?>(
       'total_weight', aliasedName, false,
-      typeName: 'REAL', requiredDuringInsert: true);
+      type: const RealType(), requiredDuringInsert: true);
   final VerificationMeta _totalTimeMeta = const VerificationMeta('totalTime');
+  @override
   late final GeneratedColumn<double?> totalTime = GeneratedColumn<double?>(
       'total_time', aliasedName, false,
-      typeName: 'REAL', requiredDuringInsert: true);
+      type: const RealType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
       [id, label, image, url, calories, totalWeight, totalTime];
@@ -359,13 +359,13 @@ class $MoorRecipeTable extends MoorRecipe
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   MoorRecipeData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return MoorRecipeData.fromData(data, _db,
+    return MoorRecipeData.fromData(data, attachedDatabase,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
   $MoorRecipeTable createAlias(String alias) {
-    return $MoorRecipeTable(_db, alias);
+    return $MoorRecipeTable(attachedDatabase, alias);
   }
 }
 
@@ -455,8 +455,7 @@ class MoorIngredientData extends DataClass
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(id.hashCode,
-      $mrjc(recipeId.hashCode, $mrjc(name.hashCode, weight.hashCode))));
+  int get hashCode => Object.hash(id, recipeId, name, weight);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -545,27 +544,32 @@ class MoorIngredientCompanion extends UpdateCompanion<MoorIngredientData> {
 
 class $MoorIngredientTable extends MoorIngredient
     with TableInfo<$MoorIngredientTable, MoorIngredientData> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $MoorIngredientTable(this._db, [this._alias]);
+  $MoorIngredientTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _recipeIdMeta = const VerificationMeta('recipeId');
+  @override
   late final GeneratedColumn<int?> recipeId = GeneratedColumn<int?>(
       'recipe_id', aliasedName, false,
-      typeName: 'INTEGER', requiredDuringInsert: true);
+      type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
   late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
       'name', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _weightMeta = const VerificationMeta('weight');
+  @override
   late final GeneratedColumn<double?> weight = GeneratedColumn<double?>(
       'weight', aliasedName, false,
-      typeName: 'REAL', requiredDuringInsert: true);
+      type: const RealType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [id, recipeId, name, weight];
   @override
@@ -605,13 +609,13 @@ class $MoorIngredientTable extends MoorIngredient
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   MoorIngredientData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return MoorIngredientData.fromData(data, _db,
+    return MoorIngredientData.fromData(data, attachedDatabase,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
   $MoorIngredientTable createAlias(String alias) {
-    return $MoorIngredientTable(_db, alias);
+    return $MoorIngredientTable(attachedDatabase, alias);
   }
 }
 
