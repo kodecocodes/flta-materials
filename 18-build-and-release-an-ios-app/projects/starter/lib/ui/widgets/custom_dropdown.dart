@@ -11,7 +11,7 @@ class CustomDropdownMenuItem<T> extends PopupMenuEntry<T> {
   final Function? callback;
 
   @override
-  _CustomDropdownMenuItemState<T> createState() =>
+  State<CustomDropdownMenuItem<T>> createState() =>
       _CustomDropdownMenuItemState<T>();
 
   @override
@@ -47,8 +47,11 @@ class _CustomDropdownMenuItemState<T> extends State<CustomDropdownMenuItem<T>> {
                     widget.callback!();
                   }
                 },
-                child: SvgPicture.asset('assets/images/dismiss.svg',
-                    color: Colors.grey, semanticsLabel: 'Back'),
+                child: SvgPicture.asset(
+                  'assets/images/dismiss.svg',
+                  color: Colors.grey,
+                  semanticsLabel: 'Back',
+                ),
               ),
             ),
           ),
