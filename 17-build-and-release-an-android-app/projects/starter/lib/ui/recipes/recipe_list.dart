@@ -1,9 +1,10 @@
+import 'dart:collection';
 import 'dart:math';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:recipes/ui/widgets/custom_dropdown.dart';
+import '../widgets/custom_dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/models/models.dart';
@@ -18,7 +19,7 @@ class RecipeList extends StatefulWidget {
   const RecipeList({Key? key}) : super(key: key);
 
   @override
-  _RecipeListState createState() => _RecipeListState();
+  State createState() => _RecipeListState();
 }
 
 class _RecipeListState extends State<RecipeList> {
@@ -42,25 +43,26 @@ class _RecipeListState extends State<RecipeList> {
     getPreviousSearches();
 
     searchTextController = TextEditingController(text: '');
-    _scrollController
-      ..addListener(() {
-        final triggerFetchMoreSize =
-            0.7 * _scrollController.position.maxScrollExtent;
+    _scrollController.addListener(() {
+      final triggerFetchMoreSize =
+          0.7 * _scrollController.position.maxScrollExtent;
 
-        if (_scrollController.position.pixels > triggerFetchMoreSize) {
-          if (hasMore &&
-              currentEndPosition < currentCount &&
-              !loading &&
-              !inErrorState) {
-            setState(() {
+      if (_scrollController.position.pixels > triggerFetchMoreSize) {
+        if (hasMore &&
+            currentEndPosition < currentCount &&
+            !loading &&
+            !inErrorState) {
+          setState(
+            () {
               loading = true;
               currentStartPosition = currentEndPosition;
               currentEndPosition =
                   min(currentStartPosition + pageCount, currentCount);
-            });
-          }
+            },
+          );
         }
-      });
+      }
+    });
   }
 
   @override
@@ -130,14 +132,13 @@ class _RecipeListState extends State<RecipeList> {
                   Expanded(
                       child: TextField(
                     decoration: const InputDecoration(
-                        border: InputBorder.none, hintText: 'Search'),
+                      border: InputBorder.none,
+                      hintText: 'Search',
+                    ),
                     autofocus: false,
                     textInputAction: TextInputAction.done,
                     onSubmitted: (value) {
-                      if (!previousSearches.contains(value)) {
-                        previousSearches.add(value);
-                        savePreviousSearches();
-                      }
+                      startSearch(searchTextController.text);
                     },
                     controller: searchTextController,
                   )),
@@ -159,6 +160,7 @@ class _RecipeListState extends State<RecipeList> {
                           callback: () {
                             setState(() {
                               previousSearches.remove(value);
+                              savePreviousSearches();
                               Navigator.pop(context);
                             });
                           },
@@ -212,9 +214,24 @@ class _RecipeListState extends State<RecipeList> {
           }
 
           loading = false;
-          final result = snapshot.data?.body;
           // Hit an error
-          if (result is Error) {
+          if (false == snapshot.data?.isSuccessful) {
+            var errorMessage = 'Problems getting data';
+            if (snapshot.data?.error != null &&
+                snapshot.data?.error is LinkedHashMap) {
+              final map = snapshot.data?.error as LinkedHashMap;
+              errorMessage = map['message'];
+            }
+            return Center(
+              child: Text(
+                errorMessage,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 18.0),
+              ),
+            );
+          }
+          final result = snapshot.data?.body;
+          if (result == null || result is Error) {
             inErrorState = true;
             return _buildRecipeList(context, currentSearchList);
           }
@@ -255,15 +272,25 @@ class _RecipeListState extends State<RecipeList> {
           childAspectRatio: (itemWidth / itemHeight),
         ),
         itemCount: hits.length,
-        itemBuilder: (BuildContext context, int index) {
-          return _buildRecipeCard(recipeListContext, hits, index);
+        itemBuilder: (
+          BuildContext context,
+          int index,
+        ) {
+          return _buildRecipeCard(
+            recipeListContext,
+            hits,
+            index,
+          );
         },
       ),
     );
   }
 
   Widget _buildRecipeCard(
-      BuildContext topLevelContext, List<APIHits> hits, int index) {
+    BuildContext topLevelContext,
+    List<APIHits> hits,
+    int index,
+  ) {
     final recipe = hits[index].recipe;
     return GestureDetector(
       onTap: () {
