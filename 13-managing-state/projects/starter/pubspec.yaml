@@ -13,10 +13,10 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.5
-  cached_network_image: ^3.2.1
+  cached_network_image: ^3.2.2
   flutter_slidable: ^2.0.0
   platform: ^3.1.0
-  flutter_svg: ^1.1.3
+  flutter_svg: ^1.1.4
   shared_preferences: ^2.0.15
   json_annotation: ^4.6.0
   http: ^0.13.5
