@@ -20,7 +20,6 @@ class RecipeDetails extends StatelessWidget {
                   children: [
                     Align(
                       alignment: Alignment.topLeft,
-                      // TODO 1
                       child: Image.asset(
                         'assets/images/pizza_w700.png',
                         height: 200,
@@ -45,7 +44,6 @@ class RecipeDetails extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(left: 16.0),
                   child: Text(
-                    // TODO 2
                     'Chicken Vesuvio',
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
@@ -56,7 +54,6 @@ class RecipeDetails extends StatelessWidget {
                 const Padding(
                     padding: EdgeInsets.only(left: 16.0),
                     child: Chip(
-                      // TODO 3
                       label: Text('16CAL'),
                     )),
                 const SizedBox(
@@ -70,7 +67,6 @@ class RecipeDetails extends StatelessWidget {
                           borderRadius: BorderRadius.circular(16.0)),
                     ),
                     onPressed: () {
-                      // TODO 4
                       Navigator.pop(context);
                     },
                     icon: SvgPicture.asset(

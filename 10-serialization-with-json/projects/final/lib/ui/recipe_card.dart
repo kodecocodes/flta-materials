@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// TODO: Replace with new class
 Widget recipeStringCard(String image, String label) {
   return Card(
     elevation: 4.0,
@@ -13,7 +12,6 @@ Widget recipeStringCard(String image, String label) {
         ClipRRect(
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(6.0), topRight: Radius.circular(6.0)),
-          // TODO: Replace with image from recipe
           child: Image.asset(
             'assets/images/pizza_w700.png',
             height: 200,
@@ -26,7 +24,6 @@ Widget recipeStringCard(String image, String label) {
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Text(
-            // TODO: Replace with label from recipe
             label,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,

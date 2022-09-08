@@ -9,10 +9,8 @@ class MyRecipesList extends StatefulWidget {
 }
 
 class _MyRecipesListState extends State<MyRecipesList> {
-  // TODO 1
   List<String> recipes = [];
 
-  // TODO 2
   @override
   void initState() {
     super.initState();
@@ -28,11 +26,9 @@ class _MyRecipesListState extends State<MyRecipesList> {
   }
 
   Widget _buildRecipeList(BuildContext context) {
-    // TODO 3
     return ListView.builder(
         itemCount: recipes.length,
         itemBuilder: (BuildContext context, int index) {
-          // TODO 4
           return SizedBox(
             height: 100,
             child: Slidable(
@@ -45,7 +41,6 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     backgroundColor: Colors.transparent,
                     foregroundColor: Colors.black,
                     icon: Icons.delete,
-                    // TODO 7
                     onPressed: (context) {},
                   ),
                 ],
@@ -59,7 +54,6 @@ class _MyRecipesListState extends State<MyRecipesList> {
                     backgroundColor: Colors.transparent,
                     foregroundColor: Colors.black,
                     icon: Icons.delete,
-                    // TODO 8
                     onPressed: (context) {},
                   ),
                 ],
@@ -75,13 +69,11 @@ class _MyRecipesListState extends State<MyRecipesList> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
-                      // TODO 5
                       leading: Image.asset(
                         'assets/images/pizza_w700.png',
                         height: 200,
                         width: 200,
                       ),
-                      // TODO 6
                       title: const Text('Chicken Vesuvio'),
                     ),
                   ),
@@ -90,6 +82,5 @@ class _MyRecipesListState extends State<MyRecipesList> {
             ),
           );
         });
-    // TODO 9
   }
 }
