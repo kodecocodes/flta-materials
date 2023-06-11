@@ -1,56 +1,86 @@
-import 'dart:developer';
-
+import 'package:colorize_lumberdash/colorize_lumberdash.dart';
+import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lumberdash/lumberdash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/memory_repository.dart';
-import 'data/repository.dart';
-import 'network/recipe_service.dart';
-import 'network/service_interface.dart';
+import 'providers.dart';
 import 'ui/main_screen.dart';
+import 'ui/theme/theme.dart';
+import 'utils.dart';
 
 Future<void> main() async {
   _setupLogging();
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+  if (isDesktop()) {
+    await DesktopWindow.setWindowSize(const Size(600, 600));
+    await DesktopWindow.setMinWindowSize(const Size(260, 600));
+  }
+  globalSharedPreferences = await SharedPreferences.getInstance();
+  globalRepository = MemoryRepository();
+  await globalRepository.init();
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 void _setupLogging() {
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((rec) {
-    log('${rec.level.name}: ${rec.time}: ${rec.message}');
-  });
+  putLumberdashToWork(withClients: [
+    ColorizeLumberdash(),
+  ]);
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeMode currentMode = ThemeMode.light;
+
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          Provider<Repository>(
-            lazy: false,
-            create: (_) => MemoryRepository(),
+    return PlatformMenuBar(
+      menus: [
+        PlatformMenu(label: 'File', menus: [
+          PlatformMenuItem(
+              label: 'Dark Mode',
+              onSelected: () {
+                setState(() {
+                  currentMode = ThemeMode.dark;
+                });
+              }),
+          PlatformMenuItem(
+              label: 'Light Mode',
+              onSelected: () {
+                setState(() {
+                  currentMode = ThemeMode.light;
+                });
+              }),
+          PlatformMenuItem(
+            label: 'Quit',
+            onSelected: () {
+              setState(() {
+                SystemNavigator.pop();
+              });
+            },
+            shortcut:
+                const SingleActivator(LogicalKeyboardKey.keyQ, meta: true),
           ),
-          Provider<ServiceInterface>(
-            create: (_) => RecipeService.create(),
-            lazy: false,
-          ),
-        ],
-        child: MaterialApp(
-          title: 'Recipes',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-          brightness: Brightness.light,
-          primaryColor: Colors.white,
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          home: const MainScreen(),
-        ),
+        ])
+      ],
+      child: MaterialApp(
+        title: 'Recipes',
+        debugShowCheckedModeBanner: false,
+        themeMode: currentMode,
+        theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+        darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+        home: const MainScreen(),
+      ),
     );
   }
 }

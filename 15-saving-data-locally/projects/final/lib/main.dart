@@ -1,68 +1,84 @@
-import 'dart:developer';
-
+import 'package:colorize_lumberdash/colorize_lumberdash.dart';
+import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lumberdash/lumberdash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-// import 'data/memory_repository.dart';
-// import 'data/sqlite/sqlite_repository.dart';
-import 'data/moor/moor_repository.dart';
-import 'data/repository.dart';
-import 'network/recipe_service.dart';
-import 'network/service_interface.dart';
+import 'data/database/db_repository.dart';
+import 'providers.dart';
 import 'ui/main_screen.dart';
+import 'ui/theme/theme.dart';
+import 'utils.dart';
 
 Future<void> main() async {
   _setupLogging();
   WidgetsFlutterBinding.ensureInitialized();
-  // final repository = SqliteRepository();
-  final repository = MoorRepository();
-  await repository.init();
-  runApp(MyApp(repository: repository));
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+  if (isDesktop()) {
+    await DesktopWindow.setWindowSize(const Size(600, 600));
+    await DesktopWindow.setMinWindowSize(const Size(260, 600));
+  }
+  globalSharedPreferences = await SharedPreferences.getInstance();
+  globalRepository = DBRepository();
+  await globalRepository.init();
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 void _setupLogging() {
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen(
-    (rec) {
-      log('${rec.level.name}: ${rec.time}: ${rec.message}');
-    },
-  );
+  putLumberdashToWork(withClients: [
+    ColorizeLumberdash(),
+  ]);
 }
 
-class MyApp extends StatelessWidget {
-  final Repository repository;
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
-  const MyApp({
-    Key? key,
-    required this.repository,
-  }) : super(key: key);
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
-  // This widget is the root of your application.
+class _MyAppState extends State<MyApp> {
+  ThemeMode currentMode = ThemeMode.light;
+
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<Repository>(
-          lazy: false,
-          create: (_) => repository,
-          dispose: (_, Repository repository) => repository.close(),
-        ),
-        Provider<ServiceInterface>(
-          // create: (_) => MockService()..create(),
-          create: (_) => RecipeService.create(),
-          lazy: false,
-        ),
+    return PlatformMenuBar(
+      menus: [
+        PlatformMenu(label: 'File', menus: [
+          PlatformMenuItem(
+              label: 'Dark Mode',
+              onSelected: () {
+                setState(() {
+                  currentMode = ThemeMode.dark;
+                });
+              }),
+          PlatformMenuItem(
+              label: 'Light Mode',
+              onSelected: () {
+                setState(() {
+                  currentMode = ThemeMode.light;
+                });
+              }),
+          PlatformMenuItem(
+            label: 'Quit',
+            onSelected: () {
+              setState(() {
+                SystemNavigator.pop();
+              });
+            },
+            shortcut:
+                const SingleActivator(LogicalKeyboardKey.keyQ, meta: true),
+          ),
+        ])
       ],
       child: MaterialApp(
         title: 'Recipes',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          brightness: Brightness.light,
-          primaryColor: Colors.white,
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
+        themeMode: currentMode,
+        theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+        darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
         home: const MainScreen(),
       ),
     );

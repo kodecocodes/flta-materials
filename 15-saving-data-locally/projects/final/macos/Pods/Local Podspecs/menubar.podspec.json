@@ -1,0 +1,25 @@
+{
+  "name": "menubar",
+  "version": "0.0.2",
+  "summary": "Provides the ability to add menubar items with Dart callbacks.",
+  "description": "Provides the ability to add menubar items with Dart callbacks.",
+  "homepage": "https://github.com/google/flutter-desktop-embedding/tree/master/plugins/menubar",
+  "license": {
+    "file": "../LICENSE"
+  },
+  "authors": {
+    "Flutter Desktop Embedding Developers": "flutter-desktop-embedding-dev@googlegroups.com"
+  },
+  "source": {
+    "path": "."
+  },
+  "source_files": "Classes/**/*",
+  "dependencies": {
+    "FlutterMacOS": [
+
+    ]
+  },
+  "platforms": {
+    "osx": "10.11"
+  }
+}

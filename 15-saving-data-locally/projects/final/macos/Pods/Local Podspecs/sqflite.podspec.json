@@ -1,0 +1,33 @@
+{
+  "name": "sqflite",
+  "version": "0.0.2",
+  "summary": "SQLite plugin.",
+  "description": "Accss SQLite database.",
+  "homepage": "https://github.com/tekartik/sqflite",
+  "license": {
+    "file": "../LICENSE"
+  },
+  "authors": {
+    "Tekartik": "alex@tekartik.com"
+  },
+  "source": {
+    "path": "."
+  },
+  "source_files": "Classes/**/*",
+  "dependencies": {
+    "FlutterMacOS": [
+
+    ],
+    "FMDB": [
+      ">= 2.7.5"
+    ]
+  },
+  "platforms": {
+    "osx": "10.11"
+  },
+  "pod_target_xcconfig": {
+    "DEFINES_MODULE": "YES"
+  },
+  "swift_versions": "5.0",
+  "swift_version": "5.0"
+}

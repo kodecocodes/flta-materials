@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'ingredient.dart';
 
@@ -7,29 +8,27 @@ class Recipe extends Equatable {
   int? id;
   final String? label;
   final String? image;
-  final String? url;
-  List<Ingredient>? ingredients;
-  final double? calories;
-  final double? totalWeight;
-  final double? totalTime;
+  final String? description;
+  bool bookmarked = false;
+
+  List<Ingredient> ingredients;
 
   Recipe({
     this.id,
     this.label,
     this.image,
-    this.url,
-    this.calories,
-    this.totalWeight,
-    this.totalTime,
+    this.description,
+    this.bookmarked = false,
+    required this.ingredients,
   });
 
   @override
   List<Object?> get props => [
         label,
         image,
-        url,
-        calories,
-        totalWeight,
-        totalTime,
+        description,
+        bookmarked,
+        ingredients,
       ];
+
 }

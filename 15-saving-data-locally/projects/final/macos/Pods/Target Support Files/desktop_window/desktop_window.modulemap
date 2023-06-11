@@ -1,0 +1,6 @@
+framework module desktop_window {
+  umbrella header "desktop_window-umbrella.h"
+
+  export *
+  module * { export * }
+}

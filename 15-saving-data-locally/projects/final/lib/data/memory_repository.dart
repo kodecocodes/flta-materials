@@ -60,12 +60,10 @@ class MemoryRepository extends Repository {
     recipe.id = recipeIdCount++;
     _currentRecipes.add(recipe);
     _recipeStreamController.sink.add(_currentRecipes);
-    if (recipe.ingredients != null) {
-      for (final ingredient in recipe.ingredients!) {
-        ingredient.recipeId = recipe.id!;
-      }
-      insertIngredients(recipe.ingredients!);
+    for (final ingredient in recipe.ingredients) {
+      ingredient.recipeId = recipe.id!;
     }
+    insertIngredients(recipe.ingredients);
     return Future.value(0);
   }
 
