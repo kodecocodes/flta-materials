@@ -15,7 +15,7 @@ import 'utils.dart';
 Future<void> main() async {
   _setupLogging();
   WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   if (isDesktop()) {
     await DesktopWindow.setWindowSize(const Size(600, 600));
     await DesktopWindow.setMinWindowSize(const Size(260, 600));

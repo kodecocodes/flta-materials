@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
 export "FLUTTER_ROOT=/Users/kevin/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/kevin/Projects/Kodeco/Flutter/Flutter_Apprentice/Projects/v4_final"
+export "FLUTTER_APPLICATION_PATH=/Users/kevin/Projects/Kodeco/Flutter/Flutter_Apprentice/Github/v4/flta-materials/15-saving-data-locally/projects/final"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.0.0"

@@ -396,6 +396,7 @@ class _RecipeListState extends ConsumerState<RecipeList> {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SegmentedButton<ListType>(
               segments: const [

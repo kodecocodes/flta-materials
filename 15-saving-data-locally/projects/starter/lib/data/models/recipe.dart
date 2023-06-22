@@ -3,6 +3,9 @@ import 'package:json_annotation/json_annotation.dart';
 
 import 'ingredient.dart';
 
+part 'recipe.g.dart';
+
+@JsonSerializable()
 // ignore: must_be_immutable
 class Recipe extends Equatable {
   int? id;
@@ -31,4 +34,10 @@ class Recipe extends Equatable {
         ingredients,
       ];
 
+  // Create a Recipe from JSON data
+  factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);
+
+  // Convert our Recipe to JSON to make it easier
+  // when we store it in the database
+  Map<String, dynamic> toJson() => _$RecipeToJson(this);
 }

@@ -166,36 +166,33 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   BottomNavigationBar createBottomNavigationBar() {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final selectedColor = isDarkMode ? Colors.white : Colors.black;
-    final unSelectedItemColor = isDarkMode ? Colors.white : Colors.black;
+    final unSelectedItemColor = isDarkMode ? Colors.white : Colors.grey;
     final backgroundColor =
         isDarkMode ? darkBackgroundColor : smallCardBackgroundColor;
     return BottomNavigationBar(
       backgroundColor: backgroundColor,
       currentIndex: _selectedIndex,
       selectedItemColor: selectedColor,
-      unselectedItemColor: unSelectedItemColor,
+      unselectedItemColor: Colors.grey,
       items: [
         BottomNavigationBarItem(
-          // backgroundColor:
-          //     _selectedIndex == 0 ? selectedIconColor : Colors.black,
           icon: SvgPicture.asset(
             'assets/images/icon_recipe.svg',
             colorFilter: ColorFilter.mode(
-                // selectedColor,
-                _selectedIndex == 0 ? selectedColor : Colors.black,
+                _selectedIndex == 0 ? selectedColor : unSelectedItemColor,
                 BlendMode.srcIn),
             semanticsLabel: 'Recipes',
           ),
           label: 'Recipes',
         ),
         BottomNavigationBarItem(
-          // backgroundColor:
-          //     _selectedIndex == 1 ? selectedIconColor : Colors.black,
+          backgroundColor:
+              _selectedIndex == 1 ? iconBackgroundColor : Colors.black,
           icon: SvgPicture.asset(
             'assets/images/shopping_cart.svg',
             colorFilter: ColorFilter.mode(
                 // selectedColor,
-                _selectedIndex == 1 ? selectedColor : Colors.black,
+                _selectedIndex == 1 ? selectedColor : unSelectedItemColor,
                 BlendMode.srcIn),
             semanticsLabel: 'Groceries',
           ),

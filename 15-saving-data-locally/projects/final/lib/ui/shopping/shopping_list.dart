@@ -51,22 +51,20 @@ class _ShoppingListState extends ConsumerState<ShoppingList> {
   Widget _buildHeader() {
     return SizedBox(
       height: 160.0,
-      child: ClipRRect(
-        child: Stack(
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                color: background1Color,
-              ),
+      child: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              color: background1Color,
             ),
-            Center(
-              child: Image.asset(
-                'assets/images/background1.png',
-                fit: BoxFit.contain,
-              ),
+          ),
+          Center(
+            child: Image.asset(
+              'assets/images/background1.png',
+              fit: BoxFit.contain,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -149,14 +147,17 @@ class _ShoppingListState extends ConsumerState<ShoppingList> {
       int index,
       bool showCheckbox) {
     final even = index % 2 == 0;
-    return IngredientCard(
-        name: ingredient.name ?? '',
-        initiallyChecked: checked,
-        evenRow: even,
-        showCheckbox: showCheckbox,
-        onChecked: (newValue) {
-          checkBoxValues?[index] = newValue;
-        });
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: IngredientCard(
+          name: ingredient.name ?? '',
+          initiallyChecked: checked,
+          evenRow: even,
+          showCheckbox: showCheckbox,
+          onChecked: (newValue) {
+            checkBoxValues?[index] = newValue;
+          }),
+    );
   }
 
   Widget buildSearchRow() {
