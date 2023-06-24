@@ -96,8 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // 1
       elevation: 2.0,
       // 2
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       // 3
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -122,4 +121,5 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
-  }}
+  }
+}
