@@ -1,3 +1,3 @@
-# raychat
+# kodecochat
 
 A reactive chat application.

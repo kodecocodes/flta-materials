@@ -1,4 +1,4 @@
-package com.raywenderlich.RayChat
+package com.kodeco.kodecochat
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,14 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MessageList extends StatefulWidget {
+class MessageList extends ConsumerStatefulWidget {
   const MessageList({Key? key}) : super(key: key);
 
   @override
-  MessageListState createState() => MessageListState();
+  ConsumerState createState() => MessageListState();
 }
 
-class MessageListState extends State<MessageList> {
+class MessageListState extends ConsumerState<MessageList> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   // TODO: Add Email String
@@ -22,7 +22,7 @@ class MessageListState extends State<MessageList> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('RayChat'),
+        title: const Text('Kodeco Chat'),
         // TODO: Replace with actions
       ),
       body: Padding(
@@ -52,8 +52,8 @@ class MessageListState extends State<MessageList> {
                 IconButton(
                   icon: Icon(
                     _canSendMessage()
-                        ? CupertinoIcons.arrow_right_circle_fill
-                        : CupertinoIcons.arrow_right_circle,
+                        ? Icons.arrow_circle_left_outlined
+                        : Icons.arrow_circle_right_outlined,
                   ),
                   onPressed: () {
                     // TODO: Add Message DAO 2

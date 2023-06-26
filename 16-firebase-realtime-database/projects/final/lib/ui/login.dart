@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../data/user_dao.dart';
+import '../providers.dart';
 
-class Login extends StatefulWidget {
+class Login extends ConsumerStatefulWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
-  State createState() => _LoginState();
+  ConsumerState createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends ConsumerState<Login> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -24,10 +24,10 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    final userDao = Provider.of<UserDao>(context, listen: false);
+    final userDao = ref.watch(userDaoProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('RayChat'),
+        title: const Text('Kodeco Chat'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(32.0),

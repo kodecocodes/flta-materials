@@ -37,13 +37,17 @@ class MessageWidget extends StatelessWidget {
             ),
           ],
           Container(
-            decoration: BoxDecoration(boxShadow: [
-              BoxShadow(
-                color: Colors.grey[350]!,
-                blurRadius: 2.0,
-                offset: const Offset(0, 1.0),
-              )
-            ], borderRadius: BorderRadius.circular(50.0), color: Colors.white),
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey[350]!,
+                  blurRadius: 2.0,
+                  offset: const Offset(0, 1.0),
+                )
+              ],
+              borderRadius: BorderRadius.circular(50.0),
+              color: Colors.white,
+            ),
             child: MaterialButton(
               disabledTextColor: Colors.black87,
               padding: const EdgeInsets.only(left: 18),

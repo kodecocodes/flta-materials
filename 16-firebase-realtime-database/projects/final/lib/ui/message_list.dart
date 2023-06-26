@@ -1,20 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data/message.dart';
 import '../data/message_dao.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../providers.dart';
 import 'message_widget.dart';
-import '../data/user_dao.dart';
 
-class MessageList extends StatefulWidget {
+class MessageList extends ConsumerStatefulWidget {
   const MessageList({Key? key}) : super(key: key);
 
   @override
-  MessageListState createState() => MessageListState();
+  ConsumerState createState() => MessageListState();
 }
 
-class MessageListState extends State<MessageList> {
+class MessageListState extends ConsumerState<MessageList> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   String? email;
@@ -22,14 +21,14 @@ class MessageListState extends State<MessageList> {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
-    final messageDao = Provider.of<MessageDao>(context, listen: false);
+    final messageDao = ref.watch(messageDaoProvider);
+    final userDao = ref.watch(userDaoProvider);
 
-    final userDao = Provider.of<UserDao>(context, listen: false);
     email = userDao.email();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('RayChat'),
+        title: const Text('Kodeco Chat'),
         actions: [
           IconButton(
             onPressed: () {
@@ -64,8 +63,8 @@ class MessageListState extends State<MessageList> {
                 IconButton(
                   icon: Icon(
                     _canSendMessage()
-                        ? CupertinoIcons.arrow_right_circle_fill
-                        : CupertinoIcons.arrow_right_circle,
+                        ? Icons.arrow_circle_left_outlined
+                        : Icons.arrow_circle_right_outlined,
                   ),
                   onPressed: () {
                     _sendMessage(messageDao);
