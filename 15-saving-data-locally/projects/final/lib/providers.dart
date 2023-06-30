@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:recipes/data/models/ingredient.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/repository.dart';
@@ -17,3 +18,10 @@ final repositoryProvider = Provider<Repository>((ref) {
 
 final serviceProvider =
     Provider<ServiceInterface>((ref) => SpoonacularService.create());
+
+final ingredientProvider = StreamProvider<List<Ingredient>>((ref) {
+  final repository = ref.read(repositoryProvider);
+  final stream = repository.watchAllIngredients();
+
+  return stream;
+});

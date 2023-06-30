@@ -12,7 +12,7 @@ import '../../network/model_response.dart';
 import '../../network/query_result.dart';
 import '../../network/service_interface.dart';
 import '../../providers.dart';
-import '../myrecipes/my_recipes_list.dart';
+import '../bookmarks/bookmarks.dart';
 import '../recipe_card.dart';
 import '../recipes/recipe_details.dart';
 import '../theme/colors.dart';
@@ -147,7 +147,7 @@ class _RecipeListState extends ConsumerState<RecipeList> {
       child: Column(
         children: <Widget>[
           _buildTypePicker(),
-          const MyRecipesList(),
+          const Bookmarks(),
         ],
       ),
     );
@@ -214,6 +214,14 @@ class _RecipeListState extends ConsumerState<RecipeList> {
                     },
                     controller: searchTextController,
                   )),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      setState(() {
+                        searchTextController.text = '';
+                      });
+                    },
+                  ),
                   PopupMenuButton<String>(
                     icon: const Icon(
                       Icons.arrow_drop_down,
@@ -377,13 +385,7 @@ class _RecipeListState extends ConsumerState<RecipeList> {
       onTap: () {
         Navigator.push(topLevelContext, MaterialPageRoute(
           builder: (context) {
-            final detailRecipe = Recipe(
-              id: recipe.id,
-              label: recipe.label,
-              image: recipe.image,
-              ingredients: const <Ingredient>[],
-            );
-            return RecipeDetails(recipe: detailRecipe);
+            return RecipeDetails(recipe: recipe);
           },
         ));
       },

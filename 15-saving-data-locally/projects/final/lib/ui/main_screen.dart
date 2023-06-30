@@ -2,10 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:recipes/providers.dart';
 import '../utils.dart';
+import 'groceries/groceries.dart';
 import 'theme/colors.dart';
 
 import 'recipes/recipe_list.dart';
-import 'shopping/shopping_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 
@@ -25,7 +25,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   void initState() {
     super.initState();
     pageList.add(const RecipeList());
-    pageList.add(const ShoppingList());
+    pageList.add(const GroceryList());
     getCurrentIndex();
   }
 

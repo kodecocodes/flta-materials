@@ -57,13 +57,14 @@ class MemoryRepository extends Repository {
 
   @override
   Future<int> insertRecipe(Recipe recipe) {
-    recipe.id = recipeIdCount++;
+    final id = recipeIdCount++;
     _currentRecipes.add(recipe);
     _recipeStreamController.sink.add(_currentRecipes);
+    final ingredients = <Ingredient>[];
     for (final ingredient in recipe.ingredients) {
-      ingredient.recipeId = recipe.id!;
+      ingredients.add(ingredient.copyWith(recipeId: id));
     }
-    insertIngredients(recipe.ingredients);
+    insertIngredients(ingredients);
     return Future.value(0);
   }
 

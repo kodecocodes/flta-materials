@@ -6,7 +6,8 @@ part of 'query_result.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-QueryResult _$QueryResultFromJson(Map<String, dynamic> json) => QueryResult(
+_$_QueryResult _$$_QueryResultFromJson(Map<String, dynamic> json) =>
+    _$_QueryResult(
       offset: json['offset'] as int,
       number: json['number'] as int,
       totalResults: json['totalResults'] as int,
@@ -15,7 +16,7 @@ QueryResult _$QueryResultFromJson(Map<String, dynamic> json) => QueryResult(
           .toList(),
     );
 
-Map<String, dynamic> _$QueryResultToJson(QueryResult instance) =>
+Map<String, dynamic> _$$_QueryResultToJson(_$_QueryResult instance) =>
     <String, dynamic>{
       'offset': instance.offset,
       'number': instance.number,

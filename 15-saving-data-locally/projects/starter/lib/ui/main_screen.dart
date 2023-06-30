@@ -2,10 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:recipes/providers.dart';
 import '../utils.dart';
+import 'groceries/groceries.dart';
 import 'theme/colors.dart';
 
 import 'recipes/recipe_list.dart';
-import 'shopping/shopping_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 
@@ -25,7 +25,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   void initState() {
     super.initState();
     pageList.add(const RecipeList());
-    pageList.add(const ShoppingList());
+    pageList.add(const GroceryList());
     getCurrentIndex();
   }
 
@@ -166,36 +166,33 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   BottomNavigationBar createBottomNavigationBar() {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final selectedColor = isDarkMode ? Colors.white : Colors.black;
-    final unSelectedItemColor = isDarkMode ? Colors.white : Colors.black;
+    final unSelectedItemColor = isDarkMode ? Colors.white : Colors.grey;
     final backgroundColor =
         isDarkMode ? darkBackgroundColor : smallCardBackgroundColor;
     return BottomNavigationBar(
       backgroundColor: backgroundColor,
       currentIndex: _selectedIndex,
       selectedItemColor: selectedColor,
-      unselectedItemColor: unSelectedItemColor,
+      unselectedItemColor: Colors.grey,
       items: [
         BottomNavigationBarItem(
-          // backgroundColor:
-          //     _selectedIndex == 0 ? selectedIconColor : Colors.black,
           icon: SvgPicture.asset(
             'assets/images/icon_recipe.svg',
             colorFilter: ColorFilter.mode(
-                // selectedColor,
-                _selectedIndex == 0 ? selectedColor : Colors.black,
+                _selectedIndex == 0 ? selectedColor : unSelectedItemColor,
                 BlendMode.srcIn),
             semanticsLabel: 'Recipes',
           ),
           label: 'Recipes',
         ),
         BottomNavigationBarItem(
-          // backgroundColor:
-          //     _selectedIndex == 1 ? selectedIconColor : Colors.black,
+          backgroundColor:
+              _selectedIndex == 1 ? iconBackgroundColor : Colors.black,
           icon: SvgPicture.asset(
             'assets/images/shopping_cart.svg',
             colorFilter: ColorFilter.mode(
                 // selectedColor,
-                _selectedIndex == 1 ? selectedColor : Colors.black,
+                _selectedIndex == 1 ? selectedColor : unSelectedItemColor,
                 BlendMode.srcIn),
             semanticsLabel: 'Groceries',
           ),

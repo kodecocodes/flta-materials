@@ -12,6 +12,10 @@ class DbRecipe extends Table {
 
   TextColumn get image => text()();
 
+  TextColumn get description => text()();
+
+  BoolColumn get bookmarked  => boolean()();
+
 }
 
 class DbIngredient extends Table {
@@ -20,6 +24,8 @@ class DbIngredient extends Table {
   IntColumn get recipeId => integer()();
 
   TextColumn get name => text()();
+
+  RealColumn get amount => real()();
 
   RealColumn get weight => real()();
 }
@@ -93,20 +99,27 @@ class IngredientDao extends DatabaseAccessor<RecipeDatabase>
 
 // Conversion Methods
 
+
 Recipe dbRecipeToModelRecipe(
     DbRecipeData recipe, List<Ingredient> ingredients) {
   return Recipe(
     id: recipe.id,
     label: recipe.label,
     image: recipe.image,
+    description: recipe.description,
+    bookmarked: recipe.bookmarked,
     ingredients: ingredients,
   );
 }
+
+
 
 Insertable<DbRecipeData> recipeToInsertableDbRecipe(Recipe recipe) {
   return DbRecipeCompanion.insert(
     label: recipe.label ?? '',
     image: recipe.image ?? '',
+    description: recipe.description ?? '',
+    bookmarked: recipe.bookmarked,
   );
 }
 
@@ -115,6 +128,7 @@ Ingredient dbIngredientToIngredient(DbIngredientData ingredient) {
     id: ingredient.id,
     recipeId: ingredient.recipeId,
     name: ingredient.name,
+    amount: ingredient.amount,
     weight: ingredient.weight,
   );
 }
@@ -124,6 +138,8 @@ DbIngredientCompanion ingredientToInsertableDbIngredient(
   return DbIngredientCompanion.insert(
     recipeId: ingredient.recipeId ?? 0,
     name: ingredient.name ?? '',
+    amount: ingredient.amount ?? 0,
     weight: ingredient.weight ?? 0,
   );
 }
+

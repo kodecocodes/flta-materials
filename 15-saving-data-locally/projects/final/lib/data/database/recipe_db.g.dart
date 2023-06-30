@@ -28,8 +28,27 @@ class $DbRecipeTable extends DbRecipe
   late final GeneratedColumn<String> image = GeneratedColumn<String>(
       'image', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
   @override
-  List<GeneratedColumn> get $columns => [id, label, image];
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _bookmarkedMeta =
+      const VerificationMeta('bookmarked');
+  @override
+  late final GeneratedColumn<bool> bookmarked =
+      GeneratedColumn<bool>('bookmarked', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("bookmarked" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }));
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, label, image, description, bookmarked];
   @override
   String get aliasedName => _alias ?? 'db_recipe';
   @override
@@ -54,6 +73,22 @@ class $DbRecipeTable extends DbRecipe
     } else if (isInserting) {
       context.missing(_imageMeta);
     }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('bookmarked')) {
+      context.handle(
+          _bookmarkedMeta,
+          bookmarked.isAcceptableOrUnknown(
+              data['bookmarked']!, _bookmarkedMeta));
+    } else if (isInserting) {
+      context.missing(_bookmarkedMeta);
+    }
     return context;
   }
 
@@ -69,6 +104,10 @@ class $DbRecipeTable extends DbRecipe
           .read(DriftSqlType.string, data['${effectivePrefix}label'])!,
       image: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}image'])!,
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
+      bookmarked: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}bookmarked'])!,
     );
   }
 
@@ -82,14 +121,22 @@ class DbRecipeData extends DataClass implements Insertable<DbRecipeData> {
   final int id;
   final String label;
   final String image;
+  final String description;
+  final bool bookmarked;
   const DbRecipeData(
-      {required this.id, required this.label, required this.image});
+      {required this.id,
+      required this.label,
+      required this.image,
+      required this.description,
+      required this.bookmarked});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['label'] = Variable<String>(label);
     map['image'] = Variable<String>(image);
+    map['description'] = Variable<String>(description);
+    map['bookmarked'] = Variable<bool>(bookmarked);
     return map;
   }
 
@@ -98,6 +145,8 @@ class DbRecipeData extends DataClass implements Insertable<DbRecipeData> {
       id: Value(id),
       label: Value(label),
       image: Value(image),
+      description: Value(description),
+      bookmarked: Value(bookmarked),
     );
   }
 
@@ -108,6 +157,8 @@ class DbRecipeData extends DataClass implements Insertable<DbRecipeData> {
       id: serializer.fromJson<int>(json['id']),
       label: serializer.fromJson<String>(json['label']),
       image: serializer.fromJson<String>(json['image']),
+      description: serializer.fromJson<String>(json['description']),
+      bookmarked: serializer.fromJson<bool>(json['bookmarked']),
     );
   }
   @override
@@ -117,69 +168,100 @@ class DbRecipeData extends DataClass implements Insertable<DbRecipeData> {
       'id': serializer.toJson<int>(id),
       'label': serializer.toJson<String>(label),
       'image': serializer.toJson<String>(image),
+      'description': serializer.toJson<String>(description),
+      'bookmarked': serializer.toJson<bool>(bookmarked),
     };
   }
 
-  DbRecipeData copyWith({int? id, String? label, String? image}) =>
+  DbRecipeData copyWith(
+          {int? id,
+          String? label,
+          String? image,
+          String? description,
+          bool? bookmarked}) =>
       DbRecipeData(
         id: id ?? this.id,
         label: label ?? this.label,
         image: image ?? this.image,
+        description: description ?? this.description,
+        bookmarked: bookmarked ?? this.bookmarked,
       );
   @override
   String toString() {
     return (StringBuffer('DbRecipeData(')
           ..write('id: $id, ')
           ..write('label: $label, ')
-          ..write('image: $image')
+          ..write('image: $image, ')
+          ..write('description: $description, ')
+          ..write('bookmarked: $bookmarked')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, label, image);
+  int get hashCode => Object.hash(id, label, image, description, bookmarked);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is DbRecipeData &&
           other.id == this.id &&
           other.label == this.label &&
-          other.image == this.image);
+          other.image == this.image &&
+          other.description == this.description &&
+          other.bookmarked == this.bookmarked);
 }
 
 class DbRecipeCompanion extends UpdateCompanion<DbRecipeData> {
   final Value<int> id;
   final Value<String> label;
   final Value<String> image;
+  final Value<String> description;
+  final Value<bool> bookmarked;
   const DbRecipeCompanion({
     this.id = const Value.absent(),
     this.label = const Value.absent(),
     this.image = const Value.absent(),
+    this.description = const Value.absent(),
+    this.bookmarked = const Value.absent(),
   });
   DbRecipeCompanion.insert({
     this.id = const Value.absent(),
     required String label,
     required String image,
+    required String description,
+    required bool bookmarked,
   })  : label = Value(label),
-        image = Value(image);
+        image = Value(image),
+        description = Value(description),
+        bookmarked = Value(bookmarked);
   static Insertable<DbRecipeData> custom({
     Expression<int>? id,
     Expression<String>? label,
     Expression<String>? image,
+    Expression<String>? description,
+    Expression<bool>? bookmarked,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (label != null) 'label': label,
       if (image != null) 'image': image,
+      if (description != null) 'description': description,
+      if (bookmarked != null) 'bookmarked': bookmarked,
     });
   }
 
   DbRecipeCompanion copyWith(
-      {Value<int>? id, Value<String>? label, Value<String>? image}) {
+      {Value<int>? id,
+      Value<String>? label,
+      Value<String>? image,
+      Value<String>? description,
+      Value<bool>? bookmarked}) {
     return DbRecipeCompanion(
       id: id ?? this.id,
       label: label ?? this.label,
       image: image ?? this.image,
+      description: description ?? this.description,
+      bookmarked: bookmarked ?? this.bookmarked,
     );
   }
 
@@ -195,6 +277,12 @@ class DbRecipeCompanion extends UpdateCompanion<DbRecipeData> {
     if (image.present) {
       map['image'] = Variable<String>(image.value);
     }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (bookmarked.present) {
+      map['bookmarked'] = Variable<bool>(bookmarked.value);
+    }
     return map;
   }
 
@@ -203,7 +291,9 @@ class DbRecipeCompanion extends UpdateCompanion<DbRecipeData> {
     return (StringBuffer('DbRecipeCompanion(')
           ..write('id: $id, ')
           ..write('label: $label, ')
-          ..write('image: $image')
+          ..write('image: $image, ')
+          ..write('description: $description, ')
+          ..write('bookmarked: $bookmarked')
           ..write(')'))
         .toString();
   }
@@ -235,13 +325,18 @@ class $DbIngredientTable extends DbIngredient
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
       'name', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
+  @override
+  late final GeneratedColumn<double> amount = GeneratedColumn<double>(
+      'amount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
   static const VerificationMeta _weightMeta = const VerificationMeta('weight');
   @override
   late final GeneratedColumn<double> weight = GeneratedColumn<double>(
       'weight', aliasedName, false,
       type: DriftSqlType.double, requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns => [id, recipeId, name, weight];
+  List<GeneratedColumn> get $columns => [id, recipeId, name, amount, weight];
   @override
   String get aliasedName => _alias ?? 'db_ingredient';
   @override
@@ -266,6 +361,12 @@ class $DbIngredientTable extends DbIngredient
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
+    if (data.containsKey('amount')) {
+      context.handle(_amountMeta,
+          amount.isAcceptableOrUnknown(data['amount']!, _amountMeta));
+    } else if (isInserting) {
+      context.missing(_amountMeta);
+    }
     if (data.containsKey('weight')) {
       context.handle(_weightMeta,
           weight.isAcceptableOrUnknown(data['weight']!, _weightMeta));
@@ -287,6 +388,8 @@ class $DbIngredientTable extends DbIngredient
           .read(DriftSqlType.int, data['${effectivePrefix}recipe_id'])!,
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      amount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}amount'])!,
       weight: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}weight'])!,
     );
@@ -303,11 +406,13 @@ class DbIngredientData extends DataClass
   final int id;
   final int recipeId;
   final String name;
+  final double amount;
   final double weight;
   const DbIngredientData(
       {required this.id,
       required this.recipeId,
       required this.name,
+      required this.amount,
       required this.weight});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -315,6 +420,7 @@ class DbIngredientData extends DataClass
     map['id'] = Variable<int>(id);
     map['recipe_id'] = Variable<int>(recipeId);
     map['name'] = Variable<String>(name);
+    map['amount'] = Variable<double>(amount);
     map['weight'] = Variable<double>(weight);
     return map;
   }
@@ -324,6 +430,7 @@ class DbIngredientData extends DataClass
       id: Value(id),
       recipeId: Value(recipeId),
       name: Value(name),
+      amount: Value(amount),
       weight: Value(weight),
     );
   }
@@ -335,6 +442,7 @@ class DbIngredientData extends DataClass
       id: serializer.fromJson<int>(json['id']),
       recipeId: serializer.fromJson<int>(json['recipeId']),
       name: serializer.fromJson<String>(json['name']),
+      amount: serializer.fromJson<double>(json['amount']),
       weight: serializer.fromJson<double>(json['weight']),
     );
   }
@@ -345,16 +453,22 @@ class DbIngredientData extends DataClass
       'id': serializer.toJson<int>(id),
       'recipeId': serializer.toJson<int>(recipeId),
       'name': serializer.toJson<String>(name),
+      'amount': serializer.toJson<double>(amount),
       'weight': serializer.toJson<double>(weight),
     };
   }
 
   DbIngredientData copyWith(
-          {int? id, int? recipeId, String? name, double? weight}) =>
+          {int? id,
+          int? recipeId,
+          String? name,
+          double? amount,
+          double? weight}) =>
       DbIngredientData(
         id: id ?? this.id,
         recipeId: recipeId ?? this.recipeId,
         name: name ?? this.name,
+        amount: amount ?? this.amount,
         weight: weight ?? this.weight,
       );
   @override
@@ -363,13 +477,14 @@ class DbIngredientData extends DataClass
           ..write('id: $id, ')
           ..write('recipeId: $recipeId, ')
           ..write('name: $name, ')
+          ..write('amount: $amount, ')
           ..write('weight: $weight')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, recipeId, name, weight);
+  int get hashCode => Object.hash(id, recipeId, name, amount, weight);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -377,6 +492,7 @@ class DbIngredientData extends DataClass
           other.id == this.id &&
           other.recipeId == this.recipeId &&
           other.name == this.name &&
+          other.amount == this.amount &&
           other.weight == this.weight);
 }
 
@@ -384,31 +500,37 @@ class DbIngredientCompanion extends UpdateCompanion<DbIngredientData> {
   final Value<int> id;
   final Value<int> recipeId;
   final Value<String> name;
+  final Value<double> amount;
   final Value<double> weight;
   const DbIngredientCompanion({
     this.id = const Value.absent(),
     this.recipeId = const Value.absent(),
     this.name = const Value.absent(),
+    this.amount = const Value.absent(),
     this.weight = const Value.absent(),
   });
   DbIngredientCompanion.insert({
     this.id = const Value.absent(),
     required int recipeId,
     required String name,
+    required double amount,
     required double weight,
   })  : recipeId = Value(recipeId),
         name = Value(name),
+        amount = Value(amount),
         weight = Value(weight);
   static Insertable<DbIngredientData> custom({
     Expression<int>? id,
     Expression<int>? recipeId,
     Expression<String>? name,
+    Expression<double>? amount,
     Expression<double>? weight,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (recipeId != null) 'recipe_id': recipeId,
       if (name != null) 'name': name,
+      if (amount != null) 'amount': amount,
       if (weight != null) 'weight': weight,
     });
   }
@@ -417,11 +539,13 @@ class DbIngredientCompanion extends UpdateCompanion<DbIngredientData> {
       {Value<int>? id,
       Value<int>? recipeId,
       Value<String>? name,
+      Value<double>? amount,
       Value<double>? weight}) {
     return DbIngredientCompanion(
       id: id ?? this.id,
       recipeId: recipeId ?? this.recipeId,
       name: name ?? this.name,
+      amount: amount ?? this.amount,
       weight: weight ?? this.weight,
     );
   }
@@ -438,6 +562,9 @@ class DbIngredientCompanion extends UpdateCompanion<DbIngredientData> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
+    if (amount.present) {
+      map['amount'] = Variable<double>(amount.value);
+    }
     if (weight.present) {
       map['weight'] = Variable<double>(weight.value);
     }
@@ -450,6 +577,7 @@ class DbIngredientCompanion extends UpdateCompanion<DbIngredientData> {
           ..write('id: $id, ')
           ..write('recipeId: $recipeId, ')
           ..write('name: $name, ')
+          ..write('amount: $amount, ')
           ..write('weight: $weight')
           ..write(')'))
         .toString();

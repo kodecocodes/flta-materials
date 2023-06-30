@@ -7,22 +7,22 @@ import '../../data/models/recipe.dart';
 import '../../data/repository.dart';
 import '../recipes/recipe_details.dart';
 
-class MyRecipesList extends ConsumerStatefulWidget {
-  const MyRecipesList({Key? key}) : super(key: key);
+class Bookmarks extends ConsumerStatefulWidget {
+  const Bookmarks({Key? key}) : super(key: key);
 
   @override
-  ConsumerState createState() => _MyRecipesListState();
+  ConsumerState createState() => _BookmarkState();
 }
 
-class _MyRecipesListState extends ConsumerState<MyRecipesList> {
+class _BookmarkState extends ConsumerState<Bookmarks> {
   List<Recipe> recipes = [];
 
   @override
   Widget build(BuildContext context) {
-    return _buildRecipeList(context);
+    return _buildBookmarks(context);
   }
 
-  Widget _buildRecipeList(BuildContext context) {
+  Widget _buildBookmarks(BuildContext context) {
     final repository = ref.watch(repositoryProvider);
     return StreamBuilder<List<Recipe>>(
       stream: repository.watchAllRecipes(),
@@ -77,7 +77,8 @@ class _MyRecipesListState extends ConsumerState<MyRecipesList> {
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return RecipeDetails(recipe: recipe);
+                          return RecipeDetails(
+                              recipe: recipe.copyWith(bookmarked: true));
                         },
                       ));
                     },

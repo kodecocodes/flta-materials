@@ -91,10 +91,11 @@ class DBRepository extends Repository {
         final id = await _recipeDao.insertRecipe(
           recipeToInsertableDbRecipe(recipe),
         );
+        final ingredients = <Ingredient>[];
         for (final ingredient in recipe.ingredients) {
-          ingredient.recipeId = id;
+          ingredients.add(ingredient.copyWith(recipeId: id));
         }
-        insertIngredients(recipe.ingredients);
+        insertIngredients(ingredients);
         return id;
       },
     );

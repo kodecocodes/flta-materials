@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lumberdash/lumberdash.dart';
 import 'package:recipes/providers.dart';
 
 import '../../data/models/recipe.dart';
@@ -28,46 +29,54 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
   Recipe? recipeDetail;
 
   @override
+  void initState() {
+    super.initState();
+    loadRecipe();
+  }
+
+  void loadRecipe() async {
+    final response = await ref
+        .read(serviceProvider)
+        .queryRecipe(widget.recipe.id.toString());
+    final result = response.body;
+    if (result is Success<Recipe>) {
+      final body = result.value;
+      recipeDetail = body;
+      setState(() {});
+    } else  {
+      logMessage('Problems getting Recipe $result');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final maxHeight = MediaQuery.of(context).size.height;
-    return FutureBuilder<Response<Result<Recipe>>>(
-      future:
-          ref.read(serviceProvider).queryRecipe(widget.recipe.id.toString()),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          readRecipe(snapshot);
-          return Scaffold(
-            body: SafeArea(
-              child: Container(
-                color: Colors.white,
-                height: maxHeight,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      topImage(context),
-                      sizedW16,
-                      Container(
-                          constraints: const BoxConstraints(maxWidth: 500),
-                          child: Column(
-                            children: [
-                              titleRow(),
-                              sizedW16,
-                              description(),
-                              sizedW16,
-                            ],
-                          )),
-                    ],
-                  ),
-                ),
-              ),
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+          color: Colors.white,
+          height: maxHeight,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                topImage(context),
+                sizedW16,
+                Container(
+                    constraints: const BoxConstraints(maxWidth: 500),
+                    child: Column(
+                      children: [
+                        titleRow(),
+                        description(),
+                        sizedW16,
+                      ],
+                    )),
+              ],
             ),
-          );
-        } else {
-          return Container();
-        }
-      },
+          ),
+        ),
+      ),
     );
   }
 
@@ -104,8 +113,7 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
               imageUrl: widget.recipe.image ?? '',
               alignment: Alignment.topCenter,
               fit: BoxFit.contain,
-              placeholder: (context, url) =>
-                  const CircularProgressIndicator(),
+              placeholder: (context, url) => const CircularProgressIndicator(),
               height: 200,
               // width: size.width,
             ),
@@ -117,47 +125,62 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
 
   Widget titleRow() {
     final repository = ref.read(repositoryProvider);
-    return Padding(
-      padding: const EdgeInsets.only(left: 16.0),
-      child: Row(
-        children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          Expanded(
-            child: AutoSizeText(
-              widget.recipe.label ?? '',
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-              style: const TextStyle(
-                fontSize: 24,
-                fontFamily: 'Roboto',
+    final titleRowColor = widget.recipe.bookmarked
+        ? Colors.black
+        : Colors.white;
+    return Container(
+      decoration: const BoxDecoration(color: lightGreen),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 16.0),
+        child: Row(
+          children: [
+            IconButton(
+              icon: Icon(Icons.arrow_back, color: titleRowColor),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            Expanded(
+              child: AutoSizeText(
+                widget.recipe.label ?? '',
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: TextStyle(
+                    fontSize: 24,
+                    fontFamily: 'Roboto',
+                    color: titleRowColor),
               ),
             ),
-          ),
-          IconButton(
-            icon: SvgPicture.asset(
-              'assets/images/icon_bookmark.svg',
+            IconButton(
+              icon: SvgPicture.asset(
+                widget.recipe.bookmarked
+                    ? 'assets/images/icon_bookmarks.svg'
+                    : 'assets/images/icon_bookmark.svg',
+                colorFilter: ColorFilter.mode(
+                    titleRowColor,
+                    BlendMode.srcIn),
+              ),
+              onPressed: () {
+                if (!widget.recipe.bookmarked) {
+                  if (recipeDetail != null) {
+                    repository.insertRecipe(recipeDetail!);
+                  }
+                } else {
+                  repository.deleteRecipe(widget.recipe);
+                }
+                Navigator.pop(context);
+              },
             ),
-            onPressed: () {
-              if (recipeDetail != null) {
-                repository.insertRecipe(recipeDetail!);
-              }
-              Navigator.pop(context);
-            },
-          ),
-          sizedW8,
-        ],
+            sizedW8,
+          ],
+        ),
       ),
     );
   }
 
   Widget description() {
     return Padding(
-      padding: const EdgeInsets.only(left: 16.0),
+      padding: const EdgeInsets.only(left: 16.0, top: 24.0),
       child: Html(data: recipeDetail?.description ?? ''),
     );
   }

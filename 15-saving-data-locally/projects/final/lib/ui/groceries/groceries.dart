@@ -7,24 +7,26 @@ import '../theme/colors.dart';
 import '../widgets/common.dart';
 import '../widgets/ingredient_card.dart';
 
-class ShoppingList extends ConsumerStatefulWidget {
-  const ShoppingList({Key? key}) : super(key: key);
+class GroceryList extends ConsumerStatefulWidget {
+  const GroceryList({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ShoppingList> createState() => _ShoppingListState();
+  ConsumerState<GroceryList> createState() => _GroceryListState();
 }
 
-class _ShoppingListState extends ConsumerState<ShoppingList> {
+class _GroceryListState extends ConsumerState<GroceryList> {
   final checkBoxValues = <int, bool>{};
   late TextEditingController searchTextController;
   bool showAll = true;
   List<Ingredient> currentIngredients = [];
+  bool searching = false;
+  List<Ingredient> searchIngredients = [];
   final ScrollController _scrollController = ScrollController();
+  final searchFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-
     searchTextController = TextEditingController(text: '');
   }
 
@@ -72,7 +74,8 @@ class _ShoppingListState extends ConsumerState<ShoppingList> {
   Widget buildNeedHaveList() {
     final needListIndexes = <int, bool>{};
     final haveListIndexes = <int, bool>{};
-    for (var index = 0; index < currentIngredients.length; index++) {
+    final ingredients = currentIngredients;
+    for (var index = 0; index < ingredients.length; index++) {
       if (!checkBoxValues.containsKey(index)) {
         needListIndexes[index] = true;
       } else {
@@ -81,12 +84,12 @@ class _ShoppingListState extends ConsumerState<ShoppingList> {
     }
     final needList = <Ingredient>[];
     final haveList = <Ingredient>[];
-    for (var index = 0; index < currentIngredients.length; index++) {
+    for (var index = 0; index < ingredients.length; index++) {
       if (needListIndexes.containsKey(index)) {
-        needList.add(currentIngredients[index]);
+        needList.add(ingredients[index]);
       }
       if (haveListIndexes.containsKey(index)) {
-        haveList.add(currentIngredients[index]);
+        haveList.add(ingredients[index]);
       }
     }
     final columnList = <Widget>[];
@@ -106,20 +109,17 @@ class _ShoppingListState extends ConsumerState<ShoppingList> {
   }
 
   Widget buildIngredientList() {
-    final repository = ref.read(repositoryProvider);
-    return StreamBuilder(
-      stream: repository.watchAllIngredients(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.active) {
-          final ingredients = snapshot.data;
-          if (ingredients == null) {
-            currentIngredients = [];
-            return Container();
-          }
-          currentIngredients = ingredients;
-          return ingredientList(currentIngredients, checkBoxValues, true);
+    final ingredientStream = ref.watch(ingredientProvider);
+    return ingredientStream.when(
+      loading: () => const CircularProgressIndicator(),
+      error: (error, stackTrace) => Text(error.toString()),
+      data: (ingredients) {
+        currentIngredients = ingredients;
+        if (searching) {
+          startSearch(searchTextController.text);
+          return ingredientList(searchIngredients, checkBoxValues, true);
         } else {
-          return Container();
+          return ingredientList(currentIngredients, checkBoxValues, true);
         }
       },
     );
@@ -168,10 +168,6 @@ class _ShoppingListState extends ConsumerState<ShoppingList> {
           icon: const Icon(Icons.search),
           onPressed: () {
             startSearch(searchTextController.text);
-            final currentFocus = FocusScope.of(context);
-            if (!currentFocus.hasPrimaryFocus) {
-              currentFocus.unfocus();
-            }
           },
         ),
         sizedW8,
@@ -184,7 +180,8 @@ class _ShoppingListState extends ConsumerState<ShoppingList> {
                   border: InputBorder.none,
                   hintText: 'Search...',
                 ),
-                autofocus: false,
+                focusNode: searchFocusNode,
+                autofocus: true,
                 textInputAction: TextInputAction.done,
                 onSubmitted: (value) {
                   startSearch(searchTextController.text);
@@ -194,7 +191,15 @@ class _ShoppingListState extends ConsumerState<ShoppingList> {
             ],
           ),
         ),
-        sizedW8,
+        IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            setState(() {
+              searching = false;
+              searchTextController.text = '';
+            });
+          },
+        ),
         PopupMenuButton<String>(
           icon: const Icon(
             Icons.filter_list,
@@ -225,11 +230,10 @@ class _ShoppingListState extends ConsumerState<ShoppingList> {
   }
 
   void startSearch(String searchString) {
-    final index = currentIngredients
-        .indexWhere((element) => true == element.name?.contains(searchString));
-    if (index != -1) {
-      _scrollController.animateTo(index * 50,
-          duration: const Duration(seconds: 1), curve: Curves.easeInOut);
-    }
+    searching = searchString.isNotEmpty;
+    searchIngredients = currentIngredients
+        .where((element) => true == element.name?.contains(searchString))
+        .toList();
+    setState(() {});
   }
 }

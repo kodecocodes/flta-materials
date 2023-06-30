@@ -83,7 +83,7 @@ Map<String, dynamic> _$SpoonacularRecipeToJson(SpoonacularRecipe instance) =>
 ExtendedIngredient _$ExtendedIngredientFromJson(Map<String, dynamic> json) =>
     ExtendedIngredient(
       id: json['id'] as int,
-      aisle: json['aisle'] as String,
+      aisle: json['aisle'] as String?,
       image: json['image'] as String,
       name: json['name'] as String,
       nameClean: json['nameClean'] as String,

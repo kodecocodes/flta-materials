@@ -8,7 +8,6 @@ import 'model_response.dart';
 import 'spoonacular_model.dart';
 
 class SpoonacularConverter implements Converter {
-
   @override
   Request convertRequest(Request request) {
     final req = applyHeader(
@@ -61,9 +60,9 @@ class SpoonacularConverter implements Converter {
       }
     } catch (e) {
       chopperLogger.warning(e);
-      return response.copyWith<BodyType>(
-        body: Error(e as Exception) as BodyType,
-      );
+      final error = Error<InnerType>(Exception(e.toString()));
+      return Response(response.base, null,
+          error: error);
     }
   }
 

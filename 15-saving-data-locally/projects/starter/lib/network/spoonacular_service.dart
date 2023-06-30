@@ -8,7 +8,9 @@ import 'spoonacular_converter.dart';
 
 part 'spoonacular_service.chopper.dart';
 
-const String apiKey = '<Your Key Here>';
+// TODO: Remove key
+// const String apiKey = '6abcc18295294c48b466ddf1270cddd7';
+const String apiKey = '76d87ac219204992a7d20d02a0a5d258';
 const String apiUrl = 'https://api.spoonacular.com/';
 
 @ChopperApi()

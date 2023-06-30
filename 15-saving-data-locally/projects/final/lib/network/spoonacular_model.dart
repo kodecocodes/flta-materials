@@ -88,7 +88,7 @@ class SpoonacularRecipe {
 @JsonSerializable()
 class ExtendedIngredient {
   int id;
-  String aisle;
+  String? aisle;
   String image;
   String name;
   String nameClean;

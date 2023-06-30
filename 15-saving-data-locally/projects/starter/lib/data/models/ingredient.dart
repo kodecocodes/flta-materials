@@ -1,39 +1,20 @@
-import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'ingredient.freezed.dart';
 
 part 'ingredient.g.dart';
 
-@JsonSerializable()
-// ignore: must_be_immutable
-class Ingredient extends Equatable {
-  int? id;
-  int? recipeId;
-  final String? name;
-  final double? amount;
-  final double? weight;
-
-  Ingredient({
-    this.id,
-    this.recipeId,
-    this.name,
-    this.amount,
-    this.weight,
-  });
-
-  @override
-  List<Object?> get props => [
-        recipeId,
-        name,
-        amount,
-        weight,
-      ];
+@freezed
+class Ingredient with _$Ingredient {
+  const factory Ingredient(
+      {int? id,
+        int? recipeId,
+        String? name,
+        double? amount,
+        double? weight}) = _Ingredient;
 
   // Create a Ingredient from JSON data
   factory Ingredient.fromJson(Map<String, dynamic> json) =>
       _$IngredientFromJson(json);
 
-
-  // Convert our Ingredient to JSON to make it
-  // easier when we store it in the database
-  Map<String, dynamic> toJson() => _$IngredientToJson(this);
 }
