@@ -15,7 +15,7 @@ dependencies:
   intl: ^0.18.1
   flutter_riverpod: ^2.3.6
   firebase_core: ^2.14.0
-  cloud_firestore: ^4.8.1
+  cloud_firestore: ^4.8.2
   firebase_auth: ^4.6.3
 
 dev_dependencies:
