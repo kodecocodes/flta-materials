@@ -8,23 +8,25 @@ import 'models/models.dart';
 class MemoryRepository extends Repository {
   final List<Recipe> _currentRecipes = <Recipe>[];
   final List<Ingredient> _currentIngredients = <Ingredient>[];
-  Stream<List<Recipe>>? _recipeStream;
-  Stream<List<Ingredient>>? _ingredientStream;
+  var recipeIdCount = 0;
   final StreamController _recipeStreamController =
       StreamController<List<Recipe>>();
   final StreamController _ingredientStreamController =
       StreamController<List<Ingredient>>();
+  Stream<List<Recipe>>? _recipeStream;
+  Stream<List<Ingredient>>? _ingredientStream;
 
   @override
   Stream<List<Recipe>> watchAllRecipes() {
-    _recipeStream ??= _recipeStreamController.stream as Stream<List<Recipe>>;
+    _recipeStream ??= _recipeStreamController.stream.asBroadcastStream()
+        as Stream<List<Recipe>>;
     return _recipeStream!;
   }
 
   @override
   Stream<List<Ingredient>> watchAllIngredients() {
-    _ingredientStream ??=
-        _ingredientStreamController.stream as Stream<List<Ingredient>>;
+    _ingredientStream ??= _ingredientStreamController.stream.asBroadcastStream()
+        as Stream<List<Ingredient>>;
     return _ingredientStream!;
   }
 
@@ -58,9 +60,7 @@ class MemoryRepository extends Repository {
   Future<int> insertRecipe(Recipe recipe) {
     _currentRecipes.add(recipe);
     _recipeStreamController.sink.add(_currentRecipes);
-    if (recipe.ingredients != null) {
-      insertIngredients(recipe.ingredients!);
-    }
+    insertIngredients(recipe.ingredients);
     return Future.value(0);
   }
 

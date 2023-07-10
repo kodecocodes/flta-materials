@@ -1,23 +1,20 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-// ignore: must_be_immutable
-class Ingredient extends Equatable {
-  int? id;
-  int? recipeId;
-  final String? name;
-  final double? weight;
+part 'ingredient.freezed.dart';
 
-  Ingredient({
-    this.id,
-    this.recipeId,
-    this.name,
-    this.weight,
-  });
+part 'ingredient.g.dart';
 
-  @override
-  List<Object?> get props => [
-        recipeId,
-        name,
-        weight,
-      ];
+@freezed
+class Ingredient with _$Ingredient {
+  const factory Ingredient(
+      {int? id,
+        int? recipeId,
+        String? name,
+        double? amount,
+        double? weight}) = _Ingredient;
+
+  // Create a Ingredient from JSON data
+  factory Ingredient.fromJson(Map<String, dynamic> json) =>
+      _$IngredientFromJson(json);
+
 }
