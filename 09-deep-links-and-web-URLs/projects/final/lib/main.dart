@@ -1,71 +1,108 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:yummy/login.dart';
+import 'package:yummy/restaurant_menu.dart';
 
-import 'fooderlich_theme.dart';
-import 'models/models.dart';
-import 'navigation/app_router.dart';
+import 'constants.dart';
+import 'home.dart';
+import 'package:go_router/go_router.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final appStateManager = AppStateManager();
-  await appStateManager.initializeApp();
-  runApp(Fooderlich(appStateManager: appStateManager));
+void main() {
+  runApp(const MyApp());
 }
 
-class Fooderlich extends StatefulWidget {
-  final AppStateManager appStateManager;
-
-  const Fooderlich({
-    super.key,
-    required this.appStateManager,
-  });
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
   @override
-  FooderlichState createState() => FooderlichState();
+  State<MyApp> createState() => _MyAppState();
 }
 
-class FooderlichState extends State<Fooderlich> {
-  late final _groceryManager = GroceryManager();
-  late final _profileManager = ProfileManager();
-  late final _appRouter = AppRouter(
-    widget.appStateManager,
-    _profileManager,
-    _groceryManager,
+class _MyAppState extends State<MyApp> {
+  ThemeMode themeMode = ThemeMode.system;
+  ColorSeed colorSelected = ColorSeed.green;
+  ColorScheme? imageColorScheme = const ColorScheme.light();
+
+  final _router = GoRouter(
+    debugLogDiagnostics: true,
+    initialLocation: '/login',
+    routes: [
+      GoRoute(
+        path: '/login',
+        builder: (context, state) => const Login(),
+      ),
+      // ShellRoute(
+      //   builder: (BuildContext context, GoRouterState state, Widget child) {
+      //     return Scaffold(
+      //       body: child,
+      //       /* ... */
+      //       bottomNavigationBar: BottomNavigationBar(
+      //           /* ... */
+      //           ),
+      //     );
+      //   },
+      //   routes: <RouteBase>[
+      //     GoRoute(
+      //       path: 'details',
+      //       builder: (BuildContext context, GoRouterState state) {
+      //         return const DetailsScreen();
+      //       },
+      //     ),
+      //   ],
+      // ),
+      GoRoute(
+          path: '/',
+          builder: (context, state) {
+            return Home(
+                tab: int.tryParse(state.queryParameters['tab'] ?? '') ?? 0);
+          },
+          routes: [
+            // ShellRoute(
+            //     routes: [
+            //       GoRoute(
+            //         path: 'store',
+            //         builder: (context, state) => Container(color: Colors.blue),
+            //       ),
+            //     ],
+            //     builder:
+            //         (BuildContext context, GoRouterState state, Widget child) {
+            //       return Container(color: Colors.blue);
+            //     })
+            GoRoute(
+              path: 'store',
+              builder: (context, state) => RestaurantMenu(),
+            ),
+          ]),
+      // GoRoute(path: '/restaurant/:merchantId'),
+      // GoRoute(path: '/onboarding'),
+      // GoRoute(path: '/account'),
+      // GoRoute(
+      //   path: '/',
+      //   builder: (context, state) => Home(
+      //     title: 'Yummy',
+      //     colorSelected: colorSelected,
+      //     handleBrightnessChange: handleBrightnessChange,
+      //     handleColorSelect: handleColorSelect,
+      //   ),
+      // ),
+    ],
   );
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => _groceryManager,
-        ),
-        ChangeNotifierProvider(
-          create: (context) => _profileManager,
-        ),
-        ChangeNotifierProvider(
-          create: (context) => widget.appStateManager,
-        ),
-      ],
-      child: Consumer<ProfileManager>(
-        builder: (context, profileManager, child) {
-          ThemeData theme;
-          if (profileManager.darkMode) {
-            theme = FooderlichTheme.dark();
-          } else {
-            theme = FooderlichTheme.light();
-          }
-
-          final router = _appRouter.router;
-
-          return MaterialApp.router(
-            theme: theme,
-            title: 'Fooderlich',
-            routerDelegate: router.routerDelegate,
-            routeInformationParser: router.routeInformationParser,
-            routeInformationProvider: router.routeInformationProvider,
-          );
-        },
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerConfig: _router,
+      title: 'Yummy',
+      themeMode: ThemeMode.dark,
+      theme: ThemeData(
+        colorSchemeSeed: colorSelected.color,
+        useMaterial3: true,
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        colorSchemeSeed: colorSelected.color,
+        useMaterial3: true,
+        brightness: Brightness.dark,
       ),
     );
   }
