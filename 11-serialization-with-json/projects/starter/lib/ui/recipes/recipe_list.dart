@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../network/service_interface.dart';
 import '../widgets/common.dart';
@@ -314,7 +313,19 @@ class _RecipeListState extends ConsumerState<RecipeList> {
           currentSearchList.addAll(query.recipes);
           currentEndPosition =
               min(query.totalResults, currentEndPosition + query.number);
-          return _buildRecipeList(context, currentSearchList);
+          if (currentCount == 0) {
+            return const SliverFillRemaining(
+              child: Center(
+                child: Text(
+                  'No Results',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              ),
+            );
+          } else {
+            return _buildRecipeList(context, currentSearchList);
+          }
         } else {
           if (currentCount == 0) {
             // Show a loading indicator while waiting for the movies
