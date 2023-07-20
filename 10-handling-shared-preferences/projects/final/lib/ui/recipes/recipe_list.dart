@@ -313,7 +313,19 @@ class _RecipeListState extends ConsumerState<RecipeList> {
           currentSearchList.addAll(query.recipes);
           currentEndPosition =
               min(query.totalResults, currentEndPosition + query.number);
-          return _buildRecipeList(context, currentSearchList);
+          if (currentCount == 0) {
+            return const SliverFillRemaining(
+              child: Center(
+                child: Text(
+                  'No Results',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              ),
+            );
+          } else {
+            return _buildRecipeList(context, currentSearchList);
+          }
         } else {
           if (currentCount == 0) {
             // Show a loading indicator while waiting for the movies
