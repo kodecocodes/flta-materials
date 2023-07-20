@@ -93,7 +93,7 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
       children: [
         SizedBox(
           width: size.width,
-          height: 200,
+          height: 150,
           child: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -111,7 +111,7 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
             // TODO Replace Asset with Recipe Image
             child: Image.asset(
               'assets/images/pizza_w700.png',
-              height: 200,
+              height: 150,
               width: 200,
             ),
           ),
