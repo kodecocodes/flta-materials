@@ -94,7 +94,7 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
       children: [
         SizedBox(
           width: size.width,
-          height: 200,
+          height: 150,
           child: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -114,8 +114,8 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
               alignment: Alignment.topCenter,
               fit: BoxFit.contain,
               placeholder: (context, url) => const CircularProgressIndicator(),
-              height: 200,
-              // width: size.width,
+              height: 150,
+              width: 200,
             ),
           ),
         ),

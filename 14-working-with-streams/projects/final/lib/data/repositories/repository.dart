@@ -1,5 +1,5 @@
 
-import 'models/models.dart';
+import '../models/models.dart';
 
 abstract class Repository {
   Future<List<Recipe>> findAllRecipes();

@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:core';
 
+import 'package:flutter/foundation.dart';
+
+import '../models/models.dart';
 import 'repository.dart';
 
-import 'models/models.dart';
-
-class MemoryRepository extends Repository {
+class MemoryRepository with ChangeNotifier implements Repository {
   final List<Recipe> _currentRecipes = <Recipe>[];
   final List<Ingredient> _currentIngredients = <Ingredient>[];
-  var recipeIdCount = 0;
   final StreamController _recipeStreamController =
       StreamController<List<Recipe>>();
   final StreamController _ingredientStreamController =
@@ -60,7 +60,12 @@ class MemoryRepository extends Repository {
   Future<int> insertRecipe(Recipe recipe) {
     _currentRecipes.add(recipe);
     _recipeStreamController.sink.add(_currentRecipes);
-    insertIngredients(recipe.ingredients);
+    final ingredients = <Ingredient>[];
+    for (final ingredient in recipe.ingredients) {
+      ingredients.add(ingredient.copyWith(recipeId: recipe.id));
+    }
+    insertIngredients(ingredients);
+    notifyListeners();
     return Future.value(0);
   }
 
@@ -70,6 +75,7 @@ class MemoryRepository extends Repository {
       _currentIngredients.addAll(ingredients);
       _ingredientStreamController.sink.add(_currentIngredients);
     }
+    notifyListeners();
     return Future.value(<int>[]);
   }
 
@@ -80,6 +86,7 @@ class MemoryRepository extends Repository {
     if (recipe.id != null) {
       deleteRecipeIngredients(recipe.id!);
     }
+    notifyListeners();
     return Future.value();
   }
 
@@ -87,6 +94,7 @@ class MemoryRepository extends Repository {
   Future<void> deleteIngredient(Ingredient ingredient) {
     _currentIngredients.remove(ingredient);
     _ingredientStreamController.sink.add(_currentIngredients);
+    notifyListeners();
     return Future.value();
   }
 
@@ -95,6 +103,7 @@ class MemoryRepository extends Repository {
     _currentIngredients
         .removeWhere((ingredient) => ingredients.contains(ingredient));
     _ingredientStreamController.sink.add(_currentIngredients);
+    notifyListeners();
     return Future.value();
   }
 
@@ -103,6 +112,7 @@ class MemoryRepository extends Repository {
     _currentIngredients
         .removeWhere((ingredient) => ingredient.recipeId == recipeId);
     _ingredientStreamController.sink.add(_currentIngredients);
+    notifyListeners();
     return Future.value();
   }
 

@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lumberdash/lumberdash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'data/memory_repository.dart';
+import 'data/repositories/memory_repository.dart';
 import 'providers.dart';
 import 'ui/main_screen.dart';
 import 'ui/theme/theme.dart';
@@ -20,10 +20,16 @@ Future<void> main() async {
     await DesktopWindow.setWindowSize(const Size(600, 600));
     await DesktopWindow.setMinWindowSize(const Size(260, 600));
   }
-  globalSharedPreferences = await SharedPreferences.getInstance();
-  globalRepository = MemoryRepository();
-  await globalRepository.init();
-  runApp(const ProviderScope(child: MyApp()));
+  final sharedPrefs = await SharedPreferences.getInstance();
+  final repository = MemoryRepository();
+  await repository.init();
+  // final service = await MockService.create();
+  runApp(ProviderScope(
+    overrides: [
+      repositoryProvider.overrideWithValue(repository),
+      sharedPrefProvider.overrideWithValue(sharedPrefs),
+    ],
+      child: const MyApp()));
 }
 
 void _setupLogging() {

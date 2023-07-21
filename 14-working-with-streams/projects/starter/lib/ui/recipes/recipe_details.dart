@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -93,7 +94,7 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
       children: [
         SizedBox(
           width: size.width,
-          height: 200,
+          height: 150,
           child: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -108,10 +109,12 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
           alignment: Alignment.topCenter,
           child: Hero(
             tag: 'recipe-${widget.recipe.id}',
-            // TODO Replace Asset with Recipe Image
-            child: Image.asset(
-              'assets/images/pizza_w700.png',
-              height: 200,
+            child: CachedNetworkImage(
+              imageUrl: widget.recipe.image ?? '',
+              alignment: Alignment.topCenter,
+              fit: BoxFit.contain,
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              height: 150,
               width: 200,
             ),
           ),
