@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -55,13 +56,12 @@ Widget recipeCard(Recipe recipe) {
             ),
             child: Hero(
               tag: 'recipe-${recipe.id}',
-	      // TODO: Replace with Cached Image
-              child: Image.asset(
-                'assets/images/pizza_w700.png',
-                height: 200,
-                width: 200,
+                child: CachedNetworkImage(
+                  imageUrl: recipe.image ?? '',
+                  height: 210,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
           ),
         ],
       ),

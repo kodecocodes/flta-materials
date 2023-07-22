@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -108,9 +109,11 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
           alignment: Alignment.topCenter,
           child: Hero(
             tag: 'recipe-${widget.recipe.id}',
-            // TODO Replace Asset with Recipe Image
-            child: Image.asset(
-              'assets/images/pizza_w700.png',
+            child: CachedNetworkImage(
+              imageUrl: widget.recipe.image ?? '',
+              alignment: Alignment.topCenter,
+              fit: BoxFit.contain,
+              placeholder: (context, url) => const CircularProgressIndicator(),
               height: 150,
               width: 200,
             ),
