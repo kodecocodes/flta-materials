@@ -352,8 +352,15 @@ class _RecipeListState extends ConsumerState<RecipeList> {
     final recipeService = ref.watch(serviceProvider);
     currentResponse = recipeService.queryRecipes(
         searchTextController.text.trim(), currentStartPosition, pageCount);
-*/
     return currentResponse!;
+*/
+    const apiQueryResults = QueryResult(
+        offset: 0,
+        number: 0,
+        totalResults: 0,
+        recipes: <Recipe>[]);
+    return Success(apiQueryResults);
+
   }
 
   Widget _buildRecipeList(
