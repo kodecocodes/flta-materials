@@ -5,7 +5,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../network/spoonacular_service.dart';
+import '../../network/service_interface.dart';
 import '../widgets/common.dart';
 
 import '../../data/models/models.dart';

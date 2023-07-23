@@ -1,10 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:chopper/chopper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lumberdash/lumberdash.dart';
+import '../../network/service_interface.dart';
 import '../../providers.dart';
 
 import '../../data/models/recipe.dart';
@@ -79,7 +80,7 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
     );
   }
 
-  void readRecipe(AsyncSnapshot<Response<Result<Recipe>>> snapshot) {
+  void readRecipe(AsyncSnapshot<RecipeDetailsResponse> snapshot) {
     final result = snapshot.data?.body;
     if (result is Success<Recipe>) {
       final body = result.value;
@@ -108,9 +109,11 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
           alignment: Alignment.topCenter,
           child: Hero(
             tag: 'recipe-${widget.recipe.id}',
-            // TODO Replace Asset with Recipe Image
-            child: Image.asset(
-              'assets/images/pizza_w700.png',
+            child: CachedNetworkImage(
+              imageUrl: widget.recipe.image ?? '',
+              alignment: Alignment.topCenter,
+              fit: BoxFit.contain,
+              placeholder: (context, url) => const CircularProgressIndicator(),
               height: 150,
               width: 200,
             ),

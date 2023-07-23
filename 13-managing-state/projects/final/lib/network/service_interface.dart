@@ -2,8 +2,10 @@ import 'package:chopper/chopper.dart';
 
 import '../data/models/recipe.dart';
 import 'model_response.dart';
-import 'spoonacular_service.dart';
+import 'query_result.dart';
 
+typedef RecipeResponse = Response<Result<QueryResult>>;
+typedef RecipeDetailsResponse = Response<Result<Recipe>>;
 
 abstract class ServiceInterface {
   /// Query recipes with the given query string
@@ -16,7 +18,7 @@ abstract class ServiceInterface {
   );
 
   /// Get the details of a specific recipe
-  Future<Response<Result<Recipe>>> queryRecipe(
-    @Path('id') String id,
-  );
+  Future<RecipeDetailsResponse> queryRecipe(
+      String id,
+      );
 }

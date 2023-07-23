@@ -8,9 +8,7 @@ import '../data/models/recipe.dart';
 import '../network/model_response.dart';
 import '../network/query_result.dart';
 import '../network/service_interface.dart';
-import '../network/spoonacular_converter.dart';
 import '../network/spoonacular_model.dart';
-import '../network/spoonacular_service.dart';
 
 class MockService implements ServiceInterface {
   late QueryResult _currentRecipes1;
@@ -101,7 +99,7 @@ class MockService implements ServiceInterface {
   }
 
   @override
-  Future<Response<Result<Recipe>>> queryRecipe(String id) {
+  Future<RecipeDetailsResponse> queryRecipe(String id) {
     return Future.value(
       Response(
         http.Response(
