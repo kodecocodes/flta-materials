@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:yummy/login.dart';
+import 'package:yummy/models/auth.dart';
+import 'package:yummy/profile.dart';
 import 'package:yummy/restaurant_menu.dart';
 
 import 'constants.dart';
 import 'home.dart';
 import 'package:go_router/go_router.dart';
+
+import 'models/user.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,74 +22,73 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ThemeMode themeMode = ThemeMode.system;
-  ColorSeed colorSelected = ColorSeed.green;
+  ThemeMode themeMode = ThemeMode.dark;
+  ColorSeed colorSelected = ColorSeed.blue;
   ColorScheme? imageColorScheme = const ColorScheme.light();
+  final YummyAuth _auth = YummyAuth();
+  bool loggedIn = false;
 
-  final _router = GoRouter(
+  late final _router = GoRouter(
     debugLogDiagnostics: true,
     initialLocation: '/login',
+    redirect: _appRedirect,
     routes: [
       GoRoute(
         path: '/login',
-        builder: (context, state) => const Login(),
+        builder: (context, state) =>
+            Login(onLogIn: (Credentials credentials) async {
+          _auth
+              .signIn(credentials.username, credentials.password)
+              .then((_) => context.go('/'));
+        }),
       ),
-      // ShellRoute(
-      //   builder: (BuildContext context, GoRouterState state, Widget child) {
-      //     return Scaffold(
-      //       body: child,
-      //       /* ... */
-      //       bottomNavigationBar: BottomNavigationBar(
-      //           /* ... */
-      //           ),
-      //     );
-      //   },
-      //   routes: <RouteBase>[
-      //     GoRoute(
-      //       path: 'details',
-      //       builder: (BuildContext context, GoRouterState state) {
-      //         return const DetailsScreen();
-      //       },
-      //     ),
-      //   ],
-      // ),
       GoRoute(
           path: '/',
           builder: (context, state) {
             return Home(
-                tab: int.tryParse(state.queryParameters['tab'] ?? '') ?? 0);
+              auth: _auth,
+              handleBrightnessChange: handleBrightnessChange,
+              handleColorSelect: handleColorSelect,
+              colorSelected: colorSelected,
+              tab: int.tryParse(state.queryParameters['tab'] ?? '') ?? 0);
           },
           routes: [
-            // ShellRoute(
-            //     routes: [
-            //       GoRoute(
-            //         path: 'store',
-            //         builder: (context, state) => Container(color: Colors.blue),
-            //       ),
-            //     ],
-            //     builder:
-            //         (BuildContext context, GoRouterState state, Widget child) {
-            //       return Container(color: Colors.blue);
-            //     })
             GoRoute(
-              path: 'store',
-              builder: (context, state) => RestaurantMenu(),
+              path: 'merchant',
+              builder: (context, state) => const RestaurantMenu(),
             ),
           ]),
-      // GoRoute(path: '/restaurant/:merchantId'),
-      // GoRoute(path: '/onboarding'),
-      // GoRoute(path: '/account'),
-      // GoRoute(
-      //   path: '/',
-      //   builder: (context, state) => Home(
-      //     title: 'Yummy',
-      //     colorSelected: colorSelected,
-      //     handleBrightnessChange: handleBrightnessChange,
-      //     handleColorSelect: handleColorSelect,
-      //   ),
-      // ),
     ],
   );
+
+  String? _appRedirect(BuildContext context, GoRouterState state) {
+    final bool loggedIn = _auth.loggedIn;
+    final bool isOnLoginPage = state.matchedLocation == '/login';
+
+    // Go to /login if the user is not signed in
+    if (!loggedIn) {
+      return '/login';
+    }
+    // Go to root of app / if the user is already signed in
+    else if (loggedIn && isOnLoginPage) {
+      return '/';
+    }
+
+    // no redirect
+    return null;
+  }
+
+  void handleBrightnessChange(bool useLightMode) {
+    setState(() {
+      themeMode = useLightMode ? ThemeMode.light : ThemeMode.dark;
+    });
+  }
+
+  void handleColorSelect(int value) {
+    setState(() {
+      colorSelected = ColorSeed.values[value];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +96,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       routerConfig: _router,
       title: 'Yummy',
-      themeMode: ThemeMode.dark,
+      themeMode: themeMode,
       theme: ThemeData(
         colorSchemeSeed: colorSelected.color,
         useMaterial3: true,

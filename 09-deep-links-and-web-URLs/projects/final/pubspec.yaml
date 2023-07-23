@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   go_router: ^9.0.0
   cupertino_icons: ^1.0.2
-  # url_launcher: ^6.1.12
+  url_launcher: ^6.1.12
 
 dev_dependencies:
   flutter_test:

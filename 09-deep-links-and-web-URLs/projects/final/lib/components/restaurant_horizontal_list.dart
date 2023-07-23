@@ -24,7 +24,7 @@ class RestaurantsPage extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 220,
+            height: 230,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: restaurants.length,
@@ -49,7 +49,7 @@ class RestaurantsPage extends StatelessWidget {
                           subtitle: Text(restaurants[index].attributes,
                               maxLines: 1, style: textTheme.bodySmall),
                           onTap: () {
-                            context.go('/store');
+                            context.go('/merchant');
                           },
                         ),
                       ],

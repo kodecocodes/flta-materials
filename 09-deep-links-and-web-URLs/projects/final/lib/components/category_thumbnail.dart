@@ -31,13 +31,13 @@ class CategoryPage extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 250,
+            height: 280,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: categories.length,
               itemBuilder: (context, index) {
                 return SizedBox(
-                  width: 180,
+                  width: 200,
                   child: Card(
                     child: Column(
                       children: <Widget>[

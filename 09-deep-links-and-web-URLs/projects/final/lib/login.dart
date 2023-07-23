@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+/// Credential Class
+class Credentials {
+  Credentials(this.username, this.password);
+  final String username;
+  final String password;
+}
+
 class Login extends StatelessWidget {
-  const Login({super.key});
+  const Login({required this.onLogIn, super.key});
+
+  /// Called when users sign in with [Credentials].
+  final ValueChanged<Credentials> onLogIn;
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +33,21 @@ class Login extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Expanded(
+                Expanded(
                   child: FractionallySizedBox(
-                      widthFactor: 0.70, child: LoginForm()),
+                      widthFactor: 0.70,
+                      child: LoginForm(
+                        onLogIn: onLogIn,
+                      )),
                 ),
               ],
             );
           } else {
             // Display Mobile View
-            return const Column(
+            return Column(
               children: [
                 Expanded(
-                  child: LoginForm(),
+                  child: LoginForm(onLogIn: onLogIn),
                 ),
               ],
             );
@@ -46,7 +59,11 @@ class Login extends StatelessWidget {
 }
 
 class LoginForm extends StatelessWidget {
-  const LoginForm({super.key});
+  LoginForm({required this.onLogIn, super.key});
+
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final ValueChanged<Credentials> onLogIn;
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +79,7 @@ class LoginForm extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           TextField(
+            controller: _usernameController,
             decoration: InputDecoration(
               // filled: true,
               hintText: 'Username',
@@ -73,6 +91,7 @@ class LoginForm extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           TextField(
+            controller: _passwordController,
             obscureText: true,
             decoration: InputDecoration(
               // filled: true,
@@ -86,8 +105,10 @@ class LoginForm extends StatelessWidget {
           const SizedBox(height: 24),
           ElevatedButton(
             child: const Text('Login'),
-            onPressed: () {
-              context.go('/?tab=0');
+            onPressed: () async {
+              onLogIn(Credentials(
+                _usernameController.value.text,
+                _passwordController.value.text));
             },
           ),
         ],

@@ -46,8 +46,7 @@ enum ColorImageProvider {
 enum ScreenSelected {
   home(0),
   activity(1),
-  payment(2),
-  account(3);
+  account(2);
 
   const ScreenSelected(this.value);
   final int value;
