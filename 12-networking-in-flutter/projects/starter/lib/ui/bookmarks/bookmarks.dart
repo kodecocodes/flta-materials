@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -75,11 +76,11 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ListTile(
-			  // TODO Replace with Cached Image
-                          leading: Image.asset(
-                            'assets/images/pizza_w700.png',
-                            height: 200,
-                            width: 200,
+                          leading: CachedNetworkImage(
+                            imageUrl: recipe.image ?? '',
+                            height: 120,
+                            width: 60,
+                            fit: BoxFit.cover,
                           ),
                           title: Text(recipe.label ?? ''),
                         ),

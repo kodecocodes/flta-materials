@@ -1,10 +1,10 @@
 import 'package:chopper/chopper.dart';
 
-import '../data/models/recipe.dart';
 import 'model_response.dart';
 import 'query_result.dart';
 import 'service_interface.dart';
 import 'spoonacular_converter.dart';
+import '../data/models/models.dart';
 
 part 'spoonacular_service.chopper.dart';
 
