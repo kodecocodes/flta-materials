@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yummy/components/cart_control.dart';
 
-class RestaurantMenu extends StatelessWidget {
-  const RestaurantMenu({super.key});
+import 'checkout_page.dart';
+import 'models/shopping_cart.dart';
+import 'package:uuid/uuid.dart';
+
+class RestaurantMenu extends StatefulWidget {
+  RestaurantMenu({super.key});
+
+  @override
+  State<RestaurantMenu> createState() => _RestaurantMenuState();
+}
+
+class _RestaurantMenuState extends State<RestaurantMenu> {
+  final shoppingCart = ShoppingCart();
 
   // Function to calculate number of columns
   int calculateColumnCount(double screenWidth) {
@@ -114,14 +126,6 @@ class RestaurantMenu extends StatelessWidget {
   }
 
   Widget gridViewSection(double screenWidth, int columns, String title) {
-    List<Widget> buttonList = <Widget>[
-      IconButton(onPressed: () {}, icon: const Icon(Icons.share_outlined)),
-      IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
-      IconButton(onPressed: () {}, icon: const Icon(Icons.delete_outline)),
-      IconButton(onPressed: () {}, icon: const Icon(Icons.archive_outlined)),
-      IconButton(onPressed: () {}, icon: const Icon(Icons.settings_outlined)),
-      IconButton(onPressed: () {}, icon: const Icon(Icons.favorite_border)),
-    ];
     return SliverToBoxAdapter(
       child: Center(
         child: Container(
@@ -146,7 +150,6 @@ class RestaurantMenu extends StatelessWidget {
                       // isDismissible: false,
                       showDragHandle: true,
                       context: context,
-                      // TODO: Remove when this is in the framework https://github.com/flutter/flutter/issues/118619
                       constraints: const BoxConstraints(maxWidth: 480),
                       builder: (context) {
                         return SizedBox(
@@ -213,7 +216,7 @@ class RestaurantMenu extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(
                     8.0), // This gives the rounded corners
-                image: DecorationImage(
+                image: const DecorationImage(
                   image: AssetImage('assets/food/bopbowl.webp'),
                   fit: BoxFit
                       .cover, // This ensures the image covers the entire container
@@ -223,8 +226,18 @@ class RestaurantMenu extends StatelessWidget {
           ],
         ),
         CartControl(
-          onCartNumberChanged: (number) {
-            print(number);
+          addToCart: (number) {
+            var uuid = const Uuid();
+            String uniqueId = uuid.v4();
+            final item = CartItem(
+                id: uniqueId, 
+                name: 'Bop Bowl', 
+                price: 10.0, 
+                quantity: number);
+            setState(() {
+              shoppingCart.addItem(item);
+            });
+            context.pop();
           },
         )
       ],
@@ -302,14 +315,27 @@ class RestaurantMenu extends StatelessWidget {
     );
   }
 
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void openDrawer() {
+    scaffoldKey.currentState!.openEndDrawer();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: () {
+            openDrawer();
+          },
           tooltip: 'Cart',
           icon: const Icon(Icons.shopping_cart),
-          label: const Text('10 Items in cart'),
+          label: Text('${shoppingCart.items.length} Items in cart'),
+        ),
+        endDrawer: SizedBox(
+          width: 375, // 75% of screen will be occupied
+          child: Drawer(child: CheckoutPage(shoppingCart: shoppingCart,)),
         ),
         body: LayoutBuilder(builder: (context, constraints) {
           double maxWidth = 1000;

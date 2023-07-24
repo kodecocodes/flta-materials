@@ -29,6 +29,15 @@ class ShoppingCart {
   // Remove an item from the cart by its id
   void removeItem(String id) {
     _items.removeWhere((item) => item.id == id);
+    print(_items.length);
+  }
+
+  CartItem itemAt(int index) {
+    if (index >= 0 && index < _items.length) {
+      return _items[index];
+    } else {
+      throw IndexError.withLength(index, _items.length);
+    }
   }
 
   // Remove all items from the cart

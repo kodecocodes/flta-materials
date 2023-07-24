@@ -217,10 +217,10 @@ class _HomeState extends State<Home> {
         },
         destinations: appBarDestinations,
       ),
-      endDrawer: SizedBox(
-        width: 375, // 75% of screen will be occupied
-        child: Drawer(child: CheckoutPage()),
-      ),
+      // endDrawer: SizedBox(
+      //   width: 375, // 75% of screen will be occupied
+      //   child: Drawer(child: CheckoutPage()),
+      // ),
     );
   }
 }

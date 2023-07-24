@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CartControl extends StatefulWidget {
-  final Function(int) onCartNumberChanged;
+  final Function(int) addToCart;
 
-  const CartControl({required this.onCartNumberChanged, super.key});
+  const CartControl({required this.addToCart, super.key});
 
   @override
   _CartControlState createState() => _CartControlState();
@@ -28,7 +28,6 @@ class _CartControlState extends State<CartControl> {
                   cartNumber--;
                 }
               });
-              widget.onCartNumberChanged(cartNumber); // Notify the parent
             },
           ),
 
@@ -47,7 +46,6 @@ class _CartControlState extends State<CartControl> {
               setState(() {
                 cartNumber++;
               });
-              widget.onCartNumberChanged(cartNumber); // Notify the parent
             },
           ),
 
@@ -57,7 +55,7 @@ class _CartControlState extends State<CartControl> {
           // Add cart button
           FilledButton(
             onPressed: () {
-              // Handle adding to cart action
+              widget.addToCart(cartNumber);
             },
             child: const Text('Add to Cart'),
           ),

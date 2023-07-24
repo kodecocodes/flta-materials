@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
           routes: [
             GoRoute(
               path: 'merchant',
-              builder: (context, state) => const RestaurantMenu(),
+              builder: (context, state) => RestaurantMenu(),
             ),
           ]),
     ],

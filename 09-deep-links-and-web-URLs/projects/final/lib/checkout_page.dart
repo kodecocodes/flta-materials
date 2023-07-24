@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:yummy/models/shopping_cart.dart';
 
 class CheckoutPage extends StatefulWidget {
+  final ShoppingCart shoppingCart;
+
+  const CheckoutPage({super.key, required this.shoppingCart});
+
   @override
   _CheckoutPageState createState() => _CheckoutPageState();
 }
@@ -17,6 +22,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
   DateTime? selectedDate;
   final DateTime _firstDate = DateTime(DateTime.now().year - 2);
   final DateTime _lastDate = DateTime(DateTime.now().year + 1);
+  late ShoppingCart shoppingCart;
+
+  @override
+  void initState() {
+    super.initState();
+    shoppingCart = widget.shoppingCart;
+  }
 
   void _selectDate(BuildContext context) async {
     DateTime? picked = await showDatePicker(
@@ -34,18 +46,18 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   void _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
-            context: context,
-            initialEntryMode: TimePickerEntryMode.input,
-            initialTime: selectedTime ?? TimeOfDay.now(),
-            builder: (context, child) {
-              return MediaQuery(
-                data: MediaQuery.of(context).copyWith(
-                  alwaysUse24HourFormat: true,
-                ),
-                child: child!,
-              );
-            },
-          );
+      context: context,
+      initialEntryMode: TimePickerEntryMode.input,
+      initialTime: selectedTime ?? TimeOfDay.now(),
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            alwaysUse24HourFormat: true,
+          ),
+          child: child!,
+        );
+      },
+    );
     if (picked != null && picked != selectedTime) {
       setState(() {
         selectedTime = picked;
@@ -76,9 +88,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
           children: [
             CupertinoSlidingSegmentedControl<int>(
               children: myTabs,
-              onValueChanged: (newValue) {
-
-              },
+              onValueChanged: (newValue) {},
               groupValue: sharedValue,
             ),
             TextField(
@@ -100,15 +110,27 @@ class _CheckoutPageState extends State<CheckoutPage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: 20, // Number of items in the order summary
+                itemCount: shoppingCart.items
+                    .length, // Number of items in the order summary
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    leading: ClipRRect(
-                          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                          child: Image.asset('assets/categories/burger.png'),
-                        ),
-                    title: Text('Item description'),
-                    subtitle: Text('Quantity: 1\nPrice: \$10'),
+                  final item = shoppingCart.itemAt(index);
+                  return Dismissible(
+                    key: Key(item.id),
+                    direction: DismissDirection.endToStart,
+                    onDismissed: (direction) {
+                      setState(() {
+                        shoppingCart.removeItem(item.id);
+                      });
+                    },
+                    child: ListTile(
+                      leading: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8.0)),
+                        child: Image.asset('assets/categories/burger.png'),
+                      ),
+                      title: Text('Item description'),
+                      subtitle: Text('Quantity: ${item.quantity}\nPrice: \$10'),
+                    ),
                   );
                 },
               ),
