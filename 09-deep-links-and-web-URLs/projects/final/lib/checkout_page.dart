@@ -4,8 +4,10 @@ import 'package:yummy/models/shopping_cart.dart';
 
 class CheckoutPage extends StatefulWidget {
   final ShoppingCart shoppingCart;
+  final Function() didUpdate;
 
-  const CheckoutPage({super.key, required this.shoppingCart});
+  const CheckoutPage(
+      {super.key, required this.shoppingCart, required this.didUpdate});
 
   @override
   _CheckoutPageState createState() => _CheckoutPageState();
@@ -110,8 +112,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: shoppingCart.items
-                    .length, // Number of items in the order summary
+                itemCount: shoppingCart
+                    .items.length, // Number of items in the order summary
                 itemBuilder: (context, index) {
                   final item = shoppingCart.itemAt(index);
                   return Dismissible(
@@ -121,6 +123,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       setState(() {
                         shoppingCart.removeItem(item.id);
                       });
+                      widget.didUpdate();
                     },
                     child: ListTile(
                       leading: ClipRRect(

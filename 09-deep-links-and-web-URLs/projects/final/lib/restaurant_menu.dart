@@ -335,7 +335,12 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
         ),
         endDrawer: SizedBox(
           width: 375, // 75% of screen will be occupied
-          child: Drawer(child: CheckoutPage(shoppingCart: shoppingCart,)),
+          child: Drawer(
+            child: CheckoutPage(
+              shoppingCart: shoppingCart,
+              didUpdate: () {
+                setState(() {});
+              },)),
         ),
         body: LayoutBuilder(builder: (context, constraints) {
           double maxWidth = 1000;
