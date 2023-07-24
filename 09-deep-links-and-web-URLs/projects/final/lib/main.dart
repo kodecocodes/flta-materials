@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:yummy/login.dart';
 import 'package:yummy/models/auth.dart';
-import 'package:yummy/profile.dart';
+import 'package:yummy/models/shopping_cart.dart';
 import 'package:yummy/restaurant_menu.dart';
 
 import 'constants.dart';
 import 'home.dart';
 import 'package:go_router/go_router.dart';
 
-import 'models/user.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,8 +24,12 @@ class _MyAppState extends State<MyApp> {
   ThemeMode themeMode = ThemeMode.dark;
   ColorSeed colorSelected = ColorSeed.blue;
   ColorScheme? imageColorScheme = const ColorScheme.light();
+
+  /// Authentication to manage user login session
   final YummyAuth _auth = YummyAuth();
-  bool loggedIn = false;
+
+  /// Manage user's shopping cart for the items they order.
+  final ShoppingCart _shoppingCart = ShoppingCart();
 
   late final _router = GoRouter(
     debugLogDiagnostics: true,
@@ -36,21 +39,22 @@ class _MyAppState extends State<MyApp> {
       GoRoute(
         path: '/login',
         builder: (context, state) =>
-            Login(onLogIn: (Credentials credentials) async {
-          _auth
-              .signIn(credentials.username, credentials.password)
-              .then((_) => context.go('/'));
+            Login(
+              onLogIn: (Credentials credentials) async {
+                _auth
+                  .signIn(credentials.username, credentials.password)
+                  .then((_) => context.go('/'));
         }),
       ),
       GoRoute(
           path: '/',
           builder: (context, state) {
             return Home(
-              auth: _auth,
-              handleBrightnessChange: handleBrightnessChange,
-              handleColorSelect: handleColorSelect,
-              colorSelected: colorSelected,
-              tab: int.tryParse(state.queryParameters['tab'] ?? '') ?? 0);
+                auth: _auth,
+                handleBrightnessChange: handleBrightnessChange,
+                handleColorSelect: handleColorSelect,
+                colorSelected: colorSelected,
+                tab: int.tryParse(state.queryParameters['tab'] ?? '') ?? 0);
           },
           routes: [
             GoRoute(
