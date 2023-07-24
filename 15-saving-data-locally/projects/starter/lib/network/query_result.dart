@@ -10,7 +10,6 @@ class QueryResult with _$QueryResult {
   factory QueryResult.fromJson(Map<String, dynamic> json) =>
       _$QueryResultFromJson(json);
 
-  // Map<String, dynamic> toJson() => _$QueryResultToJson(this);
   const factory QueryResult({
     required int offset,
     required int number,

@@ -1,27 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:recipes/data/models/ingredient.dart';
+import 'data/repositories/memory_repository.dart';
+
+import 'network/service_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'data/repository.dart';
-import 'network/service_interface.dart';
-import 'network/spoonacular_service.dart';
-
-late SharedPreferences globalSharedPreferences;
 final sharedPrefProvider = Provider<SharedPreferences>((ref) {
-  return globalSharedPreferences;
+  throw UnimplementedError();
 });
 
-late Repository globalRepository;
-final repositoryProvider = Provider<Repository>((ref) {
-  return globalRepository;
+final repositoryProvider = ChangeNotifierProvider<MemoryRepository>((ref) {
+  return MemoryRepository();
 });
 
-final serviceProvider =
-    Provider<ServiceInterface>((ref) => SpoonacularService.create());
 
-final ingredientProvider = StreamProvider<List<Ingredient>>((ref) {
-  final repository = ref.read(repositoryProvider);
-  final stream = repository.watchAllIngredients();
-
-  return stream;
+final serviceProvider = Provider<ServiceInterface>((ref) {
+  throw UnimplementedError();
 });
+

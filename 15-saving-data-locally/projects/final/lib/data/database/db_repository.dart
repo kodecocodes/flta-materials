@@ -1,7 +1,7 @@
 import 'dart:async';
 import '../models/models.dart';
 
-import '../repository.dart';
+import '../repositories/repository.dart';
 import 'recipe_db.dart';
 
 class DBRepository extends Repository {

@@ -107,6 +107,14 @@ class _RecipeListState extends ConsumerState<RecipeList> {
   }
 
   Widget buildRecipeList() {
+    return  buildScrollList([
+      _buildHeader(),
+      _buildTypePicker(),
+      _buildSearchCard(),
+    ], _buildRecipeLoader(context));
+  }
+
+  Widget buildScrollList(List<Widget> topList, Widget bottomWidget) {
     return Container(
       color: Colors.white,
       child: ScrollConfiguration(
@@ -123,17 +131,13 @@ class _RecipeListState extends ConsumerState<RecipeList> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    _buildHeader(),
-                    _buildTypePicker(),
-                    _buildSearchCard(),
-                  ],
+                  children: topList,
                 ),
               ),
             ),
             SliverPadding(
               padding: allPadding8,
-              sliver: _buildRecipeLoader(context),
+              sliver: bottomWidget,
             ),
           ],
         ),
@@ -142,15 +146,10 @@ class _RecipeListState extends ConsumerState<RecipeList> {
   }
 
   Widget buildBookmarkList() {
-    return Padding(
-      padding: allPadding8,
-      child: Column(
-        children: <Widget>[
-          _buildTypePicker(),
-          const Bookmarks(),
-        ],
-      ),
-    );
+    return  buildScrollList([
+      _buildHeader(),
+      _buildTypePicker(),
+    ], const Bookmarks());
   }
 
   Widget _buildHeader() {
@@ -324,7 +323,19 @@ class _RecipeListState extends ConsumerState<RecipeList> {
           currentSearchList.addAll(query.recipes);
           currentEndPosition =
               min(query.totalResults, currentEndPosition + query.number);
-          return _buildRecipeList(context, currentSearchList);
+          if (currentCount == 0) {
+            return const SliverFillRemaining(
+              child: Center(
+                child: Text(
+                  'No Results',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              ),
+            );
+          } else {
+            return _buildRecipeList(context, currentSearchList);
+          }
         } else {
           if (currentCount == 0) {
             // Show a loading indicator while waiting for the movies

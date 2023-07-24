@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:recipes/providers.dart';
 
 import '../../data/models/ingredient.dart';
 import '../theme/colors.dart';
 import '../widgets/common.dart';
 import '../widgets/ingredient_card.dart';
-
+import '../../providers.dart';
 class GroceryList extends ConsumerStatefulWidget {
   const GroceryList({Key? key}) : super(key: key);
 
@@ -28,6 +27,15 @@ class _GroceryListState extends ConsumerState<GroceryList> {
   void initState() {
     super.initState();
     searchTextController = TextEditingController(text: '');
+    final repository = ref.read(repositoryProvider);
+    final ingredientStream = repository.watchAllIngredients();
+    ingredientStream.listen(
+          (ingredients) {
+        setState(() {
+          currentIngredients = ingredients;
+        });
+      },
+    );
   }
 
   @override
@@ -109,20 +117,12 @@ class _GroceryListState extends ConsumerState<GroceryList> {
   }
 
   Widget buildIngredientList() {
-    final ingredientStream = ref.watch(ingredientProvider);
-    return ingredientStream.when(
-      loading: () => const CircularProgressIndicator(),
-      error: (error, stackTrace) => Text(error.toString()),
-      data: (ingredients) {
-        currentIngredients = ingredients;
-        if (searching) {
-          startSearch(searchTextController.text);
-          return ingredientList(searchIngredients, checkBoxValues, true);
-        } else {
-          return ingredientList(currentIngredients, checkBoxValues, true);
-        }
-      },
-    );
+    if (searching) {
+      startSearch(searchTextController.text);
+      return ingredientList(searchIngredients, checkBoxValues, true);
+    } else {
+      return ingredientList(currentIngredients, checkBoxValues, true);
+    }
   }
 
   Widget ingredientList(List<Ingredient> ingredients,
