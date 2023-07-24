@@ -40,6 +40,8 @@ class _GroceryListState extends ConsumerState<GroceryList> {
 
   @override
   Widget build(BuildContext context) {
+    final repository = ref.watch(repositoryProvider);
+    currentIngredients = repository.findAllIngredients();
     return Scaffold(
       body: Column(
         children: [
@@ -110,8 +112,6 @@ class _GroceryListState extends ConsumerState<GroceryList> {
   }
 
   Widget buildIngredientList() {
-    final repository = ref.watch(repositoryProvider);
-    currentIngredients = repository.findAllIngredients();
     if (searching) {
       startSearch(searchTextController.text);
       return ingredientList(searchIngredients, checkBoxValues, true);

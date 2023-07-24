@@ -1,18 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/repositories/memory_repository.dart';
-import 'network/spoonacular_service.dart';
+
+import 'network/service_interface.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final sharedPrefProvider = Provider<SharedPreferences>((ref) {
   throw UnimplementedError();
 });
 
-final repositoryProvider = Provider<MemoryRepository>((ref) {
-  throw UnimplementedError();
+final repositoryProvider = ChangeNotifierProvider<MemoryRepository>((ref) {
+  return MemoryRepository();
 });
 
-// TODO Replace with ServiceInterface
-final serviceProvider =
-    Provider<SpoonacularService>((ref) => SpoonacularService.create());
+
+final serviceProvider = Provider<ServiceInterface>((ref) {
+  throw UnimplementedError();
+});
 

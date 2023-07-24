@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import '../data/models/models.dart';
+
 part 'spoonacular_model.g.dart';
 
 @JsonSerializable()
@@ -149,4 +151,43 @@ class Metric {
 
   Map<String, dynamic> toJson() => _$MetricToJson(this);
 
+}
+
+
+/// Methods to convert network recipes into local recipes
+List<Recipe> spoonacularResultsToRecipe(SpoonacularResults result) {
+  final recipes = <Recipe>[];
+  for (final result in result.results) {
+    recipes.add(spoonacularToRecipe(result));
+  }
+  return recipes;
+}
+
+Recipe spoonacularToRecipe(SpoonacularResult result) {
+  return Recipe(
+      id: result.id,
+      image: result.image,
+      label: result.title,
+      bookmarked: false,
+      ingredients: const <Ingredient>[],
+      description: result.title);
+}
+
+Recipe spoonacularRecipeToRecipe(SpoonacularRecipe spoonacularRecipe) {
+  final ingredients = <Ingredient>[];
+  for (final ingredient in spoonacularRecipe.extendedIngredients) {
+    ingredients.add(Ingredient(
+        id: ingredient.id,
+        name: ingredient.name,
+        amount: ingredient.amount,
+        recipeId: spoonacularRecipe.id));
+  }
+  return Recipe(
+    id: spoonacularRecipe.id,
+    label: spoonacularRecipe.title,
+    image: spoonacularRecipe.image,
+    bookmarked: false,
+    description: spoonacularRecipe.summary,
+    ingredients: ingredients,
+  );
 }

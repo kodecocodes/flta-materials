@@ -46,8 +46,8 @@ class MemoryRepository with ChangeNotifier implements Repository {
   List<int> insertIngredients(List<Ingredient> ingredients) {
     if (ingredients.isNotEmpty) {
       _currentIngredients.addAll(ingredients);
-      notifyListeners();
     }
+    notifyListeners();
     return <int>[];
   }
 
@@ -63,6 +63,7 @@ class MemoryRepository with ChangeNotifier implements Repository {
   @override
   void deleteIngredient(Ingredient ingredient) {
     _currentIngredients.remove(ingredient);
+    notifyListeners();
   }
 
   @override

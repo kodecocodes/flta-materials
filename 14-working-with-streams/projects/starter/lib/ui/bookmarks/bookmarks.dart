@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import '../../data/repositories/memory_repository.dart';
-import '../../providers.dart';
 import '../../data/models/recipe.dart';
+import '../../data/repositories/repository.dart';
+import '../../providers.dart';
 import '../recipes/recipe_details.dart';
 
 class Bookmarks extends ConsumerStatefulWidget {
@@ -113,7 +113,8 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
     // TODO: Add else here
   }
 
-  void deleteRecipe(MemoryRepository repository, Recipe recipe) async {
+  void deleteRecipe(Repository repository, Recipe recipe) async {
+    // 1
     repository.deleteRecipe(recipe);
     setState(() {});
   }

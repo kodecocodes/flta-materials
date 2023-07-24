@@ -13,10 +13,10 @@ abstract class ServiceInterface {
   /// offset is the starting point
   /// number is the number of items
   Future<RecipeResponse> queryRecipes(
-    String query,
-    int offset,
-    int number,
-  );
+      String query,
+      int offset,
+      int number,
+      );
 
   /// Get the details of a specific recipe
   Future<RecipeDetailsResponse> queryRecipe(
