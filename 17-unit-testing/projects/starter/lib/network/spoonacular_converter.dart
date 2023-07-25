@@ -1,10 +1,11 @@
 import 'dart:convert';
+
 import 'package:chopper/chopper.dart';
-import 'package:recipes/network/query_result.dart';
 
 import '../data/models/ingredient.dart';
 import '../data/models/recipe.dart';
 import 'model_response.dart';
+import 'query_result.dart';
 import 'spoonacular_model.dart';
 
 class SpoonacularConverter implements Converter {
@@ -61,8 +62,7 @@ class SpoonacularConverter implements Converter {
     } catch (e) {
       chopperLogger.warning(e);
       final error = Error<InnerType>(Exception(e.toString()));
-      return Response(response.base, null,
-          error: error);
+      return Response(response.base, null, error: error);
     }
   }
 

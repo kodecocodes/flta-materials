@@ -6,10 +6,10 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lumberdash/lumberdash.dart';
-import 'package:recipes/providers.dart';
 
 import '../../data/models/recipe.dart';
 import '../../network/model_response.dart';
+import '../../providers.dart';
 import '../theme/colors.dart';
 import '../widgets/common.dart';
 
@@ -43,7 +43,7 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
       final body = result.value;
       recipeDetail = body;
       setState(() {});
-    } else  {
+    } else {
       logMessage('Problems getting Recipe $result');
     }
   }
@@ -125,9 +125,8 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
 
   Widget titleRow() {
     final repository = ref.read(repositoryProvider);
-    final titleRowColor = widget.recipe.bookmarked
-        ? Colors.black
-        : Colors.white;
+    final titleRowColor =
+        widget.recipe.bookmarked ? Colors.black : Colors.white;
     return Container(
       decoration: const BoxDecoration(color: lightGreen),
       child: Padding(
@@ -146,9 +145,7 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: 'Roboto',
-                    color: titleRowColor),
+                    fontSize: 24, fontFamily: 'Roboto', color: titleRowColor),
               ),
             ),
             IconButton(
@@ -156,9 +153,7 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
                 widget.recipe.bookmarked
                     ? 'assets/images/icon_bookmarks.svg'
                     : 'assets/images/icon_bookmark.svg',
-                colorFilter: ColorFilter.mode(
-                    titleRowColor,
-                    BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(titleRowColor, BlendMode.srcIn),
               ),
               onPressed: () {
                 if (!widget.recipe.bookmarked) {

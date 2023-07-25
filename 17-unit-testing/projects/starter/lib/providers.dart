@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:recipes/data/models/ingredient.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'data/models/ingredient.dart';
 import 'data/repository.dart';
 import 'network/service_interface.dart';
 import 'network/spoonacular_service.dart';

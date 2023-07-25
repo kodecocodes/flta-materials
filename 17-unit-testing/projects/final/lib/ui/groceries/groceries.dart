@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:recipes/providers.dart';
 
 import '../../data/models/ingredient.dart';
+import '../../providers.dart';
 import '../theme/colors.dart';
 import '../widgets/common.dart';
 import '../widgets/ingredient_card.dart';

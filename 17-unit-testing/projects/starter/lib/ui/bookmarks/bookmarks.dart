@@ -2,9 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:recipes/providers.dart';
+
 import '../../data/models/recipe.dart';
 import '../../data/repository.dart';
+import '../../providers.dart';
 import '../recipes/recipe_details.dart';
 
 class Bookmarks extends ConsumerStatefulWidget {

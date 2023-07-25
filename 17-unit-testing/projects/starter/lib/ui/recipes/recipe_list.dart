@@ -5,7 +5,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:recipes/ui/widgets/common.dart';
 
 import '../../data/models/models.dart';
 import '../../network/model_response.dart';
@@ -16,6 +15,7 @@ import '../bookmarks/bookmarks.dart';
 import '../recipe_card.dart';
 import '../recipes/recipe_details.dart';
 import '../theme/colors.dart';
+import '../widgets/common.dart';
 import '../widgets/custom_dropdown.dart';
 
 enum ListType { all, bookmarks }

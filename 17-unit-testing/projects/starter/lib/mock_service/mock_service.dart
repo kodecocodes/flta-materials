@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:http/http.dart' as http;
 import 'package:chopper/chopper.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:recipes/data/models/recipe.dart';
+import 'package:http/http.dart' as http;
+
+import '../data/models/recipe.dart';
 import '../network/model_response.dart';
 import '../network/query_result.dart';
 import '../network/service_interface.dart';
