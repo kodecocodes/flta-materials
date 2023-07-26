@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:chopper/chopper.dart';
-import 'package:recipes/network/query_result.dart';
+import 'query_result.dart';
 
 import 'model_response.dart';
 import 'spoonacular_model.dart';

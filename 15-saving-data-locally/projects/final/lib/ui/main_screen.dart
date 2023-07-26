@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:recipes/providers.dart';
+import '../providers.dart';
 import '../utils.dart';
 import 'groceries/groceries.dart';
 import 'theme/colors.dart';
