@@ -79,6 +79,8 @@ app.*.map.json
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 **/ios/firebase_app_id_file.json
+macos/Flutter/ephemeral/
+windows/flutter/ephemeral/
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
