@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:yummy/login.dart';
 import 'package:yummy/models/auth.dart';
+import 'package:yummy/models/restaurant.dart';
 import 'package:yummy/models/shopping_cart.dart';
-import 'package:yummy/restaurant_menu.dart';
+import 'package:yummy/restaurant_page.dart';
 
 import 'constants.dart';
 import 'home.dart';
@@ -31,6 +32,7 @@ class _MyAppState extends State<MyApp> {
   /// Manage user's shopping cart for the items they order.
   final ShoppingCart _shoppingCart = ShoppingCart();
 
+
   late final _router = GoRouter(
     debugLogDiagnostics: true,
     initialLocation: '/login',
@@ -51,15 +53,22 @@ class _MyAppState extends State<MyApp> {
           builder: (context, state) {
             return Home(
                 auth: _auth,
+                shoppingCart: _shoppingCart,
                 handleBrightnessChange: handleBrightnessChange,
                 handleColorSelect: handleColorSelect,
-                colorSelected: colorSelected,
+                colorSelected: colorSelected,                
                 tab: int.tryParse(state.queryParameters['tab'] ?? '') ?? 0);
           },
           routes: [
             GoRoute(
-              path: 'merchant',
-              builder: (context, state) => RestaurantMenu(),
+              path: 'restaurant/:id',
+              builder: (context, state) {
+                int id = int.tryParse(state.pathParameters['id'] ?? '') ?? 0;
+                final restaurant = restaurants[id];
+                return  RestaurantPage(
+                restaurant: restaurant,
+                shoppingCart: _shoppingCart,);
+              }
             ),
           ]),
     ],

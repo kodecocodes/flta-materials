@@ -3,6 +3,7 @@ class CartItem {
   final String name;
   final double price;
   final int quantity;
+  
 
   CartItem({
     required this.id,
@@ -29,7 +30,6 @@ class ShoppingCart {
   // Remove an item from the cart by its id
   void removeItem(String id) {
     _items.removeWhere((item) => item.id == id);
-    print(_items.length);
   }
 
   CartItem itemAt(int index) {

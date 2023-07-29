@@ -49,7 +49,7 @@ class RestaurantsPage extends StatelessWidget {
                           subtitle: Text(restaurants[index].attributes,
                               maxLines: 1, style: textTheme.bodySmall),
                           onTap: () {
-                            context.go('/merchant');
+                            context.go('/restaurant/${restaurants[index].id}');
                           },
                         ),
                       ],

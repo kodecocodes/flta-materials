@@ -4,7 +4,9 @@ import 'package:yummy/checkout_page.dart';
 import 'package:yummy/components/category_thumbnail.dart';
 import 'package:yummy/components/post_list.dart';
 import 'package:yummy/constants.dart';
+import 'package:yummy/models/shopping_cart.dart';
 import 'package:yummy/models/user.dart';
+import 'package:yummy/my_orders.dart';
 import 'package:yummy/profile.dart';
 
 import 'components/restaurant_horizontal_list.dart';
@@ -13,11 +15,10 @@ import 'models/auth.dart';
 class _BrightnessButton extends StatelessWidget {
   const _BrightnessButton({
     required this.handleBrightnessChange,
-    this.showTooltipBelow = true,
   });
 
   final Function handleBrightnessChange;
-  final bool showTooltipBelow;
+  final bool showTooltipBelow = true;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class _ColorSeedButton extends StatelessWidget {
         Icons.opacity_outlined,
         color: Theme.of(context).colorScheme.onSurfaceVariant,
       ),
-      tooltip: 'Select a seed color',
+      tooltip: 'Select a Seed Color',
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       itemBuilder: (context) {
         return List.generate(ColorSeed.values.length, (index) {
@@ -87,8 +88,9 @@ class _ColorSeedButton extends StatelessWidget {
 
 class Home extends StatefulWidget {
   const Home({
-    super.key, 
-    required this.auth, 
+    super.key,
+    required this.auth,
+    required this.shoppingCart,
     required this.tab,
     required this.handleBrightnessChange,
     required this.handleColorSelect,
@@ -98,6 +100,7 @@ class Home extends StatefulWidget {
   final int tab;
   final ColorSeed colorSelected;
   final YummyAuth auth;
+  final ShoppingCart shoppingCart;
   final void Function(bool useLightMode) handleBrightnessChange;
   final void Function(int value) handleColorSelect;
 
@@ -132,7 +135,7 @@ class _HomeState extends State<Home> {
     NavigationDestination(
       tooltip: '',
       icon: Icon(Icons.format_paint_outlined),
-      label: 'Activity',
+      label: 'Orders',
       selectedIcon: Icon(Icons.format_paint),
     ),
     NavigationDestination(
@@ -151,17 +154,18 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-
     List<Widget> pages = [
-      ListView(scrollDirection: Axis.vertical, children: const [
+      ListView(
+        scrollDirection: Axis.vertical, 
+        children: const [
         CategoryPage(),
         RestaurantsPage(),
         PostPage(),
       ]),
-      Container(),
+      OrderPage(),
       ProfileScreen(
           onLogOut: (logout) async {
-            widget.auth.signOut().then((value) => context.go('/lgoin'));
+            widget.auth.signOut().then((value) => context.go('/login'));
           },
           user: User(
               firstName: 'Stef',
@@ -172,12 +176,11 @@ class _HomeState extends State<Home> {
               darkMode: true))
     ];
 
-
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
-        title: const Text('Yummy'),
+        // title: const Text('Yummy'),
         // leading: const BackButton(),
         actions: [
           _BrightnessButton(
@@ -217,10 +220,16 @@ class _HomeState extends State<Home> {
         },
         destinations: appBarDestinations,
       ),
-      // endDrawer: SizedBox(
-      //   width: 375, // 75% of screen will be occupied
-      //   child: Drawer(child: CheckoutPage()),
-      // ),
+      endDrawer: SizedBox(
+        width: 375, // 75% of screen will be occupied
+        child: Drawer(
+            child: CheckoutPage(
+              shoppingCart: widget.shoppingCart, 
+              didUpdate: () { 
+                setState(() {});
+              },
+        )),
+      ),
     );
   }
 }

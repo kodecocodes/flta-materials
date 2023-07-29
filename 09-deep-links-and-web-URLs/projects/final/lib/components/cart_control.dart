@@ -15,52 +15,50 @@ class _CartControlState extends State<CartControl> {
   @override
   Widget build(BuildContext context) {
     final colorTheme = Theme.of(context).colorScheme;
-    return SizedBox(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          // Minus button
-          IconButton(
-            icon: Icon(Icons.remove),
-            onPressed: () {
-              setState(() {
-                if (cartNumber > 0) {
-                  cartNumber--;
-                }
-              });
-            },
-          ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        // Minus button
+        IconButton(
+          icon: Icon(Icons.remove),
+          onPressed: () {
+            setState(() {
+              if (cartNumber > 0) {
+                cartNumber--;
+              }
+            });
+          },
+        ),
 
-          // Container with cart number
-          Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            color: colorTheme.onPrimary, // light gray background
-            child: Text(cartNumber.toString()),
-          ),
+        // Container with cart number
+        Container(
+          padding:
+              const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          color: colorTheme.onPrimary, // light gray background
+          child: Text(cartNumber.toString()),
+        ),
 
-          // Plus button
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              setState(() {
-                cartNumber++;
-              });
-            },
-          ),
+        // Plus button
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () {
+            setState(() {
+              cartNumber++;
+            });
+          },
+        ),
 
-          // Spacer to push the Add Cart button to the end
-          const Spacer(),
+        // Spacer to push the Add Cart button to the end
+        const Spacer(),
 
-          // Add cart button
-          FilledButton(
-            onPressed: () {
-              widget.addToCart(cartNumber);
-            },
-            child: const Text('Add to Cart'),
-          ),
-        ],
-      ),
+        // Add cart button
+        FilledButton(
+          onPressed: () {
+            widget.addToCart(cartNumber);
+          },
+          child: const Text('Add to Cart'),
+        ),
+      ],
     );
   }
 }

@@ -24,13 +24,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
   DateTime? selectedDate;
   final DateTime _firstDate = DateTime(DateTime.now().year - 2);
   final DateTime _lastDate = DateTime(DateTime.now().year + 1);
-  late ShoppingCart shoppingCart;
-
-  @override
-  void initState() {
-    super.initState();
-    shoppingCart = widget.shoppingCart;
-  }
 
   void _selectDate(BuildContext context) async {
     DateTime? picked = await showDatePicker(
@@ -112,16 +105,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: shoppingCart
+                itemCount: widget.shoppingCart
                     .items.length, // Number of items in the order summary
                 itemBuilder: (context, index) {
-                  final item = shoppingCart.itemAt(index);
+                  final item = widget.shoppingCart.itemAt(index);
                   return Dismissible(
                     key: Key(item.id),
                     direction: DismissDirection.endToStart,
                     onDismissed: (direction) {
                       setState(() {
-                        shoppingCart.removeItem(item.id);
+                        widget.shoppingCart.removeItem(item.id);
                       });
                       widget.didUpdate();
                     },
