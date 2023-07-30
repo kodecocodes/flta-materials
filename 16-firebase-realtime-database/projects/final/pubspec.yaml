@@ -14,15 +14,15 @@ dependencies:
   cupertino_icons: ^1.0.5
   intl: ^0.18.1
   flutter_riverpod: ^2.3.6
-  firebase_core: ^2.14.0
-  cloud_firestore: ^4.8.2
-  firebase_auth: ^4.6.3
+  firebase_core: ^2.15.0
+  cloud_firestore: ^4.8.4
+  firebase_auth: ^4.7.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.1
+  flutter_lints: ^2.0.2
 
 flutter:
   uses-material-design: true
