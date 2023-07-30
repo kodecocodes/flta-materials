@@ -1,71 +1,127 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:yummy/login.dart';
+import 'package:yummy/models/auth.dart';
+import 'package:yummy/models/orders.dart';
+import 'package:yummy/models/restaurant.dart';
+import 'package:yummy/models/shopping_cart.dart';
+import 'package:yummy/restaurant_page.dart';
 
-import 'fooderlich_theme.dart';
-import 'models/models.dart';
-import 'navigation/app_router.dart';
+import 'constants.dart';
+import 'home.dart';
+import 'package:go_router/go_router.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final appStateManager = AppStateManager();
-  await appStateManager.initializeApp();
-  runApp(Fooderlich(appStateManager: appStateManager));
+void main() {
+  runApp(const MyApp());
 }
 
-class Fooderlich extends StatefulWidget {
-  final AppStateManager appStateManager;
-
-  const Fooderlich({
-    super.key,
-    required this.appStateManager,
-  });
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
   @override
-  FooderlichState createState() => FooderlichState();
+  State<MyApp> createState() => _MyAppState();
 }
 
-class FooderlichState extends State<Fooderlich> {
-  late final _groceryManager = GroceryManager();
-  late final _profileManager = ProfileManager();
-  late final _appRouter = AppRouter(
-    widget.appStateManager,
-    _profileManager,
-    _groceryManager,
+class _MyAppState extends State<MyApp> {
+  ThemeMode themeMode = ThemeMode.dark;
+  ColorSeed colorSelected = ColorSeed.blue;
+  ColorScheme? imageColorScheme = const ColorScheme.light();
+
+  /// Authentication to manage user login session
+  final YummyAuth _auth = YummyAuth();
+
+  /// Manage user's shopping cart for the items they order.
+  final ShoppingCart _shoppingCart = ShoppingCart();
+
+  /// Manage user's orders submitted
+  final OrdersManager _orders = OrdersManager();
+
+  late final _router = GoRouter(
+    debugLogDiagnostics: true,
+    initialLocation: '/login',
+    redirect: _appRedirect,
+    routes: [
+      GoRoute(
+        path: '/login',
+        builder: (context, state) =>
+            Login(onLogIn: (Credentials credentials) async {
+          _auth
+              .signIn(credentials.username, credentials.password)
+              .then((_) => context.go('/'));
+        }),
+      ),
+      GoRoute(
+          path: '/',
+          builder: (context, state) {
+            return Home(
+                auth: _auth,
+                shoppingCart: _shoppingCart,
+                ordersManager: _orders,
+                handleBrightnessChange: handleBrightnessChange,
+                handleColorSelect: handleColorSelect,
+                colorSelected: colorSelected,
+                tab: int.tryParse(state.queryParameters['tab'] ?? '') ?? 0);
+          },
+          routes: [
+            GoRoute(
+                path: 'restaurant/:id',
+                builder: (context, state) {
+                  int id = int.tryParse(state.pathParameters['id'] ?? '') ?? 0;
+                  final restaurant = restaurants[id];
+                  return RestaurantPage(
+                    restaurant: restaurant,
+                    shoppingCart: _shoppingCart,
+                    ordersManager: _orders,
+                  );
+                }),
+          ]),
+    ],
   );
+
+  String? _appRedirect(BuildContext context, GoRouterState state) {
+    final bool loggedIn = _auth.loggedIn;
+    final bool isOnLoginPage = state.matchedLocation == '/login';
+
+    // Go to /login if the user is not signed in
+    if (!loggedIn) {
+      return '/login';
+    }
+    // Go to root of app / if the user is already signed in
+    else if (loggedIn && isOnLoginPage) {
+      return '/';
+    }
+
+    // no redirect
+    return null;
+  }
+
+  void handleBrightnessChange(bool useLightMode) {
+    setState(() {
+      themeMode = useLightMode ? ThemeMode.light : ThemeMode.dark;
+    });
+  }
+
+  void handleColorSelect(int value) {
+    setState(() {
+      colorSelected = ColorSeed.values[value];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => _groceryManager,
-        ),
-        ChangeNotifierProvider(
-          create: (context) => _profileManager,
-        ),
-        ChangeNotifierProvider(
-          create: (context) => widget.appStateManager,
-        ),
-      ],
-      child: Consumer<ProfileManager>(
-        builder: (context, profileManager, child) {
-          ThemeData theme;
-          if (profileManager.darkMode) {
-            theme = FooderlichTheme.dark();
-          } else {
-            theme = FooderlichTheme.light();
-          }
-
-          final router = _appRouter.router;
-
-          return MaterialApp.router(
-            theme: theme,
-            title: 'Fooderlich',
-            routerDelegate: router.routerDelegate,
-            routeInformationParser: router.routeInformationParser,
-            routeInformationProvider: router.routeInformationProvider,
-          );
-        },
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerConfig: _router,
+      title: 'Yummy',
+      themeMode: themeMode,
+      theme: ThemeData(
+        colorSchemeSeed: colorSelected.color,
+        useMaterial3: true,
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        colorSchemeSeed: colorSelected.color,
+        useMaterial3: true,
+        brightness: Brightness.dark,
       ),
     );
   }
