@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yummy/models/shopping_cart.dart';
+import 'package:intl/intl.dart';
 
 class CheckoutPage extends StatefulWidget {
   final ShoppingCart shoppingCart;
@@ -18,11 +19,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
     1: Text("Self Pick-Up")
   };
 
-  int sharedValue = 0;
+  Set<int> selectedSegment = {0};
   TimeOfDay? selectedTime;
   DateTime? selectedDate;
   final DateTime _firstDate = DateTime(DateTime.now().year - 2);
   final DateTime _lastDate = DateTime(DateTime.now().year + 1);
+  final TextEditingController _nameController = TextEditingController();
 
   void _selectDate(BuildContext context) async {
     DateTime? picked = await showDatePicker(
@@ -38,6 +40,20 @@ class _CheckoutPageState extends State<CheckoutPage> {
     }
   }
 
+  String formatDate(DateTime? dateTime) {
+    if (dateTime == null) {
+      return "Select Date";
+    }
+    final formatter = DateFormat('yyyy-MM-dd');
+    return formatter.format(dateTime);
+  }
+
+  void onSegmentSelected(Set<int> segmentIndex) {
+    setState(() {
+      selectedSegment = segmentIndex;
+    });
+  }
+
   Widget orderSegmentedType() {
     return SegmentedButton(
       showSelectedIcon: false,
@@ -47,8 +63,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
         ButtonSegment(
             value: 1, label: Text('Pickup'), icon: Icon(Icons.local_mall)),
       ],
-      selected: const {0},
-      onSelectionChanged: (Set newSelection) {},
+      selected: selectedSegment,
+      onSelectionChanged: onSegmentSelected,
     );
   }
 
@@ -71,6 +87,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
         selectedTime = picked;
       });
     }
+  }
+
+  String formatTimeOfDay(TimeOfDay? timeOfDay) {
+    if (timeOfDay == null) {
+      return "Select Time";
+    }
+    final hour = timeOfDay.hour.toString().padLeft(2, '0');
+    final minute = timeOfDay.minute.toString().padLeft(2, '0');
+    return '$hour:$minute';
   }
 
   Widget orderSummary(BuildContext context) {
@@ -134,17 +159,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () {
-              // Handle delete action
-            },
-          ),
-        ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -152,8 +169,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
             const SizedBox(height: 16.0),
             orderSegmentedType(),
             const SizedBox(height: 16.0),
-            const TextField(
-              decoration: InputDecoration(
+            TextField(
+              controller: _nameController,
+              decoration: const InputDecoration(
                 labelText: "Contact Name",
               ),
             ),
@@ -161,11 +179,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
             Row(
               children: [
                 TextButton(
-                  child: Text('Select Date'),
+                  child: Text(formatDate(selectedDate)),
                   onPressed: () => _selectDate(context),
                 ),
                 TextButton(
-                  child: Text('Select Time'),
+                  child: Text(formatTimeOfDay(selectedTime)),
                   onPressed: () => _selectTime(context),
                 ),
               ],
@@ -176,7 +194,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
             ElevatedButton(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Text('Submit Order - \$${widget.shoppingCart.totalCost}'),
+                child:
+                    Text('Submit Order - \$${widget.shoppingCart.totalCost.toStringAsFixed(2)}'),
               ),
               onPressed: () {
                 // TODO: Handle submit action
