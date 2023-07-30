@@ -16,7 +16,7 @@ class RestaurantPage extends StatefulWidget {
   final ShoppingCart shoppingCart;
 
   @override
-  State<RestaurantPage> createState() => _RestaurantPageState();
+  createState() => _RestaurantPageState();
 }
 
 class _RestaurantPageState extends State<RestaurantPage> {
@@ -42,20 +42,6 @@ class _RestaurantPageState extends State<RestaurantPage> {
         title,
         style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),
-    );
-  }
-
-  Widget orderSegmentedType() {
-    return SegmentedButton(
-      showSelectedIcon: false,
-      segments: const [
-        ButtonSegment(
-            value: 0, label: Text('Delivery'), icon: Icon(Icons.pedal_bike)),
-        ButtonSegment(
-            value: 1, label: Text('Pickup'), icon: Icon(Icons.local_mall)),
-      ],
-      selected: const {0},
-      onSelectionChanged: (Set newSelection) {},
     );
   }
 
@@ -155,10 +141,13 @@ class _RestaurantPageState extends State<RestaurantPage> {
           addToCart: (number) {
             var uuid = const Uuid();
             String uniqueId = uuid.v4();
-            final item = CartItem(
-                id: uniqueId, name: 'Bop Bowl', price: 10.0, quantity: number);
+            final cartItem = CartItem(
+                id: uniqueId, 
+                name: item.name, 
+                price: item.price, 
+                quantity: number);
             setState(() {
-              widget.shoppingCart.addItem(item);
+              widget.shoppingCart.addItem(cartItem);
             });
             context.pop();
           },
@@ -219,11 +208,10 @@ class _RestaurantPageState extends State<RestaurantPage> {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(restaurant.name, style: textTheme.headlineLarge),
               Text(restaurant.address, style: textTheme.bodySmall),
-              Text('4.6 ★ 186 ratings · 0.4 mi · \$\$',
-                  style: textTheme.bodySmall),
+              Text(restaurant.getRatingAndDistance(), style: textTheme.bodySmall),
               Text(restaurant.attributes, style: textTheme.labelSmall),
               const SizedBox(height: 8.0),
-              orderSegmentedType(),
+              // orderSegmentedType(),
             ]),
           ),
         ),

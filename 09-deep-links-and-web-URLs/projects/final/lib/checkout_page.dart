@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:yummy/models/shopping_cart.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -10,7 +9,7 @@ class CheckoutPage extends StatefulWidget {
       {super.key, required this.shoppingCart, required this.didUpdate});
 
   @override
-  _CheckoutPageState createState() => _CheckoutPageState();
+  createState() => _CheckoutPageState();
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
@@ -39,6 +38,20 @@ class _CheckoutPageState extends State<CheckoutPage> {
     }
   }
 
+  Widget orderSegmentedType() {
+    return SegmentedButton(
+      showSelectedIcon: false,
+      segments: const [
+        ButtonSegment(
+            value: 0, label: Text('Delivery'), icon: Icon(Icons.pedal_bike)),
+        ButtonSegment(
+            value: 1, label: Text('Pickup'), icon: Icon(Icons.local_mall)),
+      ],
+      selected: const {0},
+      onSelectionChanged: (Set newSelection) {},
+    );
+  }
+
   void _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
@@ -60,12 +73,65 @@ class _CheckoutPageState extends State<CheckoutPage> {
     }
   }
 
+  Widget orderSummary(BuildContext context) {
+    final colorTheme = Theme.of(context).colorScheme;
+
+    return Expanded(
+      child: ListView.builder(
+        itemCount: widget
+            .shoppingCart.items.length, // Number of items in the order summary
+        itemBuilder: (context, index) {
+          final item = widget.shoppingCart.itemAt(index);
+          return Dismissible(
+            key: Key(item.id),
+            direction: DismissDirection.endToStart,
+            background: Container(),
+            secondaryBackground: const SizedBox(
+              child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                Icon(Icons.delete),
+              ]),
+            ),
+            onDismissed: (direction) {
+              setState(() {
+                widget.shoppingCart.removeItem(item.id);
+              });
+              widget.didUpdate();
+            },
+            child: ListTile(
+              leading: Container(
+                padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                  border: Border.all(
+                    color: colorTheme
+                        .primary, // Change this color to the desired border color
+                    width: 2.0, // Adjust the width as needed
+                  ),
+                ),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                  child: Text('x${item.quantity}'),
+                ),
+              ),
+              title: Text(item.name),
+              subtitle: Text('Price: \$${item.price}'),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context)
+        .textTheme
+        .apply(displayColor: Theme.of(context).colorScheme.onSurface);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: <Widget>[
@@ -80,17 +146,18 @@ class _CheckoutPageState extends State<CheckoutPage> {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            CupertinoSlidingSegmentedControl<int>(
-              children: myTabs,
-              onValueChanged: (newValue) {},
-              groupValue: sharedValue,
-            ),
-            TextField(
+            Text('Order Details', style: textTheme.headlineSmall),
+            const SizedBox(height: 16.0),
+            orderSegmentedType(),
+            const SizedBox(height: 16.0),
+            const TextField(
               decoration: InputDecoration(
                 labelText: "Contact Name",
               ),
             ),
+            const SizedBox(height: 16.0),
             Row(
               children: [
                 TextButton(
@@ -103,39 +170,17 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 ),
               ],
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: widget.shoppingCart
-                    .items.length, // Number of items in the order summary
-                itemBuilder: (context, index) {
-                  final item = widget.shoppingCart.itemAt(index);
-                  return Dismissible(
-                    key: Key(item.id),
-                    direction: DismissDirection.endToStart,
-                    onDismissed: (direction) {
-                      setState(() {
-                        widget.shoppingCart.removeItem(item.id);
-                      });
-                      widget.didUpdate();
-                    },
-                    child: ListTile(
-                      leading: ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(8.0)),
-                        child: Image.asset('assets/categories/burger.png'),
-                      ),
-                      title: Text('Item description'),
-                      subtitle: Text('Quantity: ${item.quantity}\nPrice: \$10'),
-                    ),
-                  );
-                },
-              ),
-            ),
+            const SizedBox(height: 16.0),
+            Text('Order Summary', style: textTheme.bodyLarge),
+            orderSummary(context),
             ElevatedButton(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text('Submit Order - \$${widget.shoppingCart.totalCost}'),
+              ),
               onPressed: () {
-                // Handle submit action
+                // TODO: Handle submit action
               },
-              child: Text('Submit Order'),
             ),
           ],
         ),

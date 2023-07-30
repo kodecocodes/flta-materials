@@ -6,11 +6,11 @@ class CartControl extends StatefulWidget {
   const CartControl({required this.addToCart, super.key});
 
   @override
-  _CartControlState createState() => _CartControlState();
+  createState() => _CartControlState();
 }
 
 class _CartControlState extends State<CartControl> {
-  int cartNumber = 0; // Initialize cart number
+  int cartNumber = 1; // Initialize cart number
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +20,10 @@ class _CartControlState extends State<CartControl> {
       children: <Widget>[
         // Minus button
         IconButton(
-          icon: Icon(Icons.remove),
+          icon: const Icon(Icons.remove),
           onPressed: () {
             setState(() {
-              if (cartNumber > 0) {
+              if (cartNumber > 1) {
                 cartNumber--;
               }
             });
