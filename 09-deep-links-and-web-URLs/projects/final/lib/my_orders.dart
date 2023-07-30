@@ -1,59 +1,10 @@
 import 'package:flutter/material.dart';
-
-class FoodOrder {
-  final String imageUrl;
-  final String status;
-  final DateTime orderTime;
-  final double price;
-  final int itemCount;
-
-  FoodOrder({
-    required this.imageUrl,
-    required this.status,
-    required this.orderTime,
-    required this.price,
-    required this.itemCount,
-  });
-}
+import 'package:yummy/models/orders.dart';
 
 class OrderPage extends StatelessWidget {
-  final List<FoodOrder> orders = [
-    FoodOrder(
-      imageUrl: 'https://example.com/image1.jpg',
-      status: 'Preparing Food',
-      orderTime: DateTime.now().subtract(Duration(hours: 2)),
-      price: 50.0,
-      itemCount: 5,
-    ),
-    FoodOrder(
-      imageUrl: 'https://example.com/image1.jpg',
-      status: 'Scheduled',
-      orderTime: DateTime.now().subtract(Duration(hours: 2)),
-      price: 50.0,
-      itemCount: 5,
-    ),
-    FoodOrder(
-      imageUrl: 'https://example.com/image1.jpg',
-      status: 'Scheduled',
-      orderTime: DateTime.now().subtract(Duration(hours: 2)),
-      price: 50.0,
-      itemCount: 5,
-    ),
-    FoodOrder(
-      imageUrl: 'https://example.com/image1.jpg',
-      status: 'Scheduled',
-      orderTime: DateTime.now().subtract(Duration(hours: 2)),
-      price: 50.0,
-      itemCount: 5,
-    ),
-    FoodOrder(
-      imageUrl: 'https://example.com/image1.jpg',
-      status: 'Scheduled',
-      orderTime: DateTime.now().subtract(Duration(hours: 2)),
-      price: 50.0,
-      itemCount: 5,
-    ),
-  ];
+  final OrdersManager ordersManager;
+
+  const OrderPage({super.key, required this.ordersManager});
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +18,9 @@ class OrderPage extends StatelessWidget {
         title: Text('My Orders', style: textTheme.headlineMedium),
       ),
       body: ListView.builder(
-        itemCount: orders.length,
+        itemCount: ordersManager.totalOrders,
         itemBuilder: (context, index) {
-          return OrderTile(order: orders[index]);
+          return OrderTile(order: ordersManager.orders[index]);
         },
       ),
     );
@@ -77,9 +28,9 @@ class OrderPage extends StatelessWidget {
 }
 
 class OrderTile extends StatelessWidget {
-  final FoodOrder order;
+  final Order order;
 
-  OrderTile({required this.order});
+  const OrderTile({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +41,8 @@ class OrderTile extends StatelessWidget {
     return ListTile(
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
-        child: Image.network(
-          "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1160&q=80",
+        child: Image.asset(
+          "assets/food/burger.webp",
           width: 50.0,
           height: 50.0,
           fit: BoxFit.cover,
@@ -101,11 +52,11 @@ class OrderTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${order.status}', 
-            style: textTheme.headlineSmall,),
-          Text('${order.orderTime.toString()}'),
-          Text('\$${order.price.toStringAsFixed(2)}'),
-          Text('Items: ${order.itemCount}'),
+            'Scheduled',
+            style: textTheme.bodyLarge,
+          ),
+          Text(order.getFormattedOrderInfo()),
+          Text('Items: ${order.items.length}'),
         ],
       ),
     );

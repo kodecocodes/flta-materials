@@ -4,6 +4,7 @@ import 'package:yummy/checkout_page.dart';
 import 'package:yummy/components/category_thumbnail.dart';
 import 'package:yummy/components/post_list.dart';
 import 'package:yummy/constants.dart';
+import 'package:yummy/models/orders.dart';
 import 'package:yummy/models/shopping_cart.dart';
 import 'package:yummy/models/user.dart';
 import 'package:yummy/my_orders.dart';
@@ -91,6 +92,7 @@ class Home extends StatefulWidget {
     super.key,
     required this.auth,
     required this.shoppingCart,
+    required this.ordersManager,
     required this.tab,
     required this.handleBrightnessChange,
     required this.handleColorSelect,
@@ -101,6 +103,7 @@ class Home extends StatefulWidget {
   final ColorSeed colorSelected;
   final YummyAuth auth;
   final ShoppingCart shoppingCart;
+  final OrdersManager ordersManager;
   final void Function(bool useLightMode) handleBrightnessChange;
   final void Function(int value) handleColorSelect;
 
@@ -155,14 +158,12 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     List<Widget> pages = [
-      ListView(
-        scrollDirection: Axis.vertical, 
-        children: const [
+      ListView(scrollDirection: Axis.vertical, children: const [
         CategoryPage(),
         RestaurantsPage(),
         PostPage(),
       ]),
-      OrderPage(),
+      OrderPage(ordersManager: widget.ordersManager,),
       ProfileScreen(
           onLogOut: (logout) async {
             widget.auth.signOut().then((value) => context.go('/login'));
@@ -224,10 +225,14 @@ class _HomeState extends State<Home> {
         width: 375, // 75% of screen will be occupied
         child: Drawer(
             child: CheckoutPage(
-              shoppingCart: widget.shoppingCart, 
-              didUpdate: () { 
-                setState(() {});
-              },
+          shoppingCart: widget.shoppingCart,
+          didUpdate: () {
+            setState(() {});
+          },
+          onSubmit: (order) {
+            widget.ordersManager.addOrder(order);
+            context.go('/?tab=${ScreenSelected.activity.value}');
+          },
         )),
       ),
     );

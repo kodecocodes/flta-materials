@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yummy/components/cart_control.dart';
 import 'package:yummy/components/restaurant_item.dart';
+import 'package:yummy/models/orders.dart';
 import 'package:yummy/models/restaurant.dart';
 
 import 'checkout_page.dart';
+import 'constants.dart';
 import 'models/shopping_cart.dart';
 import 'package:uuid/uuid.dart';
 
 class RestaurantPage extends StatefulWidget {
   const RestaurantPage(
-      {super.key, required this.restaurant, required this.shoppingCart});
+      {super.key,
+      required this.restaurant,
+      required this.shoppingCart,
+      required this.ordersManager});
 
   final Restaurant restaurant;
   final ShoppingCart shoppingCart;
+  final OrdersManager ordersManager;
 
   @override
   createState() => _RestaurantPageState();
@@ -76,9 +82,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                       builder: (context) {
                         return Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: itemDetails(
-                            context, item
-                          ),
+                          child: itemDetails(context, item),
                         );
                       },
                     );
@@ -142,9 +146,9 @@ class _RestaurantPageState extends State<RestaurantPage> {
             var uuid = const Uuid();
             String uniqueId = uuid.v4();
             final cartItem = CartItem(
-                id: uniqueId, 
-                name: item.name, 
-                price: item.price, 
+                id: uniqueId,
+                name: item.name,
+                price: item.price,
                 quantity: number);
             setState(() {
               widget.shoppingCart.addItem(cartItem);
@@ -208,7 +212,8 @@ class _RestaurantPageState extends State<RestaurantPage> {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(restaurant.name, style: textTheme.headlineLarge),
               Text(restaurant.address, style: textTheme.bodySmall),
-              Text(restaurant.getRatingAndDistance(), style: textTheme.bodySmall),
+              Text(restaurant.getRatingAndDistance(),
+                  style: textTheme.bodySmall),
               Text(restaurant.attributes, style: textTheme.labelSmall),
               const SizedBox(height: 8.0),
               // orderSegmentedType(),
@@ -250,6 +255,11 @@ class _RestaurantPageState extends State<RestaurantPage> {
             shoppingCart: widget.shoppingCart,
             didUpdate: () {
               setState(() {});
+            },
+            onSubmit: (order) {
+              widget.ordersManager.addOrder(order);
+              context.pop();
+              context.go('/?tab=${ScreenSelected.activity.value}');
             },
           )),
         ),

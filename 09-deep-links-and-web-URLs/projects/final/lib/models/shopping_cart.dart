@@ -1,9 +1,9 @@
+
 class CartItem {
   final String id;
   final String name;
   final double price;
   final int quantity;
-  
 
   CartItem({
     required this.id,
@@ -14,6 +14,8 @@ class CartItem {
 
   double get totalCost => price * quantity;
 }
+
+
 
 enum DeliveryMode { delivery, pickup }
 

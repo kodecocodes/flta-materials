@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yummy/login.dart';
 import 'package:yummy/models/auth.dart';
+import 'package:yummy/models/orders.dart';
 import 'package:yummy/models/restaurant.dart';
 import 'package:yummy/models/shopping_cart.dart';
 import 'package:yummy/restaurant_page.dart';
@@ -8,7 +9,6 @@ import 'package:yummy/restaurant_page.dart';
 import 'constants.dart';
 import 'home.dart';
 import 'package:go_router/go_router.dart';
-
 
 void main() {
   runApp(const MyApp());
@@ -32,6 +32,8 @@ class _MyAppState extends State<MyApp> {
   /// Manage user's shopping cart for the items they order.
   final ShoppingCart _shoppingCart = ShoppingCart();
 
+  /// Manage user's orders submitted
+  final OrdersManager _orders = OrdersManager();
 
   late final _router = GoRouter(
     debugLogDiagnostics: true,
@@ -41,11 +43,10 @@ class _MyAppState extends State<MyApp> {
       GoRoute(
         path: '/login',
         builder: (context, state) =>
-            Login(
-              onLogIn: (Credentials credentials) async {
-                _auth
-                  .signIn(credentials.username, credentials.password)
-                  .then((_) => context.go('/'));
+            Login(onLogIn: (Credentials credentials) async {
+          _auth
+              .signIn(credentials.username, credentials.password)
+              .then((_) => context.go('/'));
         }),
       ),
       GoRoute(
@@ -54,22 +55,24 @@ class _MyAppState extends State<MyApp> {
             return Home(
                 auth: _auth,
                 shoppingCart: _shoppingCart,
+                ordersManager: _orders,
                 handleBrightnessChange: handleBrightnessChange,
                 handleColorSelect: handleColorSelect,
-                colorSelected: colorSelected,                
+                colorSelected: colorSelected,
                 tab: int.tryParse(state.queryParameters['tab'] ?? '') ?? 0);
           },
           routes: [
             GoRoute(
-              path: 'restaurant/:id',
-              builder: (context, state) {
-                int id = int.tryParse(state.pathParameters['id'] ?? '') ?? 0;
-                final restaurant = restaurants[id];
-                return  RestaurantPage(
-                restaurant: restaurant,
-                shoppingCart: _shoppingCart,);
-              }
-            ),
+                path: 'restaurant/:id',
+                builder: (context, state) {
+                  int id = int.tryParse(state.pathParameters['id'] ?? '') ?? 0;
+                  final restaurant = restaurants[id];
+                  return RestaurantPage(
+                    restaurant: restaurant,
+                    shoppingCart: _shoppingCart,
+                    ordersManager: _orders,
+                  );
+                }),
           ]),
     ],
   );

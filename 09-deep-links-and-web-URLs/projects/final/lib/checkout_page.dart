@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:yummy/models/orders.dart';
 import 'package:yummy/models/shopping_cart.dart';
 import 'package:intl/intl.dart';
 
 class CheckoutPage extends StatefulWidget {
   final ShoppingCart shoppingCart;
   final Function() didUpdate;
+  final Function(Order) onSubmit;
 
   const CheckoutPage(
-      {super.key, required this.shoppingCart, required this.didUpdate});
+      {super.key,
+      required this.shoppingCart,
+      required this.didUpdate,
+      required this.onSubmit});
 
   @override
   createState() => _CheckoutPageState();
@@ -194,11 +199,24 @@ class _CheckoutPageState extends State<CheckoutPage> {
             ElevatedButton(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child:
-                    Text('Submit Order - \$${widget.shoppingCart.totalCost.toStringAsFixed(2)}'),
+                child: Text(
+                    'Submit Order - \$${widget.shoppingCart.totalCost.toStringAsFixed(2)}'),
               ),
               onPressed: () {
-                // TODO: Handle submit action
+                final selectedSegment = this.selectedSegment;
+                final selectedTime = this.selectedTime;
+                final selectedDate = this.selectedDate;
+                final name = _nameController.text;
+                final items = widget.shoppingCart.items;
+
+                final order = Order(
+                    selectedSegment: selectedSegment,
+                    selectedTime: selectedTime,
+                    selectedDate: selectedDate,
+                    name: name,
+                    items: items);
+
+                widget.onSubmit(order);
               },
             ),
           ],
