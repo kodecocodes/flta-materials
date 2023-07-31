@@ -92,10 +92,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: b33a88c67816312597e5e0f5906c5139a0b9bd9bb137346e872c788da7af8ea0
+      sha256: edbceb4c06758652fc9d12e58edb371cd977011b032e298dae0eb357167baad2
       url: "https://pub.dev"
     source: hosted
-    version: "9.0.3"
+    version: "9.1.1"
   intl:
     dependency: "direct main"
     description:
@@ -164,10 +164,10 @@ packages:
     dependency: transitive
     description:
       name: plugin_platform_interface
-      sha256: "6a2128648c854906c53fa8e33986fc0247a1116122f9534dd20e3ab9e16a32bc"
+      sha256: "43798d895c929056255600343db8f049921cbec94d31ec87f1dc5c16c01935dd"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.4"
+    version: "2.1.5"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -241,10 +241,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_android
-      sha256: "15f5acbf0dce90146a0f5a2c4a002b1814a6303c4c5c075aa2623b2d16156f03"
+      sha256: "78cb6dea3e93148615109e58e42c35d1ffbf5ef66c44add673d0ab75f12ff3af"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.36"
+    version: "6.0.37"
   url_launcher_ios:
     dependency: transitive
     description:
