@@ -72,7 +72,7 @@ class RestaurantItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,

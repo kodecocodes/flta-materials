@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:yummy/login.dart';
-import 'package:yummy/models/auth.dart';
-import 'package:yummy/models/orders.dart';
-import 'package:yummy/models/restaurant.dart';
-import 'package:yummy/models/shopping_cart.dart';
-import 'package:yummy/restaurant_page.dart';
+import 'login.dart';
+import 'models/auth.dart';
+import 'models/orders.dart';
+import 'models/restaurant.dart';
+import 'models/shopping_cart.dart';
+import 'restaurant_page.dart';
 
 import 'constants.dart';
 import 'home.dart';
@@ -65,7 +65,8 @@ class _MyAppState extends State<MyApp> {
             GoRoute(
                 path: 'restaurant/:id',
                 builder: (context, state) {
-                  int id = int.tryParse(state.pathParameters['id'] ?? '') ?? 0;
+                  final id = 
+                    int.tryParse(state.pathParameters['id'] ?? '') ?? 0;
                   final restaurant = restaurants[id];
                   return RestaurantPage(
                     restaurant: restaurant,
@@ -78,8 +79,8 @@ class _MyAppState extends State<MyApp> {
   );
 
   String? _appRedirect(BuildContext context, GoRouterState state) {
-    final bool loggedIn = _auth.loggedIn;
-    final bool isOnLoginPage = state.matchedLocation == '/login';
+    final loggedIn = _auth.loggedIn;
+    final isOnLoginPage = state.matchedLocation == '/login';
 
     // Go to /login if the user is not signed in
     if (!loggedIn) {

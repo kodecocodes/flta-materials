@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yummy/models/posts.dart';
-import 'package:yummy/models/restaurant.dart';
+import '../models/posts.dart';
+import '../models/restaurant.dart';
 
 class PostPage extends StatelessWidget {
   const PostPage({super.key});
@@ -38,8 +38,7 @@ class PostPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CircleAvatar(
-                            radius:
-                                25, // Adjust the radius to change the size of the avatar
+                            radius:25,
                             backgroundImage:
                                 AssetImage(posts[index].profileImageUrl),
                           ),
@@ -50,8 +49,13 @@ class PostPage extends StatelessWidget {
                               child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(posts[index].comment, maxLines: 2, style: textTheme.titleMedium),
-                              Text('${posts[index].timestamp} mins ago', style: textTheme.bodySmall),
+                              Text(
+                                posts[index].comment, 
+                                maxLines: 2, 
+                                style: textTheme.titleMedium),
+                              Text(
+                                '${posts[index].timestamp} mins ago', 
+                                style: textTheme.bodySmall),
                             ],
                           ))
                         ],

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:yummy/components/cart_control.dart';
-import 'package:yummy/components/restaurant_item.dart';
-import 'package:yummy/models/orders.dart';
-import 'package:yummy/models/restaurant.dart';
+import 'components/cart_control.dart';
+import 'components/restaurant_item.dart';
+import 'models/orders.dart';
+import 'models/restaurant.dart';
 
 import 'checkout_page.dart';
 import 'constants.dart';
@@ -22,7 +22,7 @@ class RestaurantPage extends StatefulWidget {
   final OrdersManager ordersManager;
 
   @override
-  createState() => _RestaurantPageState();
+  State<RestaurantPage> createState() => _RestaurantPageState();
 }
 
 class _RestaurantPageState extends State<RestaurantPage> {
@@ -32,7 +32,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
   static const double maxWidth = 1000;
 
   int calculateColumnCount(double screenWidth) {
-    int columns = 1;
+    var columns = 1;
     if (screenWidth > desktopThreshold) {
       // Desktop
       columns = 2;
@@ -131,8 +131,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                     8.0), // This gives the rounded corners
                 image: DecorationImage(
                   image: NetworkImage(item.imageUrl),
-                  fit: BoxFit
-                      .cover, // This ensures the image covers the entire container
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
@@ -143,8 +142,8 @@ class _RestaurantPageState extends State<RestaurantPage> {
         ),
         CartControl(
           addToCart: (number) {
-            var uuid = const Uuid();
-            String uniqueId = uuid.v4();
+            const uuid = Uuid();
+            final uniqueId = uuid.v4();
             final cartItem = CartItem(
                 id: uniqueId,
                 name: item.name,
@@ -162,7 +161,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
 
   Widget restaurantStore(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    double width70Percent = 2000 * 0.9;
+    const width70Percent = 2000 * 0.9;
     final restaurant = widget.restaurant;
 
     final columns = calculateColumnCount(screenWidth);
@@ -191,8 +190,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                               fit: BoxFit.cover)),
                     ),
                     const Positioned(
-                      bottom:
-                          0.0, // Half the size of the avatar to make it halfway overlapped.
+                      bottom:0.0,
                       left: 16.0,
                       child: CircleAvatar(
                         radius: 30,

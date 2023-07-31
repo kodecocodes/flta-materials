@@ -17,7 +17,8 @@ class CategoryPage extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(left: 16.0, bottom: 16.0, right: 16.0),
+            padding: const EdgeInsets.only(
+              left: 16.0, bottom: 16.0, right: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,13 +43,17 @@ class CategoryPage extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         ClipRRect(
-                          borderRadius: const BorderRadius.vertical(top: Radius.circular(8.0)),
+                          borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(8.0)),
                           child: Image.asset(categories[index].imageUrl),
                         ),
                         ListTile(
-                          title: Text(categories[index].name, style: textTheme.titleSmall),
+                          title: Text(
+                            categories[index].name, 
+                            style: textTheme.titleSmall),
                           subtitle: Text(
-                              '${categories[index].numberOfRestaurants} places', style: textTheme.bodySmall),
+                            '${categories[index].numberOfRestaurants} places', 
+                              style: textTheme.bodySmall),
                         )
                       ],
                     ),

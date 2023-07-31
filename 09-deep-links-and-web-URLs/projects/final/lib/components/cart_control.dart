@@ -6,7 +6,7 @@ class CartControl extends StatefulWidget {
   const CartControl({required this.addToCart, super.key});
 
   @override
-  createState() => _CartControlState();
+  State<CartControl> createState() => _CartControlState();
 }
 
 class _CartControlState extends State<CartControl> {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yummy/models/orders.dart';
-import 'package:yummy/models/shopping_cart.dart';
+import 'models/orders.dart';
+import 'models/shopping_cart.dart';
 import 'package:intl/intl.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -15,13 +15,13 @@ class CheckoutPage extends StatefulWidget {
       required this.onSubmit});
 
   @override
-  createState() => _CheckoutPageState();
+  State<CheckoutPage> createState() => _CheckoutPageState();
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
   final Map<int, Widget> myTabs = const <int, Widget>{
-    0: Text("Delivery"),
-    1: Text("Self Pick-Up")
+    0: Text('Delivery'),
+    1: Text('Self Pick-Up')
   };
 
   Set<int> selectedSegment = {0};
@@ -32,7 +32,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   final TextEditingController _nameController = TextEditingController();
 
   void _selectDate(BuildContext context) async {
-    DateTime? picked = await showDatePicker(
+    final picked = await showDatePicker(
       context: context,
       initialDate: selectedDate ?? DateTime.now(),
       firstDate: _firstDate,
@@ -47,7 +47,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   String formatDate(DateTime? dateTime) {
     if (dateTime == null) {
-      return "Select Date";
+      return 'Select Date';
     }
     final formatter = DateFormat('yyyy-MM-dd');
     return formatter.format(dateTime);
@@ -74,7 +74,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   void _selectTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
+    final picked = await showTimePicker(
       context: context,
       initialEntryMode: TimePickerEntryMode.input,
       initialTime: selectedTime ?? TimeOfDay.now(),
@@ -96,7 +96,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   String formatTimeOfDay(TimeOfDay? timeOfDay) {
     if (timeOfDay == null) {
-      return "Select Time";
+      return 'Select Time';
     }
     final hour = timeOfDay.hour.toString().padLeft(2, '0');
     final minute = timeOfDay.minute.toString().padLeft(2, '0');
@@ -133,9 +133,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                   border: Border.all(
-                    color: colorTheme
-                        .primary, // Change this color to the desired border color
-                    width: 2.0, // Adjust the width as needed
+                    color: colorTheme.primary,
+                    width: 2.0,
                   ),
                 ),
                 child: ClipRRect(
@@ -177,7 +176,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
             TextField(
               controller: _nameController,
               decoration: const InputDecoration(
-                labelText: "Contact Name",
+                labelText: 'Contact Name',
               ),
             ),
             const SizedBox(height: 16.0),
@@ -200,7 +199,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                    'Submit Order - \$${widget.shoppingCart.totalCost.toStringAsFixed(2)}'),
+                    '''Submit Order - \$${widget.shoppingCart.totalCost.toStringAsFixed(2)}'''),
               ),
               onPressed: () {
                 final selectedSegment = this.selectedSegment;

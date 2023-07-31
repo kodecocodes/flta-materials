@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:yummy/checkout_page.dart';
-import 'package:yummy/components/category_thumbnail.dart';
-import 'package:yummy/components/post_list.dart';
-import 'package:yummy/constants.dart';
-import 'package:yummy/models/orders.dart';
-import 'package:yummy/models/shopping_cart.dart';
-import 'package:yummy/models/user.dart';
-import 'package:yummy/my_orders.dart';
-import 'package:yummy/profile.dart';
+import 'checkout_page.dart';
+import 'components/category_thumbnail.dart';
+import 'components/post_list.dart';
+import 'constants.dart';
+import 'models/orders.dart';
+import 'models/shopping_cart.dart';
+import 'models/user.dart';
+import 'my_orders.dart';
+import 'profile.dart';
 
 import 'components/restaurant_horizontal_list.dart';
 import 'models/auth.dart';
@@ -57,7 +57,7 @@ class _ColorSeedButton extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       itemBuilder: (context) {
         return List.generate(ColorSeed.values.length, (index) {
-          ColorSeed currentColor = ColorSeed.values[index];
+          final currentColor = ColorSeed.values[index];
 
           return PopupMenuItem(
             value: index,
@@ -157,7 +157,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> pages = [
+    final pages = <Widget>[
       ListView(scrollDirection: Axis.vertical, children: const [
         CategoryPage(),
         RestaurantsPage(),
@@ -195,8 +195,8 @@ class _HomeState extends State<Home> {
         centerTitle: false,
       ),
       body: LayoutBuilder(builder: (context, constraints) {
-        double maxWidth = 1000; // Set your max width here
-        double width70Percent = constraints.maxWidth * 0.7;
+        const maxWidth = 1000.0; // Set your max width here
+        final width70Percent = constraints.maxWidth * 0.7;
         if (constraints.maxWidth > 1200) {
           return Center(
             child: SizedBox(

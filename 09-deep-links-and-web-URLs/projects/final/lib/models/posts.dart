@@ -25,17 +25,17 @@ List<Post> posts = [
   Post(
       '5',
       'assets/profile_pics/person_katz.jpeg',
-      'Going to power through my day with this nutty smoothie to finish up Flutter apprentice for our readers!',
+      '''Going to power through my day with this nutty smoothie to finish up Flutter apprentice for our readers!''',
       '40'),
   Post(
       '6',
       'assets/profile_pics/person_kevin.jpeg',
-      'Cooking up some steak 🥩 today, state should be rare, medium or medium well?',
+      '''Cooking up some steak 🥩 today, state should be rare, medium or medium well?''',
       '50'),
   Post(
       '7',
       'assets/profile_pics/person_sandra.jpeg',
-      "Kicking off the morning with mike's green smoothie recipe. Time to edit these chapters!",
+      '''Kicking off the morning with mike's green smoothie recipe. Time to edit these chapters!''',
       '50'),
   Post('8', 'assets/profile_pics/person_manda.png',
       'Not sure where I should travel to eat today.', '60'),
