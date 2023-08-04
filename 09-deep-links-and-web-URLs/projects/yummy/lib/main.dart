@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'login.dart';
 import 'models/auth.dart';
@@ -12,6 +14,15 @@ import 'package:go_router/go_router.dart';
 
 void main() {
   runApp(const MyApp());
+}
+
+class CustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.trackpad
+      };
 }
 
 class MyApp extends StatefulWidget {
@@ -112,6 +123,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: _router,
+      scrollBehavior: CustomScrollBehavior(),
       title: 'Yummy',
       themeMode: themeMode,
       theme: ThemeData(
