@@ -51,23 +51,25 @@ class _RecipeListState extends ConsumerState<RecipeList> {
 
     searchTextController = TextEditingController(text: '');
     _scrollController.addListener(() {
-      final triggerFetchMoreSize =
-          0.7 * _scrollController.position.maxScrollExtent;
+      if (currentType == ListType.all) {
+        final triggerFetchMoreSize =
+            0.7 * _scrollController.position.maxScrollExtent;
 
-      if (_scrollController.position.pixels > triggerFetchMoreSize) {
-        if (hasMore &&
-            currentEndPosition < currentCount &&
-            !loading &&
-            !inErrorState) {
-          setState(
-            () {
-              loading = true;
-              newDataRequired = true;
-              currentStartPosition = currentEndPosition;
-              currentEndPosition =
-                  min(currentStartPosition + pageCount, currentCount);
-            },
-          );
+        if (_scrollController.position.pixels > triggerFetchMoreSize) {
+          if (hasMore &&
+              currentEndPosition < currentCount &&
+              !loading &&
+              !inErrorState) {
+            setState(
+                  () {
+                loading = true;
+                newDataRequired = true;
+                currentStartPosition = currentEndPosition;
+                currentEndPosition =
+                    min(currentStartPosition + pageCount, currentCount);
+              },
+            );
+          }
         }
       }
     });
