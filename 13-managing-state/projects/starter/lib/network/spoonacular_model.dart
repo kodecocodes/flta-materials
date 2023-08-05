@@ -49,9 +49,7 @@ class SpoonacularResult {
 class SpoonacularRecipe {
   int preparationMinutes;
   int cookingMinutes;
-  int aggregateLikes;
   String sourceName;
-  double pricePerServing;
   List<ExtendedIngredient> extendedIngredients;
   int id;
   String title;
@@ -66,9 +64,7 @@ class SpoonacularRecipe {
   SpoonacularRecipe({
     required this.preparationMinutes,
     required this.cookingMinutes,
-    required this.aggregateLikes,
     required this.sourceName,
-    required this.pricePerServing,
     required this.extendedIngredients,
     required this.id,
     required this.title,
@@ -91,14 +87,13 @@ class SpoonacularRecipe {
 class ExtendedIngredient {
   int id;
   String? aisle;
-  String image;
+  String? image;
   String name;
-  String nameClean;
+  String? nameClean;
   String original;
-  String originalName;
+  String? originalName;
   double amount;
   String unit;
-  Measures measures;
 
   ExtendedIngredient({
     required this.id,
@@ -110,46 +105,11 @@ class ExtendedIngredient {
     required this.originalName,
     required this.amount,
     required this.unit,
-    required this.measures,
   });
   factory ExtendedIngredient.fromJson(Map<String, dynamic> json) =>
       _$ExtendedIngredientFromJson(json);
 
   Map<String, dynamic> toJson() => _$ExtendedIngredientToJson(this);
-
-}
-
-@JsonSerializable()
-class Measures {
-  Metric us;
-  Metric metric;
-
-  Measures({
-    required this.us,
-    required this.metric,
-  });
-  factory Measures.fromJson(Map<String, dynamic> json) =>
-      _$MeasuresFromJson(json);
-
-  Map<String, dynamic> toJson() => _$MeasuresToJson(this);
-
-}
-
-@JsonSerializable()
-class Metric {
-  double amount;
-  String unitShort;
-  String unitLong;
-
-  Metric({
-    required this.amount,
-    required this.unitShort,
-    required this.unitLong,
-  });
-  factory Metric.fromJson(Map<String, dynamic> json) =>
-      _$MetricFromJson(json);
-
-  Map<String, dynamic> toJson() => _$MetricToJson(this);
 
 }
 

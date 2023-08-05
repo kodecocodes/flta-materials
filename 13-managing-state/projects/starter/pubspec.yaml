@@ -14,6 +14,7 @@ dependencies:
 
   cupertino_icons: ^1.0.5
 
+  logging: ^1.2.0
   auto_size_text: ^3.0.0
   flutter_adaptive_scaffold: ^0.1.6
   desktop_window: ^0.4.0
@@ -22,12 +23,12 @@ dependencies:
   flutter_slidable: ^3.0.0
   platform: ^3.1.0
   freezed_annotation: ^2.4.1
+  http: ^1.1.0
+  chopper: ^6.1.4
   flutter_svg: ^2.0.7
   shared_preferences: ^2.2.0
   json_annotation: ^4.8.1
-  http: ^1.1.0
   flutter_html: ^3.0.0-beta.2
-  chopper: ^6.1.4
   lumberdash: ^3.0.0
   colorize_lumberdash: ^3.0.0
   path_provider: ^2.0.15

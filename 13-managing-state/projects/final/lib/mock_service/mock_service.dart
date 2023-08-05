@@ -1,14 +1,15 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:http/http.dart' as http;
-import 'package:chopper/chopper.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart';
+
 import '../data/models/recipe.dart';
 import '../network/model_response.dart';
 import '../network/query_result.dart';
 import '../network/service_interface.dart';
 import '../network/spoonacular_model.dart';
+import 'package:http/http.dart' as http;
+import 'package:chopper/chopper.dart';
 
 class MockService implements ServiceInterface {
   late QueryResult _currentRecipes1;
@@ -37,8 +38,7 @@ class MockService implements ServiceInterface {
 
     // Recipe List 2
     jsonString = await rootBundle.loadString('assets/recipes2.json');
-    spoonacularResults =
-    SpoonacularResults.fromJson(jsonDecode(jsonString));
+    spoonacularResults = SpoonacularResults.fromJson(jsonDecode(jsonString));
     recipes = spoonacularResultsToRecipe(spoonacularResults);
     apiQueryResults = QueryResult(
         offset: spoonacularResults.offset,
