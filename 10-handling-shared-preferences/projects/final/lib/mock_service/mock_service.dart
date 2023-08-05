@@ -33,8 +33,7 @@ class MockService implements ServiceInterface {
 
     // Recipe List 2
     jsonString = await rootBundle.loadString('assets/recipes2.json');
-    spoonacularResults =
-    SpoonacularResults.fromJson(jsonDecode(jsonString));
+    spoonacularResults = SpoonacularResults.fromJson(jsonDecode(jsonString));
     recipes = spoonacularResultsToRecipe(spoonacularResults);
     apiQueryResults = QueryResult(
         offset: spoonacularResults.offset,
