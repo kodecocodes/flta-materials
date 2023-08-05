@@ -14,6 +14,7 @@ dependencies:
 
   cupertino_icons: ^1.0.5
 
+  logging: ^1.2.0
   auto_size_text: ^3.0.0
   flutter_adaptive_scaffold: ^0.1.6
   desktop_window: ^0.4.0

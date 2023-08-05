@@ -42,7 +42,9 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
     if (result is Success<Recipe>) {
       final body = result.value;
       recipeDetail = body;
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     } else  {
       logMessage('Problems getting Recipe $result');
     }
