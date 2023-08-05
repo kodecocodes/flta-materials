@@ -5,12 +5,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../network/service_interface.dart';
 import '../widgets/common.dart';
 
 import '../../data/models/models.dart';
 import '../../network/model_response.dart';
 import '../../network/query_result.dart';
+import '../../network/service_interface.dart';
 import '../../providers.dart';
 import '../bookmarks/bookmarks.dart';
 import '../recipe_card.dart';
@@ -52,23 +52,25 @@ class _RecipeListState extends ConsumerState<RecipeList> {
 
     searchTextController = TextEditingController(text: '');
     _scrollController.addListener(() {
-      final triggerFetchMoreSize =
-          0.7 * _scrollController.position.maxScrollExtent;
+      if (currentType == ListType.all) {
+        final triggerFetchMoreSize =
+            0.7 * _scrollController.position.maxScrollExtent;
 
-      if (_scrollController.position.pixels > triggerFetchMoreSize) {
-        if (hasMore &&
-            currentEndPosition < currentCount &&
-            !loading &&
-            !inErrorState) {
-          setState(
-            () {
-              loading = true;
-              newDataRequired = true;
-              currentStartPosition = currentEndPosition;
-              currentEndPosition =
-                  min(currentStartPosition + pageCount, currentCount);
-            },
-          );
+        if (_scrollController.position.pixels > triggerFetchMoreSize) {
+          if (hasMore &&
+              currentEndPosition < currentCount &&
+              !loading &&
+              !inErrorState) {
+            setState(
+                  () {
+                loading = true;
+                newDataRequired = true;
+                currentStartPosition = currentEndPosition;
+                currentEndPosition =
+                    min(currentStartPosition + pageCount, currentCount);
+              },
+            );
+          }
         }
       }
     });

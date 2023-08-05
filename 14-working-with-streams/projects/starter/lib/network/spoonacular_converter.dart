@@ -50,8 +50,11 @@ class SpoonacularConverter implements Converter {
         );
       } else {
         // This is the recipe details
-        final spoonacularResults = SpoonacularRecipe.fromJson(mapData);
-        final recipe = spoonacularRecipeToRecipe(spoonacularResults);
+
+        final spoonacularRecipe = SpoonacularRecipe.fromJson(mapData);
+
+        final recipe = spoonacularRecipeToRecipe(spoonacularRecipe);
+
         return response.copyWith<BodyType>(
           body: Success(recipe) as BodyType,
         );

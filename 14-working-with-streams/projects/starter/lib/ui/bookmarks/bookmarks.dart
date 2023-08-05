@@ -114,7 +114,6 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
   }
 
   void deleteRecipe(Repository repository, Recipe recipe) async {
-    // 1
     repository.deleteRecipe(recipe);
     setState(() {});
   }
