@@ -11,6 +11,7 @@ import 'ui/theme/theme.dart';
 import 'utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'providers.dart';
+import 'package:logging/logging.dart' as system_log;
 
 Future<void> main() async {
   _setupLogging();
@@ -35,6 +36,10 @@ void _setupLogging() {
   putLumberdashToWork(withClients: [
     ColorizeLumberdash(),
   ]);
+  system_log.Logger.root.level = system_log.Level.ALL;
+  system_log.Logger.root.onRecord.listen((rec) {
+      debugPrint('${rec.level.name}: ${rec.time}: ${rec.message}');
+  });
 }
 
 class MyApp extends StatefulWidget {

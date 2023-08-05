@@ -28,7 +28,7 @@ class DBRepository extends Repository {
 
   @override
   Stream<List<Recipe>> watchAllRecipes() {
-    recipeStream ??= _recipeDao.watchAllRecipes(_ingredientDao);
+    recipeStream ??= _recipeDao.watchAllRecipes();
     return recipeStream!;
   }
 
