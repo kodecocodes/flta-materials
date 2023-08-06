@@ -159,9 +159,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final pages = <Widget>[
       ListView(scrollDirection: Axis.vertical, children: const [
-        CategoryPage(),
         RestaurantsPage(),
         PostPage(),
+        CategoryPage(),
       ]),
       OrderPage(ordersManager: widget.ordersManager,),
       ProfileScreen(
