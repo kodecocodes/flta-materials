@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
                 handleBrightnessChange: handleBrightnessChange,
                 handleColorSelect: handleColorSelect,
                 colorSelected: colorSelected,
-                tab: int.tryParse(state.queryParameters['tab'] ?? '') ?? 0);
+                tab: int.tryParse(state.uri.queryParameters['tab'] ?? '') ?? 0);
           },
           routes: [
             GoRoute(
