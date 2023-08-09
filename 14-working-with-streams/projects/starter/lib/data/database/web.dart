@@ -1,4 +1,3 @@
-/*
 import 'package:drift/drift.dart';
 import 'package:drift/wasm.dart';
 import 'package:flutter/foundation.dart';
@@ -22,4 +21,3 @@ DatabaseConnection connect() {
       }),
     );
 }
-*/
