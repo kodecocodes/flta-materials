@@ -1,17 +1,24 @@
 /*
 import 'package:drift/drift.dart';
 import 'package:drift/wasm.dart';
-import 'package:sqlite3/wasm.dart';
+import 'package:flutter/foundation.dart';
 
 DatabaseConnection connect() {
     return DatabaseConnection.delayed(
       Future.sync(() async {
-        final sqlite3 = await WasmSqlite3.loadFromUrl(
-          Uri.parse('sqlite3.wasm'),
+        final db = await WasmDatabase.open(
+          databaseName: 'recipes',
+          sqlite3Uri: Uri.parse('/sqlite3.wasm'),
+          // driftWorkerUri: Uri.parse('/shared_worker.dart.js'),
+          driftWorkerUri: Uri.parse('/drift_worker.js'),
         );
 
-        final databaseImpl = WasmDatabase(sqlite3: sqlite3, path: 'recipes.db');
-        return DatabaseConnection(databaseImpl);
+        if (db.missingFeatures.isNotEmpty) {
+          debugPrint('Using ${db.chosenImplementation} due to unsupported '
+              'browser features: ${db.missingFeatures}');
+        }
+
+        return db.resolvedExecutor;
       }),
     );
 }
