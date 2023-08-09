@@ -1,3 +1,4 @@
+/*
 import 'dart:io';
 
 import 'package:drift/drift.dart';
@@ -13,3 +14,4 @@ DatabaseConnection connect() {
     return NativeDatabase.createBackgroundConnection(file);
   }));
 }
+*/

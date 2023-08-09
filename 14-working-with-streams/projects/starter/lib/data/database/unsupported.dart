@@ -1,3 +1,4 @@
+/*
 import 'package:drift/drift.dart';
 
 Never _unsupported() {
@@ -15,3 +16,4 @@ DatabaseConnection connect() {
 Future<void> validateDatabaseSchema(GeneratedDatabase database) async {
   _unsupported();
 }
+ */
