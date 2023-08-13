@@ -1,15 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lumberdash/lumberdash.dart';
+import '../../network/service_interface.dart';
+import '../../providers.dart';
 
 import '../../data/models/recipe.dart';
 import '../../network/model_response.dart';
-import '../../providers.dart';
 import '../theme/colors.dart';
 import '../widgets/common.dart';
 
@@ -42,8 +42,10 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
     if (result is Success<Recipe>) {
       final body = result.value;
       recipeDetail = body;
-      setState(() {});
-    } else {
+      if (mounted) {
+        setState(() {});
+      }
+    } else  {
       logMessage('Problems getting Recipe $result');
     }
   }
@@ -80,7 +82,7 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
     );
   }
 
-  void readRecipe(AsyncSnapshot<Response<Result<Recipe>>> snapshot) {
+  void readRecipe(AsyncSnapshot<RecipeDetailsResponse> snapshot) {
     final result = snapshot.data?.body;
     if (result is Success<Recipe>) {
       final body = result.value;
@@ -94,7 +96,7 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
       children: [
         SizedBox(
           width: size.width,
-          height: 200,
+          height: 150,
           child: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -114,8 +116,8 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
               alignment: Alignment.topCenter,
               fit: BoxFit.contain,
               placeholder: (context, url) => const CircularProgressIndicator(),
-              height: 200,
-              // width: size.width,
+              height: 150,
+              width: 200,
             ),
           ),
         ),
@@ -125,8 +127,9 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
 
   Widget titleRow() {
     final repository = ref.read(repositoryProvider);
-    final titleRowColor =
-        widget.recipe.bookmarked ? Colors.black : Colors.white;
+    final titleRowColor = widget.recipe.bookmarked
+        ? Colors.black
+        : Colors.white;
     return Container(
       decoration: const BoxDecoration(color: lightGreen),
       child: Padding(
@@ -145,7 +148,9 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 style: TextStyle(
-                    fontSize: 24, fontFamily: 'Roboto', color: titleRowColor),
+                    fontSize: 24,
+                    fontFamily: 'Roboto',
+                    color: titleRowColor),
               ),
             ),
             IconButton(
@@ -153,7 +158,9 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
                 widget.recipe.bookmarked
                     ? 'assets/images/icon_bookmarks.svg'
                     : 'assets/images/icon_bookmark.svg',
-                colorFilter: ColorFilter.mode(titleRowColor, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(
+                    titleRowColor,
+                    BlendMode.srcIn),
               ),
               onPressed: () {
                 if (!widget.recipe.bookmarked) {

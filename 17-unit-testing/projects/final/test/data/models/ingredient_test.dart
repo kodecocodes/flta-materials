@@ -25,7 +25,6 @@ void main() {
       expect(ingredient.recipeId, isNull);
       expect(ingredient.name, isNull);
       expect(ingredient.amount, isNull);
-      expect(ingredient.weight, isNull);
     });
     test('can receive parameters', () {
       // Arrange
@@ -34,7 +33,6 @@ void main() {
       const recipeId = 54321;
       const name = 'Parmesan Cheese';
       const amount = 1.0;
-      const weight = 50.0;
 
       // Act
       ingredient = const Ingredient(
@@ -42,7 +40,6 @@ void main() {
         recipeId: recipeId,
         name: name,
         amount: amount,
-        weight: weight,
       );
 
       // Assert
@@ -50,7 +47,6 @@ void main() {
       expect(ingredient.recipeId, equals(recipeId));
       expect(ingredient.name, equals(name));
       expect(ingredient.amount, equals(amount));
-      expect(ingredient.weight, equals(weight));
     });
     test('can instantiate from JSON', () {
       // Arrange
@@ -66,7 +62,6 @@ void main() {
       const recipeId = 54321;
       const name = 'Parmesan Cheese';
       const amount = 1.0;
-      const weight = 50.0;
 
       // Act
       ingredient = Ingredient.fromJson(jsonMap);
@@ -76,7 +71,6 @@ void main() {
       expect(ingredient.recipeId, equals(recipeId));
       expect(ingredient.name, equals(name));
       expect(ingredient.amount, equals(amount));
-      expect(ingredient.weight, equals(weight));
     });
   });
 }

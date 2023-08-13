@@ -8,12 +8,19 @@ import 'spoonacular_converter.dart';
 
 part 'spoonacular_service.chopper.dart';
 
-const String apiKey = '2d12c34e670249c6abd71b936a4ca2f1';
+const String apiKey = '<Your Key Here>';
 const String apiUrl = 'https://api.spoonacular.com/';
 
 @ChopperApi()
 abstract class SpoonacularService extends ChopperService
     implements ServiceInterface {
+  /// Get the details of a specific recipe
+  @override
+  @Get(path: 'recipes/{id}/information?includeNutrition=false')
+  Future<RecipeDetailsResponse> queryRecipe(
+    @Path('id') String id,
+  );
+
   /// Get a list of recipes that match the query string
   @override
   @Get(path: 'recipes/complexSearch')
@@ -23,14 +30,6 @@ abstract class SpoonacularService extends ChopperService
     @Query('number') int number,
   );
 
-  /// Get the details of a specific recipe
-  @override
-  @Get(path: 'recipes/{id}/information?includeNutrition=false')
-  Future<Response<Result<Recipe>>> queryRecipe(
-    @Path('id') String id,
-  );
-
-  /// Create a new Chopper Client for our recipe service
   static SpoonacularService create() {
     final client = ChopperClient(
       baseUrl: Uri.parse(apiUrl),

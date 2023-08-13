@@ -65,21 +65,18 @@ void main() {
           recipeId: 123,
           name: 'Pasta',
           amount: 1.0,
-          weight: 250.0,
         ),
         Ingredient(
           id: 1124,
           recipeId: 123,
           name: 'Garlic',
           amount: 1.0,
-          weight: 5.0,
         ),
         Ingredient(
           id: 1125,
           recipeId: 123,
           name: 'Breadcrumbs',
           amount: 5.0,
-          weight: 75.0,
         ),
       ];
 
@@ -147,21 +144,18 @@ void main() {
           recipeId: 123,
           name: 'Pasta',
           amount: 1.0,
-          weight: 250.0,
         ),
         Ingredient(
           id: 1124,
           recipeId: 123,
           name: 'Garlic',
           amount: 1.0,
-          weight: 5.0,
         ),
         Ingredient(
           id: 1125,
           recipeId: 123,
           name: 'Breadcrumbs',
           amount: 5.0,
-          weight: 75.0,
         ),
       ];
 

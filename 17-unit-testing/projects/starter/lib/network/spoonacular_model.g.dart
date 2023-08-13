@@ -44,9 +44,7 @@ SpoonacularRecipe _$SpoonacularRecipeFromJson(Map<String, dynamic> json) =>
     SpoonacularRecipe(
       preparationMinutes: json['preparationMinutes'] as int,
       cookingMinutes: json['cookingMinutes'] as int,
-      aggregateLikes: json['aggregateLikes'] as int,
       sourceName: json['sourceName'] as String,
-      pricePerServing: (json['pricePerServing'] as num).toDouble(),
       extendedIngredients: (json['extendedIngredients'] as List<dynamic>)
           .map((e) => ExtendedIngredient.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -65,9 +63,7 @@ Map<String, dynamic> _$SpoonacularRecipeToJson(SpoonacularRecipe instance) =>
     <String, dynamic>{
       'preparationMinutes': instance.preparationMinutes,
       'cookingMinutes': instance.cookingMinutes,
-      'aggregateLikes': instance.aggregateLikes,
       'sourceName': instance.sourceName,
-      'pricePerServing': instance.pricePerServing,
       'extendedIngredients': instance.extendedIngredients,
       'id': instance.id,
       'title': instance.title,
@@ -84,14 +80,13 @@ ExtendedIngredient _$ExtendedIngredientFromJson(Map<String, dynamic> json) =>
     ExtendedIngredient(
       id: json['id'] as int,
       aisle: json['aisle'] as String?,
-      image: json['image'] as String,
+      image: json['image'] as String?,
       name: json['name'] as String,
-      nameClean: json['nameClean'] as String,
+      nameClean: json['nameClean'] as String?,
       original: json['original'] as String,
-      originalName: json['originalName'] as String,
+      originalName: json['originalName'] as String?,
       amount: (json['amount'] as num).toDouble(),
       unit: json['unit'] as String,
-      measures: Measures.fromJson(json['measures'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ExtendedIngredientToJson(ExtendedIngredient instance) =>
@@ -105,27 +100,4 @@ Map<String, dynamic> _$ExtendedIngredientToJson(ExtendedIngredient instance) =>
       'originalName': instance.originalName,
       'amount': instance.amount,
       'unit': instance.unit,
-      'measures': instance.measures,
-    };
-
-Measures _$MeasuresFromJson(Map<String, dynamic> json) => Measures(
-      us: Metric.fromJson(json['us'] as Map<String, dynamic>),
-      metric: Metric.fromJson(json['metric'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$MeasuresToJson(Measures instance) => <String, dynamic>{
-      'us': instance.us,
-      'metric': instance.metric,
-    };
-
-Metric _$MetricFromJson(Map<String, dynamic> json) => Metric(
-      amount: (json['amount'] as num).toDouble(),
-      unitShort: json['unitShort'] as String,
-      unitLong: json['unitLong'] as String,
-    );
-
-Map<String, dynamic> _$MetricToJson(Metric instance) => <String, dynamic>{
-      'amount': instance.amount,
-      'unitShort': instance.unitShort,
-      'unitLong': instance.unitLong,
     };

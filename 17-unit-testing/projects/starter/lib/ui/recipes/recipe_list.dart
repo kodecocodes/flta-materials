@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../widgets/common.dart';
 
 import '../../data/models/models.dart';
 import '../../network/model_response.dart';
@@ -15,7 +16,6 @@ import '../bookmarks/bookmarks.dart';
 import '../recipe_card.dart';
 import '../recipes/recipe_details.dart';
 import '../theme/colors.dart';
-import '../widgets/common.dart';
 import '../widgets/custom_dropdown.dart';
 
 enum ListType { all, bookmarks }
@@ -52,23 +52,25 @@ class _RecipeListState extends ConsumerState<RecipeList> {
 
     searchTextController = TextEditingController(text: '');
     _scrollController.addListener(() {
-      final triggerFetchMoreSize =
-          0.7 * _scrollController.position.maxScrollExtent;
+      if (currentType == ListType.all) {
+        final triggerFetchMoreSize =
+            0.7 * _scrollController.position.maxScrollExtent;
 
-      if (_scrollController.position.pixels > triggerFetchMoreSize) {
-        if (hasMore &&
-            currentEndPosition < currentCount &&
-            !loading &&
-            !inErrorState) {
-          setState(
-            () {
-              loading = true;
-              newDataRequired = true;
-              currentStartPosition = currentEndPosition;
-              currentEndPosition =
-                  min(currentStartPosition + pageCount, currentCount);
-            },
-          );
+        if (_scrollController.position.pixels > triggerFetchMoreSize) {
+          if (hasMore &&
+              currentEndPosition < currentCount &&
+              !loading &&
+              !inErrorState) {
+            setState(
+                  () {
+                loading = true;
+                newDataRequired = true;
+                currentStartPosition = currentEndPosition;
+                currentEndPosition =
+                    min(currentStartPosition + pageCount, currentCount);
+              },
+            );
+          }
         }
       }
     });
@@ -107,6 +109,14 @@ class _RecipeListState extends ConsumerState<RecipeList> {
   }
 
   Widget buildRecipeList() {
+    return  buildScrollList([
+      _buildHeader(),
+      _buildTypePicker(),
+      _buildSearchCard(),
+    ], _buildRecipeLoader(context));
+  }
+
+  Widget buildScrollList(List<Widget> topList, Widget bottomWidget) {
     return Container(
       color: Colors.white,
       child: ScrollConfiguration(
@@ -123,17 +133,13 @@ class _RecipeListState extends ConsumerState<RecipeList> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    _buildHeader(),
-                    _buildTypePicker(),
-                    _buildSearchCard(),
-                  ],
+                  children: topList,
                 ),
               ),
             ),
             SliverPadding(
               padding: allPadding8,
-              sliver: _buildRecipeLoader(context),
+              sliver: bottomWidget,
             ),
           ],
         ),
@@ -142,15 +148,10 @@ class _RecipeListState extends ConsumerState<RecipeList> {
   }
 
   Widget buildBookmarkList() {
-    return Padding(
-      padding: allPadding8,
-      child: Column(
-        children: <Widget>[
-          _buildTypePicker(),
-          const Bookmarks(),
-        ],
-      ),
-    );
+    return  buildScrollList([
+      _buildHeader(),
+      _buildTypePicker(),
+    ], const Bookmarks());
   }
 
   Widget _buildHeader() {
@@ -324,7 +325,19 @@ class _RecipeListState extends ConsumerState<RecipeList> {
           currentSearchList.addAll(query.recipes);
           currentEndPosition =
               min(query.totalResults, currentEndPosition + query.number);
-          return _buildRecipeList(context, currentSearchList);
+          if (currentCount == 0) {
+            return const SliverFillRemaining(
+              child: Center(
+                child: Text(
+                  'No Results',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              ),
+            );
+          } else {
+            return _buildRecipeList(context, currentSearchList);
+          }
         } else {
           if (currentCount == 0) {
             // Show a loading indicator while waiting for the movies

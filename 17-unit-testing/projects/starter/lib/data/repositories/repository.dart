@@ -1,11 +1,11 @@
 
-import 'models/models.dart';
+
+import '../models/models.dart';
 
 abstract class Repository {
   Future<List<Recipe>> findAllRecipes();
 
   Stream<List<Recipe>> watchAllRecipes();
-
   Stream<List<Ingredient>> watchAllIngredients();
 
   Future<Recipe> findRecipeById(int id);

@@ -27,7 +27,6 @@ class DbIngredient extends Table {
 
   RealColumn get amount => real()();
 
-  RealColumn get weight => real()();
 }
 
 @DriftDatabase(
@@ -49,7 +48,7 @@ class RecipeDao extends DatabaseAccessor<RecipeDatabase> with _$RecipeDaoMixin {
 
   Future<List<DbRecipeData>> findAllRecipes() => select(dbRecipe).get();
 
-  Stream<List<Recipe>> watchAllRecipes(IngredientDao ingredientDao) {
+  Stream<List<Recipe>> watchAllRecipes() {
     return select(dbRecipe).watch().map(
       (rows) {
         final recipes = <Recipe>[];
@@ -67,8 +66,8 @@ class RecipeDao extends DatabaseAccessor<RecipeDatabase> with _$RecipeDaoMixin {
   Future<List<DbRecipeData>> findRecipeById(int id) =>
       (select(dbRecipe)..where((tbl) => tbl.id.equals(id))).get();
 
-  Future<int> insertRecipe(Insertable<DbRecipeData> modelRecipe) =>
-      into(dbRecipe).insert(modelRecipe);
+  Future<int> insertRecipe(Insertable<DbRecipeData> recipe) =>
+      into(dbRecipe).insert(recipe);
 
   Future deleteRecipe(int id) =>
       Future.value((delete(dbRecipe)..where((tbl) => tbl.id.equals(id))).go());
@@ -90,8 +89,8 @@ class IngredientDao extends DatabaseAccessor<RecipeDatabase>
   Future<List<DbIngredientData>> findRecipeIngredients(int id) =>
       (select(dbIngredient)..where((tbl) => tbl.recipeId.equals(id))).get();
 
-  Future<int> insertIngredient(Insertable<DbIngredientData> modelIngredient) =>
-      into(dbIngredient).insert(modelIngredient);
+  Future<int> insertIngredient(Insertable<DbIngredientData> ingredient) =>
+      into(dbIngredient).insert(ingredient);
 
   Future deleteIngredient(int id) => Future.value(
       (delete(dbIngredient)..where((tbl) => tbl.id.equals(id))).go());
@@ -129,7 +128,6 @@ Ingredient dbIngredientToIngredient(DbIngredientData ingredient) {
     recipeId: ingredient.recipeId,
     name: ingredient.name,
     amount: ingredient.amount,
-    weight: ingredient.weight,
   );
 }
 
@@ -139,7 +137,6 @@ DbIngredientCompanion ingredientToInsertableDbIngredient(
     recipeId: ingredient.recipeId ?? 0,
     name: ingredient.name ?? '',
     amount: ingredient.amount ?? 0,
-    weight: ingredient.weight ?? 0,
   );
 }
 

@@ -2,35 +2,44 @@ import 'package:flutter/foundation.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:recipes/data/database/db_repository.dart';
+import 'package:recipes/data/database/recipe_db.dart';
 import 'package:recipes/data/models/models.dart';
 import 'package:test/test.dart';
 
 import 'db_repository_test.mocks.dart';
 
 // Annotation which generates the cat.mocks.dart library and the MockCat class.
-@GenerateNiceMocks([MockSpec<DBRepository>()])
+@GenerateNiceMocks([
+  MockSpec<RecipeDatabase>(),
+  MockSpec<RecipeDao>(),
+  MockSpec<IngredientDao>(),
+])
 void main() {
+  final mockDb = MockRecipeDatabase();
+  final mockIngredientDao = MockIngredientDao();
+  final mockRecipeDao = MockRecipeDao();
+
+  when(mockDb.ingredientDao).thenReturn(mockIngredientDao);
+  when(mockDb.recipeDao).thenReturn(mockRecipeDao);
+
   final randomIngredients = [
     const Ingredient(
       id: 1123,
       recipeId: 123,
       name: 'Pasta',
       amount: 1.0,
-      weight: 250.0,
     ),
     const Ingredient(
       id: 1124,
       recipeId: 123,
       name: 'Garlic',
       amount: 1.0,
-      weight: 5.0,
     ),
     const Ingredient(
       id: 1125,
       recipeId: 123,
       name: 'Breadcrumbs',
       amount: 5.0,
-      weight: 75.0,
     ),
   ];
 
@@ -52,212 +61,351 @@ void main() {
       late DBRepository dbRepository;
 
       // Act
-      dbRepository = DBRepository();
+      dbRepository = DBRepository(
+        recipeDatabase: mockDb,
+      );
 
       // Assert
       expect(dbRepository, isNotNull);
     });
-    test('can get initialized', () {
+    test('can get initialized without crashing', () async {
       // Arrange
-      final mockRep = MockDBRepository();
-      when(mockRep.init()).thenAnswer((_) async => {});
+      final dbRepository = DBRepository();
 
       // Act
-      mockRep.init();
+      await dbRepository.init();
 
       // Assert
-      verify(mockRep.init()).called(1);
+      // Does not crash
     });
-    test('can close', () {
+    test('can close', () async {
       // Arrange
-      final mockRep = MockDBRepository();
-      when(mockRep.close()).thenAnswer((_) => {});
+      when(mockDb.close()).thenAnswer((_) async => {});
+      final dbRepository = DBRepository(
+        recipeDatabase: mockDb,
+      );
+      await dbRepository.init();
 
       // Act
-      mockRep.close();
+      dbRepository.close();
 
       // Assert
-      verify(mockRep.close()).called(1);
+      verify(mockDb.close()).called(1);
     });
     test('can findAllRecipes', () async {
       // Arrange
-      final mockRep = MockDBRepository();
-
-      when(mockRep.findAllRecipes()).thenAnswer((_) async => randomRecipes);
+      final dbRepository = DBRepository(
+        recipeDatabase: mockDb,
+      );
+      await dbRepository.init();
+      when(mockIngredientDao.findRecipeIngredients(any)).thenAnswer(
+        (_) async => randomIngredients
+            .map(
+              (e) => DbIngredientData(
+                id: e.id!,
+                recipeId: e.recipeId!,
+                name: e.name!,
+                amount: e.amount!,
+              ),
+            )
+            .toList(),
+      );
+      when(mockRecipeDao.findAllRecipes()).thenAnswer(
+        (_) async => randomRecipes
+            .map(
+              (e) => DbRecipeData(
+                id: e.id!,
+                label: e.label!,
+                image: e.image!,
+                description: e.description!,
+                bookmarked: e.bookmarked,
+              ),
+            )
+            .toList(),
+      );
 
       // Act
-      final result = await mockRep.findAllRecipes();
+      final result = await dbRepository.findAllRecipes();
 
       // Assert
-      verify(mockRep.findAllRecipes()).called(1);
+      verify(mockRecipeDao.findAllRecipes()).called(1);
       expect(listEquals(result, randomRecipes), isTrue);
     });
-    test('can watchAllRecipes', () {
+    test('can watchAllRecipes', () async {
       // Arrange
-      final mockRep = MockDBRepository();
-      when(mockRep.watchAllRecipes()).thenAnswer((_) => Stream.fromIterable([
-            [],
-            randomRecipes,
-          ]));
+      final dbRepository = DBRepository(
+        recipeDatabase: mockDb,
+      );
+      await dbRepository.init();
+      when(mockRecipeDao.watchAllRecipes())
+          .thenAnswer((_) => Stream.fromIterable([
+                randomRecipes,
+              ]));
       // Act
-      final result = mockRep.watchAllRecipes();
+      final result = dbRepository.watchAllRecipes();
 
       // Assert
       expect(
           result,
           emitsInOrder([
-            [],
             randomRecipes,
           ]));
     });
-    test('can watchAllIngredients', () {
+    test('can watchAllIngredients', () async {
       // Arrange
-      final mockRep = MockDBRepository();
-      when(mockRep.watchAllIngredients())
-          .thenAnswer((_) => Stream.fromIterable([
-                randomIngredients.sublist(2),
-                randomIngredients.sublist(1),
-                randomIngredients,
-              ]));
+      final dbRepository = DBRepository(
+        recipeDatabase: mockDb,
+      );
+      await dbRepository.init();
+      when(mockIngredientDao.watchAllIngredients()).thenAnswer(
+        (_) => Stream.fromIterable(
+          [
+            randomIngredients
+                .map(
+                  (e) => DbIngredientData(
+                    id: e.id!,
+                    recipeId: e.recipeId!,
+                    name: e.name!,
+                    amount: e.amount!,
+                  ),
+                )
+                .toList(),
+          ],
+        ),
+      );
       // Act
-      final result = mockRep.watchAllIngredients();
+      final result = dbRepository.watchAllIngredients();
 
       // Assert
       expect(
           result,
           emitsInOrder([
-            randomIngredients.sublist(2),
-            randomIngredients.sublist(1),
             randomIngredients,
           ]));
     });
     test('can findRecipeById', () async {
       // Arrange
-      final mockRep = MockDBRepository();
-      when(mockRep.findRecipeById(any)).thenAnswer(
-        (_) async => randomRecipes.first,
+      final dbRepository = DBRepository(
+        recipeDatabase: mockDb,
+      );
+      await dbRepository.init();
+      when(mockIngredientDao.findRecipeIngredients(any)).thenAnswer(
+        (_) async => randomIngredients
+            .map(
+              (e) => DbIngredientData(
+                id: e.id!,
+                recipeId: e.recipeId!,
+                name: e.name!,
+                amount: e.amount!,
+              ),
+            )
+            .toList(),
+      );
+      when(mockRecipeDao.findRecipeById(any)).thenAnswer(
+        (_) async => randomRecipes
+            .map(
+              (e) => DbRecipeData(
+                id: e.id!,
+                label: e.label!,
+                image: e.image!,
+                description: e.description!,
+                bookmarked: e.bookmarked,
+              ),
+            )
+            .toList(),
       );
 
       // Act
-      final result = await mockRep.findRecipeById(5);
+      final result = await dbRepository.findRecipeById(5);
 
       // Assert
-      verify(mockRep.findRecipeById(any)).called(1);
+      verify(mockIngredientDao.findRecipeIngredients(any)).called(1);
+      verify(mockRecipeDao.findRecipeById(any)).called(1);
       expect(result, randomRecipes.first);
     });
     test('can findAllIngredients', () async {
       // Arrange
-      final mockRep = MockDBRepository();
-      when(mockRep.findAllIngredients()).thenAnswer(
-        (_) async => randomIngredients,
+      final dbRepository = DBRepository(
+        recipeDatabase: mockDb,
+      );
+      await dbRepository.init();
+      when(mockIngredientDao.findAllIngredients()).thenAnswer(
+        (_) async => randomIngredients
+            .map((e) => DbIngredientData(
+                  id: e.id!,
+                  recipeId: e.recipeId!,
+                  name: e.name!,
+                  amount: e.amount!,
+                ))
+            .toList(),
       );
 
       // Act
-      final result = await mockRep.findAllIngredients();
+      final result = await dbRepository.findAllIngredients();
 
       // Assert
-      verify(mockRep.findAllIngredients()).called(1);
+      verify(mockIngredientDao.findAllIngredients()).called(1);
       expect(listEquals(result, randomIngredients), isTrue);
     });
     test('can findRecipeIngredients', () async {
       // Arrange
-      final mockRep = MockDBRepository();
-      when(mockRep.findRecipeIngredients(any)).thenAnswer(
-        (_) async => randomIngredients,
+      final dbRepository = DBRepository(
+        recipeDatabase: mockDb,
+      );
+      await dbRepository.init();
+      when(mockIngredientDao.findRecipeIngredients(any)).thenAnswer(
+        (_) async => randomIngredients
+            .map((e) => DbIngredientData(
+                  id: e.id!,
+                  recipeId: e.recipeId!,
+                  name: e.name!,
+                  amount: e.amount!,
+                ))
+            .toList(),
       );
 
       // Act
-      final result = await mockRep.findRecipeIngredients(5);
+      final result = await dbRepository.findRecipeIngredients(5);
 
       // Assert
-      verify(mockRep.findRecipeIngredients(any)).called(1);
+      verify(mockIngredientDao.findRecipeIngredients(any)).called(1);
       expect(listEquals(result, randomIngredients), isTrue);
     });
     test('can insertRecipe', () async {
       // Arrange
-      final mockRep = MockDBRepository();
-      const randomIdx = 3;
-      when(mockRep.insertRecipe(any)).thenAnswer(
+      final dbRepository = DBRepository(
+        recipeDatabase: mockDb,
+      );
+      await dbRepository.init();
+      const randomIdx = 123;
+      when(mockRecipeDao.insertRecipe(any)).thenAnswer(
         (_) async => randomIdx,
       );
 
       // Act
-      final result = await mockRep.insertRecipe(randomRecipes.first);
+      final result = await dbRepository.insertRecipe(randomRecipes.first);
 
       // Assert
-      verify(mockRep.insertRecipe(any)).called(1);
+      verify(mockRecipeDao.insertRecipe(any)).called(1);
       expect(result, equals(randomIdx));
     });
     test('can insertIngredients', () async {
       // Arrange
-      final mockRep = MockDBRepository();
-      final randomIndexes = randomIngredients.indexed
-          .map((indexedIngredient) => indexedIngredient.$1)
-          .toList();
-      when(mockRep.insertIngredients(any)).thenAnswer(
-        (_) async => randomIndexes,
+      final dbRepository = DBRepository(
+        recipeDatabase: mockDb,
       );
+      await dbRepository.init();
+      when(mockIngredientDao.insertIngredient(any)).thenAnswer((inv) async =>
+          randomIngredients
+              .where((ing) =>
+                  ing.name ==
+                  (inv.positionalArguments.first as DbIngredientCompanion)
+                      .name
+                      .value)
+              .first
+              .id!);
 
       // Act
-      final result = await mockRep.insertIngredients(randomIngredients);
+      final result = await dbRepository.insertIngredients(randomIngredients);
 
       // Assert
-      verify(mockRep.insertIngredients(any)).called(1);
-      expect(listEquals(result, randomIndexes), isTrue);
+      final randomIdentifiers = randomIngredients
+          .map((indexedIngredient) => indexedIngredient.id)
+          .toList();
+      verify(mockIngredientDao.insertIngredient(any))
+          .called(randomIngredients.length);
+      expect(listEquals(result, randomIdentifiers), isTrue);
     });
     test('can deleteRecipe', () async {
       // Arrange
-      final mockRep = MockDBRepository();
-      when(mockRep.deleteRecipe(any)).thenAnswer(
+      final dbRepository = DBRepository(
+        recipeDatabase: mockDb,
+      );
+      await dbRepository.init();
+      when(mockIngredientDao.findRecipeIngredients(any)).thenAnswer(
+        (_) async => randomIngredients
+            .map((e) => DbIngredientData(
+                  id: e.id!,
+                  recipeId: e.recipeId!,
+                  name: e.name!,
+                  amount: e.amount!,
+                ))
+            .toList(),
+      );
+      when(mockRecipeDao.deleteRecipe(any)).thenAnswer(
         (_) async => {},
       );
+      final recipe = randomRecipes.first;
 
       // Act
-      await mockRep.deleteRecipe(randomRecipes.first);
+      await dbRepository.deleteRecipe(recipe);
 
       // Assert
-      verify(mockRep.deleteRecipe(any)).called(1);
+      verify(mockIngredientDao.deleteIngredient(any))
+          .called(recipe.ingredients.length);
+      verify(mockRecipeDao.deleteRecipe(any)).called(1);
     });
     test('can deleteIngredient', () async {
       // Arrange
-      final mockRep = MockDBRepository();
+      final dbRepository = DBRepository(
+        recipeDatabase: mockDb,
+      );
+      await dbRepository.init();
       const mockIngredient = Ingredient(
         id: 1125,
         recipeId: 123,
         name: 'Breadcrumbs',
         amount: 5.0,
-        weight: 75.0,
       );
-      when(mockRep.deleteIngredient(any)).thenAnswer((_) async => {});
+      when(mockIngredientDao.deleteIngredient(any)).thenAnswer((_) async => {});
 
       // Act
-      await mockRep.deleteIngredient(mockIngredient);
+      await dbRepository.deleteIngredient(mockIngredient);
 
       // Assert
-      verify(mockRep.deleteIngredient(any)).called(1);
+      verify(mockIngredientDao.deleteIngredient(any)).called(1);
     });
     test('can deleteIngredients', () async {
       // Arrange
-      final mockRep = MockDBRepository();
-      when(mockRep.deleteIngredients(any)).thenAnswer((_) async => {});
+      final dbRepository = DBRepository(
+        recipeDatabase: mockDb,
+      );
+      await dbRepository.init();
+      when(mockIngredientDao.deleteIngredient(any)).thenAnswer((_) async => {});
 
       // Act
-      await mockRep.deleteIngredients(randomIngredients);
+      await dbRepository.deleteIngredients(randomIngredients);
 
       // Assert
-      verify(mockRep.deleteIngredients(any)).called(1);
+      verify(mockIngredientDao.deleteIngredient(any))
+          .called(randomIngredients.length);
     });
     test('can deleteRecipeIngredients', () async {
       // Arrange
-      final mockRep = MockDBRepository();
+      final dbRepository = DBRepository(
+        recipeDatabase: mockDb,
+      );
+      await dbRepository.init();
 
-      when(mockRep.deleteRecipeIngredients(any)).thenAnswer((_) async => {});
+      when(mockIngredientDao.findRecipeIngredients(any)).thenAnswer(
+        (_) async => randomIngredients
+            .map((e) => DbIngredientData(
+                  id: e.id!,
+                  recipeId: e.recipeId!,
+                  name: e.name!,
+                  amount: e.amount!,
+                ))
+            .toList(),
+      );
+      when(mockIngredientDao.deleteIngredient(any)).thenAnswer((_) async => {});
 
       // Act
-      await mockRep.deleteRecipeIngredients(5);
+      await dbRepository.deleteRecipeIngredients(123);
 
       // Assert
-      verify(mockRep.deleteRecipeIngredients(any)).called(1);
+      verify(mockIngredientDao.findRecipeIngredients(any)).called(1);
+      verify(mockIngredientDao.deleteIngredient(any))
+          .called(randomIngredients.length);
     });
   });
 }

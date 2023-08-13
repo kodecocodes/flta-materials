@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../providers.dart';
 import '../utils.dart';
 import 'groceries/groceries.dart';
-import 'recipes/recipe_list.dart';
 import 'theme/colors.dart';
+
+import 'recipes/recipe_list.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

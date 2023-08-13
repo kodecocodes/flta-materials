@@ -8,10 +8,10 @@ part 'ingredient.g.dart';
 class Ingredient with _$Ingredient {
   const factory Ingredient(
       {int? id,
-      int? recipeId,
-      String? name,
-      double? amount,
-      double? weight}) = _Ingredient;
+        int? recipeId,
+        String? name,
+        double? amount
+      }) = _Ingredient;
 
   // Create a Ingredient from JSON data
   factory Ingredient.fromJson(Map<String, dynamic> json) =>

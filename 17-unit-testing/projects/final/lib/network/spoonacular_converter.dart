@@ -1,11 +1,8 @@
 import 'dart:convert';
-
 import 'package:chopper/chopper.dart';
-
-import '../data/models/ingredient.dart';
-import '../data/models/recipe.dart';
-import 'model_response.dart';
 import 'query_result.dart';
+
+import 'model_response.dart';
 import 'spoonacular_model.dart';
 
 class SpoonacularConverter implements Converter {
@@ -53,8 +50,11 @@ class SpoonacularConverter implements Converter {
         );
       } else {
         // This is the recipe details
-        final spoonacularResults = SpoonacularRecipe.fromJson(mapData);
-        final recipe = spoonacularRecipeToRecipe(spoonacularResults);
+
+        final spoonacularRecipe = SpoonacularRecipe.fromJson(mapData);
+
+        final recipe = spoonacularRecipeToRecipe(spoonacularRecipe);
+
         return response.copyWith<BodyType>(
           body: Success(recipe) as BodyType,
         );
@@ -62,48 +62,13 @@ class SpoonacularConverter implements Converter {
     } catch (e) {
       chopperLogger.warning(e);
       final error = Error<InnerType>(Exception(e.toString()));
-      return Response(response.base, null, error: error);
+      return Response(response.base, null,
+          error: error);
     }
   }
 
   @override
   Response<BodyType> convertResponse<BodyType, InnerType>(Response response) {
     return decodeJson<BodyType, InnerType>(response);
-  }
-
-  /// Methods to convert network recipes into local recipes
-  List<Recipe> spoonacularResultsToRecipe(SpoonacularResults result) {
-    final recipes = <Recipe>[];
-    for (final result in result.results) {
-      recipes.add(spoonacularToRecipe(result));
-    }
-    return recipes;
-  }
-
-  Recipe spoonacularToRecipe(SpoonacularResult result) {
-    return Recipe(
-        id: result.id,
-        image: result.image,
-        label: result.title,
-        ingredients: const <Ingredient>[],
-        description: result.title);
-  }
-
-  Recipe spoonacularRecipeToRecipe(SpoonacularRecipe spoonacularRecipe) {
-    final ingredients = <Ingredient>[];
-    for (final ingredient in spoonacularRecipe.extendedIngredients) {
-      ingredients.add(Ingredient(
-          id: ingredient.id,
-          name: ingredient.name,
-          amount: ingredient.amount,
-          recipeId: spoonacularRecipe.id));
-    }
-    return Recipe(
-      id: spoonacularRecipe.id,
-      label: spoonacularRecipe.title,
-      image: spoonacularRecipe.image,
-      description: spoonacularRecipe.summary,
-      ingredients: ingredients,
-    );
   }
 }

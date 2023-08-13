@@ -1,14 +1,13 @@
-import 'dart:async';
 import 'dart:core';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
 
+import '../models/models.dart';
 import 'repository.dart';
 
-import 'models/models.dart';
-
-class MemoryRepository extends Repository {
+class MemoryRepository with ChangeNotifier implements Repository {
   final List<Recipe> _currentRecipes = <Recipe>[];
   final List<Ingredient> _currentIngredients = <Ingredient>[];
-  var recipeIdCount = 0;
   Stream<List<Recipe>>? _recipeStream;
   Stream<List<Ingredient>>? _ingredientStream;
   final StreamController _recipeStreamController =
@@ -17,21 +16,22 @@ class MemoryRepository extends Repository {
       StreamController<List<Ingredient>>();
 
   @override
+  Future<List<Recipe>> findAllRecipes() {
+    return Future.value(_currentRecipes);
+  }
+
+  @override
   Stream<List<Recipe>> watchAllRecipes() {
-    _recipeStream ??= _recipeStreamController.stream as Stream<List<Recipe>>;
+    _recipeStream ??= _recipeStreamController.stream.asBroadcastStream()
+        as Stream<List<Recipe>>;
     return _recipeStream!;
   }
 
   @override
   Stream<List<Ingredient>> watchAllIngredients() {
-    _ingredientStream ??=
-        _ingredientStreamController.stream as Stream<List<Ingredient>>;
+    _ingredientStream ??= _ingredientStreamController.stream.asBroadcastStream()
+        as Stream<List<Ingredient>>;
     return _ingredientStream!;
-  }
-
-  @override
-  Future<List<Recipe>> findAllRecipes() {
-    return Future.value(_currentRecipes);
   }
 
   @override
@@ -57,14 +57,14 @@ class MemoryRepository extends Repository {
 
   @override
   Future<int> insertRecipe(Recipe recipe) {
-    final id = recipeIdCount++;
     _currentRecipes.add(recipe);
     _recipeStreamController.sink.add(_currentRecipes);
     final ingredients = <Ingredient>[];
     for (final ingredient in recipe.ingredients) {
-      ingredients.add(ingredient.copyWith(recipeId: id));
+      ingredients.add(ingredient.copyWith(recipeId: recipe.id));
     }
     insertIngredients(ingredients);
+    notifyListeners();
     return Future.value(0);
   }
 
@@ -74,6 +74,7 @@ class MemoryRepository extends Repository {
       _currentIngredients.addAll(ingredients);
       _ingredientStreamController.sink.add(_currentIngredients);
     }
+    notifyListeners();
     return Future.value(<int>[]);
   }
 
@@ -84,6 +85,7 @@ class MemoryRepository extends Repository {
     if (recipe.id != null) {
       deleteRecipeIngredients(recipe.id!);
     }
+    notifyListeners();
     return Future.value();
   }
 
@@ -91,6 +93,7 @@ class MemoryRepository extends Repository {
   Future<void> deleteIngredient(Ingredient ingredient) {
     _currentIngredients.remove(ingredient);
     _ingredientStreamController.sink.add(_currentIngredients);
+    notifyListeners();
     return Future.value();
   }
 
@@ -99,6 +102,7 @@ class MemoryRepository extends Repository {
     _currentIngredients
         .removeWhere((ingredient) => ingredients.contains(ingredient));
     _ingredientStreamController.sink.add(_currentIngredients);
+    notifyListeners();
     return Future.value();
   }
 
@@ -107,6 +111,7 @@ class MemoryRepository extends Repository {
     _currentIngredients
         .removeWhere((ingredient) => ingredient.recipeId == recipeId);
     _ingredientStreamController.sink.add(_currentIngredients);
+    notifyListeners();
     return Future.value();
   }
 

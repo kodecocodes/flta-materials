@@ -1,7 +1,7 @@
 import 'dart:async';
-import '../models/models.dart';
 
-import '../repository.dart';
+import '../models/models.dart';
+import '../repositories/repository.dart';
 import 'recipe_db.dart';
 
 class DBRepository extends Repository {
@@ -10,6 +10,9 @@ class DBRepository extends Repository {
   late IngredientDao _ingredientDao;
   Stream<List<Ingredient>>? ingredientStream;
   Stream<List<Recipe>>? recipeStream;
+
+  DBRepository({RecipeDatabase? recipeDatabase})
+      : recipeDatabase = recipeDatabase ?? RecipeDatabase();
 
   @override
   Future<List<Recipe>> findAllRecipes() {
@@ -28,7 +31,7 @@ class DBRepository extends Repository {
 
   @override
   Stream<List<Recipe>> watchAllRecipes() {
-    recipeStream ??= _recipeDao.watchAllRecipes(_ingredientDao);
+    recipeStream ??= _recipeDao.watchAllRecipes();
     return recipeStream!;
   }
 
@@ -102,22 +105,18 @@ class DBRepository extends Repository {
   }
 
   @override
-  Future<List<int>> insertIngredients(List<Ingredient> ingredients) {
-    return Future(
-      () {
-        if (ingredients.isEmpty) {
-          return <int>[];
-        }
-        final resultIds = <int>[];
-        for (final ingredient in ingredients) {
-          final dbIngredient = ingredientToInsertableDbIngredient(ingredient);
-          _ingredientDao
-              .insertIngredient(dbIngredient)
-              .then((int id) => resultIds.add(id));
-        }
-        return resultIds;
-      },
-    );
+  Future<List<int>> insertIngredients(List<Ingredient> ingredients) async {
+    if (ingredients.isEmpty) {
+      return <int>[];
+    }
+    final resultIds = <int>[];
+    for (final ingredient in ingredients) {
+      final dbIngredient = ingredientToInsertableDbIngredient(ingredient);
+      await _ingredientDao
+          .insertIngredient(dbIngredient)
+          .then((int id) => resultIds.add(id));
+    }
+    return resultIds;
   }
 
   @override
@@ -156,7 +155,6 @@ class DBRepository extends Repository {
 
   @override
   Future init() async {
-    recipeDatabase = RecipeDatabase();
     _recipeDao = recipeDatabase.recipeDao;
     _ingredientDao = recipeDatabase.ingredientDao;
   }

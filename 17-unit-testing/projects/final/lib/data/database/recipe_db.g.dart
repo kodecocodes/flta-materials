@@ -37,15 +37,12 @@ class $DbRecipeTable extends DbRecipe
   static const VerificationMeta _bookmarkedMeta =
       const VerificationMeta('bookmarked');
   @override
-  late final GeneratedColumn<bool> bookmarked =
-      GeneratedColumn<bool>('bookmarked', aliasedName, false,
-          type: DriftSqlType.bool,
-          requiredDuringInsert: true,
-          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
-            SqlDialect.sqlite: 'CHECK ("bookmarked" IN (0, 1))',
-            SqlDialect.mysql: '',
-            SqlDialect.postgres: '',
-          }));
+  late final GeneratedColumn<bool> bookmarked = GeneratedColumn<bool>(
+      'bookmarked', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("bookmarked" IN (0, 1))'));
   @override
   List<GeneratedColumn> get $columns =>
       [id, label, image, description, bookmarked];
@@ -330,13 +327,8 @@ class $DbIngredientTable extends DbIngredient
   late final GeneratedColumn<double> amount = GeneratedColumn<double>(
       'amount', aliasedName, false,
       type: DriftSqlType.double, requiredDuringInsert: true);
-  static const VerificationMeta _weightMeta = const VerificationMeta('weight');
   @override
-  late final GeneratedColumn<double> weight = GeneratedColumn<double>(
-      'weight', aliasedName, false,
-      type: DriftSqlType.double, requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns => [id, recipeId, name, amount, weight];
+  List<GeneratedColumn> get $columns => [id, recipeId, name, amount];
   @override
   String get aliasedName => _alias ?? 'db_ingredient';
   @override
@@ -367,12 +359,6 @@ class $DbIngredientTable extends DbIngredient
     } else if (isInserting) {
       context.missing(_amountMeta);
     }
-    if (data.containsKey('weight')) {
-      context.handle(_weightMeta,
-          weight.isAcceptableOrUnknown(data['weight']!, _weightMeta));
-    } else if (isInserting) {
-      context.missing(_weightMeta);
-    }
     return context;
   }
 
@@ -390,8 +376,6 @@ class $DbIngredientTable extends DbIngredient
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       amount: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}amount'])!,
-      weight: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}weight'])!,
     );
   }
 
@@ -407,13 +391,11 @@ class DbIngredientData extends DataClass
   final int recipeId;
   final String name;
   final double amount;
-  final double weight;
   const DbIngredientData(
       {required this.id,
       required this.recipeId,
       required this.name,
-      required this.amount,
-      required this.weight});
+      required this.amount});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -421,7 +403,6 @@ class DbIngredientData extends DataClass
     map['recipe_id'] = Variable<int>(recipeId);
     map['name'] = Variable<String>(name);
     map['amount'] = Variable<double>(amount);
-    map['weight'] = Variable<double>(weight);
     return map;
   }
 
@@ -431,7 +412,6 @@ class DbIngredientData extends DataClass
       recipeId: Value(recipeId),
       name: Value(name),
       amount: Value(amount),
-      weight: Value(weight),
     );
   }
 
@@ -443,7 +423,6 @@ class DbIngredientData extends DataClass
       recipeId: serializer.fromJson<int>(json['recipeId']),
       name: serializer.fromJson<String>(json['name']),
       amount: serializer.fromJson<double>(json['amount']),
-      weight: serializer.fromJson<double>(json['weight']),
     );
   }
   @override
@@ -454,22 +433,16 @@ class DbIngredientData extends DataClass
       'recipeId': serializer.toJson<int>(recipeId),
       'name': serializer.toJson<String>(name),
       'amount': serializer.toJson<double>(amount),
-      'weight': serializer.toJson<double>(weight),
     };
   }
 
   DbIngredientData copyWith(
-          {int? id,
-          int? recipeId,
-          String? name,
-          double? amount,
-          double? weight}) =>
+          {int? id, int? recipeId, String? name, double? amount}) =>
       DbIngredientData(
         id: id ?? this.id,
         recipeId: recipeId ?? this.recipeId,
         name: name ?? this.name,
         amount: amount ?? this.amount,
-        weight: weight ?? this.weight,
       );
   @override
   String toString() {
@@ -477,14 +450,13 @@ class DbIngredientData extends DataClass
           ..write('id: $id, ')
           ..write('recipeId: $recipeId, ')
           ..write('name: $name, ')
-          ..write('amount: $amount, ')
-          ..write('weight: $weight')
+          ..write('amount: $amount')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, recipeId, name, amount, weight);
+  int get hashCode => Object.hash(id, recipeId, name, amount);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -492,8 +464,7 @@ class DbIngredientData extends DataClass
           other.id == this.id &&
           other.recipeId == this.recipeId &&
           other.name == this.name &&
-          other.amount == this.amount &&
-          other.weight == this.weight);
+          other.amount == this.amount);
 }
 
 class DbIngredientCompanion extends UpdateCompanion<DbIngredientData> {
@@ -501,37 +472,31 @@ class DbIngredientCompanion extends UpdateCompanion<DbIngredientData> {
   final Value<int> recipeId;
   final Value<String> name;
   final Value<double> amount;
-  final Value<double> weight;
   const DbIngredientCompanion({
     this.id = const Value.absent(),
     this.recipeId = const Value.absent(),
     this.name = const Value.absent(),
     this.amount = const Value.absent(),
-    this.weight = const Value.absent(),
   });
   DbIngredientCompanion.insert({
     this.id = const Value.absent(),
     required int recipeId,
     required String name,
     required double amount,
-    required double weight,
   })  : recipeId = Value(recipeId),
         name = Value(name),
-        amount = Value(amount),
-        weight = Value(weight);
+        amount = Value(amount);
   static Insertable<DbIngredientData> custom({
     Expression<int>? id,
     Expression<int>? recipeId,
     Expression<String>? name,
     Expression<double>? amount,
-    Expression<double>? weight,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (recipeId != null) 'recipe_id': recipeId,
       if (name != null) 'name': name,
       if (amount != null) 'amount': amount,
-      if (weight != null) 'weight': weight,
     });
   }
 
@@ -539,14 +504,12 @@ class DbIngredientCompanion extends UpdateCompanion<DbIngredientData> {
       {Value<int>? id,
       Value<int>? recipeId,
       Value<String>? name,
-      Value<double>? amount,
-      Value<double>? weight}) {
+      Value<double>? amount}) {
     return DbIngredientCompanion(
       id: id ?? this.id,
       recipeId: recipeId ?? this.recipeId,
       name: name ?? this.name,
       amount: amount ?? this.amount,
-      weight: weight ?? this.weight,
     );
   }
 
@@ -565,9 +528,6 @@ class DbIngredientCompanion extends UpdateCompanion<DbIngredientData> {
     if (amount.present) {
       map['amount'] = Variable<double>(amount.value);
     }
-    if (weight.present) {
-      map['weight'] = Variable<double>(weight.value);
-    }
     return map;
   }
 
@@ -577,8 +537,7 @@ class DbIngredientCompanion extends UpdateCompanion<DbIngredientData> {
           ..write('id: $id, ')
           ..write('recipeId: $recipeId, ')
           ..write('name: $name, ')
-          ..write('amount: $amount, ')
-          ..write('weight: $weight')
+          ..write('amount: $amount')
           ..write(')'))
         .toString();
   }

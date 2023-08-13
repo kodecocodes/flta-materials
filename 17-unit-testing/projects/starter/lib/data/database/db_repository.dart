@@ -1,7 +1,7 @@
 import 'dart:async';
 import '../models/models.dart';
 
-import '../repository.dart';
+import '../repositories/repository.dart';
 import 'recipe_db.dart';
 
 class DBRepository extends Repository {
@@ -28,7 +28,7 @@ class DBRepository extends Repository {
 
   @override
   Stream<List<Recipe>> watchAllRecipes() {
-    recipeStream ??= _recipeDao.watchAllRecipes(_ingredientDao);
+    recipeStream ??= _recipeDao.watchAllRecipes();
     return recipeStream!;
   }
 
