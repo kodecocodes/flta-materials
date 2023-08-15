@@ -1,28 +1,28 @@
+
 import 'package:flutter/material.dart';
 
 void main() {
-  // 1
-  runApp(const Fooderlich());
+  runApp(const MyApp());
 }
 
-class Fooderlich extends StatelessWidget {
-  // 2
-  const Fooderlich({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
   @override
   Widget build(BuildContext context) {
-    // TODO: Create theme
-    // TODO: Apply Home widget
-    // 3
-    return MaterialApp(
-      // TODO: Add theme
-      title: 'Fooderlich',
-      // 4
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Yummy',
       home: Scaffold(
-        // TODO: Style the title
-        appBar: AppBar(title: const Text('Fooderlich')),
-        // TODO: Style the body text
-        body: const Center(child: Text('Let\'s get cooking 👩‍🍳')),
-      ),
+        body: Center(
+          child: Text(
+            'Ready to build something yummy?')))
     );
   }
 }

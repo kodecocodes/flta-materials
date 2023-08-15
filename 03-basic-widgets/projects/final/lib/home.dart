@@ -5,7 +5,7 @@ import 'components/restaurant_landscape_card.dart';
 import 'constants.dart';
 
 import 'models/food_category.dart';
-import 'models/posts.dart';
+import 'models/post.dart';
 import 'models/restaurant.dart';
 
 class _BrightnessButton extends StatelessWidget {
