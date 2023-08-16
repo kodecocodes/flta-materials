@@ -14,7 +14,7 @@ class RecipeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 2
-    final ThemeData theme = ThemeData();
+    final theme = ThemeData();
     // 3
     return MaterialApp(
       // 4
