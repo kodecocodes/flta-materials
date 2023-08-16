@@ -140,9 +140,17 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final pages = <Widget>[
-      Center(child: CategoryCard(category: categories[0])),
-      Center(child: PostCard(post: posts[0])),
-      Center(child: RestaurantLandscapeCard(restaurant: restaurants[0]))
+      Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 400),  // Adjust as needed
+          child: CategoryCard(category: categories[0]))),
+      Center(
+        child: PostCard(post: posts[0])),
+      Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 400),  // Adjust as needed
+          child: RestaurantLandscapeCard(
+            restaurant: restaurants[0])))
     ];
 
     return Scaffold(

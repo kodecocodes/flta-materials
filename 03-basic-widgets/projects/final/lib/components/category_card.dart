@@ -20,10 +20,33 @@ class CategoryCard extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(8.0)),
-            child: Image.asset(category.imageUrl),
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(8.0)),
+                child: Image.asset(category.imageUrl),
+              ),
+              Positioned(
+                left: 16.0,
+                top: 16.0,
+                child: Text(
+                  'Yummy',
+                  style: textTheme.headlineLarge,
+                ),
+              ),
+              Positioned(
+                bottom: 16.0,
+                right: 16.0,
+                child: RotatedBox(
+                  quarterTurns: 1,
+                  child: Text(
+                    'Smoothies',
+                    style: textTheme.headlineLarge,
+                  ),
+                ),
+              ),
+            ],
           ),
           ListTile(
             title: Text(
