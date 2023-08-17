@@ -170,7 +170,7 @@ class _HomeState extends State<Home> {
           user: User(
               firstName: 'Stef',
               lastName: 'P',
-              role: 'Flutterisa',
+              role: 'Flutteristas',
               profileImageUrl: 'assets/profile_pics/person_stef.jpeg',
               points: 100,
               darkMode: true))
