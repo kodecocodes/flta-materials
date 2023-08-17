@@ -2,9 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'login.dart';
-import 'models/auth.dart';
-import 'models/orders.dart';
-import 'models/shopping_cart.dart';
 
 import 'constants.dart';
 
@@ -32,15 +29,6 @@ class _MyAppState extends State<MyApp> {
   ThemeMode themeMode = ThemeMode.dark;
   ColorSeed colorSelected = ColorSeed.blue;
   ColorScheme? imageColorScheme = const ColorScheme.light();
-
-  /// Authentication to manage user login session
-  final YummyAuth _auth = YummyAuth();
-
-  /// Manage user's shopping cart for the items they order.
-  final ShoppingCart _shoppingCart = ShoppingCart();
-
-  /// Manage user's orders submitted
-  final OrdersManager _orders = OrdersManager();
 
   void handleBrightnessChange(bool useLightMode) {
     setState(() {

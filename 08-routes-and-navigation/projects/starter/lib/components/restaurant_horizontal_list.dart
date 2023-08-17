@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/restaurant.dart';
-import 'package:go_router/go_router.dart';
 
 class RestaurantsPage extends StatelessWidget {
   const RestaurantsPage({super.key});
