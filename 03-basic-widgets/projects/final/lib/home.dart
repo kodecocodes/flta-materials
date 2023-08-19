@@ -142,7 +142,8 @@ class _HomeState extends State<Home> {
     final pages = <Widget>[
       Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 400),  // Adjust as needed
+          constraints: const BoxConstraints(
+            maxWidth: 300),  // Adjust as needed
           child: CategoryCard(category: categories[0]))),
       Center(
         child: PostCard(post: posts[0])),
