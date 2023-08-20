@@ -9,25 +9,37 @@ import 'repository.dart';
 class MemoryRepository with ChangeNotifier implements Repository {
   final List<Recipe> _currentRecipes = <Recipe>[];
   final List<Ingredient> _currentIngredients = <Ingredient>[];
+  late Stream<List<Recipe>> _recipeStream;
+  late Stream<List<Ingredient>> _ingredientStream;
   final StreamController _recipeStreamController =
-      StreamController<List<Recipe>>();
+  StreamController<List<Recipe>>();
   final StreamController _ingredientStreamController =
-      StreamController<List<Ingredient>>();
-  Stream<List<Recipe>>? _recipeStream;
-  Stream<List<Ingredient>>? _ingredientStream;
+  StreamController<List<Ingredient>>();
+
+
+  MemoryRepository() {
+    _recipeStream = _recipeStreamController.stream.asBroadcastStream(
+      onListen: (subscription) {
+        // This is to send the current recipes to new subscriber
+        _recipeStreamController.sink.add(_currentRecipes);
+      },
+    ) as Stream<List<Recipe>>;
+    _ingredientStream = _ingredientStreamController.stream.asBroadcastStream(
+      onListen: (subscription) {
+        // This is to send the current ingredients to new subscriber
+        _ingredientStreamController.sink.add(_currentIngredients);
+      },
+    ) as Stream<List<Ingredient>>;
+  }
 
   @override
   Stream<List<Recipe>> watchAllRecipes() {
-    _recipeStream ??= _recipeStreamController.stream.asBroadcastStream()
-        as Stream<List<Recipe>>;
-    return _recipeStream!;
+    return _recipeStream;
   }
 
   @override
   Stream<List<Ingredient>> watchAllIngredients() {
-    _ingredientStream ??= _ingredientStreamController.stream.asBroadcastStream()
-        as Stream<List<Ingredient>>;
-    return _ingredientStream!;
+    return _ingredientStream;
   }
 
   @override
@@ -81,7 +93,7 @@ class MemoryRepository with ChangeNotifier implements Repository {
 
   @override
   Future<void> deleteRecipe(Recipe recipe) {
-    _currentRecipes.remove(recipe);
+    _currentRecipes.removeWhere((element) => element.id == recipe.id);
     _recipeStreamController.sink.add(_currentRecipes);
     if (recipe.id != null) {
       deleteRecipeIngredients(recipe.id!);

@@ -117,38 +117,34 @@ class _RecipeListState extends ConsumerState<RecipeList> {
   }
 
   Widget buildScrollList(List<Widget> topList, Widget bottomWidget) {
-    return Container(
-      color: Colors.white,
-      child: ScrollConfiguration(
-        behavior: const ScrollBehavior().copyWith(
-          dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
-          physics: const ClampingScrollPhysics(),
-        ),
-        child: CustomScrollView(
-          controller: _scrollController,
-          slivers: [
-            SliverPadding(
-              padding: topPadding8 + horizontalPadding8,
-              sliver: SliverToBoxAdapter(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: topList,
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        ...topList,
+        ScrollConfiguration(
+          behavior: const ScrollBehavior().copyWith(
+            dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
+            physics: const ClampingScrollPhysics(),
+          ),
+          child: Expanded(
+            child: CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                SliverPadding(
+                  padding: allPadding8,
+                  sliver: bottomWidget,
                 ),
-              ),
+              ],
             ),
-            SliverPadding(
-              padding: allPadding8,
-              sliver: bottomWidget,
-            ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 
   Widget buildBookmarkList() {
-    return  buildScrollList([
+    return buildScrollList([
       _buildHeader(),
       _buildTypePicker(),
     ], const Bookmarks());
@@ -157,7 +153,6 @@ class _RecipeListState extends ConsumerState<RecipeList> {
   Widget _buildHeader() {
     return SizedBox(
       height: 160.0,
-      width: 200,
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: Stack(

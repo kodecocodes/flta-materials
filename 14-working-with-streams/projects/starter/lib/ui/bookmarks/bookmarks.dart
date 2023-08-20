@@ -17,6 +17,9 @@ class Bookmarks extends ConsumerStatefulWidget {
 
 class _BookmarkState extends ConsumerState<Bookmarks> {
   List<Recipe> recipes = [];
+  // TODO: Add Recipe Stream
+
+  // TODO: Add Initstate
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
   Widget _buildBookmarks(BuildContext context) {
     final repository = ref.watch(repositoryProvider);
     // TODO: Replace with Stream
-    final recipes = repository.findAllRecipes();
+    recipes = repository.findAllRecipes();
     return SliverLayoutBuilder(
       builder: (BuildContext context, SliverConstraints constraints) {
         return SliverList.builder(
@@ -110,7 +113,7 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
         );
       },
     );
-    // TODO: Add else here
+    // TODO: Add endings
   }
 
   void deleteRecipe(Repository repository, Recipe recipe) async {
