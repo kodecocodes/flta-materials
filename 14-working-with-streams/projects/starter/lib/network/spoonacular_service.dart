@@ -8,7 +8,7 @@ import '../data/models/models.dart';
 
 part 'spoonacular_service.chopper.dart';
 
-const String apiKey = '<Add Your Key Here>';
+const String apiKey = '76d87ac219204992a7d20d02a0a5d258';
 const String apiUrl = 'https://api.spoonacular.com/';
 
 @ChopperApi()
