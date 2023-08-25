@@ -61,7 +61,7 @@ class _RecipeListState extends ConsumerState<RecipeList> {
               !loading &&
               !inErrorState) {
             setState(
-                  () {
+              () {
                 loading = true;
                 newDataRequired = true;
                 currentStartPosition = currentEndPosition;
@@ -253,6 +253,9 @@ class _RecipeListState extends ConsumerState<RecipeList> {
   }
 
   void startSearch(String value) {
+    if (value.isEmpty) {
+      return;
+    }
     setState(() {
       currentSearchList.clear();
       newDataRequired = true;
@@ -277,6 +280,7 @@ class _RecipeListState extends ConsumerState<RecipeList> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
+       
             return SliverFillRemaining(
               child: Center(
                 child: Text(
@@ -344,13 +348,15 @@ class _RecipeListState extends ConsumerState<RecipeList> {
       return currentResponse!;
     }
     newDataRequired = false;
+
     // TODO: Load Recipes
 /*
     final recipeService = ref.watch(serviceProvider);
     currentResponse = recipeService.queryRecipes(
         searchTextController.text.trim(), currentStartPosition, pageCount);
 */
-    return currentResponse!;
+
+    return currentResponse ?? Future.error('No data found');
   }
 
   Widget _buildRecipeList(

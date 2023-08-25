@@ -61,7 +61,7 @@ class _RecipeListState extends ConsumerState<RecipeList> {
               !loading &&
               !inErrorState) {
             setState(
-                  () {
+              () {
                 loading = true;
                 newDataRequired = true;
                 currentStartPosition = currentEndPosition;
@@ -253,6 +253,9 @@ class _RecipeListState extends ConsumerState<RecipeList> {
   }
 
   void startSearch(String value) {
+    if (value.isEmpty) {
+      return;
+    }
     setState(() {
       currentSearchList.clear();
       newDataRequired = true;
@@ -347,7 +350,7 @@ class _RecipeListState extends ConsumerState<RecipeList> {
     final recipeService = ref.watch(serviceProvider);
     currentResponse = recipeService.queryRecipes(
         searchTextController.text.trim(), currentStartPosition, pageCount);
-    return currentResponse!;
+    return currentResponse ?? Future.error('No data found');
   }
 
   Widget _buildRecipeList(
