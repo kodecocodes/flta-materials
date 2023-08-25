@@ -41,6 +41,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+# TODO: Add new dev_dependencies
 
   build_runner: ^2.4.6
   freezed: ^2.4.1

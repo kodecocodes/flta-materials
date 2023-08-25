@@ -1,3 +1,6 @@
+
+// TODO: Add SpoonacularResults class
+
 /*
 
 @JsonSerializable()
