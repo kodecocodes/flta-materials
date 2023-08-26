@@ -61,7 +61,7 @@ class _RecipeListState extends ConsumerState<RecipeList> {
               !loading &&
               !inErrorState) {
             setState(
-                  () {
+              () {
                 loading = true;
                 newDataRequired = true;
                 currentStartPosition = currentEndPosition;
@@ -253,6 +253,9 @@ class _RecipeListState extends ConsumerState<RecipeList> {
   }
 
   void startSearch(String value) {
+    if (value.isEmpty) {
+      return;
+    }
     setState(() {
       currentSearchList.clear();
       newDataRequired = true;
@@ -351,13 +354,9 @@ class _RecipeListState extends ConsumerState<RecipeList> {
         searchTextController.text.trim(), currentStartPosition, pageCount);
     return currentResponse!;
 */
-    const apiQueryResults = QueryResult(
-        offset: 0,
-        number: 0,
-        totalResults: 0,
-        recipes: <Recipe>[]);
+    const apiQueryResults =
+        QueryResult(offset: 0, number: 0, totalResults: 0, recipes: <Recipe>[]);
     return Success(apiQueryResults);
-
   }
 
   Widget _buildRecipeList(
