@@ -31,7 +31,7 @@
   },
   "platforms": {
     "ios": "11.0",
-    "osx": "10.11"
+    "osx": "10.14"
   },
   "pod_target_xcconfig": {
     "DEFINES_MODULE": "YES"
