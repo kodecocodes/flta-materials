@@ -26,6 +26,7 @@ Future<void> main() async {
   final service = await MockService.create();
   runApp(ProviderScope(overrides: [
     sharedPrefProvider.overrideWithValue(sharedPrefs),
+    serviceProvider.overrideWithValue(service),
   ], child: const MyApp()));
 }
 
