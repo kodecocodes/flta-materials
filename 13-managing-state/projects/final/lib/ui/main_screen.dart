@@ -17,7 +17,6 @@ class MainScreen extends ConsumerStatefulWidget {
 }
 
 class _MainScreenState extends ConsumerState<MainScreen> {
-  int _selectedIndex = 0;
   List<Widget> pageList = <Widget>[];
   static const String prefSelectedIndexKey = 'selectedIndex';
 
@@ -31,7 +30,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
   void saveCurrentIndex() async {
     final prefs = ref.read(sharedPrefProvider);
-    prefs.setInt(prefSelectedIndexKey, _selectedIndex);
+    final bottomNavigation = ref.read(bottomNavigationProvider);
+    prefs.setInt(prefSelectedIndexKey, bottomNavigation.selectedIndex);
   }
 
   void getCurrentIndex() async {
@@ -40,7 +40,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       setState(() {
         final index = prefs.getInt(prefSelectedIndexKey);
         if (index != null) {
-          _selectedIndex = index;
+          ref
+              .read(bottomNavigationProvider.notifier)
+              .updateSelectedIndex(index);
         }
       });
     }
@@ -48,7 +50,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      ref.read(bottomNavigationProvider.notifier).updateSelectedIndex(index);
     });
     saveCurrentIndex();
   }
@@ -80,7 +82,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                     _onItemTapped(index);
                   },
                   labelType: NavigationRailLabelType.all,
-                  selectedIndex: _selectedIndex,
+                  selectedIndex:
+                      ref.read(bottomNavigationProvider).selectedIndex,
                   backgroundColor: selectedColor,
                   selectedIconTheme: IconTheme.of(context)
                       .copyWith(color: iconBackgroundColor),
@@ -100,7 +103,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
               return Container(
                 color: Colors.white,
                 child: IndexedStack(
-                  index: _selectedIndex,
+                  index: ref.read(bottomNavigationProvider).selectedIndex,
                   children: pageList,
                 ),
               );
@@ -126,7 +129,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         icon: SvgPicture.asset(
           'assets/images/icon_recipe.svg',
           colorFilter: ColorFilter.mode(
-              _selectedIndex == 0 ? selectedColor : Colors.black,
+              ref.read(bottomNavigationProvider).selectedIndex == 0
+                  ? selectedColor
+                  : Colors.black,
               BlendMode.srcIn),
           semanticsLabel: 'Recipes',
         ),
@@ -139,7 +144,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         icon: SvgPicture.asset(
           'assets/images/shopping_cart.svg',
           colorFilter: ColorFilter.mode(
-              _selectedIndex == 0 ? selectedColor : Colors.black,
+              ref.read(bottomNavigationProvider).selectedIndex == 0
+                  ? selectedColor
+                  : Colors.black,
               BlendMode.srcIn),
           semanticsLabel: 'Groceries',
         ),
@@ -156,7 +163,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       bottomNavigationBar: createBottomNavigationBar(),
       body: SafeArea(
         child: IndexedStack(
-          index: _selectedIndex,
+          index: ref.read(bottomNavigationProvider).selectedIndex,
           children: pageList,
         ),
       ),
@@ -169,9 +176,11 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     final unSelectedItemColor = isDarkMode ? Colors.white : Colors.grey;
     final backgroundColor =
         isDarkMode ? darkBackgroundColor : smallCardBackgroundColor;
+    final bottomNavigationIndex =
+        ref.read(bottomNavigationProvider).selectedIndex;
     return BottomNavigationBar(
       backgroundColor: backgroundColor,
-      currentIndex: _selectedIndex,
+      currentIndex: bottomNavigationIndex,
       selectedItemColor: selectedColor,
       unselectedItemColor: Colors.grey,
       items: [
@@ -179,7 +188,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
           icon: SvgPicture.asset(
             'assets/images/icon_recipe.svg',
             colorFilter: ColorFilter.mode(
-                _selectedIndex == 0 ? selectedColor : unSelectedItemColor,
+                bottomNavigationIndex == 0
+                    ? selectedColor
+                    : unSelectedItemColor,
                 BlendMode.srcIn),
             semanticsLabel: 'Recipes',
           ),
@@ -187,12 +198,13 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         ),
         BottomNavigationBarItem(
           backgroundColor:
-              _selectedIndex == 1 ? iconBackgroundColor : Colors.black,
+              bottomNavigationIndex == 1 ? iconBackgroundColor : Colors.black,
           icon: SvgPicture.asset(
             'assets/images/shopping_cart.svg',
             colorFilter: ColorFilter.mode(
-                // selectedColor,
-                _selectedIndex == 1 ? selectedColor : unSelectedItemColor,
+                bottomNavigationIndex == 1
+                    ? selectedColor
+                    : unSelectedItemColor,
                 BlendMode.srcIn),
             semanticsLabel: 'Groceries',
           ),

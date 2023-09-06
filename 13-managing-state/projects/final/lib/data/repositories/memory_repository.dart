@@ -1,34 +1,35 @@
 import 'dart:core';
 
-import 'package:flutter/foundation.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../models/current_recipe_data.dart';
 import '../models/models.dart';
 import 'repository.dart';
 
-class MemoryRepository with ChangeNotifier implements Repository {
-  final List<Recipe> _currentRecipes = <Recipe>[];
-  final List<Ingredient> _currentIngredients = <Ingredient>[];
+class MemoryRepository extends Notifier<CurrentRecipeData>
+    implements Repository {
+  CurrentRecipeData currentRecipeData = const CurrentRecipeData();
 
   @override
   List<Recipe> findAllRecipes() {
-    return _currentRecipes;
+    return currentRecipeData.currentRecipes;
   }
 
   @override
   Recipe findRecipeById(int id) {
-    return _currentRecipes.firstWhere((recipe) => recipe.id == id);
+    return currentRecipeData.currentRecipes
+        .firstWhere((recipe) => recipe.id == id);
   }
 
   @override
   List<Ingredient> findAllIngredients() {
-    return _currentIngredients;
+    return currentRecipeData.currentIngredients;
   }
 
   @override
   List<Ingredient> findRecipeIngredients(int recipeId) {
-    final recipe =
-        _currentRecipes.firstWhere((recipe) => recipe.id == recipeId);
-    final recipeIngredients = _currentIngredients
+    final recipe = currentRecipeData.currentRecipes
+        .firstWhere((recipe) => recipe.id == recipeId);
+    final recipeIngredients = currentRecipeData.currentIngredients
         .where((ingredient) => ingredient.recipeId == recipe.id)
         .toList();
     return recipeIngredients;
@@ -36,48 +37,55 @@ class MemoryRepository with ChangeNotifier implements Repository {
 
   @override
   int insertRecipe(Recipe recipe) {
-    _currentRecipes.add(recipe);
+    currentRecipeData = currentRecipeData.copyWith(
+        currentRecipes: [...currentRecipeData.currentRecipes, recipe]);
     insertIngredients(recipe.ingredients);
-    notifyListeners();
     return 0;
   }
 
   @override
   List<int> insertIngredients(List<Ingredient> ingredients) {
     if (ingredients.isNotEmpty) {
-      _currentIngredients.addAll(ingredients);
+      currentRecipeData = currentRecipeData.copyWith(currentIngredients: [
+        ...currentRecipeData.currentIngredients,
+        ...ingredients
+      ]);
     }
-    notifyListeners();
     return <int>[];
   }
 
   @override
   void deleteRecipe(Recipe recipe) {
-    _currentRecipes.remove(recipe);
+    final updatedList = [...currentRecipeData.currentRecipes];
+    updatedList.remove(recipe);
+    currentRecipeData = currentRecipeData.copyWith(currentRecipes: updatedList);
     if (recipe.id != null) {
       deleteRecipeIngredients(recipe.id!);
     }
-    notifyListeners();
   }
 
   @override
   void deleteIngredient(Ingredient ingredient) {
-    _currentIngredients.remove(ingredient);
-    notifyListeners();
+    final updatedList = [...currentRecipeData.currentIngredients];
+    updatedList.remove(ingredient);
+    currentRecipeData =
+        currentRecipeData.copyWith(currentIngredients: updatedList);
   }
 
   @override
   void deleteIngredients(List<Ingredient> ingredients) {
-    _currentIngredients
-        .removeWhere((ingredient) => ingredients.contains(ingredient));
-    notifyListeners();
+    final updatedList = [...currentRecipeData.currentIngredients];
+    updatedList.removeWhere((ingredient) => ingredients.contains(ingredient));
+    currentRecipeData =
+        currentRecipeData.copyWith(currentIngredients: updatedList);
   }
 
   @override
   void deleteRecipeIngredients(int recipeId) {
-    _currentIngredients
-        .removeWhere((ingredient) => ingredient.recipeId == recipeId);
-    notifyListeners();
+    final updatedList = [...currentRecipeData.currentIngredients];
+    updatedList.removeWhere((ingredient) => ingredient.recipeId == recipeId);
+    currentRecipeData =
+        currentRecipeData.copyWith(currentIngredients: updatedList);
   }
 
   @override
@@ -87,4 +95,9 @@ class MemoryRepository with ChangeNotifier implements Repository {
 
   @override
   void close() {}
+
+  @override
+  CurrentRecipeData build() {
+    return currentRecipeData;
+  }
 }
