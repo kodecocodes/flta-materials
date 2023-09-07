@@ -14,7 +14,7 @@ dependencies:
   go_router: ^10.0.0
   cupertino_icons: ^1.0.2
   url_launcher: ^6.1.12
-  uuid: ^3.0.7
+  uuid: ^4.0.0
   intl: ^0.18.1
 
 dev_dependencies:
