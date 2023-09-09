@@ -21,7 +21,9 @@ class RecipeApp extends StatelessWidget {
       title: 'Recipe Calculator',
       // 5
       theme: theme.copyWith(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.greenAccent,
+        ),
       ),
       // 6
       home: const MyHomePage(title: 'Recipe Calculator'),
