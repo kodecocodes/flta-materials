@@ -41,11 +41,10 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-# TODO: Add new dev_dependencies
 
   build_runner: ^2.4.6
+  # TODO: Add new dev_dependencies
   freezed: ^2.4.1
-
   flutter_lints: ^2.0.2
 
 flutter:
