@@ -21,8 +21,10 @@ Future<void> main() async {
     await DesktopWindow.setMinWindowSize(const Size(260, 600));
   }
   final sharedPrefs = await SharedPreferences.getInstance();
+  // TODO: Create Mock service
   runApp(ProviderScope(overrides: [
     sharedPrefProvider.overrideWithValue(sharedPrefs),
+    // TODO: Inject mock service
   ], child: const MyApp()));
 }
 
