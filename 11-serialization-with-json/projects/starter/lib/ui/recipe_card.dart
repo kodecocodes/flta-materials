@@ -1,55 +1,70 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-// TODO: Replace with new class
-Widget recipeStringCard(String image, String label) {
+import '../data/models/recipe.dart';
+import 'theme/colors.dart';
+import 'widgets/common.dart';
+
+Widget recipeCard(Recipe recipe) {
   return Card(
+    color: Colors.white,
     elevation: 4.0,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(6.0),
+      side: const BorderSide(
+        color: borderColor,
+        width: 1.0,
+      ),
     ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        ClipRRect(
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(6.0), topRight: Radius.circular(6.0)),
-          // TODO: Replace with image from recipe
-          child: Image.asset(
-            'assets/images/pizza_w700.png',
-            height: 200,
-            width: 200,
-          ),
-        ),
-        const SizedBox(
-          height: 12.0,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Text(
-            // TODO: Replace with label from recipe
-            label,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-          ),
-        ),
-        const SizedBox(
-          height: 8.0,
-        ),
-        const Padding(
-          padding: EdgeInsets.only(left: 8.0),
-          child: Text(
-            '320CAL',
-            style: TextStyle(
-              fontWeight: FontWeight.normal,
-              fontSize: 11,
+    child: Container(
+      decoration: const BoxDecoration(color: cardBackgroundColor),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 12.0, 0.0, 0.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: AutoSizeText(
+                    recipe.label ?? '',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'Roboto',
+                    ),
+                  ),
+                ),
+                SvgPicture.asset(
+                  'assets/images/arrow_circle_right.svg',
+                  semanticsLabel: 'Details',
+                ),
+                const SizedBox(
+                  width: 20.0,
+                ),
+              ],
             ),
           ),
-        ),
-        const SizedBox(
-          height: 8.0,
-        ),
-      ],
+          sizedH8,
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(6.0),
+              bottomRight: Radius.circular(6.0),
+            ),
+            child: Hero(
+              tag: 'recipe-${recipe.id}',
+                child: CachedNetworkImage(
+                  imageUrl: recipe.image ?? '',
+                  height: 210,
+                  fit: BoxFit.cover,
+                ),
+              ),
+          ),
+        ],
+      ),
     ),
   );
 }
