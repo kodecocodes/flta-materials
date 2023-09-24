@@ -1,34 +1,37 @@
 import 'dart:core';
-
-import 'package:flutter/foundation.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../models/current_recipe_data.dart';
 import '../models/models.dart';
 import 'repository.dart';
 
-class MemoryRepository with ChangeNotifier implements Repository {
-  final List<Recipe> _currentRecipes = <Recipe>[];
-  final List<Ingredient> _currentIngredients = <Ingredient>[];
+class MemoryRepository extends Notifier<CurrentRecipeData>
+    implements Repository {
+  @override
+  CurrentRecipeData build() {
+    const currentRecipieData = CurrentRecipeData();
+    return currentRecipieData;
+  }
 
   @override
   List<Recipe> findAllRecipes() {
-    return _currentRecipes;
+    return state.currentRecipes;
   }
 
   @override
   Recipe findRecipeById(int id) {
-    return _currentRecipes.firstWhere((recipe) => recipe.id == id);
+    return state.currentRecipes.firstWhere((recipe) => recipe.id == id);
   }
 
   @override
   List<Ingredient> findAllIngredients() {
-    return _currentIngredients;
+    return state.currentIngredients;
   }
 
   @override
   List<Ingredient> findRecipeIngredients(int recipeId) {
     final recipe =
-    _currentRecipes.firstWhere((recipe) => recipe.id == recipeId);
-    final recipeIngredients = _currentIngredients
+        state.currentRecipes.firstWhere((recipe) => recipe.id == recipeId);
+    final recipeIngredients = state.currentIngredients
         .where((ingredient) => ingredient.recipeId == recipe.id)
         .toList();
     return recipeIngredients;
@@ -36,48 +39,52 @@ class MemoryRepository with ChangeNotifier implements Repository {
 
   @override
   int insertRecipe(Recipe recipe) {
-    _currentRecipes.add(recipe);
+    if (state.currentRecipes.contains(recipe)) {
+      return 0;
+    }
+    state = state.copyWith(currentRecipes: [...state.currentRecipes, recipe]);
     insertIngredients(recipe.ingredients);
-    notifyListeners();
     return 0;
   }
 
   @override
   List<int> insertIngredients(List<Ingredient> ingredients) {
     if (ingredients.isNotEmpty) {
-      _currentIngredients.addAll(ingredients);
+      state = state.copyWith(
+          currentIngredients: [...state.currentIngredients, ...ingredients]);
     }
-    notifyListeners();
     return <int>[];
   }
 
   @override
   void deleteRecipe(Recipe recipe) {
-    _currentRecipes.removeWhere((element) => element.id == recipe.id);
+    final updatedList = [...state.currentRecipes];
+    updatedList.remove(recipe);
+    state = state.copyWith(currentRecipes: updatedList);
     if (recipe.id != null) {
       deleteRecipeIngredients(recipe.id!);
     }
-    notifyListeners();
   }
 
   @override
   void deleteIngredient(Ingredient ingredient) {
-    _currentIngredients.remove(ingredient);
-    notifyListeners();
+    final updatedList = [...state.currentIngredients];
+    updatedList.remove(ingredient);
+    state = state.copyWith(currentIngredients: updatedList);
   }
 
   @override
   void deleteIngredients(List<Ingredient> ingredients) {
-    _currentIngredients
-        .removeWhere((ingredient) => ingredients.contains(ingredient));
-    notifyListeners();
+    final updatedList = [...state.currentIngredients];
+    updatedList.removeWhere((ingredient) => ingredients.contains(ingredient));
+    state = state.copyWith(currentIngredients: updatedList);
   }
 
   @override
   void deleteRecipeIngredients(int recipeId) {
-    _currentIngredients
-        .removeWhere((ingredient) => ingredient.recipeId == recipeId);
-    notifyListeners();
+    final updatedList = [...state.currentIngredients];
+    updatedList.removeWhere((ingredient) => ingredient.recipeId == recipeId);
+    state = state.copyWith(currentIngredients: updatedList);
   }
 
   @override

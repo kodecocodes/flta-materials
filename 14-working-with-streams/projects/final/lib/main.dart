@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lumberdash/lumberdash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'network/spoonacular_service.dart';
+import 'providers.dart';
 import 'ui/main_screen.dart';
 import 'ui/theme/theme.dart';
 import 'utils.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'providers.dart';
 import 'package:logging/logging.dart' as system_log;
 
 Future<void> main() async {
@@ -21,11 +21,8 @@ Future<void> main() async {
     await DesktopWindow.setWindowSize(const Size(600, 600));
     await DesktopWindow.setMinWindowSize(const Size(260, 600));
   }
-
   final sharedPrefs = await SharedPreferences.getInstance();
-  // final service = await MockService.create();
   final service = SpoonacularService.create();
-
   runApp(ProviderScope(overrides: [
     sharedPrefProvider.overrideWithValue(sharedPrefs),
     serviceProvider.overrideWithValue(service),
@@ -38,7 +35,7 @@ void _setupLogging() {
   ]);
   system_log.Logger.root.level = system_log.Level.ALL;
   system_log.Logger.root.onRecord.listen((rec) {
-      debugPrint('${rec.level.name}: ${rec.time}: ${rec.message}');
+    debugPrint('${rec.level.name}: ${rec.time}: ${rec.message}');
   });
 }
 
