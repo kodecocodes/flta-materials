@@ -1,5 +1,4 @@
 import 'dart:core';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/current_recipe_data.dart';
 import '../models/models.dart';
@@ -7,29 +6,32 @@ import 'repository.dart';
 
 class MemoryRepository extends Notifier<CurrentRecipeData>
     implements Repository {
-  CurrentRecipeData currentRecipeData = const CurrentRecipeData();
+  @override
+  CurrentRecipeData build() {
+    const currentRecipieData = CurrentRecipeData();
+    return currentRecipieData;
+  }
 
   @override
   List<Recipe> findAllRecipes() {
-    return currentRecipeData.currentRecipes;
+    return state.currentRecipes;
   }
 
   @override
   Recipe findRecipeById(int id) {
-    return currentRecipeData.currentRecipes
-        .firstWhere((recipe) => recipe.id == id);
+    return state.currentRecipes.firstWhere((recipe) => recipe.id == id);
   }
 
   @override
   List<Ingredient> findAllIngredients() {
-    return currentRecipeData.currentIngredients;
+    return state.currentIngredients;
   }
 
   @override
   List<Ingredient> findRecipeIngredients(int recipeId) {
-    final recipe = currentRecipeData.currentRecipes
-        .firstWhere((recipe) => recipe.id == recipeId);
-    final recipeIngredients = currentRecipeData.currentIngredients
+    final recipe =
+        state.currentRecipes.firstWhere((recipe) => recipe.id == recipeId);
+    final recipeIngredients = state.currentIngredients
         .where((ingredient) => ingredient.recipeId == recipe.id)
         .toList();
     return recipeIngredients;
@@ -37,8 +39,10 @@ class MemoryRepository extends Notifier<CurrentRecipeData>
 
   @override
   int insertRecipe(Recipe recipe) {
-    currentRecipeData = currentRecipeData.copyWith(
-        currentRecipes: [...currentRecipeData.currentRecipes, recipe]);
+    if (state.currentRecipes.contains(recipe)) {
+      return 0;
+    }
+    state = state.copyWith(currentRecipes: [...state.currentRecipes, recipe]);
     insertIngredients(recipe.ingredients);
     return 0;
   }
@@ -46,19 +50,17 @@ class MemoryRepository extends Notifier<CurrentRecipeData>
   @override
   List<int> insertIngredients(List<Ingredient> ingredients) {
     if (ingredients.isNotEmpty) {
-      currentRecipeData = currentRecipeData.copyWith(currentIngredients: [
-        ...currentRecipeData.currentIngredients,
-        ...ingredients
-      ]);
+      state = state.copyWith(
+          currentIngredients: [...state.currentIngredients, ...ingredients]);
     }
     return <int>[];
   }
 
   @override
   void deleteRecipe(Recipe recipe) {
-    final updatedList = [...currentRecipeData.currentRecipes];
+    final updatedList = [...state.currentRecipes];
     updatedList.remove(recipe);
-    currentRecipeData = currentRecipeData.copyWith(currentRecipes: updatedList);
+    state = state.copyWith(currentRecipes: updatedList);
     if (recipe.id != null) {
       deleteRecipeIngredients(recipe.id!);
     }
@@ -66,26 +68,23 @@ class MemoryRepository extends Notifier<CurrentRecipeData>
 
   @override
   void deleteIngredient(Ingredient ingredient) {
-    final updatedList = [...currentRecipeData.currentIngredients];
+    final updatedList = [...state.currentIngredients];
     updatedList.remove(ingredient);
-    currentRecipeData =
-        currentRecipeData.copyWith(currentIngredients: updatedList);
+    state = state.copyWith(currentIngredients: updatedList);
   }
 
   @override
   void deleteIngredients(List<Ingredient> ingredients) {
-    final updatedList = [...currentRecipeData.currentIngredients];
+    final updatedList = [...state.currentIngredients];
     updatedList.removeWhere((ingredient) => ingredients.contains(ingredient));
-    currentRecipeData =
-        currentRecipeData.copyWith(currentIngredients: updatedList);
+    state = state.copyWith(currentIngredients: updatedList);
   }
 
   @override
   void deleteRecipeIngredients(int recipeId) {
-    final updatedList = [...currentRecipeData.currentIngredients];
+    final updatedList = [...state.currentIngredients];
     updatedList.removeWhere((ingredient) => ingredient.recipeId == recipeId);
-    currentRecipeData =
-        currentRecipeData.copyWith(currentIngredients: updatedList);
+    state = state.copyWith(currentIngredients: updatedList);
   }
 
   @override
@@ -95,9 +94,4 @@ class MemoryRepository extends Notifier<CurrentRecipeData>
 
   @override
   void close() {}
-
-  @override
-  CurrentRecipeData build() {
-    return currentRecipeData;
-  }
 }

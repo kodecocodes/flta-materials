@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../providers.dart';
 
 import '../../data/models/ingredient.dart';
 import '../theme/colors.dart';
 import '../widgets/common.dart';
 import '../widgets/ingredient_card.dart';
+import '../../providers.dart';
 
 class GroceryList extends ConsumerStatefulWidget {
   const GroceryList({Key? key}) : super(key: key);
@@ -18,10 +18,11 @@ class _GroceryListState extends ConsumerState<GroceryList> {
   final checkBoxValues = <int, bool>{};
   late TextEditingController searchTextController;
   bool showAll = true;
-  List<Ingredient> currentIngredients = [];
+
   bool searching = false;
   List<Ingredient> searchIngredients = [];
   final ScrollController _scrollController = ScrollController();
+  List<Ingredient> currentIngredients = [];
   final searchFocusNode = FocusNode();
 
   @override
@@ -40,8 +41,6 @@ class _GroceryListState extends ConsumerState<GroceryList> {
 
   @override
   Widget build(BuildContext context) {
-    final repository = ref.watch(repositoryProvider);
-    currentIngredients = repository.findAllIngredients();
     return Scaffold(
       body: Column(
         children: [
@@ -75,10 +74,12 @@ class _GroceryListState extends ConsumerState<GroceryList> {
   }
 
   Widget buildNeedHaveList() {
+    final repository = ref.watch(repositoryProvider);
+    currentIngredients = repository.currentIngredients;
     final needListIndexes = <int, bool>{};
     final haveListIndexes = <int, bool>{};
-    final ingredients = currentIngredients;
-    for (var index = 0; index < ingredients.length; index++) {
+
+    for (var index = 0; index < currentIngredients.length; index++) {
       if (!checkBoxValues.containsKey(index)) {
         needListIndexes[index] = true;
       } else {
@@ -87,12 +88,12 @@ class _GroceryListState extends ConsumerState<GroceryList> {
     }
     final needList = <Ingredient>[];
     final haveList = <Ingredient>[];
-    for (var index = 0; index < ingredients.length; index++) {
+    for (var index = 0; index < currentIngredients.length; index++) {
       if (needListIndexes.containsKey(index)) {
-        needList.add(ingredients[index]);
+        needList.add(currentIngredients[index]);
       }
       if (haveListIndexes.containsKey(index)) {
-        haveList.add(ingredients[index]);
+        haveList.add(currentIngredients[index]);
       }
     }
     final columnList = <Widget>[];
@@ -112,11 +113,14 @@ class _GroceryListState extends ConsumerState<GroceryList> {
   }
 
   Widget buildIngredientList() {
+    final repository = ref.watch(repositoryProvider);
+    currentIngredients = repository.currentIngredients;
     if (searching) {
       startSearch(searchTextController.text);
       return ingredientList(searchIngredients, checkBoxValues, true);
     } else {
-      return ingredientList(currentIngredients, checkBoxValues, true);
+      return ingredientList(
+        currentIngredients, checkBoxValues, true);
     }
   }
 
@@ -226,7 +230,9 @@ class _GroceryListState extends ConsumerState<GroceryList> {
 
   void startSearch(String searchString) {
     searching = searchString.isNotEmpty;
-    searchIngredients = currentIngredients
+    searchIngredients = ref
+        .read(repositoryProvider.notifier)
+        .findAllIngredients()
         .where((element) => true == element.name?.contains(searchString))
         .toList();
     setState(() {});

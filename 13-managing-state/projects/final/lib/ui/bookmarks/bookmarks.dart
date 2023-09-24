@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import '../../data/repositories/repository.dart';
-import '../../providers.dart';
 import '../../data/models/recipe.dart';
+import '../../providers.dart';
 import '../recipes/recipe_details.dart';
 
 class Bookmarks extends ConsumerStatefulWidget {
@@ -16,7 +15,7 @@ class Bookmarks extends ConsumerStatefulWidget {
 }
 
 class _BookmarkState extends ConsumerState<Bookmarks> {
-  List<Recipe> recipes = [];
+   List<Recipe> recipes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,7 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
 
   Widget _buildBookmarks(BuildContext context) {
     final repository = ref.watch(repositoryProvider);
-    recipes = repository.findAllRecipes();
+    recipes = repository.currentRecipes;
     return SliverLayoutBuilder(
       builder: (BuildContext context, SliverConstraints constraints) {
         return SliverList.builder(
@@ -45,10 +44,7 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
                       foregroundColor: Colors.black,
                       icon: Icons.delete,
                       onPressed: (context) {
-                        deleteRecipe(
-                          repository,
-                          recipe,
-                        );
+                        deleteRecipe(recipe);
                       },
                     ),
                   ],
@@ -63,22 +59,22 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
                       foregroundColor: Colors.black,
                       icon: Icons.delete,
                       onPressed: (context) {
-                        deleteRecipe(
-                          repository,
-                          recipe,
-                        );
+                        deleteRecipe(recipe);
                       },
                     ),
                   ],
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return RecipeDetails(
-                            recipe: recipe.copyWith(bookmarked: true));
-                      },
-                    ));
+                    // TODO: Add Push to Recipe Details Page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RecipeDetails(
+                          recipe: recipe.copyWith(bookmarked: true),
+                        ),
+                      ),
+                    );
                   },
                   child: Card(
                     elevation: 1.0,
@@ -91,11 +87,11 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ListTile(
-                                leading: CachedNetworkImage(
-                                  imageUrl: recipe.image ?? '',
-                                  height: 120,
-                                  width: 60,
-                                  fit: BoxFit.cover,
+                          leading: CachedNetworkImage(
+                            imageUrl: recipe.image ?? '',
+                            height: 120,
+                            width: 60,
+                            fit: BoxFit.cover,
                           ),
                           title: Text(recipe.label ?? ''),
                         ),
@@ -112,8 +108,8 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
     // TODO: Add else here
   }
 
-  void deleteRecipe(Repository repository, Recipe recipe) async {
-    repository.deleteRecipe(recipe);
-    setState(() {});
+ 
+  void deleteRecipe(Recipe recipe) {
+    ref.read(repositoryProvider.notifier).deleteRecipe(recipe);
   }
 }

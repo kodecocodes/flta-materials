@@ -25,7 +25,10 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     super.initState();
     pageList.add(const RecipeList());
     pageList.add(const GroceryList());
-    getCurrentIndex();
+    // wrap getCurrentIndex in Future.microtask 
+    Future.microtask(() async {
+      getCurrentIndex();
+    });
   }
 
   void saveCurrentIndex() async {
@@ -37,21 +40,15 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   void getCurrentIndex() async {
     final prefs = ref.read(sharedPrefProvider);
     if (prefs.containsKey(prefSelectedIndexKey)) {
-      setState(() {
-        final index = prefs.getInt(prefSelectedIndexKey);
-        if (index != null) {
-          ref
-              .read(bottomNavigationProvider.notifier)
-              .updateSelectedIndex(index);
-        }
-      });
+      final index = prefs.getInt(prefSelectedIndexKey);
+      if (index != null) {
+        ref.read(bottomNavigationProvider.notifier).updateSelectedIndex(index);
+      }
     }
   }
 
   void _onItemTapped(int index) {
-    setState(() {
-      ref.read(bottomNavigationProvider.notifier).updateSelectedIndex(index);
-    });
+    ref.read(bottomNavigationProvider.notifier).updateSelectedIndex(index);
     saveCurrentIndex();
   }
 
@@ -83,7 +80,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                   },
                   labelType: NavigationRailLabelType.all,
                   selectedIndex:
-                      ref.read(bottomNavigationProvider).selectedIndex,
+                      ref.watch(bottomNavigationProvider).selectedIndex,
                   backgroundColor: selectedColor,
                   selectedIconTheme: IconTheme.of(context)
                       .copyWith(color: iconBackgroundColor),
@@ -103,7 +100,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
               return Container(
                 color: Colors.white,
                 child: IndexedStack(
-                  index: ref.read(bottomNavigationProvider).selectedIndex,
+                  index: ref.watch(bottomNavigationProvider).selectedIndex,
                   children: pageList,
                 ),
               );
@@ -129,7 +126,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         icon: SvgPicture.asset(
           'assets/images/icon_recipe.svg',
           colorFilter: ColorFilter.mode(
-              ref.read(bottomNavigationProvider).selectedIndex == 0
+              ref.watch(bottomNavigationProvider).selectedIndex == 0
                   ? selectedColor
                   : Colors.black,
               BlendMode.srcIn),
@@ -144,7 +141,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         icon: SvgPicture.asset(
           'assets/images/shopping_cart.svg',
           colorFilter: ColorFilter.mode(
-              ref.read(bottomNavigationProvider).selectedIndex == 0
+              ref.watch(bottomNavigationProvider).selectedIndex == 0
                   ? selectedColor
                   : Colors.black,
               BlendMode.srcIn),
@@ -163,7 +160,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       bottomNavigationBar: createBottomNavigationBar(),
       body: SafeArea(
         child: IndexedStack(
-          index: ref.read(bottomNavigationProvider).selectedIndex,
+          index: ref.watch(bottomNavigationProvider).selectedIndex,
           children: pageList,
         ),
       ),
@@ -177,7 +174,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     final backgroundColor =
         isDarkMode ? darkBackgroundColor : smallCardBackgroundColor;
     final bottomNavigationIndex =
-        ref.read(bottomNavigationProvider).selectedIndex;
+        ref.watch(bottomNavigationProvider).selectedIndex;
     return BottomNavigationBar(
       backgroundColor: backgroundColor,
       currentIndex: bottomNavigationIndex,
@@ -202,6 +199,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
           icon: SvgPicture.asset(
             'assets/images/shopping_cart.svg',
             colorFilter: ColorFilter.mode(
+                // selectedColor,
                 bottomNavigationIndex == 1
                     ? selectedColor
                     : unSelectedItemColor,
