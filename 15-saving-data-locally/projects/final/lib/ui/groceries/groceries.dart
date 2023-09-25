@@ -6,6 +6,7 @@ import '../theme/colors.dart';
 import '../widgets/common.dart';
 import '../widgets/ingredient_card.dart';
 import '../../providers.dart';
+
 class GroceryList extends ConsumerStatefulWidget {
   const GroceryList({Key? key}) : super(key: key);
 
@@ -17,20 +18,21 @@ class _GroceryListState extends ConsumerState<GroceryList> {
   final checkBoxValues = <int, bool>{};
   late TextEditingController searchTextController;
   bool showAll = true;
-  List<Ingredient> currentIngredients = [];
+
   bool searching = false;
   List<Ingredient> searchIngredients = [];
   final ScrollController _scrollController = ScrollController();
+  List<Ingredient> currentIngredients = [];
   final searchFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
     searchTextController = TextEditingController(text: '');
-    final repository = ref.read(repositoryProvider);
+    final repository = ref.read(repositoryProvider.notifier);
     final ingredientStream = repository.watchAllIngredients();
     ingredientStream.listen(
-          (ingredients) {
+      (ingredients) {
         setState(() {
           currentIngredients = ingredients;
         });
@@ -82,8 +84,8 @@ class _GroceryListState extends ConsumerState<GroceryList> {
   Widget buildNeedHaveList() {
     final needListIndexes = <int, bool>{};
     final haveListIndexes = <int, bool>{};
-    final ingredients = currentIngredients;
-    for (var index = 0; index < ingredients.length; index++) {
+
+    for (var index = 0; index < currentIngredients.length; index++) {
       if (!checkBoxValues.containsKey(index)) {
         needListIndexes[index] = true;
       } else {
@@ -92,12 +94,12 @@ class _GroceryListState extends ConsumerState<GroceryList> {
     }
     final needList = <Ingredient>[];
     final haveList = <Ingredient>[];
-    for (var index = 0; index < ingredients.length; index++) {
+    for (var index = 0; index < currentIngredients.length; index++) {
       if (needListIndexes.containsKey(index)) {
-        needList.add(ingredients[index]);
+        needList.add(currentIngredients[index]);
       }
       if (haveListIndexes.containsKey(index)) {
-        haveList.add(ingredients[index]);
+        haveList.add(currentIngredients[index]);
       }
     }
     final columnList = <Widget>[];
@@ -117,12 +119,12 @@ class _GroceryListState extends ConsumerState<GroceryList> {
   }
 
   Widget buildIngredientList() {
-    if (searching) {
-      startSearch(searchTextController.text);
-      return ingredientList(searchIngredients, checkBoxValues, true);
-    } else {
-      return ingredientList(currentIngredients, checkBoxValues, true);
-    }
+      if (searching) {
+        startSearch(searchTextController.text);
+        return ingredientList(searchIngredients, checkBoxValues, true);
+      } else {
+        return ingredientList(currentIngredients, checkBoxValues, true);
+      }
   }
 
   Widget ingredientList(List<Ingredient> ingredients,

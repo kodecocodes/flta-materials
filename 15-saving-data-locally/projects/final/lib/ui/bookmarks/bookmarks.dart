@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+
 import '../../data/models/recipe.dart';
-import '../../data/repositories/repository.dart';
 import '../../providers.dart';
 import '../recipes/recipe_details.dart';
 
@@ -22,7 +24,7 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
   @override
   void initState() {
     super.initState();
-    final repository = ref.read(repositoryProvider);
+    final repository = ref.read(repositoryProvider.notifier);
     recipeStream = repository.watchAllRecipes();
   }
 
@@ -32,7 +34,6 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
   }
 
   Widget _buildBookmarks(BuildContext context) {
-    final repository = ref.watch(repositoryProvider);
     return StreamBuilder<List<Recipe>>(
       stream: recipeStream,
       builder: (context, AsyncSnapshot<List<Recipe>> snapshot) {
@@ -58,10 +59,7 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
                           foregroundColor: Colors.black,
                           icon: Icons.delete,
                           onPressed: (context) {
-                            deleteRecipe(
-                              repository,
-                              recipe,
-                            );
+    	                    deleteRecipe(recipe);
                           },
                         ),
                       ],
@@ -76,10 +74,7 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
                           foregroundColor: Colors.black,
                           icon: Icons.delete,
                           onPressed: (context) {
-                            deleteRecipe(
-                              repository,
-                              recipe,
-                            );
+                   	     deleteRecipe(recipe);
                           },
                         ),
                       ],
@@ -126,9 +121,8 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
     );
   }
 
-  void deleteRecipe(Repository repository, Recipe recipe) async {
-    repository.deleteRecipe(recipe);
-    setState(() {});
+ 
+  void deleteRecipe(Recipe recipe) {
+    ref.read(repositoryProvider.notifier).deleteRecipe(recipe);
   }
-
 }
