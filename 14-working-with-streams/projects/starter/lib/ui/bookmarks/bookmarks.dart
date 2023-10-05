@@ -18,7 +18,7 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
   List<Recipe> recipes = [];
   // TODO: Add Recipe Stream
 
-  // TODO: Add Initstate
+  // TODO: Add initState
 
   @override
   Widget build(BuildContext context) {
