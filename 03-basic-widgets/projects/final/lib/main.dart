@@ -1,8 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'constants.dart';
-import 'components/brightness_button.dart';
-import 'components/color_seed_button.dart';
 import 'home.dart';
 
 void main() {
