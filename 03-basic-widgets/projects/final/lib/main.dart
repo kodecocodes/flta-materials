@@ -1,24 +1,26 @@
 
 import 'package:flutter/material.dart';
 import 'constants.dart';
+import 'components/brightness_button.dart';
+import 'components/color_seed_button.dart';
 import 'home.dart';
 
 void main() {
-  runApp(const MyApp());
+  // 1
+  runApp(const Yummy());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class Yummy extends StatefulWidget {
+
+  const Yummy({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<Yummy> createState() => _YummyState();
 }
 
-class _MyAppState extends State<MyApp> {
-  ThemeMode themeMode = ThemeMode.dark;
-  ColorSeed colorSelected = ColorSeed.blue;
-  ColorScheme? imageColorScheme = const ColorScheme.light();
-
+class _YummyState extends State<Yummy> {
+  ThemeMode themeMode = ThemeMode.light;
+  ColorSeed colorSelected = ColorSeed.pink;
 
   void handleBrightnessChange(bool useLightMode) {
     setState(() {
@@ -35,8 +37,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Yummy',
       themeMode: themeMode,
       theme: ThemeData(
         colorSchemeSeed: colorSelected.color,
@@ -48,10 +48,12 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
         brightness: Brightness.dark,
       ),
+      title: 'Yummy',
       home: Home(
-          handleBrightnessChange: handleBrightnessChange,
-          handleColorSelect: handleColorSelect,
-          colorSelected: colorSelected),
+        handleBrightnessChange: handleBrightnessChange,
+        handleColorSelect: handleColorSelect,
+        colorSelected: colorSelected,
+      ),
     );
   }
 }

@@ -15,7 +15,6 @@ class RestaurantLandscapeCard extends StatelessWidget {
     final textTheme = Theme.of(context)
         .textTheme
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
-
     return Card(
       child: Column(
         mainAxisSize: MainAxisSize.min,

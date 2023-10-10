@@ -2,27 +2,29 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  // 1
+  runApp(const Yummy());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class Yummy extends StatelessWidget {
+  // TODO: Setup default theme
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+  const Yummy({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
+    return MaterialApp(
+      // TODO: Add theme
       title: 'Yummy',
+      // TODO: Apply Home widget
       home: Scaffold(
-        body: Center(
-          child: Text(
-            'Ready to build something yummy?')))
+        appBar: AppBar(
+            // TODO: Add action buttons
+            elevation: 4.0,
+            title: const Text('Yummy', style: TextStyle(fontSize: 24.0))),
+        body: const Center(
+            child: Text('You Hungry?', style: TextStyle(fontSize: 30.0))),
+      ),
     );
   }
 }
