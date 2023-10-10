@@ -4,7 +4,6 @@ import 'constants.dart';
 import 'home.dart';
 
 void main() {
-  // 1
   runApp(const Yummy());
 }
 
