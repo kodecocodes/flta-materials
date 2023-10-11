@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+
 import 'constants.dart';
 import 'home.dart';
 
@@ -8,7 +8,6 @@ void main() {
 }
 
 class Yummy extends StatefulWidget {
-
   const Yummy({super.key});
 
   @override
@@ -17,17 +16,19 @@ class Yummy extends StatefulWidget {
 
 class _YummyState extends State<Yummy> {
   ThemeMode themeMode = ThemeMode.light;
-  ColorSeed colorSelected = ColorSeed.pink;
+  ColorSelection colorSelected = ColorSelection.pink;
 
-  void handleBrightnessChange(bool useLightMode) {
+  void changeThemeMode(bool useLightMode) {
     setState(() {
-      themeMode = useLightMode ? ThemeMode.light : ThemeMode.dark;
+      themeMode = useLightMode
+          ? ThemeMode.light //
+          : ThemeMode.dark;
     });
   }
 
-  void handleColorSelect(int value) {
+  void changeColor(int value) {
     setState(() {
-      colorSelected = ColorSeed.values[value];
+      colorSelected = ColorSelection.values[value];
     });
   }
 
@@ -47,8 +48,8 @@ class _YummyState extends State<Yummy> {
       ),
       title: 'Yummy',
       home: Home(
-        handleBrightnessChange: handleBrightnessChange,
-        handleColorSelect: handleColorSelect,
+        changeTheme: changeThemeMode,
+        changeColor: changeColor,
         colorSelected: colorSelected,
       ),
     );

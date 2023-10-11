@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class BrightnessButton extends StatelessWidget {
-  const BrightnessButton({
+class ThemeButton extends StatelessWidget {
+  const ThemeButton({
     Key? key,
-    required this.handleBrightnessChange,
+    required this.changeThemeMode,
   }) : super(key: key);
 
-  final Function handleBrightnessChange;
+  final Function changeThemeMode;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class BrightnessButton extends StatelessWidget {
       icon: isBright
           ? const Icon(Icons.dark_mode_outlined)
           : const Icon(Icons.light_mode_outlined),
-      onPressed: () => handleBrightnessChange(!isBright),
+      onPressed: () => changeThemeMode(!isBright),
     );
   }
 }

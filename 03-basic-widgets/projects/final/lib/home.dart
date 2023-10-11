@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-import 'components/brightness_button.dart';
-import 'components/color_seed_button.dart';
-import 'constants.dart';
+
 import 'components/category_card.dart';
-import 'models/food_category.dart';
+import 'components/color_button.dart';
 import 'components/post_card.dart';
-import 'models/post.dart';
 import 'components/restaurant_landscape_card.dart';
+import 'components/theme_button.dart';
+import 'constants.dart';
+import 'models/food_category.dart';
+import 'models/post.dart';
 import 'models/restaurant.dart';
 
 class Home extends StatefulWidget {
   const Home({
     super.key,
-    required this.handleBrightnessChange,
-    required this.handleColorSelect,
+    required this.changeTheme,
+    required this.changeColor,
     required this.colorSelected,
   });
 
-  final ColorSeed colorSelected;
-  final void Function(bool useLightMode) handleBrightnessChange;
-  final void Function(int value) handleColorSelect;
+  final ColorSelection colorSelected;
+  final void Function(bool useLightMode) changeTheme;
+  final void Function(int value) changeColor;
 
   @override
   State<Home> createState() => _HomeState();
@@ -30,17 +31,17 @@ class _HomeState extends State<Home> {
   List<NavigationDestination> appBarDestinations = const [
     NavigationDestination(
       icon: Icon(Icons.credit_card),
-      label: 'Card',
+      label: 'Category',
       selectedIcon: Icon(Icons.credit_card),
     ),
     NavigationDestination(
       icon: Icon(Icons.credit_card),
-      label: 'Card2',
+      label: 'Post',
       selectedIcon: Icon(Icons.credit_card),
     ),
     NavigationDestination(
       icon: Icon(Icons.credit_card),
-      label: 'Card3',
+      label: 'Restaurant',
       selectedIcon: Icon(Icons.credit_card),
     )
   ];
@@ -49,29 +50,33 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final pages = [
       Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 300),
-          child: CategoryCard(category: categories[0]))),
-      Center(child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: PostCard(post: posts[0]),
-      )),
+          child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 300),
+              child: CategoryCard(category: categories[0]))),
+      Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: PostCard(post: posts[0]),
+        ),
+      ),
       Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 400),
-          child: RestaurantLandscapeCard(restaurant: restaurants[0])))
+          child: RestaurantLandscapeCard(restaurant: restaurants[0]),
+        ),
+      )
     ];
-    
+
     return Scaffold(
       appBar: AppBar(
         elevation: 4.0,
         backgroundColor: Theme.of(context).colorScheme.background,
         actions: [
-          BrightnessButton(
-            handleBrightnessChange: widget.handleBrightnessChange,
+          ThemeButton(
+            changeThemeMode: widget.changeTheme,
           ),
-          ColorSeedButton(
-            handleColorSelect: widget.handleColorSelect,
+          ColorButton(
+            changeColor: widget.changeColor,
             colorSelected: widget.colorSelected,
           ),
         ],

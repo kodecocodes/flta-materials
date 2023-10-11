@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum ColorSeed {
+enum ColorSelection {
   deepPurple('Deep Purple', Colors.deepPurple),
   purple('Purple', Colors.purple),
   indigo('Indigo', Colors.indigo),
@@ -12,7 +12,7 @@ enum ColorSeed {
   deepOrange('Deep Orange', Colors.deepOrange),
   pink('Pink', Colors.pink);
 
-  const ColorSeed(this.label, this.color);
+  const ColorSelection(this.label, this.color);
   final String label;
   final Color color;
 }
