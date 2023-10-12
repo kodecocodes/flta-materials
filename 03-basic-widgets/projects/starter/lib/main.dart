@@ -29,7 +29,7 @@ class Yummy extends StatelessWidget {
         ),
         body: const Center(
           child: Text(
-            'You Hungry?',
+            'You Hungry?😋',
             style: TextStyle(fontSize: 30.0),
           ),
         ),
