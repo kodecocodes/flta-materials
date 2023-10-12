@@ -20,11 +20,19 @@ class Yummy extends StatelessWidget {
       // TODO: Apply Home widget
       home: Scaffold(
         appBar: AppBar(
-            // TODO: Add action buttons
-            elevation: 4.0,
-            title: const Text('Yummy', style: TextStyle(fontSize: 24.0))),
+          // TODO: Add action buttons
+          elevation: 4.0,
+          title: const Text(
+            'Yummy',
+            style: TextStyle(fontSize: 24.0),
+          ),
+        ),
         body: const Center(
-            child: Text('You Hungry?', style: TextStyle(fontSize: 30.0))),
+          child: Text(
+            'You Hungry?',
+            style: TextStyle(fontSize: 30.0),
+          ),
+        ),
       ),
     );
   }
