@@ -38,6 +38,7 @@ class _YummyState extends State<Yummy> {
 
     return MaterialApp(
       title: appTitle,
+      debugShowCheckedModeBanner: false, // Uncomment to remove Debug banner
       themeMode: themeMode,
       theme: ThemeData(
         colorSchemeSeed: colorSelected.color,

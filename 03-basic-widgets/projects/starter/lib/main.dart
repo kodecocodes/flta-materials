@@ -18,7 +18,8 @@ class Yummy extends StatelessWidget {
 
     return MaterialApp(
       title: appTitle,
-s      // TODO: Add theme
+      //debugShowCheckedModeBanner: false, // Uncomment to remove Debug banner
+      // TODO: Add theme
       // TODO: Apply Home widget
       home: Scaffold(
         appBar: AppBar(
