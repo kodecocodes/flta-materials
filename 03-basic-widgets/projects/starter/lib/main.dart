@@ -14,16 +14,18 @@ class Yummy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const appTitle = 'Yummy';
+
     return MaterialApp(
-      // TODO: Add theme
-      title: 'Yummy',
+      title: appTitle,
+s      // TODO: Add theme
       // TODO: Apply Home widget
       home: Scaffold(
         appBar: AppBar(
           // TODO: Add action buttons
           elevation: 4.0,
           title: const Text(
-            'Yummy',
+            appTitle,
             style: TextStyle(fontSize: 24.0),
           ),
         ),

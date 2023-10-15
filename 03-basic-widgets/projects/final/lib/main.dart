@@ -34,7 +34,10 @@ class _YummyState extends State<Yummy> {
 
   @override
   Widget build(BuildContext context) {
+    const appTitle = 'Yummy';
+
     return MaterialApp(
+      title: appTitle,
       themeMode: themeMode,
       theme: ThemeData(
         colorSchemeSeed: colorSelected.color,
@@ -46,8 +49,9 @@ class _YummyState extends State<Yummy> {
         useMaterial3: true,
         brightness: Brightness.dark,
       ),
-      title: 'Yummy',
       home: Home(
+        appTitle: appTitle, //todo: stef delete this?
+
         changeTheme: changeThemeMode,
         changeColor: changeColor,
         colorSelected: colorSelected,

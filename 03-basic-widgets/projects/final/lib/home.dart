@@ -16,11 +16,13 @@ class Home extends StatefulWidget {
     required this.changeTheme,
     required this.changeColor,
     required this.colorSelected,
+    required this.appTitle,
   });
 
   final ColorSelection colorSelected;
   final void Function(bool useLightMode) changeTheme;
   final void Function(int value) changeColor;
+  final String appTitle;
 
   @override
   State<Home> createState() => _HomeState();
@@ -69,6 +71,7 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
+        title: Text(widget.appTitle),
         elevation: 4.0,
         backgroundColor: Theme.of(context).colorScheme.background,
         actions: [
