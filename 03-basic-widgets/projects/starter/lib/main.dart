@@ -8,6 +8,7 @@ void main() {
 class Yummy extends StatelessWidget {
   // TODO: Setup default theme
 
+  // 2
   const Yummy({super.key});
 
   // TODO: Add changeTheme above here
@@ -16,11 +17,18 @@ class Yummy extends StatelessWidget {
   Widget build(BuildContext context) {
     const appTitle = 'Yummy';
 
+    // TODO: Setup default theme
+
+    //3
     return MaterialApp(
       title: appTitle,
       //debugShowCheckedModeBanner: false, // Uncomment to remove Debug banner
+
       // TODO: Add theme
+
       // TODO: Apply Home widget
+
+      // 4
       home: Scaffold(
         appBar: AppBar(
           // TODO: Add action buttons
