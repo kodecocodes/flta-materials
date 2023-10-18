@@ -15,7 +15,6 @@ class RestaurantLandscapeCard extends StatelessWidget {
     final textTheme = Theme.of(context)
         .textTheme
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
-
     return Card(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -25,6 +24,7 @@ class RestaurantLandscapeCard extends StatelessWidget {
                 const BorderRadius.vertical(top: Radius.circular(8.0)),
             child: AspectRatio(
                 aspectRatio: 2,
+                // TODO: Convert to a stack
                 child: Image.asset(restaurant.imageUrl, fit: BoxFit.cover)),
           ),
           ListTile(
