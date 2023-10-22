@@ -10,6 +10,7 @@ class RestaurantLandscapeCard extends StatelessWidget {
     required this.restaurant,
   });
 
+  // TODO: Add favorite property
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context)
