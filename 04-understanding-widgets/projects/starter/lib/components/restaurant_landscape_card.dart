@@ -10,7 +10,7 @@ class RestaurantLandscapeCard extends StatelessWidget {
     required this.restaurant,
   });
 
-  // TODO: Add favorite property
+  // TODO: Add _isFavorited property
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context)
@@ -24,14 +24,24 @@ class RestaurantLandscapeCard extends StatelessWidget {
             borderRadius:
                 const BorderRadius.vertical(top: Radius.circular(8.0)),
             child: AspectRatio(
-                aspectRatio: 2,
-                // TODO: Convert to a stack
-                child: Image.asset(restaurant.imageUrl, fit: BoxFit.cover)),
+              aspectRatio: 2,
+              // TODO: Convert to a stack
+              child: Image.asset(
+                restaurant.imageUrl,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           ListTile(
-            title: Text(restaurant.name, style: textTheme.titleSmall),
-            subtitle: Text(restaurant.attributes,
-                maxLines: 1, style: textTheme.bodySmall),
+            title: Text(
+              restaurant.name,
+              style: textTheme.titleSmall,
+            ),
+            subtitle: Text(
+              restaurant.attributes,
+              maxLines: 1,
+              style: textTheme.bodySmall,
+            ),
             onTap: () {
               // ignore: avoid_print
               print('Tap on ${restaurant.name}');
