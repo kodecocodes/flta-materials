@@ -72,7 +72,7 @@ class _GroceryListState extends ConsumerState<GroceryList> {
   }
 
   Widget buildNeedHaveList() {
-    // TODO: Add Repository for ingredients in buildNeedHaveList
+    // TODO: Add Repository 1
 
     final needListIndexes = <int, bool>{};
     final haveListIndexes = <int, bool>{};
@@ -111,7 +111,7 @@ class _GroceryListState extends ConsumerState<GroceryList> {
   }
 
   Widget buildIngredientList() {
-    // TODO: Add Repository for ingredients in buildIngredientList
+    // TODO: Add Repository 2
     if (searching) {
       startSearch(searchTextController.text);
       return ingredientList(searchIngredients, checkBoxValues, true);
