@@ -1,33 +1,38 @@
 import 'dart:collection';
 import 'dart:math';
+import 'dart:ui';
 
-import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../widgets/custom_dropdown.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../widgets/common.dart';
 
 import '../../data/models/models.dart';
-import '../../mock_service/mock_service.dart';
 import '../../network/model_response.dart';
-import '../../network/recipe_model.dart';
-import '../colors.dart';
+import '../../network/query_result.dart';
+import '../../network/service_interface.dart';
+import '../../providers.dart';
+import '../bookmarks/bookmarks.dart';
 import '../recipe_card.dart';
 import '../recipes/recipe_details.dart';
+import '../theme/colors.dart';
+import '../widgets/custom_dropdown.dart';
 
-class RecipeList extends StatefulWidget {
+enum ListType { all, bookmarks }
+
+class RecipeList extends ConsumerStatefulWidget {
   const RecipeList({Key? key}) : super(key: key);
 
   @override
-  State createState() => _RecipeListState();
+  ConsumerState createState() => _RecipeListState();
 }
 
-class _RecipeListState extends State<RecipeList> {
+class _RecipeListState extends ConsumerState<RecipeList> {
   static const String prefSearchKey = 'previousSearches';
 
   late TextEditingController searchTextController;
   final ScrollController _scrollController = ScrollController();
-  List<APIHits> currentSearchList = [];
+  List<Recipe> currentSearchList = [];
   int currentCount = 0;
   int currentStartPosition = 0;
   int currentEndPosition = 20;
@@ -36,6 +41,9 @@ class _RecipeListState extends State<RecipeList> {
   bool loading = false;
   bool inErrorState = false;
   List<String> previousSearches = <String>[];
+  ListType currentType = ListType.all;
+  Future<RecipeResponse>? currentResponse;
+  bool newDataRequired = true;
 
   @override
   void initState() {
@@ -44,20 +52,25 @@ class _RecipeListState extends State<RecipeList> {
 
     searchTextController = TextEditingController(text: '');
     _scrollController.addListener(() {
-      final triggerFetchMoreSize =
-          0.7 * _scrollController.position.maxScrollExtent;
+      if (currentType == ListType.all) {
+        final triggerFetchMoreSize =
+            0.7 * _scrollController.position.maxScrollExtent;
 
-      if (_scrollController.position.pixels > triggerFetchMoreSize) {
-        if (hasMore &&
-            currentEndPosition < currentCount &&
-            !loading &&
-            !inErrorState) {
-          setState(() {
-            loading = true;
-            currentStartPosition = currentEndPosition;
-            currentEndPosition =
-                min(currentStartPosition + pageCount, currentCount);
-          });
+        if (_scrollController.position.pixels > triggerFetchMoreSize) {
+          if (hasMore &&
+              currentEndPosition < currentCount &&
+              !loading &&
+              !inErrorState) {
+            setState(
+                  () {
+                loading = true;
+                newDataRequired = true;
+                currentStartPosition = currentEndPosition;
+                currentEndPosition =
+                    min(currentStartPosition + pageCount, currentCount);
+              },
+            );
+          }
         }
       }
     });
@@ -66,16 +79,17 @@ class _RecipeListState extends State<RecipeList> {
   @override
   void dispose() {
     searchTextController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
   void savePreviousSearches() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = ref.read(sharedPrefProvider);
     prefs.setStringList(prefSearchKey, previousSearches);
   }
 
   void getPreviousSearches() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = ref.read(sharedPrefProvider);
     if (prefs.containsKey(prefSearchKey)) {
       final searches = prefs.getStringList(prefSearchKey);
       if (searches != null) {
@@ -88,14 +102,72 @@ class _RecipeListState extends State<RecipeList> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            _buildSearchCard(),
-            _buildRecipeLoader(context),
+    return switch (currentType) {
+      ListType.all => buildRecipeList(),
+      ListType.bookmarks => buildBookmarkList()
+    };
+  }
+
+  Widget buildRecipeList() {
+    return  buildScrollList([
+      _buildHeader(),
+      _buildTypePicker(),
+      _buildSearchCard(),
+    ], _buildRecipeLoader(context));
+  }
+
+  Widget buildScrollList(List<Widget> topList, Widget bottomWidget) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        ...topList,
+        ScrollConfiguration(
+          behavior: const ScrollBehavior().copyWith(
+            dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
+            physics: const ClampingScrollPhysics(),
+          ),
+          child: Expanded(
+            child: CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                SliverPadding(
+                  padding: allPadding8,
+                  sliver: bottomWidget,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildBookmarkList() {
+    return buildScrollList([
+      _buildHeader(),
+      _buildTypePicker(),
+    ], const Bookmarks());
+  }
+
+  Widget _buildHeader() {
+    return SizedBox(
+      height: 160.0,
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        child: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                color: lightGreen,
+              ),
+            ),
+            Center(
+              child: Image.asset(
+                'assets/images/background2.png',
+                fit: BoxFit.cover,
+              ),
+            ),
           ],
         ),
       ),
@@ -106,10 +178,7 @@ class _RecipeListState extends State<RecipeList> {
     return Card(
       elevation: 4,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(8.0),
-        ),
-      ),
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Row(
@@ -124,9 +193,7 @@ class _RecipeListState extends State<RecipeList> {
                 }
               },
             ),
-            const SizedBox(
-              width: 6.0,
-            ),
+            sizedW8,
             Expanded(
               child: Row(
                 children: <Widget>[
@@ -143,6 +210,14 @@ class _RecipeListState extends State<RecipeList> {
                     },
                     controller: searchTextController,
                   )),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      setState(() {
+                        searchTextController.text = '';
+                      });
+                    },
+                  ),
                   PopupMenuButton<String>(
                     icon: const Icon(
                       Icons.arrow_drop_down,
@@ -181,10 +256,11 @@ class _RecipeListState extends State<RecipeList> {
   void startSearch(String value) {
     setState(() {
       currentSearchList.clear();
+      newDataRequired = true;
       currentCount = 0;
       currentEndPosition = pageCount;
       currentStartPosition = 0;
-      hasMore = true;
+      hasMore = false;
       value = value.trim();
       if (!previousSearches.contains(value)) {
         previousSearches.add(value);
@@ -193,24 +269,22 @@ class _RecipeListState extends State<RecipeList> {
     });
   }
 
-  Widget _buildRecipeLoader(BuildContext context) {
+  Sliver _buildRecipeLoader(BuildContext context) {
     if (searchTextController.text.length < 3) {
-      return Container();
+      return emptySliverWidget;
     }
-    return FutureBuilder<Response<Result<APIRecipeQuery>>>(
-      // TODO: replace with new interface
-      future: Provider.of<MockService>(context).queryRecipes(
-          searchTextController.text.trim(),
-          currentStartPosition,
-          currentEndPosition),
+    return FutureBuilder<RecipeResponse>(
+      future: fetchData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                snapshot.error.toString(),
-                textAlign: TextAlign.center,
-                textScaleFactor: 1.3,
+            return SliverFillRemaining(
+              child: Center(
+                child: Text(
+                  snapshot.error.toString(),
+                  textAlign: TextAlign.center,
+                  textScaleFactor: 1.3,
+                ),
               ),
             );
           }
@@ -224,41 +298,48 @@ class _RecipeListState extends State<RecipeList> {
               final map = snapshot.data?.error as LinkedHashMap;
               errorMessage = map['message'];
             }
-            return Center(
-              child: Text(
-                errorMessage,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 18.0),
+            return SliverFillRemaining(
+              child: Center(
+                child: Text(
+                  errorMessage,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 18.0),
+                ),
               ),
             );
           }
           final result = snapshot.data?.body;
           if (result == null || result is Error) {
             inErrorState = true;
-            return _buildRecipeList(
-              context,
-              currentSearchList,
-            );
+            return _buildRecipeList(context, currentSearchList);
           }
-          final query = (result as Success).value;
+          final query = (result as Success).value as QueryResult;
           inErrorState = false;
-          if (query != null) {
-            currentCount = query.count;
-            hasMore = query.more;
-            currentSearchList.addAll(query.hits);
-            if (query.to < currentEndPosition) {
-              currentEndPosition = query.to;
-            }
+          currentCount = query.totalResults;
+          hasMore = query.totalResults > (query.offset + query.number);
+          currentSearchList.addAll(query.recipes);
+          currentEndPosition =
+              min(query.totalResults, currentEndPosition + query.number);
+          if (currentCount == 0) {
+            return const SliverFillRemaining(
+              child: Center(
+                child: Text(
+                  'No Results',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              ),
+            );
+          } else {
+            return _buildRecipeList(context, currentSearchList);
           }
-          return _buildRecipeList(
-            context,
-            currentSearchList,
-          );
         } else {
           if (currentCount == 0) {
             // Show a loading indicator while waiting for the movies
-            return const Center(
-              child: CircularProgressIndicator(),
+            return const SliverFillRemaining(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
             );
           } else {
             return _buildRecipeList(context, currentSearchList);
@@ -268,63 +349,87 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
+  Future<RecipeResponse> fetchData() async {
+    if (!newDataRequired && currentResponse != null) {
+      return currentResponse!;
+    }
+    newDataRequired = false;
+    final recipeService = ref.watch(serviceProvider);
+    currentResponse = recipeService.queryRecipes(
+        searchTextController.text.trim(), currentStartPosition, pageCount);
+    return currentResponse!;
+  }
+
   Widget _buildRecipeList(
-    BuildContext recipeListContext,
-    List<APIHits> hits,
-  ) {
-    final size = MediaQuery.of(context).size;
-    const itemHeight = 310;
-    final itemWidth = size.width / 2;
-    return Flexible(
-      child: GridView.builder(
-        controller: _scrollController,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: (itemWidth / itemHeight),
-        ),
-        itemCount: hits.length,
-        itemBuilder: (
-          BuildContext context,
-          int index,
-        ) {
-          return _buildRecipeCard(
-            recipeListContext,
-            hits,
-            index,
-          );
-        },
-      ),
+      BuildContext recipeListContext, List<Recipe> recipes) {
+    return SliverLayoutBuilder(
+      builder: (BuildContext context, SliverConstraints constraints) {
+        final numColumns = max(1, constraints.crossAxisExtent ~/ 264);
+        return SliverGrid(
+          delegate: SliverChildBuilderDelegate(
+            childCount: recipes.length,
+            (BuildContext context, int index) {
+              return _buildRecipeCard(
+                recipeListContext,
+                recipes,
+                index,
+              );
+            },
+          ),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: numColumns, mainAxisExtent: 264),
+        );
+      },
     );
   }
 
   Widget _buildRecipeCard(
     BuildContext topLevelContext,
-    List<APIHits> hits,
+    List<Recipe> recipes,
     int index,
   ) {
-    final recipe = hits[index].recipe;
+    final recipe = recipes[index];
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          topLevelContext,
-          MaterialPageRoute(
-            builder: (context) {
-              final detailRecipe = Recipe(
-                label: recipe.label,
-                image: recipe.image,
-                url: recipe.url,
-                calories: recipe.calories,
-                totalTime: recipe.totalTime,
-                totalWeight: recipe.totalWeight,
-              );
-
-              detailRecipe.ingredients = convertIngredients(recipe.ingredients);
-              return RecipeDetails(recipe: detailRecipe);
-            },
-          ),
-        );
+        Navigator.push(topLevelContext, MaterialPageRoute(
+          builder: (context) {
+            return RecipeDetails(recipe: recipe);
+          },
+        ));
       },
       child: recipeCard(recipe),
+    );
+  }
+
+  Widget _buildTypePicker() {
+    return IntrinsicWidth(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SegmentedButton<ListType>(
+              segments: const [
+                ButtonSegment<ListType>(
+                    value: ListType.all, label: Text('All'), enabled: true),
+                ButtonSegment<ListType>(
+                    value: ListType.bookmarks,
+                    label: Text('Bookmarks'),
+                    enabled: true),
+              ],
+              selected: {currentType},
+              onSelectionChanged: (Set<ListType> newSelection) {
+                setState(() {
+                  // By default there is only a single segment that can be
+                  // selected at one time, so its value is always the first
+                  // item in the selected set.
+                  currentType = newSelection.first;
+                });
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
