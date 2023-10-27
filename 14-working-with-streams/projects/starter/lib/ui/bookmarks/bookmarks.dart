@@ -26,8 +26,8 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
   }
 
   Widget _buildBookmarks(BuildContext context) {
-    final repository = ref.watch(repositoryProvider);
     // TODO: Replace with Stream
+    final repository = ref.watch(repositoryProvider);
     recipes = repository.currentRecipes;
     return SliverLayoutBuilder(
       builder: (BuildContext context, SliverConstraints constraints) {
@@ -108,7 +108,7 @@ class _BookmarkState extends ConsumerState<Bookmarks> {
         );
       },
     );
-    // TODO: Add else here
+    // TODO: Add closing brackets
   }
 
  
