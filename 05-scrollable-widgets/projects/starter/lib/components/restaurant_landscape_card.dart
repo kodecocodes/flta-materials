@@ -11,19 +11,18 @@ class RestaurantLandscapeCard extends StatefulWidget {
   });
 
   @override
-  State<RestaurantLandscapeCard> createState() 
-    => _RestaurantLandscapeCardState();
+  State<RestaurantLandscapeCard> createState() =>
+        _RestaurantLandscapeCardState();
 }
 
 class _RestaurantLandscapeCardState extends State<RestaurantLandscapeCard> {
   bool _isFavorited = false;
-
+  
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context)
         .textTheme
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
-
     return Card(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -54,7 +53,8 @@ class _RestaurantLandscapeCardState extends State<RestaurantLandscapeCard> {
                       ),
                     ),
                   ],
-                )),
+                )
+              ),
           ),
           ListTile(
             title: Text(widget.restaurant.name, style: textTheme.titleSmall),

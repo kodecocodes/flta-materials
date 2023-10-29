@@ -1,42 +1,44 @@
-
 import 'package:flutter/material.dart';
+
 import 'constants.dart';
 import 'home.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Yummy());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class Yummy extends StatefulWidget {
+  const Yummy({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<Yummy> createState() => _YummyState();
 }
 
-class _MyAppState extends State<MyApp> {
-  ThemeMode themeMode = ThemeMode.dark;
-  ColorSeed colorSelected = ColorSeed.blue;
-  ColorScheme? imageColorScheme = const ColorScheme.light();
+class _YummyState extends State<Yummy> {
+  ThemeMode themeMode = ThemeMode.light;
+  ColorSelection colorSelected = ColorSelection.pink;
 
-
-  void handleBrightnessChange(bool useLightMode) {
+  void changeThemeMode(bool useLightMode) {
     setState(() {
-      themeMode = useLightMode ? ThemeMode.light : ThemeMode.dark;
+      themeMode = useLightMode
+          ? ThemeMode.light //
+          : ThemeMode.dark;
     });
   }
 
-  void handleColorSelect(int value) {
+  void changeColor(int value) {
     setState(() {
-      colorSelected = ColorSeed.values[value];
+      colorSelected = ColorSelection.values[value];
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    const appTitle = 'Yummy';
+
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Yummy',
+      title: appTitle,
+      debugShowCheckedModeBanner: false, // Uncomment to remove Debug banner
       themeMode: themeMode,
       theme: ThemeData(
         colorSchemeSeed: colorSelected.color,
@@ -49,9 +51,12 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.dark,
       ),
       home: Home(
-          handleBrightnessChange: handleBrightnessChange,
-          handleColorSelect: handleColorSelect,
-          colorSelected: colorSelected),
+        appTitle: appTitle, //todo: stef delete this?
+
+        changeTheme: changeThemeMode,
+        changeColor: changeColor,
+        colorSelected: colorSelected,
+      ),
     );
   }
 }
