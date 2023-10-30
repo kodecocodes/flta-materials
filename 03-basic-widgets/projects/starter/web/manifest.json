@@ -1,6 +1,6 @@
 {
-    "name": "fooderlich",
-    "short_name": "fooderlich",
+    "name": "yummy",
+    "short_name": "yummy",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
