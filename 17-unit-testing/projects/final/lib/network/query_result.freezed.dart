@@ -80,22 +80,22 @@ class _$QueryResultCopyWithImpl<$Res, $Val extends QueryResult>
 }
 
 /// @nodoc
-abstract class _$$_QueryResultCopyWith<$Res>
+abstract class _$$QueryResultImplCopyWith<$Res>
     implements $QueryResultCopyWith<$Res> {
-  factory _$$_QueryResultCopyWith(
-          _$_QueryResult value, $Res Function(_$_QueryResult) then) =
-      __$$_QueryResultCopyWithImpl<$Res>;
+  factory _$$QueryResultImplCopyWith(
+          _$QueryResultImpl value, $Res Function(_$QueryResultImpl) then) =
+      __$$QueryResultImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int offset, int number, int totalResults, List<Recipe> recipes});
 }
 
 /// @nodoc
-class __$$_QueryResultCopyWithImpl<$Res>
-    extends _$QueryResultCopyWithImpl<$Res, _$_QueryResult>
-    implements _$$_QueryResultCopyWith<$Res> {
-  __$$_QueryResultCopyWithImpl(
-      _$_QueryResult _value, $Res Function(_$_QueryResult) _then)
+class __$$QueryResultImplCopyWithImpl<$Res>
+    extends _$QueryResultCopyWithImpl<$Res, _$QueryResultImpl>
+    implements _$$QueryResultImplCopyWith<$Res> {
+  __$$QueryResultImplCopyWithImpl(
+      _$QueryResultImpl _value, $Res Function(_$QueryResultImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_QueryResultCopyWithImpl<$Res>
     Object? totalResults = null,
     Object? recipes = null,
   }) {
-    return _then(_$_QueryResult(
+    return _then(_$QueryResultImpl(
       offset: null == offset
           ? _value.offset
           : offset // ignore: cast_nullable_to_non_nullable
@@ -129,16 +129,16 @@ class __$$_QueryResultCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_QueryResult implements _QueryResult {
-  const _$_QueryResult(
+class _$QueryResultImpl implements _QueryResult {
+  const _$QueryResultImpl(
       {required this.offset,
       required this.number,
       required this.totalResults,
       required final List<Recipe> recipes})
       : _recipes = recipes;
 
-  factory _$_QueryResult.fromJson(Map<String, dynamic> json) =>
-      _$$_QueryResultFromJson(json);
+  factory _$QueryResultImpl.fromJson(Map<String, dynamic> json) =>
+      _$$QueryResultImplFromJson(json);
 
   @override
   final int offset;
@@ -163,7 +163,7 @@ class _$_QueryResult implements _QueryResult {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_QueryResult &&
+            other is _$QueryResultImpl &&
             (identical(other.offset, offset) || other.offset == offset) &&
             (identical(other.number, number) || other.number == number) &&
             (identical(other.totalResults, totalResults) ||
@@ -179,12 +179,12 @@ class _$_QueryResult implements _QueryResult {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_QueryResultCopyWith<_$_QueryResult> get copyWith =>
-      __$$_QueryResultCopyWithImpl<_$_QueryResult>(this, _$identity);
+  _$$QueryResultImplCopyWith<_$QueryResultImpl> get copyWith =>
+      __$$QueryResultImplCopyWithImpl<_$QueryResultImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_QueryResultToJson(
+    return _$$QueryResultImplToJson(
       this,
     );
   }
@@ -195,10 +195,10 @@ abstract class _QueryResult implements QueryResult {
       {required final int offset,
       required final int number,
       required final int totalResults,
-      required final List<Recipe> recipes}) = _$_QueryResult;
+      required final List<Recipe> recipes}) = _$QueryResultImpl;
 
   factory _QueryResult.fromJson(Map<String, dynamic> json) =
-      _$_QueryResult.fromJson;
+      _$QueryResultImpl.fromJson;
 
   @override
   int get offset;
@@ -210,6 +210,6 @@ abstract class _QueryResult implements QueryResult {
   List<Recipe> get recipes;
   @override
   @JsonKey(ignore: true)
-  _$$_QueryResultCopyWith<_$_QueryResult> get copyWith =>
+  _$$QueryResultImplCopyWith<_$QueryResultImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

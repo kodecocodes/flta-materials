@@ -47,9 +47,10 @@ class $DbRecipeTable extends DbRecipe
   List<GeneratedColumn> get $columns =>
       [id, label, image, description, bookmarked];
   @override
-  String get aliasedName => _alias ?? 'db_recipe';
+  String get aliasedName => _alias ?? actualTableName;
   @override
-  String get actualTableName => 'db_recipe';
+  String get actualTableName => $name;
+  static const String $name = 'db_recipe';
   @override
   VerificationContext validateIntegrity(Insertable<DbRecipeData> instance,
       {bool isInserting = false}) {
@@ -330,9 +331,10 @@ class $DbIngredientTable extends DbIngredient
   @override
   List<GeneratedColumn> get $columns => [id, recipeId, name, amount];
   @override
-  String get aliasedName => _alias ?? 'db_ingredient';
+  String get aliasedName => _alias ?? actualTableName;
   @override
-  String get actualTableName => 'db_ingredient';
+  String get actualTableName => $name;
+  static const String $name = 'db_ingredient';
   @override
   VerificationContext validateIntegrity(Insertable<DbIngredientData> instance,
       {bool isInserting = false}) {
