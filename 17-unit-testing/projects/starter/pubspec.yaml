@@ -55,9 +55,7 @@ dev_dependencies:
   json_serializable: ^6.7.1
   chopper_generator: ^6.0.3
   freezed: ^2.4.1
-  drift_dev: ^2.10.0
-
-
+  drift_dev: ^2.10.0  
   flutter_lints: ^2.0.2
 
 flutter:
