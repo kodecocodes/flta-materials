@@ -13,7 +13,7 @@ void main() {
       // Assert
       expect(ingredient, isNotNull);
     });
-    test('default properties should be null', () {
+    test('can set default properties', () {
       // Arrange
       late Ingredient ingredient;
 
