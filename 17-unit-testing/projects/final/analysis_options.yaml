@@ -5,6 +5,7 @@ analyzer:
     - build/**
     - lib/**.chopper.dart
     - lib/**.g.dart
+    - test/**.mocks.dart
 
   errors:
     always_declare_return_types: error
