@@ -165,7 +165,8 @@ class DBRepository extends Notifier<CurrentRecipeData> implements Repository {
     for (final ingredient in ingredients) {
       if (ingredient.id != null) {
         final updatedList = [...state.currentIngredients];
-        updatedList.removeWhere((ingredient) => ingredients.contains(ingredient));
+        updatedList
+            .removeWhere((ingredient) => ingredients.contains(ingredient));
         state = state.copyWith(currentIngredients: updatedList);
         _ingredientDao.deleteIngredient(ingredient.id!);
       }

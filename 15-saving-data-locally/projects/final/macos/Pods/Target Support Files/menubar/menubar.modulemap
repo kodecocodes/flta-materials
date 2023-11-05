@@ -1,6 +1,0 @@
-framework module menubar {
-  umbrella header "menubar-umbrella.h"
-
-  export *
-  module * { export * }
-}

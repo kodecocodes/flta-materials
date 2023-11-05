@@ -1,6 +1,0 @@
-framework module sqlite3 {
-  umbrella header "sqlite3-umbrella.h"
-
-  export *
-  module * { export * }
-}
