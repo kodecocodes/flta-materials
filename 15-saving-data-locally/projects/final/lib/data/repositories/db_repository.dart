@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../models/current_recipe_data.dart';
 import '../models/models.dart';
-
-import '../repositories/repository.dart';
-import 'recipe_db.dart';
+import 'repository.dart';
+import '../database/recipe_db.dart';
 
 class DBRepository extends Notifier<CurrentRecipeData> implements Repository {
   late RecipeDatabase recipeDatabase;

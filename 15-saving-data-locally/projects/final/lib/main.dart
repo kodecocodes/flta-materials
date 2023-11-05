@@ -11,7 +11,7 @@ import 'ui/theme/theme.dart';
 import 'utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'providers.dart';
-import 'data/database/db_repository.dart';
+import 'data/repositories/db_repository.dart';
 import 'package:logging/logging.dart' as system_log;
 
 Future<void> main() async {

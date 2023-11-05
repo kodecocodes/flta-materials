@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'data/database/db_repository.dart';
+import 'data/repositories/db_repository.dart';
 import 'data/models/current_recipe_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
