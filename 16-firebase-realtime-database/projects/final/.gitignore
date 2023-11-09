@@ -33,7 +33,13 @@
 # Web related
 lib/generated_plugin_registrant.dart
 
+# Firebase related
 lib/firebase_options.dart
+**/android/app/google-servicecs.json
+**/ios/firebase_app_id_file.json
+**/ios/Runner/GoogleService-Info.plist
+**/macos/firebase_app_id_file.json
+**/macos/Runner/GoogleService-Info.plist
 
 # Symbolication related
 app.*.symbols
@@ -81,6 +87,9 @@ app.*.map.json
 **/ios/firebase_app_id_file.json
 macos/Flutter/ephemeral/
 windows/flutter/ephemeral/
+
+# macOS related
+**/macos/firebase_app_id_file.json
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
