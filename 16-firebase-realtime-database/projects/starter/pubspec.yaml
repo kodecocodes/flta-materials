@@ -14,9 +14,9 @@ dependencies:
 
   intl: ^0.18.1
 
-  flutter_riverpod: ^2.4.4
+  flutter_riverpod: ^2.4.5
 
-  flutter_lints: ^3.0.0
+  flutter_lints: ^3.0.1
 
 flutter:
   uses-material-design: true

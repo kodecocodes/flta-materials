@@ -635,9 +635,10 @@ PODS:
     - BoringSSL-GRPC/Interface (= 0.0.24)
   - BoringSSL-GRPC/Interface (0.0.24)
   - cloud_firestore (4.12.2):
-    - Firebase/Firestore (= 10.16.0)
+    - Firebase/CoreOnly (~> 10.16.0)
+    - Firebase/Firestore (~> 10.16.0)
     - firebase_core
-    - Flutter
+    - FlutterMacOS
     - nanopb (< 2.30910.0, >= 2.30908.0)
   - Firebase/Auth (10.16.0):
     - Firebase/CoreOnly
@@ -648,12 +649,13 @@ PODS:
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 10.16.0)
   - firebase_auth (4.12.1):
-    - Firebase/Auth (= 10.16.0)
+    - Firebase/Auth (~> 10.16.0)
+    - Firebase/CoreOnly (~> 10.16.0)
     - firebase_core
-    - Flutter
+    - FlutterMacOS
   - firebase_core (2.21.0):
-    - Firebase/CoreOnly (= 10.16.0)
-    - Flutter
+    - Firebase/CoreOnly (~> 10.16.0)
+    - FlutterMacOS
   - FirebaseAppCheckInterop (10.17.0)
   - FirebaseAuth (10.16.0):
     - FirebaseAppCheckInterop (~> 10.0)
@@ -681,7 +683,7 @@ PODS:
     - "gRPC-C++ (~> 1.49.1)"
     - leveldb-library (~> 1.22)
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - Flutter (1.0.0)
+  - FlutterMacOS (1.0.0)
   - GoogleUtilities/AppDelegateSwizzler (7.11.6):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -766,13 +768,12 @@ PODS:
   - nanopb/decode (2.30909.1)
   - nanopb/encode (2.30909.1)
   - PromisesObjC (2.3.1)
-  - RecaptchaInterop (100.0.0)
 
 DEPENDENCIES:
-  - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
-  - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
-  - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
-  - Flutter (from `Flutter`)
+  - cloud_firestore (from `Flutter/ephemeral/.symlinks/plugins/cloud_firestore/macos`)
+  - firebase_auth (from `Flutter/ephemeral/.symlinks/plugins/firebase_auth/macos`)
+  - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
+  - FlutterMacOS (from `Flutter/ephemeral`)
 
 SPEC REPOS:
   trunk:
@@ -791,31 +792,30 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
-    - RecaptchaInterop
 
 EXTERNAL SOURCES:
   cloud_firestore:
-    :path: ".symlinks/plugins/cloud_firestore/ios"
+    :path: Flutter/ephemeral/.symlinks/plugins/cloud_firestore/macos
   firebase_auth:
-    :path: ".symlinks/plugins/firebase_auth/ios"
+    :path: Flutter/ephemeral/.symlinks/plugins/firebase_auth/macos
   firebase_core:
-    :path: ".symlinks/plugins/firebase_core/ios"
-  Flutter:
-    :path: Flutter
+    :path: Flutter/ephemeral/.symlinks/plugins/firebase_core/macos
+  FlutterMacOS:
+    :path: Flutter/ephemeral
 
 SPEC CHECKSUMS:
   abseil: 926fb7a82dc6d2b8e1f2ed7f3a718bce691d1e46
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
-  cloud_firestore: 8adb36c2bc754352c717984153ecd7e6c6898047
+  cloud_firestore: 58f86268d14416b4243c744299fffd75f8662401
   Firebase: 25899099b77d255a636e3579c3d9dce10ec150d5
-  firebase_auth: ff474dcf17bee5762106162e0791433024890ada
-  firebase_core: 68027ba03585e3efe1608e35d3ab2777a64eabe9
+  firebase_auth: e32b1a8f7b71834558ad5a77c0735dd149b362ca
+  firebase_core: 879ea61470dc218a61dafb38d2fbde609d2e353f
   FirebaseAppCheckInterop: 534d033d8d0436b4ab066a8205013d271e18a2b9
   FirebaseAuth: 3862d87d4d58deff08f705d471896a2f66e8bbf0
   FirebaseCore: 65a801af84cca84361ef9eac3fd868656968a53b
   FirebaseCoreInternal: 2cf9202e226e3f78d2bf6d56c472686b935bfb7f
   FirebaseFirestore: 17bd5c8a0ea4be0fcae5a6f95f817983623adb4a
-  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   GoogleUtilities: 202e7a9f5128accd11160fb9c19612de1911aa19
   "gRPC-C++": 2df8cba576898bdacd29f0266d5236fa0e26ba6a
   gRPC-Core: a21a60aefc08c68c247b439a9ef97174b0c54f96
@@ -823,8 +823,7 @@ SPEC CHECKSUMS:
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
-  RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
 
-PODFILE CHECKSUM: 1959d098c91d8a792531a723c4a9d7e9f6a01e38
+PODFILE CHECKSUM: a6f08a7872cf64fc0ccbe3912e6bb725fcd59ae7
 
 COCOAPODS: 1.14.2

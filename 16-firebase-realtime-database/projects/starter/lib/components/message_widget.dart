@@ -1,76 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class MessageWidget extends StatelessWidget {
-  final String message;
-  final DateTime date;
-  final String? email;
+import '../providers.dart';
+import 'message.dart';
 
+class MessageWidget extends ConsumerWidget {
   const MessageWidget(
-    this.message,
-    this.date,
-    this.email, {
-    super.key,
-  });
+      this.message, {
+        super.key,
+      });
 
+  final Message message;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 1,
-        top: 5,
-        right: 1,
-        bottom: 2,
-      ),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final userDao = ref.watch(userDaoProvider);
+    final myMessage = message.email == userDao.email();
+
+    return FractionallySizedBox(
+      widthFactor: 0.7,
+      alignment: myMessage ? Alignment.topRight : Alignment.topLeft,
       child: Column(
+        crossAxisAlignment:
+        myMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          if (email != null) ...[
-            Padding(
-              padding: const EdgeInsets.only(top: 4),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Text(
-                  email!,
-                  style: const TextStyle(color: Colors.grey),
+          Row(
+            mainAxisAlignment:
+            myMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+            children: [
+              // Display email of others not ones sent from device
+              !myMessage
+                  ? Text(
+                message.email,
+                style: TextStyle(
+                  color: theme.colorScheme.secondary,
+                ),
+              )
+                  : const Text(''),
+              // Display date and time message was sent
+              Text(
+                '  ${DateFormat.yMd().format(message.date)} '
+                    '${DateFormat.Hm().format(message.date)}',
+                style: TextStyle(
+                  color: theme.colorScheme.secondary,
                 ),
               ),
-            ),
-          ],
-          Container(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey[350]!,
-                  blurRadius: 2.0,
-                  offset: const Offset(0, 1.0),
-                )
-              ],
-              borderRadius: BorderRadius.circular(50.0),
-              color: Colors.white,
-            ),
-            child: MaterialButton(
-              disabledTextColor: Colors.black87,
-              padding: const EdgeInsets.only(left: 18),
-              onPressed: null,
-              child: Wrap(
-                children: <Widget>[
-                  Row(
-                    children: [
-                      Text(message),
-                    ],
+            ],
+          ),
+          // Speech bubble
+          Material(
+            color: theme.colorScheme.surface,
+            // Uncomment to Change speech bubble color
+            // surfaceTintColor: theme.colorScheme.surfaceTint,
+            // shadowColor: theme.colorScheme.surfaceTint,
+            elevation: 1.0,
+            borderRadius: BorderRadius.circular(10.0),
+            child: Padding(
+              padding:
+              const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    message.text,
+                    style: theme.textTheme.bodyLarge!,
                   ),
                 ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 4),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Text(
-                DateFormat('yyyy-MM-dd, HH:mm a').format(date).toString(),
-                style: const TextStyle(color: Colors.grey),
               ),
             ),
           ),

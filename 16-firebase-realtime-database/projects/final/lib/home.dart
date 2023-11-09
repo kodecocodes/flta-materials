@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'components/category_card.dart';
 import 'components/color_button.dart';
 import 'components/login.dart';
-import 'components/post_card.dart';
+import 'components/message_list.dart';
 import 'components/restaurant_landscape_card.dart';
 import 'components/theme_button.dart';
 import 'constants.dart';
@@ -33,59 +33,16 @@ class Home extends ConsumerStatefulWidget {
 class HomeState extends ConsumerState<Home> {
   int tab = 1; // To change default card to Category change to 0
 
-  List<NavigationDestination> appBarDestinations = const [
-    NavigationDestination(
-      icon: Icon(Icons.credit_card),
-      label: 'Category',
-      selectedIcon: Icon(Icons.credit_card),
-    ),
-    NavigationDestination(
-      icon: Icon(Icons.question_answer),
-      label: 'Chat',
-      selectedIcon: Icon(Icons.question_answer),
-    ),
-    NavigationDestination(
-      icon: Icon(Icons.credit_card),
-      label: 'Restaurant',
-      selectedIcon: Icon(Icons.credit_card),
-    )
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final userDao = ref.watch(userDaoProvider);
-
-    final currentScreen = userDao.isLoggedIn() //
-        ? const PostCard()
-        : const Login();
-
-    final pages = [
-      Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 300),
-          child: CategoryCard(category: categories[0]),
-        ),
-      ),
-      // TODO: Remove const
-      Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: currentScreen,
-        ),
-      ),
-      Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 400),
-          child: RestaurantLandscapeCard(restaurant: restaurants[0]),
-        ),
-      )
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.appTitle),
         elevation: 4.0,
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: theme.colorScheme.background,
+        shadowColor: theme.shadowColor,
         actions: [
           ThemeButton(
             changeThemeMode: widget.changeTheme,
@@ -94,7 +51,6 @@ class HomeState extends ConsumerState<Home> {
             changeColor: widget.changeColor,
             colorSelected: widget.colorSelected,
           ),
-          // TODO: Replace with logout action
           IconButton(
             onPressed: () {
               userDao.logout();
@@ -103,7 +59,28 @@ class HomeState extends ConsumerState<Home> {
           ),
         ],
       ),
-      body: IndexedStack(index: tab, children: pages),
+      body: IndexedStack(
+        index: tab,
+        children: [
+          Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 300),
+              child: CategoryCard(category: categories[0]),
+            ),
+          ),
+          Center(
+            child: userDao.isLoggedIn() //
+                ? const MessageList()
+                : const Login(),
+          ),
+          Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 400),
+              child: RestaurantLandscapeCard(restaurant: restaurants[0]),
+            ),
+          )
+        ],
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: tab,
         onDestinationSelected: (index) {
@@ -111,7 +88,23 @@ class HomeState extends ConsumerState<Home> {
             tab = index;
           });
         },
-        destinations: appBarDestinations,
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.credit_card),
+            label: 'Category',
+            selectedIcon: Icon(Icons.credit_card),
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.question_answer),
+            label: 'Chat',
+            selectedIcon: Icon(Icons.question_answer),
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.credit_card),
+            label: 'Restaurant',
+            selectedIcon: Icon(Icons.credit_card),
+          )
+        ],
       ),
     );
   }

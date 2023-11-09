@@ -75,7 +75,9 @@ class _LoginState extends ConsumerState<Login> {
                   Expanded(
                     child: TextFormField(
                       decoration: const InputDecoration(
-                          border: UnderlineInputBorder(), hintText: 'Password'),
+                        border: UnderlineInputBorder(),
+                        hintText: 'Password',
+                      ),
                       autofocus: false,
                       obscureText: true,
                       keyboardType: TextInputType.visiblePassword,
@@ -100,19 +102,21 @@ class _LoginState extends ConsumerState<Login> {
                     child: ElevatedButton(
                       // 1
                       onPressed: () async {
-                        final errorMessage = await userDao.login(
-                          _emailController.text,
-                          _passwordController.text,
-                        );
-                        // 2
-                        if (errorMessage != null) {
-                          if (!mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(errorMessage),
-                              duration: const Duration(milliseconds: 700),
-                            ),
+                        if (_formKey.currentState!.validate()) {
+                          final errorMessage = await userDao.login(
+                            _emailController.text,
+                            _passwordController.text,
                           );
+                          // 2
+                          if (errorMessage != null) {
+                            if (!mounted) return;
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(errorMessage),
+                                duration: const Duration(milliseconds: 700),
+                              ),
+                            );
+                          }
                         }
                       },
                       child: const Text('Login'),
@@ -127,18 +131,20 @@ class _LoginState extends ConsumerState<Login> {
                     child: ElevatedButton(
                       // 3
                       onPressed: () async {
-                        final errorMessage = await userDao.signup(
-                          _emailController.text,
-                          _passwordController.text,
-                        );
-                        if (errorMessage != null) {
-                          if (!mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(errorMessage),
-                              duration: const Duration(milliseconds: 700),
-                            ),
+                        if (_formKey.currentState!.validate()) {
+                          final errorMessage = await userDao.signup(
+                            _emailController.text,
+                            _passwordController.text,
                           );
+                          if (errorMessage != null) {
+                            if (!mounted) return;
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(errorMessage),
+                                duration: const Duration(milliseconds: 700),
+                              ),
+                            );
+                          }
                         }
                       },
                       child: const Text('Sign Up'),
