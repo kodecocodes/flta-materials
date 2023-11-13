@@ -301,10 +301,10 @@ packages:
     dependency: "direct main"
     description:
       name: drift
-      sha256: ef2ddafe89c1f5f26767e5eada65d739de4e9d2820303f7249f15a005999d5fc
+      sha256: ade0bbe936891c9da35ff5d9cb1f155bab357096c1506863e9ff7871857d3587
       url: "https://pub.dev"
     source: hosted
-    version: "2.13.1"
+    version: "2.13.0"
   drift_dev:
     dependency: "direct dev"
     description:
@@ -456,6 +456,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  golden_toolkit:
+    dependency: "direct dev"
+    description:
+      name: golden_toolkit
+      sha256: "8f74adab33154fe7b731395782797021f97d2edc52f7bfb85ff4f1b5c4a215f0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.15.0"
   graphs:
     dependency: transitive
     description:
@@ -930,10 +938,10 @@ packages:
     dependency: transitive
     description:
       name: sqflite_common
-      sha256: "8ed044102f3135add97be8653662052838859f5400075ef227f8ad72ae320803"
+      sha256: "1b92f368f44b0dee2425bb861cfa17b6f6cf3961f762ff6f941d20b33355660a"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.0+1"
+    version: "2.5.0"
   sqlbrite:
     dependency: "direct main"
     description:
