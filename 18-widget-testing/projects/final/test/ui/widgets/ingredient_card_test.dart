@@ -16,11 +16,12 @@ Widget _buildWrappedWidget(Widget child) {
 }
 
 void main() {
+  const mockIngredientName = 'colby jack cheese';
   group('IngredientCard', () {
     testWidgets('can build', (tester) async {
       await tester.pumpWidget(
         _buildWrappedWidget(IngredientCard(
-          name: 'colby jack cheese',
+          name: mockIngredientName,
           initiallyChecked: false,
           evenRow: true,
           onChecked: (isChecked) {},
@@ -28,7 +29,7 @@ void main() {
       );
 
       final cardFinder = find.byType(IngredientCard);
-      final titleFinder = find.text('colby jack cheese');
+      final titleFinder = find.text(mockIngredientName);
 
       expect(cardFinder, findsOneWidget);
       expect(titleFinder, findsOneWidget);
@@ -38,7 +39,7 @@ void main() {
       var isChecked = false;
       await tester.pumpWidget(
         _buildWrappedWidget(IngredientCard(
-          name: 'colby jack cheese',
+          name: mockIngredientName,
           initiallyChecked: isChecked,
           evenRow: true,
           onChecked: (newValue) {
@@ -63,7 +64,7 @@ void main() {
       var isChecked = true;
       await tester.pumpWidget(
         _buildWrappedWidget(IngredientCard(
-          name: 'colby jack cheese',
+          name: mockIngredientName,
           initiallyChecked: isChecked,
           evenRow: true,
           onChecked: (newValue) {
@@ -90,7 +91,7 @@ void main() {
         ..addScenario(
             'Light - Unchecked',
             IngredientCard(
-              name: 'colby jack cheese',
+              name: mockIngredientName,
               initiallyChecked: false,
               evenRow: true,
               onChecked: (newValue) {},
@@ -98,7 +99,7 @@ void main() {
         ..addScenario(
             'Light - Checked',
             IngredientCard(
-              name: 'colby jack cheese',
+              name: mockIngredientName,
               initiallyChecked: true,
               evenRow: true,
               onChecked: (newValue) {},
@@ -106,7 +107,7 @@ void main() {
         ..addScenario(
             'Light - Odd - Unchecked',
             IngredientCard(
-              name: 'colby jack cheese',
+              name: mockIngredientName,
               initiallyChecked: false,
               evenRow: false,
               onChecked: (newValue) {},
@@ -114,7 +115,7 @@ void main() {
         ..addScenario(
             'Light - Odd - Checked',
             IngredientCard(
-              name: 'colby jack cheese',
+              name: mockIngredientName,
               initiallyChecked: true,
               evenRow: false,
               onChecked: (newValue) {},
@@ -134,7 +135,7 @@ void main() {
         ..addScenario(
             'Dark - Unchecked',
             IngredientCard(
-              name: 'colby jack cheese',
+              name: mockIngredientName,
               initiallyChecked: false,
               evenRow: true,
               onChecked: (newValue) {},
@@ -142,7 +143,7 @@ void main() {
         ..addScenario(
             'Dark - Checked',
             IngredientCard(
-              name: 'colby jack cheese',
+              name: mockIngredientName,
               initiallyChecked: true,
               evenRow: true,
               onChecked: (newValue) {},
@@ -150,7 +151,7 @@ void main() {
         ..addScenario(
             'Dark - Odd - Unchecked',
             IngredientCard(
-              name: 'colby jack cheese',
+              name: mockIngredientName,
               initiallyChecked: false,
               evenRow: false,
               onChecked: (newValue) {},
@@ -158,7 +159,7 @@ void main() {
         ..addScenario(
             'Dark - Odd - Checked',
             IngredientCard(
-              name: 'colby jack cheese',
+              name: mockIngredientName,
               initiallyChecked: true,
               evenRow: false,
               onChecked: (newValue) {},
