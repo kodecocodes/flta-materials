@@ -63,9 +63,8 @@ class HomeState extends ConsumerState<Home> {
               child: CategoryCard(category: categories[0]),
             ),
           ),
-          // TODO: Remove const below
+          // TODO: Add Login
           const Center(
-            // TODO: Add Login
             child: MessageList(),
           ),
           Center(

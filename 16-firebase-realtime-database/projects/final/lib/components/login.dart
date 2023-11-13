@@ -40,118 +40,104 @@ class _LoginState extends ConsumerState<Login> {
           key: _formKey,
           child: Column(
             children: [
-              Row(
-                children: [
-                  const SizedBox(height: 80),
-                  Expanded(
-                    // 1
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        hintText: 'Email Address',
-                      ),
-                      autofocus: false,
-                      // 2
-                      keyboardType: TextInputType.emailAddress,
-                      // 3
-                      textCapitalization: TextCapitalization.none,
-                      autocorrect: false,
-                      // 4
-                      controller: _emailController,
-                      // 5
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Email Required';
-                        }
-                        return null;
-                      },
-                    ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                // 1
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    hintText: 'Email Address',
                   ),
-                ],
+                  autofocus: false,
+                  // 2
+                  keyboardType: TextInputType.emailAddress,
+                  // 3
+                  textCapitalization: TextCapitalization.none,
+                  autocorrect: false,
+                  // 4
+                  controller: _emailController,
+                  // 5
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Email Required';
+                    }
+                    return null;
+                  },
+                ),
               ),
-              Row(
-                children: [
-                  const SizedBox(height: 20),
-                  Expanded(
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        hintText: 'Password',
-                      ),
-                      autofocus: false,
-                      obscureText: true,
-                      keyboardType: TextInputType.visiblePassword,
-                      textCapitalization: TextCapitalization.none,
-                      autocorrect: false,
-                      controller: _passwordController,
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Password Required';
-                        }
-                        return null;
-                      },
-                    ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    hintText: 'Password',
                   ),
-                ],
+                  autofocus: false,
+                  obscureText: true,
+                  keyboardType: TextInputType.visiblePassword,
+                  textCapitalization: TextCapitalization.none,
+                  autocorrect: false,
+                  controller: _passwordController,
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Password Required';
+                    }
+                    return null;
+                  },
+                ),
               ),
               const Spacer(),
-              Row(
-                children: [
-                  const SizedBox(height: 20),
-                  Expanded(
-                    child: ElevatedButton(
-                      // 1
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          final errorMessage = await userDao.login(
-                            _emailController.text,
-                            _passwordController.text,
-                          );
-                          // 2
-                          if (errorMessage != null) {
-                            if (!mounted) return;
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(errorMessage),
-                                duration: const Duration(milliseconds: 700),
-                              ),
-                            );
-                          }
-                        }
-                      },
-                      child: const Text('Login'),
-                    ),
-                  )
-                ],
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  // 1
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      final errorMessage = await userDao.login(
+                        _emailController.text,
+                        _passwordController.text,
+                      );
+                      // 2
+                      if (errorMessage != null) {
+                        if (!mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(errorMessage),
+                            duration: const Duration(milliseconds: 700),
+                          ),
+                        );
+                      }
+                    }
+                  },
+                  child: const Text('Login'),
+                ),
               ),
-              Row(
-                children: [
-                  const SizedBox(height: 20),
-                  Expanded(
-                    child: ElevatedButton(
-                      // 3
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          final errorMessage = await userDao.signup(
-                            _emailController.text,
-                            _passwordController.text,
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    // 3
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        final errorMessage = await userDao.signup(
+                          _emailController.text,
+                          _passwordController.text,
+                        );
+                        if (errorMessage != null) {
+                          if (!mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(errorMessage),
+                              duration: const Duration(milliseconds: 700),
+                            ),
                           );
-                          if (errorMessage != null) {
-                            if (!mounted) return;
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(errorMessage),
-                                duration: const Duration(milliseconds: 700),
-                              ),
-                            );
-                          }
                         }
-                      },
-                      child: const Text('Sign Up'),
-                    ),
+                      }
+                    },
+                    child: const Text('Sign Up'),
                   ),
-                  const SizedBox(height: 60),
-                ],
+                ),
               ),
             ],
           ),
