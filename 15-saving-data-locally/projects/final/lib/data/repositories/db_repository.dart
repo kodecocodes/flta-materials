@@ -14,8 +14,8 @@ class DBRepository extends Notifier<CurrentRecipeData> implements Repository {
 
   @override
   CurrentRecipeData build() {
-    const currentRecipieData = CurrentRecipeData();
-    return currentRecipieData;
+    const currentRecipeData = CurrentRecipeData();
+    return currentRecipeData;
   }
 
   @override

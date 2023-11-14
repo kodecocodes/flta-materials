@@ -32,8 +32,8 @@ class MemoryRepository extends Notifier<CurrentRecipeData>
 
   @override
   CurrentRecipeData build() {
-    const currentRecipieData = CurrentRecipeData();
-    return currentRecipieData;
+    const currentRecipeData = CurrentRecipeData();
+    return currentRecipeData;
   }
 
   @override
