@@ -89,37 +89,41 @@ void main() {
     testGoldens('can support light theme', (tester) async {
       final builder = GoldenBuilder.grid(columns: 2, widthToHeightRatio: 1)
         ..addScenario(
-            'Light - Unchecked',
-            IngredientCard(
-              name: mockIngredientName,
-              initiallyChecked: false,
-              evenRow: true,
-              onChecked: (newValue) {},
-            ))
+          'Light - Unchecked',
+          IngredientCard(
+            name: mockIngredientName,
+            initiallyChecked: false,
+            evenRow: true,
+            onChecked: (newValue) {},
+          ),
+        )
         ..addScenario(
-            'Light - Checked',
-            IngredientCard(
-              name: mockIngredientName,
-              initiallyChecked: true,
-              evenRow: true,
-              onChecked: (newValue) {},
-            ))
+          'Light - Checked',
+          IngredientCard(
+            name: mockIngredientName,
+            initiallyChecked: true,
+            evenRow: true,
+            onChecked: (newValue) {},
+          ),
+        )
         ..addScenario(
-            'Light - Odd - Unchecked',
-            IngredientCard(
-              name: mockIngredientName,
-              initiallyChecked: false,
-              evenRow: false,
-              onChecked: (newValue) {},
-            ))
+          'Light - Odd - Unchecked',
+          IngredientCard(
+            name: mockIngredientName,
+            initiallyChecked: false,
+            evenRow: false,
+            onChecked: (newValue) {},
+          ),
+        )
         ..addScenario(
-            'Light - Odd - Checked',
-            IngredientCard(
-              name: mockIngredientName,
-              initiallyChecked: true,
-              evenRow: false,
-              onChecked: (newValue) {},
-            ));
+          'Light - Odd - Checked',
+          IngredientCard(
+            name: mockIngredientName,
+            initiallyChecked: true,
+            evenRow: false,
+            onChecked: (newValue) {},
+          ),
+        );
       await tester.pumpWidgetBuilder(
         builder.build(),
         wrapper: materialAppWrapper(
