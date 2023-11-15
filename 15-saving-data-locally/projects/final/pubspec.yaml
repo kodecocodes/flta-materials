@@ -38,7 +38,7 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.18
   web_ffi: ^0.7.2
   sqlite3: ^2.1.0
-  drift: ^2.12.0
+  drift: ^2.13.1
 
   menubar:
     git:
@@ -55,7 +55,7 @@ dev_dependencies:
   json_serializable: ^6.7.1
   chopper_generator: ^6.0.3
   freezed: ^2.4.1
-  drift_dev: ^2.12.0
+  drift_dev: ^2.13.2
 
 
   flutter_lints: ^2.0.3
