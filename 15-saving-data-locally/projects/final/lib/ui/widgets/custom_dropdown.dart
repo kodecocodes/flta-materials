@@ -49,7 +49,8 @@ class _CustomDropdownMenuItemState<T> extends State<CustomDropdownMenuItem<T>> {
                 },
                 child: SvgPicture.asset(
                   'assets/images/dismiss.svg',
-                  color: Colors.grey,
+                  colorFilter:
+                  const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
                   semanticsLabel: 'Back',
                 ),
               ),

@@ -1,5 +1,5 @@
 
-abstract class Result<T> {
+sealed class Result<T> {
 }
 
 class Success<T> extends Result<T> {
