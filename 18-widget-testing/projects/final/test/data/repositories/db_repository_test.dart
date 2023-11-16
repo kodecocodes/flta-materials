@@ -1,8 +1,9 @@
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:recipes/data/database/db_repository.dart';
+
 import 'package:recipes/data/database/recipe_db.dart';
 import 'package:recipes/data/models/models.dart';
+import 'package:recipes/data/repositories/db_repository.dart';
 import 'package:test/test.dart';
 
 import 'db_repository_test.mocks.dart';

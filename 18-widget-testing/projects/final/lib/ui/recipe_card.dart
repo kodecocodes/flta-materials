@@ -56,12 +56,12 @@ Widget recipeCard(Recipe recipe) {
             ),
             child: Hero(
               tag: 'recipe-${recipe.id}',
-              child: CachedNetworkImage(
-                imageUrl: recipe.image ?? '',
-                height: 210,
-                fit: BoxFit.cover,
+                child: CachedNetworkImage(
+                  imageUrl: recipe.image ?? '',
+                  height: 210,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
           ),
         ],
       ),
