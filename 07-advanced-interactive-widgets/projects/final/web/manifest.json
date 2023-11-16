@@ -1,6 +1,6 @@
 {
-    "name": "starter",
-    "short_name": "starter",
+    "name": "Yummy",
+    "short_name": "Yummy",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

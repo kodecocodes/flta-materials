@@ -1,4 +1,4 @@
-# yummy
+# Yummy
 
 A new Flutter project.
 
