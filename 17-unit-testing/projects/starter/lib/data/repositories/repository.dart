@@ -1,11 +1,10 @@
-
-
 import '../models/models.dart';
 
 abstract class Repository {
   Future<List<Recipe>> findAllRecipes();
 
   Stream<List<Recipe>> watchAllRecipes();
+
   Stream<List<Ingredient>> watchAllIngredients();
 
   Future<Recipe> findRecipeById(int id);
@@ -27,6 +26,6 @@ abstract class Repository {
   Future<void> deleteRecipeIngredients(int recipeId);
 
   Future init();
-  void close();
 
+  void close();
 }

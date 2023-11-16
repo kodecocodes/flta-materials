@@ -11,7 +11,7 @@ import 'ui/theme/theme.dart';
 import 'utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'providers.dart';
-import 'data/database/db_repository.dart';
+import 'data/repositories/db_repository.dart';
 import 'package:logging/logging.dart' as system_log;
 
 Future<void> main() async {
@@ -24,13 +24,12 @@ Future<void> main() async {
   }
 
   final sharedPrefs = await SharedPreferences.getInstance();
-  // final service = await MockService.create();
   final repository = DBRepository();
   await repository.init();
   final service = SpoonacularService.create();
 
   runApp(ProviderScope(overrides: [
-    repositoryProvider.overrideWithValue(repository),
+    repositoryProvider.overrideWith(() { return repository; }),
     sharedPrefProvider.overrideWithValue(sharedPrefs),
     serviceProvider.overrideWithValue(service),
   ], child: const MyApp()));
@@ -42,7 +41,7 @@ void _setupLogging() {
   ]);
   system_log.Logger.root.level = system_log.Level.ALL;
   system_log.Logger.root.onRecord.listen((rec) {
-      debugPrint('${rec.level.name}: ${rec.time}: ${rec.message}');
+    debugPrint('${rec.level.name}: ${rec.time}: ${rec.message}');
   });
 }
 
