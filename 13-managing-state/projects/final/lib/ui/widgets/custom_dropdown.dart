@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomDropdownMenuItem<T> extends PopupMenuEntry<T> {
-  const CustomDropdownMenuItem({
-    Key? key,
-    required this.value,
-    required this.text,
-    this.callback,
-  }) : super(key: key);
+  const CustomDropdownMenuItem(
+      {Key? key, required this.value, required this.text, this.callback})
+      : super(key: key);
 
   final T value;
   final String text;
@@ -52,7 +49,8 @@ class _CustomDropdownMenuItemState<T> extends State<CustomDropdownMenuItem<T>> {
                 },
                 child: SvgPicture.asset(
                   'assets/images/dismiss.svg',
-                  color: Colors.grey,
+                  colorFilter:
+                  const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
                   semanticsLabel: 'Back',
                 ),
               ),

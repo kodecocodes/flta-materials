@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.raywenderlich.recipe_finder">
-   <application
+    package="com.kodeco.recipe_finder">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
         android:label="Recipe Finder"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
