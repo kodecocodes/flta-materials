@@ -45,7 +45,7 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
       if (mounted) {
         setState(() {});
       }
-    } else  {
+    } else {
       logMessage('Problems getting Recipe $result');
     }
   }
@@ -126,10 +126,9 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
   }
 
   Widget titleRow() {
-    final repository = ref.read(repositoryProvider);
-    final titleRowColor = widget.recipe.bookmarked
-        ? Colors.black
-        : Colors.white;
+    final repository = ref.read(repositoryProvider.notifier);
+    final titleRowColor =
+        widget.recipe.bookmarked ? Colors.black : Colors.white;
     return Container(
       decoration: const BoxDecoration(color: lightGreen),
       child: Padding(
@@ -148,9 +147,7 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: 'Roboto',
-                    color: titleRowColor),
+                    fontSize: 24, fontFamily: 'Roboto', color: titleRowColor),
               ),
             ),
             IconButton(
@@ -158,17 +155,16 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
                 widget.recipe.bookmarked
                     ? 'assets/images/icon_bookmarks.svg'
                     : 'assets/images/icon_bookmark.svg',
-                colorFilter: ColorFilter.mode(
-                    titleRowColor,
-                    BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(titleRowColor, BlendMode.srcIn),
               ),
               onPressed: () {
                 if (!widget.recipe.bookmarked) {
                   if (recipeDetail != null) {
                     repository.insertRecipe(recipeDetail!);
                   }
+                  // ignore: dead_code
                 } else {
-                  repository.deleteRecipe(widget.recipe);
+                  repository.deleteRecipe(recipeDetail!);
                 }
                 Navigator.pop(context);
               },
