@@ -1,35 +1,22 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'ingredient.dart';
 
-// ignore: must_be_immutable
-class Recipe extends Equatable {
-  int? id;
-  final String? label;
-  final String? image;
-  final String? url;
-  List<Ingredient>? ingredients;
-  final double? calories;
-  final double? totalWeight;
-  final double? totalTime;
+part 'recipe.freezed.dart';
+part 'recipe.g.dart';
 
-  Recipe({
-    this.id,
-    this.label,
-    this.image,
-    this.url,
-    this.calories,
-    this.totalWeight,
-    this.totalTime,
-  });
+@freezed
+class Recipe with _$Recipe {
+  const factory Recipe({
+    int? id,
+    String? label,
+    String? image,
+    String? description,
+    @Default(false) bool bookmarked,
+    @Default(<Ingredient>[]) List<Ingredient> ingredients
+  }) = _Recipe;
 
-  @override
-  List<Object?> get props => [
-        label,
-        image,
-        url,
-        calories,
-        totalWeight,
-        totalTime,
-      ];
+  // Create a Recipe from JSON data
+  factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);
+
 }
