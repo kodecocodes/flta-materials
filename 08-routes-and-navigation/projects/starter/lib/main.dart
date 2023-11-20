@@ -1,44 +1,50 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'login.dart';
 
 import 'constants.dart';
+// TODO: Replace home with screens.dart
+import 'home.dart';
+import '../models/models.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Yummy());
 }
 
-class CustomScrollBehavior extends MaterialScrollBehavior {
-  @override
-  Set<PointerDeviceKind> get dragDevices => {
-        PointerDeviceKind.touch,
-        PointerDeviceKind.mouse,
-        PointerDeviceKind.trackpad
-      };
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class Yummy extends StatefulWidget {
+  const Yummy({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<Yummy> createState() => _YummyState();
 }
 
-class _MyAppState extends State<MyApp> {
-  ThemeMode themeMode = ThemeMode.dark;
-  ColorSeed colorSelected = ColorSeed.blue;
-  ColorScheme? imageColorScheme = const ColorScheme.light();
+class _YummyState extends State<Yummy> {
+  ThemeMode themeMode = ThemeMode.light;
+  ColorSelection colorSelected = ColorSelection.pink;
 
-  void handleBrightnessChange(bool useLightMode) {
+  /// Authentication to manage user login session
+  // ignore: unused_field
+  final YummyAuth _auth = YummyAuth();
+
+  /// Manage user's shopping cart for the items they order.
+  final CartManager _cartManager = CartManager();
+
+  /// Manage user's orders submitted
+  final OrderManager _orderManager = OrderManager();
+
+  // TODO: Initialize GoRouter
+
+  // TODO: Add Redirect Handler
+
+  void changeThemeMode(bool useLightMode) {
     setState(() {
-      themeMode = useLightMode ? ThemeMode.light : ThemeMode.dark;
+      themeMode = useLightMode
+          ? ThemeMode.light //
+          : ThemeMode.dark;
     });
   }
 
-  void handleColorSelect(int value) {
+  void changeColor(int value) {
     setState(() {
-      colorSelected = ColorSeed.values[value];
+      colorSelected = ColorSelection.values[value];
     });
   }
 
@@ -46,9 +52,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     // TODO: Replace with Router
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      scrollBehavior: CustomScrollBehavior(),
-      title: 'Yummy',
+      debugShowCheckedModeBanner: false, // Uncomment to remove Debug banner
       themeMode: themeMode,
       theme: ThemeData(
         colorSchemeSeed: colorSelected.color,
@@ -60,7 +64,15 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
         brightness: Brightness.dark,
       ),
-      home: Login(onLogIn: (credentials) {}),
+      home: Home(
+        tab: 0,
+        auth: _auth,
+        cartManager: _cartManager,
+        ordersManager: _orderManager,
+        changeTheme: changeThemeMode,
+        changeColor: changeColor,
+        colorSelected: colorSelected,
+      ),
     );
   }
 }

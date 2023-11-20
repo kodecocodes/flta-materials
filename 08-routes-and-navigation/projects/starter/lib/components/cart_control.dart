@@ -1,64 +1,73 @@
 import 'package:flutter/material.dart';
 
 class CartControl extends StatefulWidget {
-  final Function(int) addToCart;
-
-  const CartControl({required this.addToCart, super.key});
+  final void Function(int) addToCart;
+  const CartControl({required this.addToCart, Key? key}) : super(key: key);
 
   @override
   State<CartControl> createState() => _CartControlState();
 }
 
 class _CartControlState extends State<CartControl> {
-  int cartNumber = 1; // Initialize cart number
+  int _cartNumber = 1;
 
   @override
   Widget build(BuildContext context) {
-    final colorTheme = Theme.of(context).colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        // Minus button
-        IconButton(
-          icon: const Icon(Icons.remove),
-          onPressed: () {
-            setState(() {
-              if (cartNumber > 1) {
-                cartNumber--;
-              }
-            });
-          },
-        ),
-
-        // Container with cart number
-        Container(
-          padding:
-              const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          color: colorTheme.onPrimary, // light gray background
-          child: Text(cartNumber.toString()),
-        ),
-
-        // Plus button
-        IconButton(
-          icon: const Icon(Icons.add),
-          onPressed: () {
-            setState(() {
-              cartNumber++;
-            });
-          },
-        ),
-
-        // Spacer to push the Add Cart button to the end
+      children: [
+        _buildMinusButton(),
+        _buildCartNumberContainer(colorScheme),
+        _buildPlusButton(),
         const Spacer(),
-
-        // Add cart button
-        FilledButton(
-          onPressed: () {
-            widget.addToCart(cartNumber);
-          },
-          child: const Text('Add to Cart'),
-        ),
+        _buildAddCartButton(),
+        Container(color: Colors.red, height: 44.0)
       ],
     );
   }
+
+  Widget _buildMinusButton() {
+    return IconButton(
+      icon: const Icon(Icons.remove),
+      onPressed: () {
+        setState(() {
+          if (_cartNumber > 1) {
+            _cartNumber--;
+          }
+        });
+      },
+      tooltip: 'Decrease Cart Count',
+    );
+  }
+
+  Widget _buildCartNumberContainer(ColorScheme colorScheme) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      color: colorScheme.onPrimary,
+      child: Text(_cartNumber.toString()),
+    );
+  }
+
+  Widget _buildPlusButton() {
+    return IconButton(
+      icon: const Icon(Icons.add),
+      onPressed: () {
+        setState(() {
+          _cartNumber++;
+        });
+      },
+      tooltip: 'Increase Cart Count',
+    );
+  }
+
+  Widget _buildAddCartButton() {
+    return FilledButton(
+      onPressed: () {
+        widget.addToCart(_cartNumber);
+      },
+      child: const Text('Add to Cart'),
+    );
+  }
+
 }

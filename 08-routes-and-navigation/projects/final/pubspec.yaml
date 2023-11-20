@@ -11,17 +11,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  go_router: ^10.0.0
-  cupertino_icons: ^1.0.2
-  url_launcher: ^6.1.12
-  uuid: ^3.0.7
+  go_router: ^12.1.1
+  url_launcher: ^6.2.1
+  uuid: ^4.0.0
   intl: ^0.18.1
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.1
+  flutter_lints: ^2.0.3
 
 flutter:
   uses-material-design: true
