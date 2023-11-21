@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   go_router: ^12.1.1
   url_launcher: ^6.2.1
-  uuid: ^4.0.0
+  uuid: ^4.2.1
   intl: ^0.18.1
   shared_preferences: ^2.2.2
 
