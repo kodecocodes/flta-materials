@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'constants.dart';
@@ -7,6 +8,16 @@ import 'home.dart';
 
 void main() {
   runApp(const Yummy());
+}
+
+/// Allows the ability to scroll by dragging with touch, mouse, and trackpad.
+class CustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.trackpad
+      };
 }
 
 class Yummy extends StatefulWidget {
@@ -41,10 +52,10 @@ class _YummyState extends State<Yummy> {
               onLogIn: (Credentials credentials) async {
             _auth
                 .signIn(credentials.username, credentials.password)
-                .then((_) => context.go('/'));
+                .then((_) => context.go('/${YummyTab.home.value}'));
           })),
       GoRoute(
-          path: '/',
+          path: '/:tab',
           builder: (context, state) {
             return Home(
               auth: _auth,
@@ -54,7 +65,7 @@ class _YummyState extends State<Yummy> {
               changeColor: changeColor,
               colorSelected: colorSelected,
               tab: int.tryParse(
-                state.uri.queryParameters['tab'] ?? '') ?? 0);
+                state.pathParameters['tab'] ?? '') ?? 0);
           },
           routes: [
             GoRoute(
@@ -96,7 +107,7 @@ class _YummyState extends State<Yummy> {
     }
     // Go to root of app / if the user is already signed in
     else if (loggedIn && isOnLoginPage) {
-      return '/';
+      return '/${YummyTab.home.value}';
     }
 
     // no redirect
@@ -122,7 +133,7 @@ class _YummyState extends State<Yummy> {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: _router,
-      // TODO: Add Custom Scroll Behavior
+      scrollBehavior: CustomScrollBehavior(),
       themeMode: themeMode,
       theme: ThemeData(
         colorSchemeSeed: colorSelected.color,

@@ -88,7 +88,7 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: NavigationBar(
         selectedIndex: widget.tab,
         onDestinationSelected: (index) {
-          context.go('/?tab=$index');
+          context.go('/$index');
         },
         destinations: appBarDestinations,
       ),

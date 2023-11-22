@@ -1,5 +1,5 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
-
 import 'constants.dart';
 // TODO: Replace home with screens.dart
 import 'home.dart';
@@ -7,6 +7,16 @@ import '../models/models.dart';
 
 void main() {
   runApp(const Yummy());
+}
+
+/// Allows the ability to scroll by dragging with touch, mouse, and trackpad.
+class CustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.trackpad
+      };
 }
 
 class Yummy extends StatefulWidget {
@@ -53,6 +63,7 @@ class _YummyState extends State<Yummy> {
     // TODO: Replace with Router
     return MaterialApp(
       debugShowCheckedModeBanner: false, // Uncomment to remove Debug banner
+      scrollBehavior: CustomScrollBehavior(),
       themeMode: themeMode,
       theme: ThemeData(
         colorSchemeSeed: colorSelected.color,

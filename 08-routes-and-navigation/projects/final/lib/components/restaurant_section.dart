@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../components/components.dart';
 import '../models/models.dart';
+import '../constants.dart';
 
 class RestaurantSection extends StatelessWidget {
   final List<Restaurant> restaurants;
@@ -39,7 +40,7 @@ class RestaurantSection extends StatelessWidget {
                     child: RestaurantLandscapeCard(
                       restaurant: restaurants[index],
                       onTap: () {
-                        context.go('/restaurant/${restaurants[index].id}');
+                        context.go('/${YummyTab.home.value}/restaurant/${restaurants[index].id}');
                       },
                     ));
               },
