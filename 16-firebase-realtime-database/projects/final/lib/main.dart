@@ -1,52 +1,75 @@
-import 'package:flutter/material.dart';
-import 'ui/message_list.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:provider/provider.dart';
-import '../data/message_dao.dart';
-import '../data/user_dao.dart';
-import 'ui/login.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'constants.dart';
+import 'firebase_options.dart';
+import 'home.dart';
 
 Future<void> main() async {
+  // Ensure there is platform channel to native code for Firebase Initialization
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const App());
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  runApp(
+    // ProviderScope stores all providers state
+    const ProviderScope(
+      child: Yummy(),
+    ),
+  );
 }
 
-class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+class Yummy extends StatefulWidget {
+  const Yummy({super.key});
+
+  @override
+  State<Yummy> createState() => _YummyState();
+}
+
+class _YummyState extends State<Yummy> {
+  ThemeMode themeMode = ThemeMode.light;
+  ColorSelection colorSelected = ColorSelection.pink;
+
+  void changeThemeMode(bool useLightMode) {
+    setState(() {
+      themeMode = useLightMode
+          ? ThemeMode.light //
+          : ThemeMode.dark;
+    });
+  }
+
+  void changeColor(int value) {
+    setState(() {
+      colorSelected = ColorSelection.values[value];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<UserDao>(
-          lazy: false,
-          create: (_) => UserDao(),
-        ),
-        Provider<MessageDao>(
-          lazy: false,
-          create: (_) => MessageDao(),
-        ),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'RayChat',
-        theme: ThemeData(
-          primaryColor: const Color(0xFF3D814A),
-        ),
-        home: Consumer<UserDao>(
-          builder: (
-            context,
-            userDao,
-            child,
-          ) {
-            if (userDao.isLoggedIn()) {
-              return const MessageList();
-            } else {
-              return const Login();
-            }
-          },
-        ),
+    const appTitle = 'Yummy';
+
+    return MaterialApp(
+      title: appTitle,
+      //debugShowCheckedModeBanner: false, // Uncomment to remove Debug banner
+      themeMode: themeMode,
+      theme: ThemeData(
+        colorSchemeSeed: colorSelected.color,
+        useMaterial3: true,
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        colorSchemeSeed: colorSelected.color,
+        useMaterial3: true,
+        brightness: Brightness.dark,
+      ),
+      home: Home(
+        appTitle: appTitle,
+        changeTheme: changeThemeMode,
+        changeColor: changeColor,
+        colorSelected: colorSelected,
       ),
     );
   }
