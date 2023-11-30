@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -91,87 +90,118 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
   }
 
   Widget topImage(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return Stack(
-      children: [
-        SizedBox(
-          width: size.width,
-          height: 150,
-          child: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  stops: [0.0, 0.5, 1.0],
-                  colors: [lightGreen, Colors.white, lightGreen]),
+    final repository = ref.read(repositoryProvider.notifier);
+    final deviceWidth = MediaQuery.of(context).size.shortestSide;
+    final isHandset = 300 < deviceWidth && deviceWidth < 600;
+    final horizontalPadding = isHandset ? 0.0 : deviceWidth / 2;
+
+    return SizedBox(
+      height: 150,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    stops: [0.0, 0.5, 1.0],
+                    colors: [lightGreen, Colors.white, lightGreen]),
+              ),
             ),
           ),
-        ),
-        Align(
-          alignment: Alignment.topCenter,
-          child: Hero(
-            tag: 'recipe-${widget.recipe.id}',
-            child: CachedNetworkImage(
-              imageUrl: widget.recipe.image ?? '',
-              alignment: Alignment.topCenter,
-              fit: BoxFit.contain,
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              height: 150,
-              width: 200,
+          Positioned.fill(
+            left: horizontalPadding,
+            right: horizontalPadding,
+            child: Hero(
+              tag: 'recipe-${widget.recipe.id}',
+              child: CachedNetworkImage(
+                imageUrl: widget.recipe.image ?? '',
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+              ),
             ),
           ),
-        ),
-      ],
+          Positioned(
+            top: 8,
+            left: 16,
+            child: CircleAvatar(
+              backgroundColor: Colors.black54,
+              child: IconButton(
+                splashColor: Colors.white,
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ),
+          Positioned(
+            top: 8,
+            right: 16,
+            child: CircleAvatar(
+              backgroundColor: Colors.black54,
+              child: IconButton(
+                icon: SvgPicture.asset(
+                  widget.recipe.bookmarked
+                      ? 'assets/images/icon_bookmarks.svg'
+                      : 'assets/images/icon_bookmark.svg',
+                  colorFilter:
+                      const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                ),
+                onPressed: () {
+                  if (!widget.recipe.bookmarked) {
+                    if (recipeDetail != null) {
+                      repository.insertRecipe(recipeDetail!).then((_) {
+                        ScaffoldMessenger.of(context)
+                          ..clearSnackBars()
+                          ..showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'You\'ve bookmarked the recipe: '
+                                '${widget.recipe.label ?? ""}.',
+                              ),
+                            ),
+                          );
+                      });
+                    }
+                  } else {
+                    repository.deleteRecipe(recipeDetail!).then((_) {
+                      ScaffoldMessenger.of(context)
+                        ..clearSnackBars()
+                        ..showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'You\'ve removed '
+                              '${widget.recipe.label ?? ""}'
+                              ' from your bookmarked recipes.',
+                            ),
+                          ),
+                        );
+                    });
+                  }
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget titleRow() {
-    final repository = ref.read(repositoryProvider.notifier);
-    final titleRowColor =
-        widget.recipe.bookmarked ? Colors.black : Colors.white;
-    return Container(
-      decoration: const BoxDecoration(color: lightGreen),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 16.0),
-        child: Row(
-          children: [
-            IconButton(
-              icon: Icon(Icons.arrow_back, color: titleRowColor),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+      child: Text(
+        widget.recipe.label ?? '',
+        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.bold,
             ),
-            Expanded(
-              child: AutoSizeText(
-                widget.recipe.label ?? '',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: TextStyle(
-                    fontSize: 24, fontFamily: 'Roboto', color: titleRowColor),
-              ),
-            ),
-            IconButton(
-              icon: SvgPicture.asset(
-                widget.recipe.bookmarked
-                    ? 'assets/images/icon_bookmarks.svg'
-                    : 'assets/images/icon_bookmark.svg',
-                colorFilter: ColorFilter.mode(titleRowColor, BlendMode.srcIn),
-              ),
-              onPressed: () {
-                if (!widget.recipe.bookmarked) {
-                  if (recipeDetail != null) {
-                    repository.insertRecipe(recipeDetail!);
-                  }
-                  // ignore: dead_code
-                } else {
-                  repository.deleteRecipe(recipeDetail!);
-                }
-                Navigator.pop(context);
-              },
-            ),
-            sizedW8,
-          ],
-        ),
       ),
     );
   }
