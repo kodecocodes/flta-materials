@@ -87,6 +87,7 @@ class _MyAppState extends State<MyApp> {
         ])
       ],
       child: MaterialApp(
+        // TODO: Change title
         title: 'Recipes',
         debugShowCheckedModeBanner: false,
         themeMode: currentMode,
