@@ -17,9 +17,9 @@ class RecipeDetails extends ConsumerStatefulWidget {
   final Recipe recipe;
 
   const RecipeDetails({
-    Key? key,
+    super.key,
     required this.recipe,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<RecipeDetails> createState() => _RecipeDetailsState();

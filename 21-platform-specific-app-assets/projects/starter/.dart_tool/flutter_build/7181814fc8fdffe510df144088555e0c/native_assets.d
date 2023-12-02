@@ -1,0 +1,1 @@
+ /Users/Stef/Apps_Dev_Space/GitHub/Work/raywenderlich/flta_edition4_materials/21-platform-specific-app-assets/projects/starter/.dart_tool/flutter_build/7181814fc8fdffe510df144088555e0c/native_assets.yaml: 

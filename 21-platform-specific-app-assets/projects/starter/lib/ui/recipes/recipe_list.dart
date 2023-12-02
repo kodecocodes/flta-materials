@@ -21,7 +21,7 @@ import '../widgets/custom_dropdown.dart';
 enum ListType { all, bookmarks }
 
 class RecipeList extends ConsumerStatefulWidget {
-  const RecipeList({Key? key}) : super(key: key);
+  const RecipeList({super.key});
 
   @override
   ConsumerState createState() => _RecipeListState();
