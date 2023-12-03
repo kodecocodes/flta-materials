@@ -283,7 +283,7 @@ class _RecipeListState extends ConsumerState<RecipeList> {
                 child: Text(
                   snapshot.error.toString(),
                   textAlign: TextAlign.center,
-                  textScaleFactor: 1.3,
+                  textScaler: const TextScaler.linear(1.3),
                 ),
               ),
             );
