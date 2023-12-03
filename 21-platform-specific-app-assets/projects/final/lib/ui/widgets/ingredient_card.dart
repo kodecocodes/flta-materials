@@ -13,13 +13,13 @@ class IngredientCard extends ConsumerStatefulWidget {
   final OnChecked onChecked;
 
   const IngredientCard({
-    Key? key,
+    super.key,
     required this.name,
     required this.initiallyChecked,
     required this.evenRow,
     this.showCheckbox = true,
     required this.onChecked,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<IngredientCard> createState() => _IngredientCardState();
