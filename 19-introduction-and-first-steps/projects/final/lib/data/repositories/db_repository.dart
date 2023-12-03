@@ -140,8 +140,8 @@ class DBRepository extends Notifier<CurrentRecipeData> implements Repository {
   @override
   Future<void> deleteRecipe(Recipe recipe) {
     if (recipe.id != null) {
-      final updatedList = [...state.currentRecipes];
-      updatedList.remove(recipe);
+      final updatedList =
+          state.currentRecipes.where((it) => it.id != recipe.id).toList();
       state = state.copyWith(currentRecipes: updatedList);
       _recipeDao.deleteRecipe(recipe.id!);
       deleteRecipeIngredients(recipe.id!);

@@ -9,7 +9,6 @@ import 'widgets/common.dart';
 
 Widget recipeCard(Recipe recipe) {
   return Card(
-    clipBehavior: Clip.antiAlias,
     color: Colors.white,
     elevation: 4.0,
     shape: RoundedRectangleBorder(
