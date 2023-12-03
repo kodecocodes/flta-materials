@@ -1,6 +1,6 @@
 {
-    "name": "starter",
-    "short_name": "starter",
+    "name": "recipe_finder",
+    "short_name": "recipe_finder",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
