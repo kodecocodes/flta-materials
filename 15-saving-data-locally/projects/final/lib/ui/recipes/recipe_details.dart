@@ -35,9 +35,13 @@ class _RecipeDetailsState extends ConsumerState<RecipeDetails> {
   }
 
   void loadRecipe() async {
+    var id = widget.recipe.id.toString();
+    if (widget.recipe.remoteId != null) {
+      id = widget.recipe.remoteId.toString();
+    }
     final response = await ref
         .read(serviceProvider)
-        .queryRecipe(widget.recipe.id.toString());
+        .queryRecipe(id);
     final result = response.body;
     if (result is Success<Recipe>) {
       final body = result.value;

@@ -9,6 +9,7 @@ part 'recipe.g.dart';
 class Recipe with _$Recipe {
   const factory Recipe({
   int? id,
+  int? remoteId,
   String? label,
   String? image,
   String? description,

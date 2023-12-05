@@ -18,6 +18,12 @@ class $DbRecipeTable extends DbRecipe
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _remoteIdMeta =
+      const VerificationMeta('remoteId');
+  @override
+  late final GeneratedColumn<int> remoteId = GeneratedColumn<int>(
+      'remote_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _labelMeta = const VerificationMeta('label');
   @override
   late final GeneratedColumn<String> label = GeneratedColumn<String>(
@@ -37,22 +43,20 @@ class $DbRecipeTable extends DbRecipe
   static const VerificationMeta _bookmarkedMeta =
       const VerificationMeta('bookmarked');
   @override
-  late final GeneratedColumn<bool> bookmarked =
-      GeneratedColumn<bool>('bookmarked', aliasedName, false,
-          type: DriftSqlType.bool,
-          requiredDuringInsert: true,
-          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
-            SqlDialect.sqlite: 'CHECK ("bookmarked" IN (0, 1))',
-            SqlDialect.mysql: '',
-            SqlDialect.postgres: '',
-          }));
+  late final GeneratedColumn<bool> bookmarked = GeneratedColumn<bool>(
+      'bookmarked', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("bookmarked" IN (0, 1))'));
   @override
   List<GeneratedColumn> get $columns =>
-      [id, label, image, description, bookmarked];
+      [id, remoteId, label, image, description, bookmarked];
   @override
-  String get aliasedName => _alias ?? 'db_recipe';
+  String get aliasedName => _alias ?? actualTableName;
   @override
-  String get actualTableName => 'db_recipe';
+  String get actualTableName => $name;
+  static const String $name = 'db_recipe';
   @override
   VerificationContext validateIntegrity(Insertable<DbRecipeData> instance,
       {bool isInserting = false}) {
@@ -60,6 +64,12 @@ class $DbRecipeTable extends DbRecipe
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('remote_id')) {
+      context.handle(_remoteIdMeta,
+          remoteId.isAcceptableOrUnknown(data['remote_id']!, _remoteIdMeta));
+    } else if (isInserting) {
+      context.missing(_remoteIdMeta);
     }
     if (data.containsKey('label')) {
       context.handle(
@@ -100,6 +110,8 @@ class $DbRecipeTable extends DbRecipe
     return DbRecipeData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      remoteId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}remote_id'])!,
       label: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}label'])!,
       image: attachedDatabase.typeMapping
@@ -119,12 +131,14 @@ class $DbRecipeTable extends DbRecipe
 
 class DbRecipeData extends DataClass implements Insertable<DbRecipeData> {
   final int id;
+  final int remoteId;
   final String label;
   final String image;
   final String description;
   final bool bookmarked;
   const DbRecipeData(
       {required this.id,
+      required this.remoteId,
       required this.label,
       required this.image,
       required this.description,
@@ -133,6 +147,7 @@ class DbRecipeData extends DataClass implements Insertable<DbRecipeData> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
+    map['remote_id'] = Variable<int>(remoteId);
     map['label'] = Variable<String>(label);
     map['image'] = Variable<String>(image);
     map['description'] = Variable<String>(description);
@@ -143,6 +158,7 @@ class DbRecipeData extends DataClass implements Insertable<DbRecipeData> {
   DbRecipeCompanion toCompanion(bool nullToAbsent) {
     return DbRecipeCompanion(
       id: Value(id),
+      remoteId: Value(remoteId),
       label: Value(label),
       image: Value(image),
       description: Value(description),
@@ -155,6 +171,7 @@ class DbRecipeData extends DataClass implements Insertable<DbRecipeData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return DbRecipeData(
       id: serializer.fromJson<int>(json['id']),
+      remoteId: serializer.fromJson<int>(json['remoteId']),
       label: serializer.fromJson<String>(json['label']),
       image: serializer.fromJson<String>(json['image']),
       description: serializer.fromJson<String>(json['description']),
@@ -166,6 +183,7 @@ class DbRecipeData extends DataClass implements Insertable<DbRecipeData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'remoteId': serializer.toJson<int>(remoteId),
       'label': serializer.toJson<String>(label),
       'image': serializer.toJson<String>(image),
       'description': serializer.toJson<String>(description),
@@ -175,12 +193,14 @@ class DbRecipeData extends DataClass implements Insertable<DbRecipeData> {
 
   DbRecipeData copyWith(
           {int? id,
+          int? remoteId,
           String? label,
           String? image,
           String? description,
           bool? bookmarked}) =>
       DbRecipeData(
         id: id ?? this.id,
+        remoteId: remoteId ?? this.remoteId,
         label: label ?? this.label,
         image: image ?? this.image,
         description: description ?? this.description,
@@ -190,6 +210,7 @@ class DbRecipeData extends DataClass implements Insertable<DbRecipeData> {
   String toString() {
     return (StringBuffer('DbRecipeData(')
           ..write('id: $id, ')
+          ..write('remoteId: $remoteId, ')
           ..write('label: $label, ')
           ..write('image: $image, ')
           ..write('description: $description, ')
@@ -199,12 +220,14 @@ class DbRecipeData extends DataClass implements Insertable<DbRecipeData> {
   }
 
   @override
-  int get hashCode => Object.hash(id, label, image, description, bookmarked);
+  int get hashCode =>
+      Object.hash(id, remoteId, label, image, description, bookmarked);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is DbRecipeData &&
           other.id == this.id &&
+          other.remoteId == this.remoteId &&
           other.label == this.label &&
           other.image == this.image &&
           other.description == this.description &&
@@ -213,12 +236,14 @@ class DbRecipeData extends DataClass implements Insertable<DbRecipeData> {
 
 class DbRecipeCompanion extends UpdateCompanion<DbRecipeData> {
   final Value<int> id;
+  final Value<int> remoteId;
   final Value<String> label;
   final Value<String> image;
   final Value<String> description;
   final Value<bool> bookmarked;
   const DbRecipeCompanion({
     this.id = const Value.absent(),
+    this.remoteId = const Value.absent(),
     this.label = const Value.absent(),
     this.image = const Value.absent(),
     this.description = const Value.absent(),
@@ -226,16 +251,19 @@ class DbRecipeCompanion extends UpdateCompanion<DbRecipeData> {
   });
   DbRecipeCompanion.insert({
     this.id = const Value.absent(),
+    required int remoteId,
     required String label,
     required String image,
     required String description,
     required bool bookmarked,
-  })  : label = Value(label),
+  })  : remoteId = Value(remoteId),
+        label = Value(label),
         image = Value(image),
         description = Value(description),
         bookmarked = Value(bookmarked);
   static Insertable<DbRecipeData> custom({
     Expression<int>? id,
+    Expression<int>? remoteId,
     Expression<String>? label,
     Expression<String>? image,
     Expression<String>? description,
@@ -243,6 +271,7 @@ class DbRecipeCompanion extends UpdateCompanion<DbRecipeData> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (remoteId != null) 'remote_id': remoteId,
       if (label != null) 'label': label,
       if (image != null) 'image': image,
       if (description != null) 'description': description,
@@ -252,12 +281,14 @@ class DbRecipeCompanion extends UpdateCompanion<DbRecipeData> {
 
   DbRecipeCompanion copyWith(
       {Value<int>? id,
+      Value<int>? remoteId,
       Value<String>? label,
       Value<String>? image,
       Value<String>? description,
       Value<bool>? bookmarked}) {
     return DbRecipeCompanion(
       id: id ?? this.id,
+      remoteId: remoteId ?? this.remoteId,
       label: label ?? this.label,
       image: image ?? this.image,
       description: description ?? this.description,
@@ -270,6 +301,9 @@ class DbRecipeCompanion extends UpdateCompanion<DbRecipeData> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
+    }
+    if (remoteId.present) {
+      map['remote_id'] = Variable<int>(remoteId.value);
     }
     if (label.present) {
       map['label'] = Variable<String>(label.value);
@@ -290,6 +324,7 @@ class DbRecipeCompanion extends UpdateCompanion<DbRecipeData> {
   String toString() {
     return (StringBuffer('DbRecipeCompanion(')
           ..write('id: $id, ')
+          ..write('remoteId: $remoteId, ')
           ..write('label: $label, ')
           ..write('image: $image, ')
           ..write('description: $description, ')
@@ -333,9 +368,10 @@ class $DbIngredientTable extends DbIngredient
   @override
   List<GeneratedColumn> get $columns => [id, recipeId, name, amount];
   @override
-  String get aliasedName => _alias ?? 'db_ingredient';
+  String get aliasedName => _alias ?? actualTableName;
   @override
-  String get actualTableName => 'db_ingredient';
+  String get actualTableName => $name;
+  static const String $name = 'db_ingredient';
   @override
   VerificationContext validateIntegrity(Insertable<DbIngredientData> instance,
       {bool isInserting = false}) {

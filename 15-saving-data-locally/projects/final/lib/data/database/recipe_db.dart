@@ -8,6 +8,8 @@ part 'recipe_db.g.dart';
 class DbRecipe extends Table {
   IntColumn get id => integer().autoIncrement()();
 
+  IntColumn get remoteId => integer()();
+
   TextColumn get label => text()();
 
   TextColumn get image => text()();
@@ -103,6 +105,7 @@ Recipe dbRecipeToModelRecipe(
     DbRecipeData recipe, List<Ingredient> ingredients) {
   return Recipe(
     id: recipe.id,
+    remoteId: recipe.remoteId,
     label: recipe.label,
     image: recipe.image,
     description: recipe.description,
@@ -115,6 +118,7 @@ Recipe dbRecipeToModelRecipe(
 
 Insertable<DbRecipeData> recipeToInsertableDbRecipe(Recipe recipe) {
   return DbRecipeCompanion.insert(
+    remoteId: recipe.id ?? 0,
     label: recipe.label ?? '',
     image: recipe.image ?? '',
     description: recipe.description ?? '',

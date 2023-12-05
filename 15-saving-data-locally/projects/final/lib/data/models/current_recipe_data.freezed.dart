@@ -63,22 +63,22 @@ class _$CurrentRecipeDataCopyWithImpl<$Res, $Val extends CurrentRecipeData>
 }
 
 /// @nodoc
-abstract class _$$_CurrentRecipeDataCopyWith<$Res>
+abstract class _$$CurrentRecipeDataImplCopyWith<$Res>
     implements $CurrentRecipeDataCopyWith<$Res> {
-  factory _$$_CurrentRecipeDataCopyWith(_$_CurrentRecipeData value,
-          $Res Function(_$_CurrentRecipeData) then) =
-      __$$_CurrentRecipeDataCopyWithImpl<$Res>;
+  factory _$$CurrentRecipeDataImplCopyWith(_$CurrentRecipeDataImpl value,
+          $Res Function(_$CurrentRecipeDataImpl) then) =
+      __$$CurrentRecipeDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<Recipe> currentRecipes, List<Ingredient> currentIngredients});
 }
 
 /// @nodoc
-class __$$_CurrentRecipeDataCopyWithImpl<$Res>
-    extends _$CurrentRecipeDataCopyWithImpl<$Res, _$_CurrentRecipeData>
-    implements _$$_CurrentRecipeDataCopyWith<$Res> {
-  __$$_CurrentRecipeDataCopyWithImpl(
-      _$_CurrentRecipeData _value, $Res Function(_$_CurrentRecipeData) _then)
+class __$$CurrentRecipeDataImplCopyWithImpl<$Res>
+    extends _$CurrentRecipeDataCopyWithImpl<$Res, _$CurrentRecipeDataImpl>
+    implements _$$CurrentRecipeDataImplCopyWith<$Res> {
+  __$$CurrentRecipeDataImplCopyWithImpl(_$CurrentRecipeDataImpl _value,
+      $Res Function(_$CurrentRecipeDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -87,7 +87,7 @@ class __$$_CurrentRecipeDataCopyWithImpl<$Res>
     Object? currentRecipes = null,
     Object? currentIngredients = null,
   }) {
-    return _then(_$_CurrentRecipeData(
+    return _then(_$CurrentRecipeDataImpl(
       currentRecipes: null == currentRecipes
           ? _value._currentRecipes
           : currentRecipes // ignore: cast_nullable_to_non_nullable
@@ -102,8 +102,8 @@ class __$$_CurrentRecipeDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CurrentRecipeData implements _CurrentRecipeData {
-  const _$_CurrentRecipeData(
+class _$CurrentRecipeDataImpl implements _CurrentRecipeData {
+  const _$CurrentRecipeDataImpl(
       {final List<Recipe> currentRecipes = const <Recipe>[],
       final List<Ingredient> currentIngredients = const <Ingredient>[]})
       : _currentRecipes = currentRecipes,
@@ -137,7 +137,7 @@ class _$_CurrentRecipeData implements _CurrentRecipeData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CurrentRecipeData &&
+            other is _$CurrentRecipeDataImpl &&
             const DeepCollectionEquality()
                 .equals(other._currentRecipes, _currentRecipes) &&
             const DeepCollectionEquality()
@@ -153,15 +153,15 @@ class _$_CurrentRecipeData implements _CurrentRecipeData {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CurrentRecipeDataCopyWith<_$_CurrentRecipeData> get copyWith =>
-      __$$_CurrentRecipeDataCopyWithImpl<_$_CurrentRecipeData>(
+  _$$CurrentRecipeDataImplCopyWith<_$CurrentRecipeDataImpl> get copyWith =>
+      __$$CurrentRecipeDataImplCopyWithImpl<_$CurrentRecipeDataImpl>(
           this, _$identity);
 }
 
 abstract class _CurrentRecipeData implements CurrentRecipeData {
   const factory _CurrentRecipeData(
       {final List<Recipe> currentRecipes,
-      final List<Ingredient> currentIngredients}) = _$_CurrentRecipeData;
+      final List<Ingredient> currentIngredients}) = _$CurrentRecipeDataImpl;
 
   @override
   List<Recipe> get currentRecipes;
@@ -169,6 +169,6 @@ abstract class _CurrentRecipeData implements CurrentRecipeData {
   List<Ingredient> get currentIngredients;
   @override
   @JsonKey(ignore: true)
-  _$$_CurrentRecipeDataCopyWith<_$_CurrentRecipeData> get copyWith =>
+  _$$CurrentRecipeDataImplCopyWith<_$CurrentRecipeDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

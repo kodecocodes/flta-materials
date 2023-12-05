@@ -57,22 +57,22 @@ class _$MainScreenStateCopyWithImpl<$Res, $Val extends MainScreenState>
 }
 
 /// @nodoc
-abstract class _$$_MainScreenStateCopyWith<$Res>
+abstract class _$$MainScreenStateImplCopyWith<$Res>
     implements $MainScreenStateCopyWith<$Res> {
-  factory _$$_MainScreenStateCopyWith(
-          _$_MainScreenState value, $Res Function(_$_MainScreenState) then) =
-      __$$_MainScreenStateCopyWithImpl<$Res>;
+  factory _$$MainScreenStateImplCopyWith(_$MainScreenStateImpl value,
+          $Res Function(_$MainScreenStateImpl) then) =
+      __$$MainScreenStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int selectedIndex});
 }
 
 /// @nodoc
-class __$$_MainScreenStateCopyWithImpl<$Res>
-    extends _$MainScreenStateCopyWithImpl<$Res, _$_MainScreenState>
-    implements _$$_MainScreenStateCopyWith<$Res> {
-  __$$_MainScreenStateCopyWithImpl(
-      _$_MainScreenState _value, $Res Function(_$_MainScreenState) _then)
+class __$$MainScreenStateImplCopyWithImpl<$Res>
+    extends _$MainScreenStateCopyWithImpl<$Res, _$MainScreenStateImpl>
+    implements _$$MainScreenStateImplCopyWith<$Res> {
+  __$$MainScreenStateImplCopyWithImpl(
+      _$MainScreenStateImpl _value, $Res Function(_$MainScreenStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -80,7 +80,7 @@ class __$$_MainScreenStateCopyWithImpl<$Res>
   $Res call({
     Object? selectedIndex = null,
   }) {
-    return _then(_$_MainScreenState(
+    return _then(_$MainScreenStateImpl(
       selectedIndex: null == selectedIndex
           ? _value.selectedIndex
           : selectedIndex // ignore: cast_nullable_to_non_nullable
@@ -91,8 +91,8 @@ class __$$_MainScreenStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_MainScreenState implements _MainScreenState {
-  const _$_MainScreenState({this.selectedIndex = 0});
+class _$MainScreenStateImpl implements _MainScreenState {
+  const _$MainScreenStateImpl({this.selectedIndex = 0});
 
   @override
   @JsonKey()
@@ -107,7 +107,7 @@ class _$_MainScreenState implements _MainScreenState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MainScreenState &&
+            other is _$MainScreenStateImpl &&
             (identical(other.selectedIndex, selectedIndex) ||
                 other.selectedIndex == selectedIndex));
   }
@@ -118,18 +118,19 @@ class _$_MainScreenState implements _MainScreenState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MainScreenStateCopyWith<_$_MainScreenState> get copyWith =>
-      __$$_MainScreenStateCopyWithImpl<_$_MainScreenState>(this, _$identity);
+  _$$MainScreenStateImplCopyWith<_$MainScreenStateImpl> get copyWith =>
+      __$$MainScreenStateImplCopyWithImpl<_$MainScreenStateImpl>(
+          this, _$identity);
 }
 
 abstract class _MainScreenState implements MainScreenState {
   const factory _MainScreenState({final int selectedIndex}) =
-      _$_MainScreenState;
+      _$MainScreenStateImpl;
 
   @override
   int get selectedIndex;
   @override
   @JsonKey(ignore: true)
-  _$$_MainScreenStateCopyWith<_$_MainScreenState> get copyWith =>
+  _$$MainScreenStateImplCopyWith<_$MainScreenStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
