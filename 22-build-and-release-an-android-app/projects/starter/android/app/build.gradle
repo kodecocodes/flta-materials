@@ -23,6 +23,7 @@ if (flutterVersionName == null) {
 }
 
 // TODO: Add keystore properties here
+
 android {
     namespace "com.kodeco.recipe_finder"
     compileSdkVersion flutter.compileSdkVersion
