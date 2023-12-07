@@ -115,6 +115,7 @@ Recipe dbRecipeToModelRecipe(
 
 Insertable<DbRecipeData> recipeToInsertableDbRecipe(Recipe recipe) {
   return DbRecipeCompanion.insert(
+    id: Value.ofNullable(recipe.id),
     label: recipe.label ?? '',
     image: recipe.image ?? '',
     description: recipe.description ?? '',
