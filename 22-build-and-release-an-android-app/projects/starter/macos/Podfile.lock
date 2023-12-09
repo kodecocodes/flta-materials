@@ -63,13 +63,13 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/sqlite3_flutter_libs/macos
 
 SPEC CHECKSUMS:
-  desktop_window: fb7c4f12c1129f947ac482296b6f14059d57a3c3
+  desktop_window: f7d997ac5583e9a3c0dcf146e293345b6e53d142
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  menubar: 4e3d461d62d775540277ce6639acafe2a111a231
+  menubar: 21d620e98aa539f7ab82b705bdb63a9d1665acb8
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
-  sqflite: a5789cceda41d54d23f31d6de539d65bb14100ea
+  sqflite: 5c95035b48b4152774f4c67ed811f217917bdb47
   sqlite3: 6e2d4a4879854d0ec86b476bf3c3e30870bac273
   sqlite3_flutter_libs: a25f3a0f522fdcd8fef6a4a50a3d681dd43d8dea
 
