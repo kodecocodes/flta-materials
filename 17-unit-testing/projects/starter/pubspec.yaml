@@ -1,0 +1,71 @@
+name: recipes
+description: Recipe Finder
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.6
+
+  logging: ^1.2.0
+  auto_size_text: ^3.0.0
+  flutter_adaptive_scaffold: ^0.1.7+1
+  desktop_window: ^0.4.0
+  path: ^1.8.3
+  cached_network_image: ^3.2.3
+  flutter_slidable: ^3.0.0
+  platform: ^3.1.0
+  freezed_annotation: ^2.4.1
+  http: ^1.1.0
+  chopper: ^6.1.4
+  flutter_svg: ^2.0.7
+  shared_preferences: ^2.2.0
+  json_annotation: ^4.8.1
+  flutter_html: ^3.0.0-beta.2
+  lumberdash: ^3.0.0
+  colorize_lumberdash: ^3.0.0
+  path_provider: ^2.1.1
+  flutter_riverpod: ^2.4.0
+  synchronized: ^3.1.0
+  sqlbrite: ^2.6.0
+  sqlite3_flutter_libs: ^0.5.18
+  web_ffi: ^0.7.2
+  sqlite3: ^2.1.0
+  drift: ^2.13.1
+
+  menubar:
+    git:
+      url: https://github.com/google/flutter-desktop-embedding
+      path: plugins/menubar
+      ref: 12decbe0f592e14e03223f6f2c0c7e0e2dbd70a1
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  build_runner: ^2.4.6
+  json_serializable: ^6.7.1
+  chopper_generator: ^6.0.3
+  freezed: ^2.4.1
+  drift_dev: ^2.13.2
+
+
+  flutter_lints: ^2.0.3
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/recipes1.json
+    - assets/recipes2.json
+    - assets/recipe_details.json
+    - assets/images/

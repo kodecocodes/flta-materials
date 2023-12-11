@@ -1,0 +1,67 @@
+{
+  "results": [
+    {
+      "id": 296687,
+      "title": "Chicken",
+      "image": "https://spoonacular.com/recipeImages/296687-312x231.jpeg",
+      "imageType": "jpeg"
+    },
+    {
+      "id": 379523,
+      "title": "Chicken",
+      "image": "https://spoonacular.com/recipeImages/379523-312x231.jpeg",
+      "imageType": "jpeg"
+    },
+    {
+      "id": 1224783,
+      "title": "Chicken 65",
+      "image": "https://spoonacular.com/recipeImages/1224783-312x231.jpg",
+      "imageType": "jpg"
+    },
+    {
+      "id": 637876,
+      "title": "Chicken 65",
+      "image": "https://spoonacular.com/recipeImages/637876-312x231.jpg",
+      "imageType": "jpg"
+    },
+    {
+      "id": 737543,
+      "title": "Chicken Pie",
+      "image": "https://spoonacular.com/recipeImages/737543-312x231.jpeg",
+      "imageType": "jpeg"
+    },
+    {
+      "id": 42569,
+      "title": "Chicken Bbq",
+      "image": "https://spoonacular.com/recipeImages/42569-312x231.jpg",
+      "imageType": "jpg"
+    },
+    {
+      "id": 279390,
+      "title": "Chicken Mac",
+      "image": "https://spoonacular.com/recipeImages/279390-312x231.jpg",
+      "imageType": "jpg"
+    },
+    {
+      "id": 583898,
+      "title": "Chicken Pho",
+      "image": "https://spoonacular.com/recipeImages/583898-312x231.jpg",
+      "imageType": "jpg"
+    },
+    {
+      "id": 83890,
+      "title": "Chicken Blt",
+      "image": "https://spoonacular.com/recipeImages/83890-312x231.jpg",
+      "imageType": "jpg"
+    },
+    {
+      "id": 311972,
+      "title": "Chicken Bog",
+      "image": "https://spoonacular.com/recipeImages/311972-312x231.jpeg",
+      "imageType": "jpeg"
+    }
+  ],
+  "offset": 0,
+  "number": 10,
+  "totalResults": 51412
+}
