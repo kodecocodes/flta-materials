@@ -1,0 +1,336 @@
+{
+  "vegetarian": true,
+  "vegan": true,
+  "glutenFree": true,
+  "dairyFree": true,
+  "veryHealthy": true,
+  "cheap": false,
+  "veryPopular": true,
+  "sustainable": false,
+  "lowFodmap": false,
+  "weightWatcherSmartPoints": 8,
+  "gaps": "no",
+  "preparationMinutes": 15,
+  "cookingMinutes": 0,
+  "aggregateLikes": 18248,
+  "healthScore": 100,
+  "creditsText": "Jeanettes Healthy Living",
+  "sourceName": "Jeanettes Healthy Living",
+  "pricePerServing": 185.15,
+  "extendedIngredients": [
+    {
+      "id": 93690,
+      "aisle": "Spices and Seasonings;Health Foods",
+      "image": "nutritional-yeast.png",
+      "consistency": "SOLID",
+      "name": "cheese optional",
+      "nameClean": "nutritional yeast flakes",
+      "original": "freshly grated Bellevitano cheese or your favorite cheese optional (leave out for vegan version or use nutritional yeast)",
+      "originalName": "freshly grated Bellevitano cheese or your favorite cheese optional (leave out for vegan version or use nutritional yeast)",
+      "amount": 2.0,
+      "unit": "servings",
+      "meta": [
+        "freshly grated",
+        "for vegan version or use nutritional yeast",
+        "your favorite",
+        "(leave out )"
+      ],
+      "measures": {
+        "us": {
+          "amount": 2.0,
+          "unitShort": "servings",
+          "unitLong": "servings"
+        },
+        "metric": {
+          "amount": 2.0,
+          "unitShort": "servings",
+          "unitLong": "servings"
+        }
+      }
+    },
+    {
+      "id": 10311529,
+      "aisle": "Produce",
+      "image": "cherry-tomatoes.png",
+      "consistency": "SOLID",
+      "name": "cherry tomatoes",
+      "nameClean": "cherry tomato",
+      "original": "1 cup cherry tomatoes halved",
+      "originalName": "cherry tomatoes halved",
+      "amount": 1.0,
+      "unit": "cup",
+      "meta": [
+        "halved"
+      ],
+      "measures": {
+        "us": {
+          "amount": 1.0,
+          "unitShort": "cup",
+          "unitLong": "cup"
+        },
+        "metric": {
+          "amount": 149.0,
+          "unitShort": "g",
+          "unitLong": "grams"
+        }
+      }
+    },
+    {
+      "id": 20137,
+      "aisle": "Pasta and Rice;Health Foods",
+      "image": "cooked-quinoa.png",
+      "consistency": "SOLID",
+      "name": "quinoa",
+      "nameClean": "cooked quinoa",
+      "original": "1 cup cooked quinoa",
+      "originalName": "cooked quinoa",
+      "amount": 1.0,
+      "unit": "cup",
+      "meta": [
+        "cooked"
+      ],
+      "measures": {
+        "us": {
+          "amount": 1.0,
+          "unitShort": "cup",
+          "unitLong": "cup"
+        },
+        "metric": {
+          "amount": 185.0,
+          "unitShort": "g",
+          "unitLong": "grams"
+        }
+      }
+    },
+    {
+      "id": 11168,
+      "aisle": "Produce",
+      "image": "corn.png",
+      "consistency": "SOLID",
+      "name": "corn",
+      "nameClean": "corn",
+      "original": "1/2 cup corn",
+      "originalName": "corn",
+      "amount": 0.5,
+      "unit": "cup",
+      "meta": [],
+      "measures": {
+        "us": {
+          "amount": 0.5,
+          "unitShort": "cups",
+          "unitLong": "cups"
+        },
+        "metric": {
+          "amount": 77.0,
+          "unitShort": "g",
+          "unitLong": "grams"
+        }
+      }
+    },
+    {
+      "id": 1034053,
+      "aisle": "Oil, Vinegar, Salad Dressing",
+      "image": "olive-oil.jpg",
+      "consistency": "LIQUID",
+      "name": "extra virgin olive oil",
+      "nameClean": "extra virgin olive oil",
+      "original": "2 tablespoons extra virgin olive oil",
+      "originalName": "extra virgin olive oil",
+      "amount": 2.0,
+      "unit": "tablespoons",
+      "meta": [],
+      "measures": {
+        "us": {
+          "amount": 2.0,
+          "unitShort": "Tbsps",
+          "unitLong": "Tbsps"
+        },
+        "metric": {
+          "amount": 2.0,
+          "unitShort": "Tbsps",
+          "unitLong": "Tbsps"
+        }
+      }
+    },
+    {
+      "id": 10211215,
+      "aisle": "Produce",
+      "image": "garlic.jpg",
+      "consistency": "SOLID",
+      "name": "garlic clove",
+      "nameClean": "whole garlic cloves",
+      "original": "1 garlic clove minced",
+      "originalName": "garlic clove minced",
+      "amount": 1.0,
+      "unit": "",
+      "meta": [
+        "minced"
+      ],
+      "measures": {
+        "us": {
+          "amount": 1.0,
+          "unitShort": "",
+          "unitLong": ""
+        },
+        "metric": {
+          "amount": 1.0,
+          "unitShort": "",
+          "unitLong": ""
+        }
+      }
+    },
+    {
+      "id": 11233,
+      "aisle": "Produce",
+      "image": "kale.jpg",
+      "consistency": "SOLID",
+      "name": "kale",
+      "nameClean": "kale",
+      "original": "2 cups kale chopped",
+      "originalName": "kale chopped",
+      "amount": 2.0,
+      "unit": "cups",
+      "meta": [
+        "chopped"
+      ],
+      "measures": {
+        "us": {
+          "amount": 2.0,
+          "unitShort": "cups",
+          "unitLong": "cups"
+        },
+        "metric": {
+          "amount": 134.0,
+          "unitShort": "g",
+          "unitLong": "grams"
+        }
+      }
+    },
+    {
+      "id": 9156,
+      "aisle": "Produce",
+      "image": "zest-lemon.jpg",
+      "consistency": "SOLID",
+      "name": "lemon zest",
+      "nameClean": "lemon peel",
+      "original": "zest and juice from 1 lemon",
+      "originalName": "zest and juice from lemon",
+      "amount": 1.0,
+      "unit": "",
+      "meta": [],
+      "measures": {
+        "us": {
+          "amount": 1.0,
+          "unitShort": "",
+          "unitLong": ""
+        },
+        "metric": {
+          "amount": 1.0,
+          "unitShort": "",
+          "unitLong": ""
+        }
+      }
+    },
+    {
+      "id": 1102047,
+      "aisle": "Spices and Seasonings",
+      "image": "salt-and-pepper.jpg",
+      "consistency": "SOLID",
+      "name": "salt and pepper",
+      "nameClean": "salt and pepper",
+      "original": "salt and freshly ground pepper to taste",
+      "originalName": "salt and freshly ground pepper to taste",
+      "amount": 2.0,
+      "unit": "servings",
+      "meta": [
+        "freshly ground",
+        "to taste"
+      ],
+      "measures": {
+        "us": {
+          "amount": 2.0,
+          "unitShort": "servings",
+          "unitLong": "servings"
+        },
+        "metric": {
+          "amount": 2.0,
+          "unitShort": "servings",
+          "unitLong": "servings"
+        }
+      }
+    },
+    {
+      "id": 11291,
+      "aisle": "Produce",
+      "image": "spring-onions.jpg",
+      "consistency": "SOLID",
+      "name": "scallion",
+      "nameClean": "spring onions",
+      "original": "1 scallion chopped",
+      "originalName": "scallion chopped",
+      "amount": 1.0,
+      "unit": "",
+      "meta": [
+        "chopped"
+      ],
+      "measures": {
+        "us": {
+          "amount": 1.0,
+          "unitShort": "",
+          "unitLong": ""
+        },
+        "metric": {
+          "amount": 1.0,
+          "unitShort": "",
+          "unitLong": ""
+        }
+      }
+    }
+  ],
+  "id": 1009573,
+  "title": "Quinoa Kale Tomato Corn Salad",
+  "readyInMinutes": 15,
+  "servings": 2,
+  "sourceUrl": "http://jeanetteshealthyliving.com/quinoa-kale-tomato-corn-salad/",
+  "image": "https://spoonacular.com/recipeImages/1009573-556x370.jpg",
+  "imageType": "jpg",
+  "summary": "Quinoa Kale Tomato Corn Salad takes about <b>15 minutes</b> from beginning to end. For <b>$1.85 per serving</b>, this recipe <b>covers 27%</b> of your daily requirements of vitamins and minerals. This side dish has <b>318 calories</b>, <b>9g of protein</b>, and <b>18g of fat</b> per serving. This recipe serves 2. It is a good option if you're following a <b>gluten free, dairy free, lacto ovo vegetarian, and vegan</b> diet. If you have corn, extra virgin olive oil, quinoa, and a few other ingredients on hand, you can make it. This recipe from Jeanettes Healthy Living has 18248 fans. All things considered, we decided this recipe <b>deserves a spoonacular score of 100%</b>. This score is amazing. Similar recipes include <a href=\"https://spoonacular.com/recipes/quinoa-kale-tomato-corn-salad-video-giveaway-1254417\">Quinoa Kale Tomato Corn Salad {Video + Giveaway}</a>, <a href=\"https://spoonacular.com/recipes/quinoa-kale-tomato-corn-salad-video-giveaway-474463\">Quinoa Kale Tomato Corn Salad {Video + Giveaway}</a>, and <a href=\"https://spoonacular.com/recipes/quinoa-kale-tomato-corn-salad-video-giveaway-1283115\">Quinoa Kale Tomato Corn Salad {Video + Giveaway}</a>.",
+  "cuisines": [],
+  "dishTypes": [
+    "side dish"
+  ],
+  "diets": [
+    "gluten free",
+    "dairy free",
+    "lacto ovo vegetarian",
+    "vegan"
+  ],
+  "occasions": [],
+  "winePairing": {
+    "pairedWines": [],
+    "pairingText": "",
+    "productMatches": []
+  },
+  "instructions": "InstructionsGently toss all ingredients together in a bowl.",
+  "analyzedInstructions": [
+    {
+      "name": "",
+      "steps": [
+        {
+          "number": 1,
+          "step": "Gently toss all ingredients together in a bowl.",
+          "ingredients": [],
+          "equipment": [
+            {
+              "id": 404783,
+              "name": "bowl",
+              "localizedName": "bowl",
+              "image": "bowl.jpg"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "originalId": null
+}

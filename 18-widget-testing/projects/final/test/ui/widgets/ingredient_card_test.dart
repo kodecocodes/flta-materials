@@ -58,31 +58,6 @@ void main() {
       expect(checkboxFinder, findsOneWidget);
       expect(isChecked, isTrue);
     });
-
-    // Challenge 1: Test that `IngredientCard` can be unchecked
-    testWidgets('can be unchecked when tapped', (tester) async {
-      var isChecked = true;
-      await tester.pumpWidget(
-        _buildWrappedWidget(IngredientCard(
-          name: mockIngredientName,
-          initiallyChecked: isChecked,
-          evenRow: true,
-          onChecked: (newValue) {
-            isChecked = newValue;
-          },
-        )),
-      );
-
-      final cardFinder = find.byType(IngredientCard);
-
-      await tester.tap(cardFinder);
-      await tester.pumpAndSettle();
-
-      final checkboxFinder = find.byType(Checkbox);
-
-      expect(checkboxFinder, findsOneWidget);
-      expect(isChecked, isFalse);
-    });
   });
 
   group('Golden Tests - IngredientCard', () {
@@ -132,49 +107,7 @@ void main() {
       );
       await screenMatchesGolden(tester, 'light_ingredient_card');
     });
-
-    // Challenge 2: Test `IngredientCard` supports dark theme
-    testGoldens('can support dark theme', (tester) async {
-      final builder = GoldenBuilder.grid(columns: 2, widthToHeightRatio: 1)
-        ..addScenario(
-            'Dark - Unchecked',
-            IngredientCard(
-              name: mockIngredientName,
-              initiallyChecked: false,
-              evenRow: true,
-              onChecked: (newValue) {},
-            ))
-        ..addScenario(
-            'Dark - Checked',
-            IngredientCard(
-              name: mockIngredientName,
-              initiallyChecked: true,
-              evenRow: true,
-              onChecked: (newValue) {},
-            ))
-        ..addScenario(
-            'Dark - Odd - Unchecked',
-            IngredientCard(
-              name: mockIngredientName,
-              initiallyChecked: false,
-              evenRow: false,
-              onChecked: (newValue) {},
-            ))
-        ..addScenario(
-            'Dark - Odd - Checked',
-            IngredientCard(
-              name: mockIngredientName,
-              initiallyChecked: true,
-              evenRow: false,
-              onChecked: (newValue) {},
-            ));
-      await tester.pumpWidgetBuilder(
-        builder.build(),
-        wrapper: materialAppWrapper(
-          theme: ThemeData.dark(),
-        ),
-      );
-      await screenMatchesGolden(tester, 'dark_ingredient_card');
-    });
   });
 }
+
+  
