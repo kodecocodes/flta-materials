@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  const MainScreen({super.key});
 
   @override
   ConsumerState createState() => _MainScreenState();
