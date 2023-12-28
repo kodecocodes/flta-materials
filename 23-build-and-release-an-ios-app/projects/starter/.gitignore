@@ -50,7 +50,7 @@ app.*.map.json
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
 **/android/app/google-services.json
-**/android/key.>properties
+**/android/key.properties
 ./recipes.jks
 
 # iOS/XCode related
