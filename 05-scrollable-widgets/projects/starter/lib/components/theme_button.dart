@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class ThemeButton extends StatelessWidget {
   const ThemeButton({
-    Key? key,
+    super.key,
     required this.changeThemeMode,
-  }) : super(key: key);
+  });
 
   final Function changeThemeMode;
 
