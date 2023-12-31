@@ -45,6 +45,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final pages = [
+      // TODO: Replace with ExplorePage
       const Center(
         child: Text(
           'Explore Page',
