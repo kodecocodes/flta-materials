@@ -3,7 +3,11 @@ class FoodCategory {
   int numberOfRestaurants;
   String imageUrl;
 
-  FoodCategory(this.name, this.numberOfRestaurants, this.imageUrl);
+  FoodCategory(
+    this.name,
+    this.numberOfRestaurants,
+    this.imageUrl,
+  );
 }
 
 List<FoodCategory> categories = [
