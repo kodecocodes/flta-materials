@@ -33,6 +33,14 @@
 # Web related
 lib/generated_plugin_registrant.dart
 
+# Firebase related
+lib/firebase_options.dart
+**/android/app/google-servicecs.json
+**/ios/firebase_app_id_file.json
+**/ios/Runner/GoogleService-Info.plist
+**/macos/firebase_app_id_file.json
+**/macos/Runner/GoogleService-Info.plist
+
 # Symbolication related
 app.*.symbols
 
@@ -47,6 +55,7 @@ app.*.map.json
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
+**/android/app/google-services.json
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
@@ -75,6 +84,9 @@ app.*.map.json
 **/ios/Flutter/flutter.podspec
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
+
+macos/Flutter/ephemeral/
+windows/flutter/ephemeral/
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
