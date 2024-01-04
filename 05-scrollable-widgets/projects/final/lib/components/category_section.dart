@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../components/category_card.dart';
+
 import '../models/food_category.dart';
+import 'category_card.dart';
 
 class CategorySection extends StatelessWidget {
   final List<FoodCategory> categories;
@@ -18,8 +19,9 @@ class CategorySection extends StatelessWidget {
             child: Text(
               'Categories',
               style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           SizedBox(
@@ -29,9 +31,11 @@ class CategorySection extends StatelessWidget {
               itemCount: categories.length,
               itemBuilder: (context, index) {
                 return SizedBox(
-                    width: 200,
-                    child: CategoryCard(
-                        category: categories[index]));
+                  width: 200,
+                  child: CategoryCard(
+                    category: categories[index],
+                  ),
+                );
               },
             ),
           ),
