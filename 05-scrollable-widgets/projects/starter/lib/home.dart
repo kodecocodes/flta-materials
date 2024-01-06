@@ -1,57 +1,98 @@
 import 'package:flutter/material.dart';
 
+import 'components/color_button.dart';
+import 'components/theme_button.dart';
+import 'constants.dart';
+
 class Home extends StatefulWidget {
-  const Home({super.key});
+  const Home({
+    super.key,
+    required this.changeTheme,
+    required this.changeColor,
+    required this.colorSelected,
+    required this.appTitle,
+  });
+
+  final ColorSelection colorSelected;
+  final void Function(bool useLightMode) changeTheme;
+  final void Function(int value) changeColor;
+  final String appTitle;
 
   @override
-  HomeState createState() => HomeState();
+  State<Home> createState() => _HomeState();
 }
 
-class HomeState extends State<Home> {
-  int _selectedIndex = 0;
-
-  static List<Widget> pages = <Widget>[
-    // TODO: Replace with ExploreScreen
-    Container(color: Colors.white),
-    // TODO: Replace with RecipesScreen
-    Container(color: Colors.green),
-    Container(color: Colors.blue),
+class _HomeState extends State<Home> {
+  int tab = 0;
+  List<NavigationDestination> appBarDestinations = const [
+    NavigationDestination(
+      icon: Icon(Icons.home_outlined),
+      label: 'Explore',
+      selectedIcon: Icon(Icons.home),
+    ),
+    NavigationDestination(
+      icon: Icon(Icons.list_outlined),
+      label: 'Orders',
+      selectedIcon: Icon(Icons.list),
+    ),
+    NavigationDestination(
+      icon: Icon(Icons.person_2_outlined),
+      label: 'Account',
+      selectedIcon: Icon(Icons.person),
+    )
   ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Fooderlich',
-          style: Theme.of(context).textTheme.headline6,
+    final pages = [
+      // TODO: Replace with ExplorePage
+      const Center(
+        child: Text(
+          'Explore Page',
+          style: TextStyle(fontSize: 32.0),
         ),
       ),
-      body: pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            label: 'Explore',
+      const Center(
+        child: Text(
+          'Order Page',
+          style: TextStyle(fontSize: 32.0),
+        ),
+      ),
+      const Center(
+        child: Text(
+          'Account Page',
+          style: TextStyle(fontSize: 32.0),
+        ),
+      ),
+    ];
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.appTitle),
+        elevation: 4.0,
+        backgroundColor: Theme.of(context).colorScheme.background,
+        actions: [
+          ThemeButton(
+            changeThemeMode: widget.changeTheme,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: 'Recipes',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'To Buy',
+          ColorButton(
+            changeColor: widget.changeColor,
+            colorSelected: widget.colorSelected,
           ),
         ],
+      ),
+      body: IndexedStack(
+        index: tab,
+        children: pages,
+      ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: tab,
+        onDestinationSelected: (index) {
+          setState(() {
+            tab = index;
+          });
+        },
+        destinations: appBarDestinations,
       ),
     );
   }
