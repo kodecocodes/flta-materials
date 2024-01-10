@@ -15,12 +15,16 @@ class RestaurantSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(left: 16.0, bottom: 8.0),
+            padding: EdgeInsets.only(
+              left: 16.0,
+              bottom: 8.0,
+            ),
             child: Text(
               'Food near me',
               style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           SizedBox(
@@ -30,9 +34,11 @@ class RestaurantSection extends StatelessWidget {
               itemCount: restaurants.length,
               itemBuilder: (context, index) {
                 return SizedBox(
-                    width: 300,
-                    child: RestaurantLandscapeCard(
-                        restaurant: restaurants[index]));
+                  width: 300,
+                  child: RestaurantLandscapeCard(
+                    restaurant: restaurants[index],
+                  ),
+                );
               },
             ),
           ),

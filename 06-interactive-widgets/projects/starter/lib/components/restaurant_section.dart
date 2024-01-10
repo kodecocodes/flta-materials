@@ -19,8 +19,9 @@ class RestaurantSection extends StatelessWidget {
             child: Text(
               'Food near me',
               style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           SizedBox(
@@ -30,9 +31,11 @@ class RestaurantSection extends StatelessWidget {
               itemCount: restaurants.length,
               itemBuilder: (context, index) {
                 return SizedBox(
-                    width: 300,
-                    child: RestaurantLandscapeCard(
-                        restaurant: restaurants[index]));
+                  width: 300,
+                  child: RestaurantLandscapeCard(
+                    restaurant: restaurants[index],
+                  ),
+                );
               },
             ),
           ),

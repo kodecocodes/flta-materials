@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../models/food_category.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -22,16 +23,23 @@ class CategoryCard extends StatelessWidget {
           Stack(
             children: [
               ClipRRect(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(8.0)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(8.0),
+                ),
                 child: Image.asset(category.imageUrl),
               ),
             ],
           ),
           ListTile(
-              title: Text(category.name, style: textTheme.titleSmall),
-              subtitle: Text('${category.numberOfRestaurants} places',
-                  style: textTheme.bodySmall)),
+            title: Text(
+              category.name,
+              style: textTheme.titleSmall,
+            ),
+            subtitle: Text(
+              '${category.numberOfRestaurants} places',
+              style: textTheme.bodySmall,
+            ),
+          ),
         ],
       ),
     );

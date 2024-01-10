@@ -52,7 +52,11 @@ class RestaurantItem extends StatelessWidget {
       children: [
         Text('${item.price}'),
         const SizedBox(width: 4),
-        const Icon(Icons.thumb_up, color: Colors.green, size: 18),
+        const Icon(
+          Icons.thumb_up,
+          color: Colors.green,
+          size: 18,
+        ),
       ],
     );
   }
@@ -87,14 +91,20 @@ class RestaurantItem extends StatelessWidget {
       bottom: 8.0,
       right: 8.0,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8.0,
+          vertical: 4.0,
+        ),
         decoration: BoxDecoration(
           color: colorScheme.onPrimary,
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: const Text(
           'Add',
-          style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 12.0,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

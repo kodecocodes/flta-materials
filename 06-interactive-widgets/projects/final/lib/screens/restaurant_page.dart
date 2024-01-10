@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/restaurant.dart';
+
 import '../components/restaurant_item.dart';
+import '../models/restaurant.dart';
 
 class RestaurantPage extends StatefulWidget {
   final Restaurant restaurant;
@@ -48,24 +49,33 @@ class _RestaurantPageState extends State<RestaurantPage> {
       flexibleSpace: FlexibleSpaceBar(
         background: Center(
           child: Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 64.0),
+            padding: const EdgeInsets.only(
+              left: 16.0,
+              right: 16.0,
+              top: 64.0,
+            ),
             child: Stack(
               children: [
                 Container(
                   margin: const EdgeInsets.only(bottom: 30.0),
                   decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(16.0),
-                      image: DecorationImage(
-                          image: AssetImage(widget.restaurant.imageUrl),
-                          fit: BoxFit.cover)),
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(16.0),
+                    image: DecorationImage(
+                      image: AssetImage(widget.restaurant.imageUrl),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
                 const Positioned(
                   bottom: 0.0,
                   left: 16.0,
                   child: CircleAvatar(
                     radius: 30,
-                    child: Icon(Icons.store, color: Colors.white),
+                    child: Icon(
+                      Icons.store,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],
@@ -85,10 +95,22 @@ class _RestaurantPageState extends State<RestaurantPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(restaurant.name, style: textTheme.headlineLarge),
-            Text(restaurant.address, style: textTheme.bodySmall),
-            Text(restaurant.getRatingAndDistance(), style: textTheme.bodySmall),
-            Text(restaurant.attributes, style: textTheme.labelSmall),
+            Text(
+              restaurant.name,
+              style: textTheme.headlineLarge,
+            ),
+            Text(
+              restaurant.address,
+              style: textTheme.bodySmall,
+            ),
+            Text(
+              restaurant.getRatingAndDistance(),
+              style: textTheme.bodySmall,
+            ),
+            Text(
+              restaurant.attributes,
+              style: textTheme.labelSmall,
+            ),
           ],
         ),
       ),
@@ -110,7 +132,10 @@ class _RestaurantPageState extends State<RestaurantPage> {
       padding: const EdgeInsets.all(8.0),
       child: Text(
         title,
-        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        style: const TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

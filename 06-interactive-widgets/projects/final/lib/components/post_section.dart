@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../components/post_card.dart';
 import '../models/post.dart';
 
@@ -14,12 +15,13 @@ class PostSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(left: 16.0, bottom: 8.0),
+            padding: EdgeInsets.only(
+              left: 16.0,
+              bottom: 8.0,
+            ),
             child: Text(
               'Friend\'s Activity',
-              style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),
           ListView.separated(
