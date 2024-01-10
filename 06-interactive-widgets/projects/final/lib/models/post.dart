@@ -70,7 +70,7 @@ List<Post> posts = [
   Post(
     '10',
     'assets/profile_pics/person_tiffani.jpeg',
-    'Hmmm.... Salmon, little broccoli, mash potatos',
+    'Hmmm.... Salmon, little broccoli, mash potatoes',
     '90',
   ),
 ];
