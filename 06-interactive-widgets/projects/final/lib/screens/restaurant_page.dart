@@ -16,19 +16,18 @@ class RestaurantPage extends StatefulWidget {
 }
 
 class _RestaurantPageState extends State<RestaurantPage> {
+  static const desktopThreshold = 700;
   static const double largeScreenPercentage = 0.9;
   static const double maxWidth = 1000;
-  static const desktopThreshold = 700;
 
   double _calculateConstrainedWidth(double screenWidth) {
     return (screenWidth > desktopThreshold
-            ? screenWidth * largeScreenPercentage
+            ? screenWidth * largeScreenPercentage //
             : screenWidth)
         .clamp(0.0, maxWidth);
   }
 
   int calculateColumnCount(double screenWidth) {
-    const desktopThreshold = 700;
     return screenWidth > desktopThreshold ? 2 : 1;
   }
 
