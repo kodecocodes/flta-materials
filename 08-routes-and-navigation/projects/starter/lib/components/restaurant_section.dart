@@ -41,7 +41,7 @@ class RestaurantSection extends StatelessWidget {
                   child: RestaurantLandscapeCard(
                     restaurant: restaurants[index],
                     onTap: () {
-                      // TODO: Navigate to /Restaurant
+                      // TODO: Navigate to Restaurant
                     },
                   )
                 );

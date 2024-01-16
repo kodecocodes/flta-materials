@@ -4,6 +4,7 @@ import 'constants.dart';
 // TODO: Replace home with screens.dart
 import 'home.dart';
 import '../models/models.dart';
+import 'screens/screens.dart';
 
 void main() {
   runApp(const Yummy());
@@ -75,15 +76,7 @@ class _YummyState extends State<Yummy> {
         useMaterial3: true,
         brightness: Brightness.dark,
       ),
-      home: Home(
-        tab: 0,
-        auth: _auth,
-        cartManager: _cartManager,
-        ordersManager: _orderManager,
-        changeTheme: changeThemeMode,
-        changeColor: changeColor,
-        colorSelected: colorSelected,
-      ),
+      home: LoginPage(onLogIn: (credentials) {}),
     );
   }
 }
