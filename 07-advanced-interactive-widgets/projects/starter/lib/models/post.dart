@@ -10,7 +10,6 @@ class Post {
     this.comment,
     this.timestamp,
   );
-
 }
 
 List<Post> posts = [
@@ -42,11 +41,5 @@ List<Post> posts = [
   Post('9', 'assets/profile_pics/person_ray.jpeg',
       'Hot off the press, cooking up more books this year!', '70'),
   Post('10', 'assets/profile_pics/person_tiffani.jpeg',
-      'Hmmm.... Salmon, little broccoli, mash potatos', '90'),
+      'Hmmm.... Salmon, little broccoli, mash potatoes', '90'),
 ];
-
-
-
-
-
-
