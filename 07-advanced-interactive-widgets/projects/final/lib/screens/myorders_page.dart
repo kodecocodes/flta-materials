@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../models/order_manager.dart';
 
 class MyOrdersPage extends StatelessWidget {
@@ -15,7 +16,10 @@ class MyOrdersPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text('My Orders', style: textTheme.headlineMedium),
+        title: Text(
+          'My Orders',
+          style: textTheme.headlineMedium,
+        ),
       ),
       body: ListView.builder(
         itemCount: orderManager.totalOrders,
@@ -30,7 +34,10 @@ class MyOrdersPage extends StatelessWidget {
 class OrderTile extends StatelessWidget {
   final Order order;
 
-  const OrderTile({super.key, required this.order});
+  const OrderTile({
+    super.key,
+    required this.order,
+  });
 
   @override
   Widget build(BuildContext context) {

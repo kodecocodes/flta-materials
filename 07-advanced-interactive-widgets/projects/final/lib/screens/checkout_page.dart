@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import '../models/cart_manager.dart';
 import '../models/order_manager.dart';
 
@@ -8,11 +9,12 @@ class CheckoutPage extends StatefulWidget {
   final Function() didUpdate;
   final Function(Order) onSubmit;
 
-  const CheckoutPage(
-      {super.key,
-      required this.cartManager,
-      required this.didUpdate,
-      required this.onSubmit});
+  const CheckoutPage({
+    super.key,
+    required this.cartManager,
+    required this.didUpdate,
+    required this.onSubmit,
+  });
 
   @override
   State<CheckoutPage> createState() => _CheckoutPageState();
@@ -59,9 +61,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
       showSelectedIcon: false,
       segments: const [
         ButtonSegment(
-            value: 0, label: Text('Delivery'), icon: Icon(Icons.pedal_bike)),
+          value: 0,
+          label: Text('Delivery'),
+          icon: Icon(Icons.pedal_bike),
+        ),
         ButtonSegment(
-            value: 1, label: Text('Pickup'), icon: Icon(Icons.local_mall)),
+          value: 1,
+          label: Text('Pickup'),
+          icon: Icon(Icons.local_mall),
+        ),
       ],
       selected: selectedSegment,
       onSelectionChanged: onSegmentSelected,
@@ -128,10 +136,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
             background: Container(),
             secondaryBackground: const SizedBox(
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(Icons.delete),
-                  ]),
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [Icon(Icons.delete)],
+              ),
             ),
             onDismissed: (direction) {
               setState(() {
@@ -168,26 +175,28 @@ class _CheckoutPageState extends State<CheckoutPage> {
       onPressed: widget.cartManager.isEmpty
           ? null
           : () {
-        final selectedSegment = this.selectedSegment;
-        final selectedTime = this.selectedTime;
-        final selectedDate = this.selectedDate;
-        final name = _nameController.text;
-        final items = widget.cartManager.items;
+              final selectedSegment = this.selectedSegment;
+              final selectedTime = this.selectedTime;
+              final selectedDate = this.selectedDate;
+              final name = _nameController.text;
+              final items = widget.cartManager.items;
 
-        final order = Order(
-            selectedSegment: selectedSegment,
-            selectedTime: selectedTime,
-            selectedDate: selectedDate,
-            name: name,
-            items: items);
+              final order = Order(
+                selectedSegment: selectedSegment,
+                selectedTime: selectedTime,
+                selectedDate: selectedDate,
+                name: name,
+                items: items,
+              );
 
-        widget.cartManager.resetCart();
-        widget.onSubmit(order);
-      },
+              widget.cartManager.resetCart();
+              widget.onSubmit(order);
+            },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
-            '''Submit Order - \$${widget.cartManager.totalCost.toStringAsFixed(2)}'''),
+          '''Submit Order - \$${widget.cartManager.totalCost.toStringAsFixed(2)}''',
+        ),
       ),
     );
   }

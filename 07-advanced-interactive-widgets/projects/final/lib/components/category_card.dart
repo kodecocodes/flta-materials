@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../models/food_category.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -29,9 +30,15 @@ class CategoryCard extends StatelessWidget {
             ],
           ),
           ListTile(
-              title: Text(category.name, style: textTheme.titleSmall),
-              subtitle: Text('${category.numberOfRestaurants} places',
-                  style: textTheme.bodySmall)),
+            title: Text(
+              category.name,
+              style: textTheme.titleSmall,
+            ),
+            subtitle: Text(
+              '${category.numberOfRestaurants} places',
+              style: textTheme.bodySmall,
+            ),
+          ),
         ],
       ),
     );

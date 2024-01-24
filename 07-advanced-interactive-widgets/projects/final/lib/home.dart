@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'components/color_button.dart';
 import 'components/theme_button.dart';
 import 'constants.dart';
-import 'screens/explore_page.dart';
 import 'models/cart_manager.dart';
 import 'models/order_manager.dart';
+import 'screens/explore_page.dart';
 import 'screens/myorders_page.dart';
 
 class Home extends StatefulWidget {
@@ -49,7 +50,6 @@ class _HomeState extends State<Home> {
     )
   ];
 
-
   @override
   Widget build(BuildContext context) {
     final pages = [
@@ -59,8 +59,11 @@ class _HomeState extends State<Home> {
       ),
       MyOrdersPage(orderManager: widget.ordersManager),
       const Center(
-        child: Text('Account Page', 
-        style: TextStyle(fontSize: 32.0))),
+        child: Text(
+          'Account Page',
+          style: TextStyle(fontSize: 32.0),
+        ),
+      ),
     ];
 
     return Scaffold(
@@ -78,7 +81,10 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: IndexedStack(index: tab, children: pages),
+      body: IndexedStack(
+        index: tab,
+        children: pages,
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: tab,
         onDestinationSelected: (index) {

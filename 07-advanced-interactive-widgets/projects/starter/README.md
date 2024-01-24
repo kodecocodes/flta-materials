@@ -1,3 +1,3 @@
 # Yummy
 
-AYummy is a food platform for customers to order food from a wide variety of restaurants
+AYummy is a food platform for customers to order food from a wide variety of restaurantss

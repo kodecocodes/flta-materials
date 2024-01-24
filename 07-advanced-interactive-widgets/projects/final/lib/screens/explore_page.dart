@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+
 import '../api/mock_yummy_service.dart';
-import '../components/restaurant_section.dart';
 import '../components/category_section.dart';
 import '../components/post_section.dart';
+import '../components/restaurant_section.dart';
 import '../models/cart_manager.dart';
 import '../models/order_manager.dart';
 
@@ -13,8 +14,9 @@ class ExplorePage extends StatelessWidget {
 
   ExplorePage({
     super.key,
-    required this.cartManager, 
-    required this.orderManager});
+    required this.cartManager,
+    required this.orderManager,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,8 @@ class ExplorePage extends StatelessWidget {
                 RestaurantSection(
                   restaurants: restaurants,
                   cartManager: cartManager,
-                  orderManager: orderManager,),
+                  orderManager: orderManager,
+                ),
                 CategorySection(categories: categories),
                 PostSection(posts: posts),
               ]);

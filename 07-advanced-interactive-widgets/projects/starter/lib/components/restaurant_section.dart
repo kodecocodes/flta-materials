@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+
 import '../components/restaurant_landscape_card.dart';
-import '../models/restaurant.dart';
 import '../models/cart_manager.dart';
 import '../models/order_manager.dart';
+import '../models/restaurant.dart';
 import '../screens/restaurant_page.dart';
 
 class RestaurantSection extends StatelessWidget {
@@ -11,10 +12,10 @@ class RestaurantSection extends StatelessWidget {
   final OrderManager orderManager;
 
   const RestaurantSection({
-    super.key, 
+    super.key,
     required this.restaurants,
     required this.cartManager,
-    required this.orderManager
+    required this.orderManager,
   });
 
   @override
@@ -29,8 +30,9 @@ class RestaurantSection extends StatelessWidget {
             child: Text(
               'Food near me',
               style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           SizedBox(
@@ -51,11 +53,11 @@ class RestaurantSection extends StatelessWidget {
                             restaurant: restaurants[index],
                             cartManager: cartManager,
                             ordersManager: orderManager,
-                          )
+                          ),
                         ),
                       );
                     },
-                  )
+                  ),
                 );
               },
             ),

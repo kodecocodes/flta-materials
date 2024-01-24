@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 class CartControl extends StatefulWidget {
   final void Function(int) addToCart;
-  const CartControl({required this.addToCart, Key? key}) : super(key: key);
+  const CartControl({
+    required this.addToCart,
+    super.key,
+  });
 
   @override
   State<CartControl> createState() => _CartControlState();
@@ -69,5 +72,4 @@ class _CartControlState extends State<CartControl> {
       child: const Text('Add to Cart'),
     );
   }
-
 }

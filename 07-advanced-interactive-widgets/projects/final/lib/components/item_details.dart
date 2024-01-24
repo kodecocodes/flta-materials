@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
+
 import '../models/cart_manager.dart';
 import '../models/restaurant.dart';
 import 'cart_control.dart';
-import 'package:uuid/uuid.dart';
 
 class ItemDetails extends StatefulWidget {
   final Item item;
@@ -11,11 +12,10 @@ class ItemDetails extends StatefulWidget {
 
   // 1
   const ItemDetails(
-      {Key? key,
+      {super.key,
       required this.item,
       required this.cartManager,
-      required this.quantityUpdated})
-      : super(key: key);
+      required this.quantityUpdated});
 
   @override
   State<ItemDetails> createState() => _ItemDetailsState();
@@ -41,7 +41,10 @@ class _ItemDetailsState extends State<ItemDetails> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(widget.item.name, style: textTheme.headlineMedium),
+              Text(
+                widget.item.name,
+                style: textTheme.headlineMedium,
+              ),
               const SizedBox(
                 height: 16.0,
               ),
@@ -63,9 +66,10 @@ class _ItemDetailsState extends State<ItemDetails> {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
-          padding: const EdgeInsets.all(4.0),
-          color: colorTheme.onPrimary,
-          child: const Text('#1 Most Liked')),
+        padding: const EdgeInsets.all(4.0),
+        color: colorTheme.onPrimary,
+        child: const Text('#1 Most Liked'),
+      ),
     );
   }
 
@@ -92,7 +96,11 @@ class _ItemDetailsState extends State<ItemDetails> {
         const uuid = Uuid();
         final uniqueId = uuid.v4();
         final cartItem = CartItem(
-            id: uniqueId, name: item.name, price: item.price, quantity: number);
+          id: uniqueId,
+          name: item.name,
+          price: item.price,
+          quantity: number,
+        );
         // 4
         setState(() {
           widget.cartManager.addItem(cartItem);

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+
 import '../components/item_details.dart';
-import '../models/restaurant.dart';
 import '../components/restaurant_item.dart';
 import '../models/cart_manager.dart';
 import '../models/order_manager.dart';
+import '../models/restaurant.dart';
 import 'checkout_page.dart';
 
 class RestaurantPage extends StatefulWidget {
@@ -15,7 +16,7 @@ class RestaurantPage extends StatefulWidget {
     super.key,
     required this.restaurant,
     required this.cartManager,
-    required this.ordersManager
+    required this.ordersManager,
   });
 
   @override
@@ -64,18 +65,23 @@ class _RestaurantPageState extends State<RestaurantPage> {
                 Container(
                   margin: const EdgeInsets.only(bottom: 30.0),
                   decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(16.0),
-                      image: DecorationImage(
-                          image: AssetImage(widget.restaurant.imageUrl),
-                          fit: BoxFit.cover)),
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(16.0),
+                    image: DecorationImage(
+                      image: AssetImage(widget.restaurant.imageUrl),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
                 const Positioned(
                   bottom: 0.0,
                   left: 16.0,
                   child: CircleAvatar(
                     radius: 30,
-                    child: Icon(Icons.store, color: Colors.white),
+                    child: Icon(
+                      Icons.store,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],
@@ -95,10 +101,22 @@ class _RestaurantPageState extends State<RestaurantPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(restaurant.name, style: textTheme.headlineLarge),
-            Text(restaurant.address, style: textTheme.bodySmall),
-            Text(restaurant.getRatingAndDistance(), style: textTheme.bodySmall),
-            Text(restaurant.attributes, style: textTheme.labelSmall),
+            Text(
+              restaurant.name,
+              style: textTheme.headlineLarge,
+            ),
+            Text(
+              restaurant.address,
+              style: textTheme.bodySmall,
+            ),
+            Text(
+              restaurant.getRatingAndDistance(),
+              style: textTheme.bodySmall,
+            ),
+            Text(
+              restaurant.attributes,
+              style: textTheme.labelSmall,
+            ),
           ],
         ),
       ),
@@ -118,7 +136,10 @@ class _RestaurantPageState extends State<RestaurantPage> {
       padding: const EdgeInsets.all(8.0),
       child: Text(
         title,
-        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        style: const TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
@@ -160,13 +181,13 @@ class _RestaurantPageState extends State<RestaurantPage> {
       isScrollControlled: true,
       context: context,
       constraints: const BoxConstraints(maxWidth: 480),
-      builder: (context) =>
-        ItemDetails(
-          item: item, 
-          cartManager: widget.cartManager,
-          quantityUpdated: () {
-            setState(() {});
-          },),
+      builder: (context) => ItemDetails(
+        item: item,
+        cartManager: widget.cartManager,
+        quantityUpdated: () {
+          setState(() {});
+        },
+      ),
     );
   }
 
@@ -174,7 +195,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
     return SizedBox(
       width: drawerWidth,
       child: Drawer(
-        child: CheckoutPage(
+          child: CheckoutPage(
         cartManager: widget.cartManager,
         didUpdate: () {
           setState(() {});

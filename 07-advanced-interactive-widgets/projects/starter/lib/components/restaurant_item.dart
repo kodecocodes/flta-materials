@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+
 import '../models/restaurant.dart';
 
 class RestaurantItem extends StatelessWidget {
   final Item item;
 
-  const RestaurantItem({Key? key, required this.item}) : super(key: key);
+  const RestaurantItem({
+    super.key,
+    required this.item,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +55,11 @@ class RestaurantItem extends StatelessWidget {
       children: [
         Text('${item.price}'),
         const SizedBox(width: 4),
-        const Icon(Icons.thumb_up, color: Colors.green, size: 18),
+        const Icon(
+          Icons.thumb_up,
+          color: Colors.green,
+          size: 18,
+        ),
       ],
     );
   }
@@ -93,7 +101,10 @@ class RestaurantItem extends StatelessWidget {
         ),
         child: const Text(
           'Add',
-          style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 12.0,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
