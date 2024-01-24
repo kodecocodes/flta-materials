@@ -181,7 +181,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
         onSubmit: (order) {
           widget.ordersManager.addOrder(order);
           context.pop();
-          context.go('/?tab=${YummyTab.orders.value}');
+          context.go('/${YummyTab.orders.value}');
         },
       )),
     );
