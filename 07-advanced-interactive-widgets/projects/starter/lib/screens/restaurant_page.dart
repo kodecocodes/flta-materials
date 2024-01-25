@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../models/restaurant.dart';
+
 import '../components/restaurant_item.dart';
 import '../models/cart_manager.dart';
 import '../models/order_manager.dart';
+import '../models/restaurant.dart';
 
 class RestaurantPage extends StatefulWidget {
   final Restaurant restaurant;
@@ -13,7 +14,7 @@ class RestaurantPage extends StatefulWidget {
     super.key,
     required this.restaurant,
     required this.cartManager,
-    required this.ordersManager
+    required this.ordersManager,
   });
 
   @override
