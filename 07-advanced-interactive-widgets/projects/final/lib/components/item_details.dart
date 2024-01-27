@@ -10,7 +10,6 @@ class ItemDetails extends StatefulWidget {
   final CartManager cartManager;
   final void Function() quantityUpdated;
 
-  // 1
   const ItemDetails(
       {super.key,
       required this.item,
@@ -24,20 +23,15 @@ class ItemDetails extends StatefulWidget {
 class _ItemDetailsState extends State<ItemDetails> {
   @override
   Widget build(BuildContext context) {
-    // 2
     final textTheme = Theme.of(context)
         .textTheme
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
-    // 3
     final colorTheme = Theme.of(context).colorScheme;
 
-    // 4
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      // 5
       child: Wrap(
         children: [
-          // 6
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -87,11 +81,8 @@ class _ItemDetailsState extends State<ItemDetails> {
     );
   }
 
-  // 1
   Widget _addToCartControl(Item item) {
-    // 2
     return CartControl(
-      // 3
       addToCart: (number) {
         const uuid = Uuid();
         final uniqueId = uuid.v4();
@@ -101,12 +92,10 @@ class _ItemDetailsState extends State<ItemDetails> {
           price: item.price,
           quantity: number,
         );
-        // 4
         setState(() {
           widget.cartManager.addItem(cartItem);
           widget.quantityUpdated();
         });
-        // 5
         Navigator.pop(context);
       },
     );
