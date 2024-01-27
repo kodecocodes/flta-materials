@@ -23,8 +23,9 @@ class CategoryCard extends StatelessWidget {
           Stack(
             children: [
               ClipRRect(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(8.0)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(8.0),
+                ),
                 child: Image.asset(category.imageUrl),
               ),
             ],

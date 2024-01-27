@@ -25,7 +25,10 @@ class _CartControlState extends State<CartControl> {
         _buildPlusButton(),
         const Spacer(),
         _buildAddCartButton(),
-        Container(color: Colors.red, height: 44.0)
+        Container(
+          color: Colors.red,
+          height: 44.0,
+        )
       ],
     );
   }
