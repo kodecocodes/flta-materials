@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'constants.dart';
-// TODO: Replace home with screens.dart
 import 'home.dart';
 import '../models/models.dart';
 import 'screens/screens.dart';
