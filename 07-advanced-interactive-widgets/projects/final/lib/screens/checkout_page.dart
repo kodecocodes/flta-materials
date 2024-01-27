@@ -23,7 +23,7 @@ class CheckoutPage extends StatefulWidget {
 class _CheckoutPageState extends State<CheckoutPage> {
   final Map<int, Widget> myTabs = const <int, Widget>{
     0: Text('Delivery'),
-    1: Text('Self Pick-Up')
+    1: Text('Self Pick-Up'),
   };
 
   Set<int> selectedSegment = {0};
@@ -137,7 +137,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
             secondaryBackground: const SizedBox(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [Icon(Icons.delete)],
+                children: [
+                  Icon(Icons.delete),
+                ],
               ),
             ),
             onDismissed: (direction) {
@@ -219,7 +221,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('Order Details', style: textTheme.headlineSmall),
+            Text(
+              'Order Details',
+              style: textTheme.headlineSmall,
+            ),
             const SizedBox(height: 16.0),
             _buildOrderSegmentedType(),
             const SizedBox(height: 16.0),
