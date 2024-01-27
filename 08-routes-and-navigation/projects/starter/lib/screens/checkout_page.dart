@@ -227,6 +227,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               ],
             ),
             const SizedBox(height: 16.0),
+            Text('Order Summary'),
             _buildOrderSummary(context),
             _buildSubmitButton(),
           ],
