@@ -10,11 +10,12 @@ class ItemDetails extends StatefulWidget {
   final CartManager cartManager;
   final void Function() quantityUpdated;
 
-  const ItemDetails(
-      {super.key,
-      required this.item,
-      required this.cartManager,
-      required this.quantityUpdated});
+  const ItemDetails({
+    super.key,
+    required this.item,
+    required this.cartManager,
+    required this.quantityUpdated,
+  });
 
   @override
   State<ItemDetails> createState() => _ItemDetailsState();
@@ -39,9 +40,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                 widget.item.name,
                 style: textTheme.headlineMedium,
               ),
-              const SizedBox(
-                height: 16.0,
-              ),
+              const SizedBox(height: 16.0),
               _mostLikedBadge(colorTheme),
               const SizedBox(height: 16.0),
               Text(widget.item.description),
@@ -72,7 +71,6 @@ class _ItemDetailsState extends State<ItemDetails> {
       height: 200,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        // 3
         image: DecorationImage(
           image: NetworkImage(imageUrl),
           fit: BoxFit.cover,

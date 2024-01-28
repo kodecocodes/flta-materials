@@ -5,7 +5,6 @@ import '../models/order_manager.dart';
 class MyOrdersPage extends StatelessWidget {
   final OrderManager orderManager;
 
-  // 1
   const MyOrdersPage({
     super.key,
     required this.orderManager,
@@ -16,7 +15,6 @@ class MyOrdersPage extends StatelessWidget {
     final textTheme = Theme.of(context)
         .textTheme
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,

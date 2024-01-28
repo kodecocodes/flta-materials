@@ -25,14 +25,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
     0: Text('Delivery'),
     1: Text('Self Pick-Up'),
   };
-
   Set<int> selectedSegment = {0};
   TimeOfDay? selectedTime;
   DateTime? selectedDate;
   final DateTime _firstDate = DateTime(DateTime.now().year - 2);
   final DateTime _lastDate = DateTime(DateTime.now().year + 1);
   final TextEditingController _nameController = TextEditingController();
-
   String formatDate(DateTime? dateTime) {
     if (dateTime == null) {
       return 'Select Date';
@@ -182,7 +180,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
               final selectedDate = this.selectedDate;
               final name = _nameController.text;
               final items = widget.cartManager.items;
-
               final order = Order(
                 selectedSegment: selectedSegment,
                 selectedTime: selectedTime,
@@ -190,15 +187,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 name: name,
                 items: items,
               );
-
               widget.cartManager.resetCart();
               widget.onSubmit(order);
             },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
-          '''Submit Order - \$${widget.cartManager.totalCost.toStringAsFixed(2)}''',
-        ),
+            '''Submit Order - \$${widget.cartManager.totalCost.toStringAsFixed(2)}'''),
       ),
     );
   }

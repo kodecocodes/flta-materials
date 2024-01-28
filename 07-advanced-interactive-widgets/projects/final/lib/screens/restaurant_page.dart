@@ -195,16 +195,17 @@ class _RestaurantPageState extends State<RestaurantPage> {
     return SizedBox(
       width: drawerWidth,
       child: Drawer(
-          child: CheckoutPage(
-        cartManager: widget.cartManager,
-        didUpdate: () {
-          setState(() {});
-        },
-        onSubmit: (order) {
-          widget.ordersManager.addOrder(order);
-          Navigator.popUntil(context, (route) => route.isFirst);
-        },
-      )),
+        child: CheckoutPage(
+          cartManager: widget.cartManager,
+          didUpdate: () {
+            setState(() {});
+          },
+          onSubmit: (order) {
+            widget.ordersManager.addOrder(order);
+            Navigator.popUntil(context, (route) => route.isFirst);
+          },
+        ),
+      ),
     );
   }
 
