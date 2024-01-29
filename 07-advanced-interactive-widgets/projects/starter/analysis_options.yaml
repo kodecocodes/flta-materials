@@ -1,0 +1,42 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - build/**
+    - lib/**.chopper.dart
+    - lib/**.g.dart
+
+  errors:
+    always_declare_return_types: error
+    avoid_web_libraries_in_flutter: error
+    camel_case_types: error
+    dead_code: error
+    empty_statements: error
+    file_names: error
+    iterable_contains_unrelated_type: error
+    list_remove_unrelated_type: error
+    missing_required_param: error
+    missing_return: error
+    no_duplicate_case_values: error
+    prefer_single_quotes: error
+    unrelated_type_equality_checks: error
+
+    #This is added as an error to make viewing code on the web easier
+    lines_longer_than_80_chars: error
+
+linter:
+  rules:
+    - always_declare_return_types
+    - avoid_annotating_with_dynamic
+    - avoid_bool_literals_in_conditional_expressions
+    - cancel_subscriptions
+    - close_sinks
+    - lines_longer_than_80_chars
+    - omit_local_variable_types
+    - only_throw_errors
+    - prefer_final_in_for_each
+    - prefer_final_locals
+    - prefer_relative_imports
+    - prefer_single_quotes
+    - unnecessary_await_in_return
+    - unnecessary_statements
