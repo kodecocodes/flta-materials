@@ -14,16 +14,15 @@ class RecipeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 2
-    final ThemeData theme = ThemeData();
+    final theme = ThemeData();
     // 3
     return MaterialApp(
       // 4
       title: 'Recipe Calculator',
       // 5
       theme: theme.copyWith(
-        colorScheme: theme.colorScheme.copyWith(
-          primary: Colors.grey,
-          secondary: Colors.black,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.greenAccent,
         ),
       ),
       // 6
@@ -96,8 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // 1
       elevation: 2.0,
       // 2
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       // 3
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -122,4 +120,5 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
-  }}
+  }
+}

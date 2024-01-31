@@ -1,32 +1,20 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppCache {
-  static const kUser = 'user';
-  static const kOnboarding = 'onboarding';
+  static const klogin = 'yummy_login';
 
   Future<void> invalidate() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(kUser, false);
-    await prefs.setBool(kOnboarding, false);
+    await prefs.setBool(klogin, false);
   }
 
   Future<void> cacheUser() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(kUser, true);
-  }
-
-  Future<void> completeOnboarding() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(kOnboarding, true);
+    await prefs.setBool(klogin, true);
   }
 
   Future<bool> isUserLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(kUser) ?? false;
-  }
-
-  Future<bool> didCompleteOnboarding() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(kOnboarding) ?? false;
+    return prefs.getBool(klogin) ?? false;
   }
 }

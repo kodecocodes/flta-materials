@@ -1,22 +1,22 @@
-import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../providers.dart';
+import '../utils.dart';
+import 'groceries/groceries.dart';
+import 'theme/colors.dart';
 
-import 'myrecipes/my_recipes_list.dart';
 import 'recipes/recipe_list.dart';
-import 'shopping/shopping_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 
-class MainScreen extends StatefulWidget {
+class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 
   @override
-  State createState() => _MainScreenState();
+  ConsumerState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0;
+class _MainScreenState extends ConsumerState<MainScreen> {
   List<Widget> pageList = <Widget>[];
   static const String prefSelectedIndexKey = 'selectedIndex';
 
@@ -24,110 +24,192 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     pageList.add(const RecipeList());
-    pageList.add(const MyRecipesList());
-    pageList.add(const ShoppingList());
-    getCurrentIndex();
+    pageList.add(const GroceryList());
+    // wrap getCurrentIndex in Future.microtask 
+    Future.microtask(() async {
+      getCurrentIndex();
+    });
   }
 
   void saveCurrentIndex() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setInt(prefSelectedIndexKey, _selectedIndex);
+    final prefs = ref.read(sharedPrefProvider);
+    final bottomNavigation = ref.read(bottomNavigationProvider);
+    prefs.setInt(prefSelectedIndexKey, bottomNavigation.selectedIndex);
   }
 
   void getCurrentIndex() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = ref.read(sharedPrefProvider);
     if (prefs.containsKey(prefSelectedIndexKey)) {
-      setState(() {
-        final index = prefs.getInt(prefSelectedIndexKey);
-        if (index != null) {
-          _selectedIndex = index;
-        }
-      });
+      final index = prefs.getInt(prefSelectedIndexKey);
+      if (index != null) {
+        ref.read(bottomNavigationProvider.notifier).updateSelectedIndex(index);
+      }
     }
   }
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    ref.read(bottomNavigationProvider.notifier).updateSelectedIndex(index);
     saveCurrentIndex();
   }
 
   @override
   Widget build(BuildContext context) {
-    String title;
-    switch (_selectedIndex) {
-      case 0:
-        title = 'Recipes';
-        break;
-      case 1:
-        title = 'Bookmarks';
-        break;
-      case 2:
-        title = 'Groceries';
-        break;
-      default:
-        title = 'Recipes';
-        break;
+    if (isDesktop() || isWeb()) {
+      return largeLayout();
+    } else {
+      return mobileLayout();
     }
+  }
+
+  Widget largeLayout() {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final selectedColor =
+        isDarkMode ? darkBackgroundColor : smallCardBackgroundColor;
+    return AdaptiveLayout(
+      primaryNavigation: SlotLayout(
+        config: <Breakpoint, SlotLayoutConfig>{
+          Breakpoints.mediumAndUp: SlotLayout.from(
+            key: const Key('PrimaryNavigation'),
+            builder: (_) {
+              return Container(
+                decoration: BoxDecoration(color: selectedColor),
+                child: AdaptiveScaffold.standardNavigationRail(
+                  destinations: getRailNavigations(),
+                  onDestinationSelected: (int index) {
+                    _onItemTapped(index);
+                  },
+                  labelType: NavigationRailLabelType.all,
+                  selectedIndex:
+                      ref.watch(bottomNavigationProvider).selectedIndex,
+                  backgroundColor: selectedColor,
+                  selectedIconTheme: IconTheme.of(context)
+                      .copyWith(color: iconBackgroundColor),
+                  unselectedIconTheme:
+                      IconTheme.of(context).copyWith(color: Colors.black),
+                ),
+              );
+            },
+          )
+        },
+      ),
+      body: SlotLayout(
+        config: <Breakpoint, SlotLayoutConfig?>{
+          Breakpoints.standard: SlotLayout.from(
+            key: const Key('body'),
+            builder: (_) {
+              return Container(
+                color: Colors.white,
+                child: IndexedStack(
+                  index: ref.watch(bottomNavigationProvider).selectedIndex,
+                  children: pageList,
+                ),
+              );
+            },
+          ),
+        },
+      ),
+      bottomNavigation: SlotLayout(
+        config: <Breakpoint, SlotLayoutConfig?>{
+          Breakpoints.small: SlotLayout.from(
+              key: const Key('bottomNavigation'),
+              builder: (_) => createBottomNavigationBar())
+        },
+      ),
+    );
+  }
+
+  List<NavigationRailDestination> getRailNavigations() {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final selectedColor = isDarkMode ? Colors.white : Colors.black;
+    return [
+      NavigationRailDestination(
+        icon: SvgPicture.asset(
+          'assets/images/icon_recipe.svg',
+          colorFilter: ColorFilter.mode(
+              ref.watch(bottomNavigationProvider).selectedIndex == 0
+                  ? selectedColor
+                  : Colors.black,
+              BlendMode.srcIn),
+          semanticsLabel: 'Recipes',
+        ),
+        label: const Text(
+          'Recipes',
+          style: TextStyle(fontSize: 10),
+        ),
+      ),
+      NavigationRailDestination(
+        icon: SvgPicture.asset(
+          'assets/images/shopping_cart.svg',
+          colorFilter: ColorFilter.mode(
+              ref.watch(bottomNavigationProvider).selectedIndex == 0
+                  ? selectedColor
+                  : Colors.black,
+              BlendMode.srcIn),
+          semanticsLabel: 'Groceries',
+        ),
+        label: const Text(
+          'Groceries',
+          style: TextStyle(fontSize: 10),
+        ),
+      ),
+    ];
+  }
+
+  Widget mobileLayout() {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/images/icon_recipe.svg',
-              color: _selectedIndex == 0 ? green : Colors.grey,
-              semanticsLabel: 'Recipes',
-            ),
-            label: 'Recipes',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/images/icon_bookmarks.svg',
-              color: _selectedIndex == 1 ? green : Colors.grey,
-              semanticsLabel: 'Bookmarks',
-            ),
-            label: 'Bookmarks',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/images/icon_shopping_list.svg',
-              color: _selectedIndex == 2 ? green : Colors.grey,
-              semanticsLabel: 'Groceries',
-            ),
-            label: 'Groceries',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: green,
-        onTap: _onItemTapped,
-      ),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          systemNavigationBarColor: Colors.white,
-          statusBarColor: Colors.white,
-          statusBarBrightness: Brightness.light,
-          statusBarIconBrightness: Brightness.dark,
-          systemNavigationBarDividerColor: Colors.white,
-          //Navigation bar divider color
-          systemNavigationBarIconBrightness:
-              Brightness.light, //navigation bar icon
-        ),
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
+      bottomNavigationBar: createBottomNavigationBar(),
+      body: SafeArea(
+        child: IndexedStack(
+          index: ref.watch(bottomNavigationProvider).selectedIndex,
+          children: pageList,
         ),
       ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: pageList,
-      ),
+    );
+  }
+
+  BottomNavigationBar createBottomNavigationBar() {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final selectedColor = isDarkMode ? Colors.white : Colors.black;
+    final unSelectedItemColor = isDarkMode ? Colors.white : Colors.grey;
+    final backgroundColor =
+        isDarkMode ? darkBackgroundColor : smallCardBackgroundColor;
+    final bottomNavigationIndex =
+        ref.watch(bottomNavigationProvider).selectedIndex;
+    return BottomNavigationBar(
+      backgroundColor: backgroundColor,
+      currentIndex: bottomNavigationIndex,
+      selectedItemColor: selectedColor,
+      unselectedItemColor: Colors.grey,
+      items: [
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(
+            'assets/images/icon_recipe.svg',
+            colorFilter: ColorFilter.mode(
+                bottomNavigationIndex == 0
+                    ? selectedColor
+                    : unSelectedItemColor,
+                BlendMode.srcIn),
+            semanticsLabel: 'Recipes',
+          ),
+          label: 'Recipes',
+        ),
+        BottomNavigationBarItem(
+          backgroundColor:
+              bottomNavigationIndex == 1 ? iconBackgroundColor : Colors.black,
+          icon: SvgPicture.asset(
+            'assets/images/shopping_cart.svg',
+            colorFilter: ColorFilter.mode(
+                // selectedColor,
+                bottomNavigationIndex == 1
+                    ? selectedColor
+                    : unSelectedItemColor,
+                BlendMode.srcIn),
+            semanticsLabel: 'Groceries',
+          ),
+          label: 'Groceries',
+        ),
+      ],
+      onTap: _onItemTapped,
     );
   }
 }

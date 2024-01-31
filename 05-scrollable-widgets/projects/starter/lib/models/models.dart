@@ -1,4 +1,3 @@
-export 'explore_recipe.dart';
+export 'food_category.dart';
 export 'post.dart';
-export 'simple_recipe.dart';
-export 'explore_data.dart';
+export 'restaurant.dart';

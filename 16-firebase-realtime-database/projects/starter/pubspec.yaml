@@ -1,23 +1,29 @@
-name: raychat
-description: A reactive chat application fueled by a Firebase Realtime Database.
-publish_to: 'none'
+name: yummy
+description: Yummy is a food platform for customers to order food from a wide variety of restaurants
+
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.16.2 <3.0.0"
+  sdk: ">=3.0.5 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.5
-  intl: 0.17.0
+  intl: ^0.18.1
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
+  flutter_riverpod: ^2.4.5
 
-  flutter_lints: ^2.0.1
+  flutter_lints: ^3.0.1
+
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/categories/
+    - assets/restaurants/
+    - assets/profile_pics/
+    - assets/food/
